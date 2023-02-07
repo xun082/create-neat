@@ -1,5 +1,6 @@
 const { resolveApp } = require("./paths");
 const chalk = require("chalk");
+const fs = require("fs");
 
 const packages = resolveApp("package.json");
 const appName = require(packages).name;
@@ -117,7 +118,13 @@ function formatWebpackMessages(json) {
   return result;
 }
 
-function friendlyPrints(urls, useYarn) {
+let packageManagement;
+if (fs.existsSync("package-lock.json")) packageManagement = "npm";
+else if (fs.existsSync("pnpm-lock.yaml")) packageManagement = "pnpm";
+else if (fs.existsSync("yarn.lock")) packageManagement = "yarn";
+else packageManagement = "cnpm";
+
+function friendlyPrints(urls) {
   console.log();
   console.log(`You can now view ${chalk.bold(appName)} in the browser.`);
   console.log();
@@ -137,7 +144,7 @@ function friendlyPrints(urls, useYarn) {
   console.log("Note that the development build is not optimized.");
   console.log(
     `To create a production build, use ` +
-      `${chalk.cyan(`${useYarn ? "yarn" : "npm run"} build`)}.`
+      `${chalk.cyan(`${packageManagement} build`)}.`
   );
   console.log();
 }

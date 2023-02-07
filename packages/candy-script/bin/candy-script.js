@@ -9,6 +9,7 @@ const webpack = require("webpack");
 const WebpackDevServer = require("webpack-dev-server");
 const chalk = require("chalk");
 const devWebpackConfig = require("../config/webpack.dev");
+const prodWebpackConfig = require("../config/webpack.prod");
 const { getIPAddress } = require("./utils/paths");
 const devServerConfig = require("./utils/port");
 const portFinder = require("portfinder");
@@ -28,6 +29,12 @@ if (argument[0] === "serve") {
 
     server.startCallback();
   });
+} else if (argument[0] === "build") {
+  webpack(prodWebpackConfig, (err, res) => {
+    if (err) console.log(err);
+
+    // console.log(res);
+  });
 }
 
 compiler.hooks.done.tap("done", async (stats) => {
@@ -45,13 +52,10 @@ compiler.hooks.done.tap("done", async (stats) => {
   if (isSuccessful) console.log(chalk.green("Compiled successfully!"));
 
   if (isSuccessful && (isInteractive || isFirstCompile)) {
-    friendlyPrints(
-      {
-        localUrlForTerminal: `http://localhost:${devServerConfig.port}`,
-        lanUrlForTerminal: `${getIPAddress()}:${devServerConfig.port}`,
-      },
-      true
-    );
+    friendlyPrints({
+      localUrlForTerminal: `http://localhost:${devServerConfig.port}`,
+      lanUrlForTerminal: `${getIPAddress()}:${devServerConfig.port}`,
+    });
   }
 
   isFirstCompile = false;

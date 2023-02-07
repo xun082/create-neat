@@ -8,7 +8,8 @@
     "candy": "./index.js"
   },
   "scripts": {
-    "start": "candy-script serve"
+    "start": "candy-script serve",
+    "build": "candy-script build"
   },
   "keywords": [],
   "author": "",
