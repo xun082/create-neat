@@ -1,0 +1,17 @@
+{
+  "name": "cli",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "bin": {
+    "candy": "./index.js"
+  },
+  "scripts": {
+    "start": "candy-script serve"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {}
+}
