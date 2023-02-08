@@ -1,7 +1,6 @@
 const fs = require("fs");
 const path = require("path");
 const os = require("os");
-const portFinder = require("portfinder");
 
 const appDirectory = fs.realpathSync(process.cwd());
 const resolveApp = (relativePath) => path.resolve(appDirectory, relativePath);
@@ -22,7 +21,6 @@ function getIPAddress() {
     }
   }
 }
-
 
 module.exports = {
   resolveApp,
