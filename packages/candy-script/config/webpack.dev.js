@@ -1,7 +1,11 @@
 const { merge } = require("webpack-merge");
 const ESLintPlugin = require("eslint-webpack-plugin");
 const path = require("path");
-const { resolveApp } = require("candy-dev-utils");
+const { resolveApp, isUseTypescript } = require("candy-dev-utils");
+const CircularDependencyPlugin = require("circular-dependency-plugin");
+const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
+const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
+
 const webpackCommonConfig = require("./webpack.common");
 
 module.exports = merge(webpackCommonConfig, {
@@ -18,5 +22,19 @@ module.exports = merge(webpackCommonConfig, {
         ".cache/.eslintcache"
       ),
     }),
-  ],
+    new ReactRefreshWebpackPlugin(),
+
+    isUseTypescript &&
+      new ForkTsCheckerWebpackPlugin({
+        async: false,
+      }),
+    //  解决模块循环引入问题
+    new CircularDependencyPlugin({
+      exclude: /node_modules/,
+      include: resolveApp("./src"),
+      failOnError: true,
+      allowAsyncCycles: false,
+      cwd: process.cwd(),
+    }),
+  ].filter(Boolean),
 });
