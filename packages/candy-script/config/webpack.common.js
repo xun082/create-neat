@@ -127,7 +127,7 @@ module.exports = {
         },
         exclude: [/node_modules/, /public/, /(.|_)min\.js$/],
       },
-    ],
+    ].filter(Boolean),
   },
   resolve: {
     extensions: [".js", ".json", ".jsx", ".ts", ".css", ".tsx"],
