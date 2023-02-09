@@ -44,26 +44,23 @@ module.exports = merge(webpackCommonConfig, {
       algorithm: gzip,
     }),
     // 生成目录文件
-    // new WebpackManifestPlugin({
-    //   fileName: "asset-manifest.json",
-    //   generate: (seed, files, entryPoints) => {
-    //     console.log(seed, 111);
-    //     console.log(files, 222);
-    //     console.log(entryPoints, 333);
-    //     const manifestFiles = files.reduce((manifest, file) => {
-    //       if (manifest) manifest[file.name] = file.path;
-    //       return manifest;
-    //     }, seed);
-    //     const entrypointFiles = entryPoints.main.filter(
-    //       (fileName) => !fileName.endsWith(".map")
-    //     );
+    new WebpackManifestPlugin({
+      fileName: "asset-manifest.json",
+      generate: (seed, files, entryPoints) => {
+        const manifestFiles = files.reduce((manifest, file) => {
+          if (manifest) manifest[file.name] = file.path;
+          return manifest;
+        }, seed);
+        const entrypointFiles = entryPoints.main.filter(
+          (fileName) => !fileName.endsWith(".map")
+        );
 
-    //     return {
-    //       files: manifestFiles,
-    //       entryPoints: entrypointFiles,
-    //     };
-    //   },
-    // }),
+        return {
+          files: manifestFiles,
+          entryPoints: entrypointFiles,
+        };
+      },
+    }),
   ].filter(Boolean),
   optimization: {
     chunkIds: "named",
