@@ -22,7 +22,8 @@ module.exports = merge(webpackCommonConfig, {
         ".cache/.eslintcache"
       ),
     }),
-    new ReactRefreshWebpackPlugin(),
+    // 还没有使用到,暂时不开启
+    // new ReactRefreshWebpackPlugin(),
 
     isUseTypescript &&
       new ForkTsCheckerWebpackPlugin({
@@ -31,7 +32,7 @@ module.exports = merge(webpackCommonConfig, {
     //  解决模块循环引入问题
     new CircularDependencyPlugin({
       exclude: /node_modules/,
-      include: resolveApp("./src"),
+      include: /src/,
       failOnError: true,
       allowAsyncCycles: false,
       cwd: process.cwd(),

@@ -11,7 +11,7 @@ const chalk = require("chalk");
 const devWebpackConfig = require("../config/webpack.dev");
 const prodWebpackConfig = require("../config/webpack.prod");
 const { getIPAddress } = require("./utils/paths");
-const devServerConfig = require("./utils/port");
+const { devServerConfig } = require("candy-dev-utils");
 const portFinder = require("portfinder");
 
 portFinder.setBasePort(3000);
