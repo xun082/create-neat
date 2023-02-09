@@ -1,4 +1,4 @@
-const { resolveApp } = require("./paths");
+const { resolveApp } = require("candy-dev-utils");
 const chalk = require("chalk");
 const fs = require("fs");
 

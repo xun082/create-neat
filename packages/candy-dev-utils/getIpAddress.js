@@ -1,9 +1,4 @@
-const fs = require("fs");
-const path = require("path");
 const os = require("os");
-
-const appDirectory = fs.realpathSync(process.cwd());
-const resolveApp = (relativePath) => path.resolve(appDirectory, relativePath);
 
 function getIPAddress() {
   const interfaces = os.networkInterfaces();
@@ -22,7 +17,4 @@ function getIPAddress() {
   }
 }
 
-module.exports = {
-  resolveApp,
-  getIPAddress,
-};
+module.exports = getIPAddress;
