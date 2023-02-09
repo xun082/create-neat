@@ -72,6 +72,28 @@ module.exports = {
           useCssPreset("less") && require.resolve("less-loader"),
         ].filter(Boolean),
       },
+      // 处理图片
+      {
+        test: /\.(jpe?g|png|gif|webp|svg|mp4)$/,
+        type: "asset",
+        // 文件生成路径
+        generator: {
+          filename: "./images/[hash:8][ext][query]",
+        },
+        parser: {
+          dataUrlCondition: {
+            maxSize: 10 * 1024, // 小于10kb会被压缩成base64
+          },
+        },
+      },
+      // 处理字体
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/i,
+        type: "asset/resource",
+        generator: {
+          filename: "./assets/fonts/[hash][ext][query]",
+        },
+      },
     ],
   },
   resolve: {
