@@ -2,12 +2,9 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const WebpackBar = require("webpackbar");
 const { DefinePlugin } = require("webpack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const { resolveApp } = require("candy-dev-utils");
+const { resolveApp, useCssPreset } = require("candy-dev-utils");
 const stylelint = require("stylelint");
-
 const isDevelopment = process.argv.slice(2)[0] === "serve";
-
-console.log(require.resolve("webpack"));
 
 module.exports = {
   stats: "errors-only",
@@ -30,7 +27,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.css$|\.scss$/i,
+        test: /\.css$|\.scss$|\.less$/i,
         include: [resolveApp("./src")],
         exclude: /node_module/,
         use: [
@@ -71,7 +68,9 @@ module.exports = {
               },
             },
           },
-        ],
+          useCssPreset("sass") && require.resolve("sass-loader"),
+          useCssPreset("less") && require.resolve("less-loader"),
+        ].filter(Boolean),
       },
     ],
   },

@@ -21,6 +21,7 @@
     "eslint-webpack-plugin": "^4.0.0",
     "fork-ts-checker-webpack-plugin": "^7.3.0",
     "html-webpack-plugin": "^5.5.0",
+    "less-loader": "^11.1.0",
     "mini-css-extract-plugin": "^2.7.2",
     "portfinder": "^1.0.32",
     "postcss-loader": "^7.0.2",
