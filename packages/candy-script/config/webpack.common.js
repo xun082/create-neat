@@ -2,7 +2,11 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const WebpackBar = require("webpackbar");
 const { DefinePlugin } = require("webpack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const { resolveApp, useCssPreset } = require("candy-dev-utils");
+const {
+  resolveApp,
+  useCssPreset,
+  isUseTypescript,
+} = require("candy-dev-utils");
 const stylelint = require("stylelint");
 const isDevelopment = process.argv.slice(2)[0] === "serve";
 
@@ -93,6 +97,35 @@ module.exports = {
         generator: {
           filename: "./assets/fonts/[hash][ext][query]",
         },
+      },
+      // 处理js
+      {
+        test: /\.(tsx?|jsx?)$/,
+        include: [resolveApp("./src")],
+        loader: require.resolve("babel-loader"),
+        options: {
+          babelrc: true,
+          cacheDirectory: true,
+          cacheCompression: false, // 缓存不压缩
+          presets: [
+            require.resolve("@babel/preset-react"),
+            isUseTypescript && require.resolve("@babel/preset-typescript"),
+            [
+              require.resolve("@babel/preset-env"),
+              {
+                useBuiltIns: "usage", // 代码中需要那些polyfill,就引用相关的api
+                corejs: 3, // 配置使用core-js低版本
+              },
+            ],
+          ].filter(Boolean),
+          plugins: [
+            isDevelopment && require.resolve("react-refresh/babel"), // 激活 js 的 HMR
+            require.resolve("@babel/plugin-transform-runtime"),
+
+            require.resolve("@babel/plugin-syntax-dynamic-import"),
+          ].filter(Boolean),
+        },
+        exclude: [/node_modules/, /public/, /(.|_)min\.js$/],
       },
     ],
   },

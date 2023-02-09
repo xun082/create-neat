@@ -13,8 +13,11 @@ function useCssPreset(preset) {
   );
 }
 
+const isUseTypescript = fs.existsSync(resolveApp("./tsconfig.json"));
+
 module.exports = {
   resolveApp,
   package,
   useCssPreset,
+  isUseTypescript,
 };
