@@ -13,8 +13,6 @@ const isDevelopment = process.argv.slice(2)[0] === "serve";
 
 const userWebpackConfig = require(resolveApp("./react.config.js"));
 
-console.log(userWebpackConfig);
-
 module.exports = merge(userWebpackConfig, {
   stats: "errors-only",
   entry: resolveApp("./src/index.js"),
