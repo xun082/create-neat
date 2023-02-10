@@ -23,7 +23,7 @@ const compiler = webpack(devWebpackConfig);
 if (argument[0] === "serve") {
   portFinder.getPort(function (err, port) {
     devServerConfig.port = port;
-    devServerConfig.open = `http://localhost:${3000}`;
+    devServerConfig.open = `http://localhost:${port}`;
 
     const server = new WebpackDevServer(devServerConfig, compiler);
 
