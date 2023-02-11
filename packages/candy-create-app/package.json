@@ -1,0 +1,13 @@
+{
+  "name": "candy-create-app",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "bin": {
+    "xun": "./bin/index.js"
+  },
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
