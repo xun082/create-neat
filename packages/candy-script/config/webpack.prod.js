@@ -34,7 +34,7 @@ module.exports = merge(webpackCommonConfig, {
       ],
     }),
     // 打包体积分析
-    // new BundleAnalyzerPlugin(),
+    new BundleAnalyzerPlugin(),
     new CompressionWebpackPlugin({
       filename: "[path][base].gz",
       algorithm: "gzip",
