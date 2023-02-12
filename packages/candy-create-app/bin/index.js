@@ -2,7 +2,7 @@
 
 import { Command } from "commander";
 import chalk from "chalk";
-import { getCliPackageInfo, createApp } from "../lib/index.js";
+import { getCliPackageInfo, createApp, shortcutCommit } from "../lib/index.js";
 
 const program = new Command();
 
