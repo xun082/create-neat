@@ -15,3 +15,21 @@ export function isRemoveExitMatter(matter) {
     },
   ];
 }
+
+export const createAppType = [
+  {
+    type: "list",
+    name: "language",
+    message: "选择js或者ts",
+    choices: [
+      { name: "JavaScript", value: "js" },
+      { name: "TypeScript", value: "ts" },
+    ],
+  },
+  {
+    type: "list",
+    name: "tool",
+    message: "Select the package management tool you will use:",
+    choices: ["npm", "yarn", "cnpm", "pnpm"],
+  },
+];
