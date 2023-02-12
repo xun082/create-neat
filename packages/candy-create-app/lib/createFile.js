@@ -32,3 +32,15 @@ export default async function createFile(type, options = ".") {
     if (action === true) fs.promises.unlink(fileRouter);
   }
 }
+
+// 自动导入reducer
+function autoImportReducer(data, filename) {
+  return data
+    .replace(/^(import)(\s|\S)*from(\s|\.)*('|").*('|"|;)/m, (content) => {
+      return content + `\nimport ${filename} from "./modules/${filename}";`;
+    })
+    .replace(/(?<=(reducer:(\s)*{))(\s|\S)*(?=(},))/, (content) => {
+      if (content === "") return content + `${filename}`;
+      return content + `,${filename}`;
+    });
+}
