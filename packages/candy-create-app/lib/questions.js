@@ -32,4 +32,10 @@ export const createAppType = [
     message: "Select the package management tool you will use:",
     choices: ["npm", "yarn", "cnpm", "pnpm"],
   },
+  {
+    type: "list",
+    name: "template",
+    message: "Please select the project template that you will use:",
+    choices: ["default", "axios"],
+  },
 ];
