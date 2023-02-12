@@ -1,11 +1,11 @@
 import chalk from "chalk";
 
-export function isRemoveExitMatter(matter) {
+export function removeExitMatter(matter, type = "directory") {
   return [
     {
       type: "list",
       name: "action",
-      message: `Target directory ${chalk.cyan(
+      message: `Target ${type} ${chalk.cyan(
         matter
       )} already exists. Pick an action:`,
       choices: [
@@ -40,27 +40,10 @@ export const createAppType = [
   },
 ];
 
-export const commitType = [
-  {
-    type: "list",
-    name: "commit",
-    message: "请选择文件提交类型",
-    choices: [
-      { name: "feat: 增加新功能", value: "feat" },
-      { name: "fix: 修复bug", value: "fix" },
-      {
-        name: "build: 修改webpack配置等",
-        value: "build",
-      },
-      { name: "docs: 文档更新", value: "docs" },
-      { name: "perf: 性能，体验优化", value: "perf" },
-      { name: "feat: 增加新功能", value: "feat" },
-      { name: "style: 增加新功能", value: "style" },
-    ],
-  },
+export const mkdirFileName = [
   {
     type: "input",
-    message: "请输入要提交的信息",
-    name: "commitInfo",
+    message: "请输入文件名",
+    name: "filename",
   },
 ];
