@@ -15,7 +15,7 @@ module.exports = merge(webpackCommonConfig, {
     new ESLintPlugin({
       extensions: ["js", "mjs", "jsx", "ts", "tsx"],
       eslintPath: require.resolve("eslint"),
-      context: resolveApp("."),
+      context: resolveApp("./src"),
       cwd: resolveApp("."),
       cacheLocation: path.resolve(
         resolveApp("node_modules"),

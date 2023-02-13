@@ -111,12 +111,16 @@ importers:
   packages/cli:
     specifiers:
       babel-plugin-await-add-trycatch: ^1.0.1
+      eslint: ^8.33.0
+      eslint-webpack-plugin: ^4.0.0
       less: ^4.1.3
       sass: ^1.58.0
       script: workspace:*
       webpack-bundle-analyzer: ^4.7.0
     dependencies:
       babel-plugin-await-add-trycatch: 1.0.1
+      eslint: 8.33.0
+      eslint-webpack-plugin: 4.0.0_eslint@8.33.0
       less: 4.1.3
       sass: 1.58.0
       script: link:../candy-script
@@ -3206,6 +3210,21 @@ packages:
   /eslint-visitor-keys/3.3.0:
     resolution: {integrity: sha512-mQ+suqKJVyeuwGYHAdjMFqjCyfl8+Ldnxuyp3ldiMBFKkvytrXUZWaiPCEav8qDHKty44bD+qV1IP4T+w+xXRA==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    dev: false
+
+  /eslint-webpack-plugin/4.0.0_eslint@8.33.0:
+    resolution: {integrity: sha512-eM9ccGRWkU+btBSVfABRn8CjT7jZ2Q+UV/RfErMDVCFXpihEbvajNrLltZpwTAcEoXSqESGlEPIUxl7PoDlLWw==}
+    engines: {node: '>= 14.15.0'}
+    peerDependencies:
+      eslint: ^8.0.0
+      webpack: ^5.0.0
+    dependencies:
+      '@types/eslint': 8.21.0
+      eslint: 8.33.0
+      jest-worker: 29.4.1
+      micromatch: 4.0.5
+      normalize-path: 3.0.0
+      schema-utils: 4.0.0
     dev: false
 
   /eslint-webpack-plugin/4.0.0_nkwuvqep7k7zzhloz3wxbhr4hq:
