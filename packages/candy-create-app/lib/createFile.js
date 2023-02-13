@@ -2,9 +2,14 @@ import { isUseTypescript, resolveApp } from "candy-dev-utils";
 import fs from "fs";
 import inquirer from "inquirer";
 import chalk from "chalk";
+import ejs from "ejs";
 import { mkdirFileName } from "./questions.js";
 import { simplifyPath, fileTypeRouter } from "./index.js";
 import { removeExitMatter } from "./questions.js";
+import path, { dirname } from "path";
+import { fileURLToPath } from "url";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 export default async function createFile(type, options) {
   const { filename } = await inquirer.prompt(mkdirFileName);
@@ -32,7 +37,45 @@ export default async function createFile(type, options) {
     if (action === true) fs.promises.unlink(fileRouter);
   }
 
-  console.log(fileRouter);
+  const fileContext = await compile(type, {
+    filename,
+    toUpperCase: filename
+      .toLowerCase()
+      .replace(/( |^)[a-z]/g, (L) => L.toUpperCase()),
+  });
+
+  if (type === "redux") {
+    const router = path.resolve("src/store", `index.${suffix}`);
+    if (!fs.existsSync(router)) {
+      const fileContext = await compile("redux-entry", {
+        isUseTypescript,
+      });
+      writeToFile(router, autoImportReducer(fileContext, filename));
+    } else {
+      const data = fs.readFileSync(router, "utf-8");
+      writeToFile(router, autoImportReducer(data, filename));
+    }
+  }
+
+  writeToFile(fileRouter, fileContext);
+  console.log(chalk.greenBright("√ 文件创建成功"));
+}
+
+// 判断文件是否存在,不存在则创建
+function createDirSync(router) {
+  const result = router.slice(process.cwd().length + 1).split("\\");
+  let index = ".";
+  for (const name of result) {
+    if (name.indexOf(".") !== -1) break;
+
+    index += `/${name}`;
+    if (!fs.existsSync(index)) fs.mkdirSync(index);
+  }
+}
+
+function writeToFile(path, content) {
+  createDirSync(path);
+  return fs.promises.writeFile(path, content);
 }
 
 // 自动导入reducer
@@ -45,4 +88,18 @@ function autoImportReducer(data, filename) {
       if (content === "") return content + `${filename}`;
       return content + `,${filename}`;
     });
+}
+
+function compile(template, data) {
+  if (["page", "component"].includes(template)) template = "react";
+
+  const templatePosition = `../template/${template}.ejs`;
+  const templatePath = path.resolve(__dirname, templatePosition);
+
+  return new Promise((resolve, reject) => {
+    ejs.renderFile(templatePath, { data }, {}, (error, result) => {
+      if (error) reject(error);
+      resolve(result);
+    });
+  });
 }

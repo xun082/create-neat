@@ -1,0 +1,19 @@
+import { configureStore } from "@reduxjs/toolkit";
+
+<% if (data.isTypescript) { %>
+import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux";
+<% } %>
+
+export const store = configureStore({
+  reducer: {},
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({ serializableCheck: false }),
+  devTools: process.env.NODE_ENV !== "production",
+});
+
+<% if (data.isUseTypescript) { %>
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+export const useAppDispatch: () => AppDispatch = useDispatch;
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+<% } %>
