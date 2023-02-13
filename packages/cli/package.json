@@ -7,8 +7,7 @@
   },
   "scripts": {
     "start": "candy-script serve",
-    "build": "candy-script build",
-    "lint": "eslint --fix"
+    "build": "candy-script build"
   },
   "keywords": [],
   "author": "",
@@ -18,9 +17,7 @@
     "less": "^4.1.3",
     "sass": "^1.58.0",
     "script": "workspace:*",
-    "webpack-bundle-analyzer": "^4.7.0",
-    "eslint": "^8.33.0",
-    "eslint-webpack-plugin": "^4.0.0"
+    "webpack-bundle-analyzer": "^4.7.0"
   },
   "browserslist": [
     "last 2 version",
