@@ -1,5 +1,5 @@
 {
-  "name": "@ymentze/dev-utils",
+  "name": "@cloud-dream/dev-utils",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,5 +8,5 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "MIT"
 }

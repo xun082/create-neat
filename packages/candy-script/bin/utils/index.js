@@ -1,4 +1,4 @@
-const { resolveApp } = require("devServerConfig");
+const { resolveApp } = require("@cloud-dream/dev-utils");
 const chalk = require("chalk");
 const fs = require("fs");
 

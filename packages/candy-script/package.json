@@ -1,6 +1,6 @@
 {
-  "name": "@ymentze/react-script",
-  "version": "1.0.0",
+  "name": "@cloud-dream/react-script",
+  "version": "1.0.1",
   "description": "",
   "type": "commonjs",
   "bin": {
@@ -9,7 +9,7 @@
   "scripts": {},
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "@babel/core": "^7.20.12",
     "@babel/plugin-syntax-dynamic-import": "^7.8.3",
@@ -22,7 +22,7 @@
     "@typescript-eslint/parser": "^5.52.0",
     "autoprefixer": "^10.4.13",
     "babel-loader": "^9.1.2",
-    "@ymentze/dev-utils": "workspace:*",
+    "@cloud-dream/dev-utils": "workspace:*",
     "chalk": "4.0.0",
     "circular-dependency-plugin": "^5.2.2",
     "compression-webpack-plugin": "^10.0.0",

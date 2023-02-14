@@ -2,7 +2,7 @@ const { merge } = require("webpack-merge");
 const webpackCommonConfig = require("./webpack.common");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const copyWebpackPlugin = require("copy-webpack-plugin");
-const { resolveApp } = require("candy-dev-utils");
+const { resolveApp } = require("@cloud-dream/dev-utils");
 const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
 const BundleAnalyzerPlugin =
   require("webpack-bundle-analyzer").BundleAnalyzerPlugin;

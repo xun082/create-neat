@@ -1,5 +1,5 @@
 {
-  "name": "@ymentze/react-cli",
+  "name": "@cloud-dream/react-cli",
   "version": "1.0.0",
   "description": "",
   "type": "module",
@@ -7,12 +7,15 @@
     "crazy": "./bin/index.js"
   },
   "scripts": {},
-  "keywords": [],
+  "keywords": [
+    "react",
+    "cli"
+  ],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "boxen": "^7.0.1",
-    "@ymentze/dev-utils": "workspace:*",
+    "@cloud-dream/dev-utils": "workspace:*",
     "chalk": "4.0.0",
     "commander": "^10.0.0",
     "ejs": "^3.1.8",
