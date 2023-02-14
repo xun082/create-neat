@@ -16,7 +16,7 @@ const userWebpackConfig = require(resolveApp("./webpack.config.js"));
 module.exports = merge(
   {
     stats: "errors-only",
-    entry: resolveApp("./src/index.js"),
+    entry: resolveApp(isUseTypescript ? "./src/index.tsx" : "./src/index.jsx"),
     output: {
       path: isDevelopment ? undefined : resolveApp("./dist"),
       // 图片、字体资源
@@ -125,7 +125,6 @@ module.exports = merge(
             plugins: [
               isDevelopment && require.resolve("react-refresh/babel"), // 激活 js 的 HMR
               require.resolve("@babel/plugin-transform-runtime"),
-
               require.resolve("@babel/plugin-syntax-dynamic-import"),
             ].filter(Boolean),
           },
@@ -134,7 +133,7 @@ module.exports = merge(
       ].filter(Boolean),
     },
     resolve: {
-      extensions: [".js"],
+      extensions: [".js", ".jsx", ".ts", ".tsx"],
       alias: {
         "@pages": resolveApp("scr/pages"),
         "@": resolveApp("src"),

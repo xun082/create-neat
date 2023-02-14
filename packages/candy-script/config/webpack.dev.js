@@ -23,8 +23,7 @@ module.exports = merge(
           ".cache/.eslintcache"
         ),
       }),
-      // 还没有使用到,暂时不开启
-      // new ReactRefreshWebpackPlugin(),
+      new ReactRefreshWebpackPlugin(),
 
       isUseTypescript &&
         new ForkTsCheckerWebpackPlugin({

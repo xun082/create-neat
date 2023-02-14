@@ -100,7 +100,23 @@ module.exports = merge(
             filename: "static/js/[id]_vendors.js",
             priority: 10,
           },
+          react: {
+            test(module) {
+              return (
+                module.resource &&
+                module.resource.includes("node_modules/react")
+              );
+            },
+            chunks: "initial",
+            filename: "react.[contenthash].js",
+            priority: 1,
+            maxInitialRequests: 2,
+            minChunks: 1,
+          },
         },
+      },
+      runtimeChunk: {
+        name: "runtime",
       },
     },
   },
