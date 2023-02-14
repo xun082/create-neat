@@ -2,13 +2,10 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const WebpackBar = require("webpackbar");
 const { DefinePlugin } = require("webpack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const {
-  resolveApp,
-  useCssPreset,
-  isUseTypescript,
-} = require("candy-dev-utils");
+const { resolveApp, isUseTypescript } = require("candy-dev-utils");
 const stylelint = require("stylelint");
 const { merge } = require("webpack-merge");
+const { useCssPreset } = require("./helper");
 const isDevelopment = process.argv.slice(2)[0] === "serve";
 
 const userWebpackConfig = require(resolveApp("./webpack.config.js"));
