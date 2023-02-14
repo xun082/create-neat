@@ -7,15 +7,15 @@ importers:
 
   packages/candy-create-app:
     specifiers:
+      '@ymentze/dev-utils': workspace:*
       boxen: ^7.0.1
-      candy-dev-utils: workspace:*
       chalk: 4.0.0
       commander: ^10.0.0
       ejs: ^3.1.8
       inquirer: ^9.1.4
     dependencies:
+      '@ymentze/dev-utils': link:../candy-dev-utils
       boxen: 7.0.1
-      candy-dev-utils: link:../candy-dev-utils
       chalk: 4.0.0
       commander: 10.0.0
       ejs: 3.1.8
@@ -35,9 +35,9 @@ importers:
       '@babel/preset-typescript': ^7.18.6
       '@pmmmwh/react-refresh-webpack-plugin': ^0.5.10
       '@typescript-eslint/parser': ^5.52.0
+      '@ymentze/dev-utils': workspace:*
       autoprefixer: ^10.4.13
       babel-loader: ^9.1.2
-      candy-dev-utils: workspace:*
       chalk: 4.0.0
       circular-dependency-plugin: ^5.2.2
       compression-webpack-plugin: ^10.0.0
@@ -78,9 +78,9 @@ importers:
       '@babel/preset-typescript': 7.18.6_@babel+core@7.20.12
       '@pmmmwh/react-refresh-webpack-plugin': 0.5.10_e764yt37rymiplqgpb7fiwcihu
       '@typescript-eslint/parser': 5.52.0_eslint@8.33.0
+      '@ymentze/dev-utils': link:../candy-dev-utils
       autoprefixer: 10.4.13
       babel-loader: 9.1.2_la66t7xldg4uecmyawueag5wkm
-      candy-dev-utils: link:../candy-dev-utils
       chalk: 4.0.0
       circular-dependency-plugin: 5.2.2_webpack@5.75.0
       compression-webpack-plugin: 10.0.0_webpack@5.75.0

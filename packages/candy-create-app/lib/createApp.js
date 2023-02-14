@@ -1,4 +1,4 @@
-import { resolveApp } from "candy-dev-utils";
+import { resolveApp } from "@ymentze/dev-utils";
 import fs from "fs";
 import childProcess from "child_process";
 import inquirer from "inquirer";

@@ -1,10 +1,10 @@
 {
-  "name": "candy-create-app",
+  "name": "@ymentze/react-cli",
   "version": "1.0.0",
   "description": "",
   "type": "module",
   "bin": {
-    "xun": "./bin/index.js"
+    "crazy": "./bin/index.js"
   },
   "scripts": {},
   "keywords": [],
@@ -12,7 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "boxen": "^7.0.1",
-    "candy-dev-utils": "workspace:*",
+    "@ymentze/dev-utils": "workspace:*",
     "chalk": "4.0.0",
     "commander": "^10.0.0",
     "ejs": "^3.1.8",

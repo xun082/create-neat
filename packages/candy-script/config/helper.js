@@ -1,4 +1,4 @@
-const { resolveApp } = require("candy-dev-utils");
+const { resolveApp } = require("@ymentze/dev-utils");
 
 const package = require(resolveApp("./package.json"));
 

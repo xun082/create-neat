@@ -10,8 +10,8 @@ const WebpackDevServer = require("webpack-dev-server");
 const chalk = require("chalk");
 const devWebpackConfig = require("../config/webpack.dev");
 const prodWebpackConfig = require("../config/webpack.prod");
-const { getIPAddress } = require("candy-dev-utils");
-const { devServerConfig } = require("candy-dev-utils");
+const { getIPAddress, devServerConfig } = require("@ymentze/dev-utils");
+
 const portFinder = require("portfinder");
 
 portFinder.setBasePort(3000);

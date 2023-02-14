@@ -1,4 +1,4 @@
-import { isUseTypescript, resolveApp } from "candy-dev-utils";
+import { isUseTypescript, resolveApp } from "@ymentze/dev-utils";
 import fs from "fs";
 import inquirer from "inquirer";
 import chalk from "chalk";

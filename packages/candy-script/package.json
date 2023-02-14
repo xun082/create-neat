@@ -1,5 +1,5 @@
 {
-  "name": "script",
+  "name": "@ymentze/react-script",
   "version": "1.0.0",
   "description": "",
   "type": "commonjs",
@@ -22,7 +22,7 @@
     "@typescript-eslint/parser": "^5.52.0",
     "autoprefixer": "^10.4.13",
     "babel-loader": "^9.1.2",
-    "candy-dev-utils": "workspace:*",
+    "@ymentze/dev-utils": "workspace:*",
     "chalk": "4.0.0",
     "circular-dependency-plugin": "^5.2.2",
     "compression-webpack-plugin": "^10.0.0",
