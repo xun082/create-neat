@@ -37,7 +37,11 @@ export default async function createApp(matter, options) {
       }
 
       if (stdout.length) console.log(stdout);
-      else createSuccessInfo(matter, tool);
+      else {
+        // 删除.git文件
+        removeDirectory(resolveApp(`${matter}/.git`));
+        createSuccessInfo(matter, tool);
+      }
     }
   );
 }
