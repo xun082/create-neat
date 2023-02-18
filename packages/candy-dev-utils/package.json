@@ -6,7 +6,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "react",
+    "cli",
+    "webpack"
+  ],
+  "author": "moment",
   "license": "MIT"
 }

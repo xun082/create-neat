@@ -20,7 +20,8 @@ export const createAppType = [
   {
     type: "list",
     name: "language",
-    message: "选择js或者ts",
+    message:
+      "Please select the language in which your project will be developed:",
     choices: [
       { name: "JavaScript", value: "js" },
       { name: "TypeScript", value: "ts" },
@@ -30,20 +31,20 @@ export const createAppType = [
     type: "list",
     name: "tool",
     message: "Select the package management tool you will use:",
-    choices: ["npm", "yarn", "cnpm", "pnpm"],
+    choices: ["pnpm", "npm", "yarn", "cnpm"],
   },
   {
     type: "list",
     name: "template",
     message: "Please select the project template that you will use:",
-    choices: ["default", "axios"],
+    choices: ["default"],
   },
 ];
 
 export const mkdirFileName = [
   {
     type: "input",
-    message: "请输入文件名",
+    message: "Please enter the file name you want to create:",
     name: "filename",
   },
 ];

@@ -11,7 +11,7 @@
     "react",
     "cli"
   ],
-  "author": "",
+  "author": "moment",
   "license": "MIT",
   "dependencies": {
     "boxen": "^7.0.1",

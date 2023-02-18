@@ -26,7 +26,11 @@ export default async function createApp(matter, options) {
   childProcess.exec(`mkdir ${resolveApp(matter)}`);
   childProcess.exec(`cd ${resolveApp(matter)}`);
 
-  console.log(chalk.blue(`正在为你拉取远程项目,请骚等...`));
+  console.log(
+    chalk.blue(
+      `Please wait a moment while I download the project remotely for you...`
+    )
+  );
   childProcess.exec(
     `git clone ${createAppUrl} ${matter}`,
     (error, stdout, stderr) => {

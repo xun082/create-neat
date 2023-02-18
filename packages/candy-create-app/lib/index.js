@@ -1,4 +1,4 @@
-import getCliPackageInfo from "./getCliPackageInfo.js";
+import { getCliPackageInfo } from "./getPackageInfo.js";
 import createApp from "./createApp.js";
 
 function simplifyPath(path) {
