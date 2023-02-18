@@ -57,5 +57,10 @@
     "webpack-manifest-plugin": "^5.0.0",
     "webpack-merge": "^5.8.0",
     "webpackbar": "^5.0.2"
+  },
+  "homepage": "https://github.com/xun082/fast-create-app",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xun082/fast-create-app"
   }
 }

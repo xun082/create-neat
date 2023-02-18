@@ -20,5 +20,10 @@
     "commander": "^10.0.0",
     "ejs": "^3.1.8",
     "inquirer": "^9.1.4"
+  },
+  "homepage": "https://github.com/xun082/fast-create-app",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xun082/fast-create-app"
   }
 }

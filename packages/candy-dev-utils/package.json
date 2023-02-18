@@ -10,5 +10,10 @@
     "webpack"
   ],
   "author": "moment",
-  "license": "MIT"
+  "license": "MIT",
+  "homepage": "https://github.com/xun082/fast-create-app",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xun082/fast-create-app"
+  }
 }
