@@ -1,6 +1,6 @@
 {
   "name": "@cloud-dream/react-cli",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "基于pnpm+monorepo+webpack开发的前端脚手架,旨在为用户快速初始化项目。",
   "type": "module",
   "bin": {
@@ -15,7 +15,6 @@
   "license": "MIT",
   "dependencies": {
     "@cloud-dream/dev-utils": "workspace:*",
-    "@cloud-dream/react-cli": "^1.0.2",
     "boxen": "^7.0.1",
     "chalk": "4.0.0",
     "commander": "^10.0.0",

@@ -1,6 +1,6 @@
 {
   "name": "@cloud-dream/dev-utils",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "基于pnpm+monorepo+webpack开发的前端脚手架,旨在为用户快速初始化项目。",
   "main": "index.js",
   "scripts": {},
