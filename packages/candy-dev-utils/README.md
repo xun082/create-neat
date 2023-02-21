@@ -5,7 +5,7 @@
 ## 全局安装
 
 ```bash
-npm install @fast-cli/react-cli --location=global
+npm install @obstinate/react-cli --location=global
 ```
 
 该脚手架提供的的全局指令为 `crazy`,查看该脚手架帮助,你可以直接使用:

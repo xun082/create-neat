@@ -3,7 +3,7 @@
   "changelog": "@changesets/cli/changelog",
   "commit": false,
   "fixed": [],
-  "linked": [["@fast-cli/*"]],
+  "linked": [["@obstinate/*"]],
   "access": "public",
   "baseBranch": "master",
   "updateInternalDependencies": "patch",

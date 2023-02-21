@@ -1,5 +1,5 @@
 {
-  "name": "@fast-cli/react-script",
+  "name": "@obstinate/react-script",
   "version": "1.0.0",
   "description": "基于pnpm+monorepo+webpack开发的前端脚手架,旨在为用户快速初始化项目。",
   "type": "commonjs",
@@ -26,7 +26,7 @@
     "@typescript-eslint/parser": "^5.52.0",
     "autoprefixer": "^10.4.13",
     "babel-loader": "^9.1.2",
-    "@fast-cli/dev-utils": "workspace:*",
+    "@obstinate/dev-utils": "workspace:*",
     "chalk": "4.0.0",
     "circular-dependency-plugin": "^5.2.2",
     "compression-webpack-plugin": "^10.0.0",

@@ -4,7 +4,7 @@ import chalk from "chalk";
 export default function createSuccessInfo(name, tool) {
   const END_MSG = `${chalk.blue(
     "🎉 created project " + chalk.greenBright(name) + " Successfully"
-  )}\n\n 🙏 Thanks for using @fast-cli/react-cli !`;
+  )}\n\n 🙏 Thanks for using @obstinate/react-cli !`;
 
   const BOXEN_CONFIG = {
     padding: 1,
