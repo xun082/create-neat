@@ -1,6 +1,6 @@
 {
   "name": "@obstinate/react-cli",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "基于pnpm+monorepo+webpack开发的前端脚手架,旨在为用户快速初始化项目。",
   "type": "module",
   "bin": {
