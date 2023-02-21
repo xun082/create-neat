@@ -1,4 +1,4 @@
-import { isUseTypescript, resolveApp } from "@cloud-dream/dev-utils";
+import { isUseTypescript, resolveApp } from "@fast-cli/dev-utils";
 import fs from "fs";
 import inquirer from "inquirer";
 import chalk from "chalk";

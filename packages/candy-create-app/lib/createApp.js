@@ -1,4 +1,4 @@
-import { resolveApp } from "@cloud-dream/dev-utils";
+import { resolveApp } from "@fast-cli/dev-utils";
 import fs from "fs";
 import childProcess from "child_process";
 import inquirer from "inquirer";

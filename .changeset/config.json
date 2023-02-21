@@ -3,7 +3,7 @@
   "changelog": "@changesets/cli/changelog",
   "commit": false,
   "fixed": [],
-  "linked": [["@cloud-dream/*"]],
+  "linked": [["@fast-cli/*"]],
   "access": "public",
   "baseBranch": "master",
   "updateInternalDependencies": "patch",

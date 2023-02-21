@@ -1,4 +1,4 @@
-const { resolveApp } = require("@cloud-dream/dev-utils");
+const { resolveApp } = require("@fast-cli/dev-utils");
 
 const package = require(resolveApp("./package.json"));
 
