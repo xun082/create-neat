@@ -1,16 +1,14 @@
 # 基本使用
 
-> 我发布的脚手架的包名字很长,没办法,因为不会取名,如果有取名大佬也可以联系我。
-
 ## 全局安装
 
-```bash
-npm install @obstinate/react-cli --location=global
+```sh
+npm install @cloud-dream/react-cli -g
 ```
 
 该脚手架提供的的全局指令为 `crazy`,查看该脚手架帮助,你可以直接使用:
 
-```bash
+```sh
 crazy
 ```
 
@@ -22,19 +20,31 @@ crazy
 
 要想创建项目,你可以执行以下命令来根据你想要的项目:
 
-```bash
+```sh
 crazy create <projectName> [options]
 ```
 
-例如创建一个名为 `moment`,并且当当前终端存在同名文件时直接覆盖,你可以执行以下命令:
+例如创建一个名为 `moment`,如果当前终端所在的目录下存在同名文件时直接覆盖,你可以执行以下命令:
 
-```bash
+```sh
 crazy create moment -f
 ```
+
+如果你不想安装该脚手架,你也可以使用 `npx` 执行,使用 `npx @obstinate/react-cli` 代替 `crazy` 命令,例如,你要创建一个项目,你可以执行以下命令:
+
+```sh
+npx @obstinate/react-cli create moment -f
+```
+
+如果没有输入 `-f`,则会在后面的交互信息询问是否覆盖当前已存在的文件夹。
 
 之后便有以下交互信息,你可以根据这些交互选择你想要的模板:
 
 ![动画.gif](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d094c0b458ca4c38ac4e2939796fe647~tplv-k3u1fbpfcp-watermark.image?)
+
+最终生成的文件如下图所示:
+
+![image.png](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f413a5f5950d4c5d8be5e0d9fb87bb01~tplv-k3u1fbpfcp-watermark.image?)
 
 当项目安装完成之后你就可以根据控制台的指示去启动你的项目了。
 
@@ -44,7 +54,7 @@ crazy create moment -f
 
 要想成创建创建文件,请执行以下指令:
 
-```bash
+```sh
 crazy mkdir <type> [router]
 ```
 
@@ -68,5 +78,7 @@ module.exports = {
   // ...
 };
 ```
+
+> 最后一个小提示,如果全局安装失败,检查是否权限不够,可以通过管理员身份打开 cmd 即可解决。
 
 这些就是目前仅有的功能,其他的功能正在逐渐开发中......
