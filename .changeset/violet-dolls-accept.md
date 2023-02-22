@@ -1,0 +1,7 @@
+---
+"@obstinate/react-cli": patch
+"@obstinate/dev-utils": patch
+"@obstinate/react-script": patch
+---
+
+文档更新
