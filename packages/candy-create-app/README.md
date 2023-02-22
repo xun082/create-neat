@@ -3,7 +3,7 @@
 ## 全局安装
 
 ```sh
-npm install @obstinate/react-cli/react-cli -g
+npm install @obstinate/react-cli -g
 ```
 
 该脚手架提供的的全局指令为 `crazy`,查看该脚手架帮助,你可以直接使用:
