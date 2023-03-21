@@ -2,7 +2,7 @@
 
 import { Command } from "commander";
 import chalk from "chalk";
-import { getCliPackageInfo, createApp } from "../lib/index.js";
+import { getCliPackageInfo, createApp, createLint } from "../lib/index.js";
 import createFile from "../lib/createFile.js";
 
 const program = new Command();

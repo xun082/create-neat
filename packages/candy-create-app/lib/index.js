@@ -1,5 +1,6 @@
 import { getCliPackageInfo } from "./getPackageInfo.js";
 import createApp from "./createApp.js";
+import createLint from "./createLint.js";
 
 function simplifyPath(path) {
   const names = path.split("/");
@@ -24,4 +25,10 @@ function fileTypeRouter(suffix, filename = "index") {
   ]);
 }
 
-export { getCliPackageInfo, createApp, simplifyPath, fileTypeRouter };
+export {
+  getCliPackageInfo,
+  createApp,
+  simplifyPath,
+  fileTypeRouter,
+  createLint,
+};

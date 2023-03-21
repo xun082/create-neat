@@ -39,6 +39,15 @@ export const createAppType = [
     message: "Please select the project template that you will use:",
     choices: ["default"],
   },
+  {
+    type: "list",
+    name: "lint",
+    message: "是否需要添加代码校验:",
+    choices: [
+      { name: "yes", value: true },
+      { name: "no", value: false },
+    ],
+  },
 ];
 
 export const mkdirFileName = [

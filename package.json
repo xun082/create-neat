@@ -10,5 +10,8 @@
   "license": "ISC",
   "devDependencies": {
     "@changesets/cli": "^2.26.0"
+  },
+  "dependencies": {
+    "@obstinate/react-cli": "^1.0.3"
   }
 }

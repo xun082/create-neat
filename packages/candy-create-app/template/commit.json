@@ -1,0 +1,23 @@
+{
+  "scripts": {
+    "prepare": "husky install",
+    "commit": "cz"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.4.2",
+    "@commitlint/config-conventional": "^17.4.2",
+    "commitizen": "^4.3.0",
+    "commitlint": "^17.4.2",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.1.0",
+    "cz-conventional-changelog": "^3.3.0"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": ["prettier --write", "eslint --fix"]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}

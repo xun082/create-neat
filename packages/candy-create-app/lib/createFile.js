@@ -69,11 +69,12 @@ function createDirSync(router) {
     if (name.indexOf(".") !== -1) break;
 
     index += `/${name}`;
+    console.log(index);
     if (!fs.existsSync(index)) fs.mkdirSync(index);
   }
 }
 
-function writeToFile(path, content) {
+export function writeToFile(path, content) {
   createDirSync(path);
   return fs.promises.writeFile(path, content);
 }
@@ -90,7 +91,7 @@ function autoImportReducer(data, filename) {
     });
 }
 
-function compile(template, data) {
+export function compile(template, data = {}) {
   if (["page", "component"].includes(template)) template = "react";
 
   const templatePosition = `../template/${template}.ejs`;

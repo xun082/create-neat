@@ -3,4 +3,4 @@ const require = createRequire(import.meta.url);
 
 const getCliPackageInfo = require("../package.json");
 
-export { getCliPackageInfo };
+export { getCliPackageInfo, require };
