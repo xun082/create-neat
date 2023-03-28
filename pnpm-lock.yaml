@@ -5,6 +5,9 @@ importers:
   .:
     specifiers:
       '@changesets/cli': ^2.26.0
+      '@obstinate/react-cli': ^1.0.3
+    dependencies:
+      '@obstinate/react-cli': link:packages/candy-create-app
     devDependencies:
       '@changesets/cli': 2.26.0
 
@@ -46,6 +49,7 @@ importers:
       compression-webpack-plugin: ^10.0.0
       copy-webpack-plugin: ^11.0.0
       core-js: ^3.27.2
+      cross-spawn: ^7.0.3
       css-loader: ^6.7.3
       css-minimizer-webpack-plugin: ^4.2.2
       eslint: ^8.33.0
@@ -89,6 +93,7 @@ importers:
       compression-webpack-plugin: 10.0.0_webpack@5.75.0
       copy-webpack-plugin: 11.0.0_webpack@5.75.0
       core-js: 3.27.2
+      cross-spawn: 7.0.3
       css-loader: 6.7.3_webpack@5.75.0
       css-minimizer-webpack-plugin: 4.2.2_webpack@5.75.0
       eslint: 8.33.0
