@@ -6,7 +6,7 @@ const { resolveApp, isUseTypescript } = require("@obstinate/dev-utils");
 const stylelint = require("stylelint");
 const { merge } = require("webpack-merge");
 const { useCssPreset } = require("./helper");
-const isDevelopment = process.argv.slice(2)[0] === "serve";
+const isDevelopment = process.env.NODE_ENV === "development";
 
 const userWebpackConfig = require(resolveApp("./webpack.config.js"));
 
@@ -32,7 +32,15 @@ module.exports = merge(
     module: {
       rules: [
         {
-          test: /\.css$|\.scss$|\.less$/i,
+          test: /\.css$/,
+          use: [
+            require.resolve("style-loader"),
+            require.resolve("css-loader"),
+            require.resolve("postcss-loader"),
+          ],
+        },
+        {
+          test: /\.scss$|\.less$/i,
           include: [resolveApp("./src")],
           exclude: /node_module/,
           use: [
@@ -64,9 +72,7 @@ module.exports = merge(
                     require("autoprefixer"),
                     stylelint({
                       config: {
-                        rules: {
-                          "declaration-no-important": true,
-                        },
+                        rules: {},
                       },
                     }),
                   ],

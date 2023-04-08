@@ -1,6 +1,6 @@
 {
   "name": "@obstinate/react-cli",
-  "version": "1.0.4",
+  "version": "1.0.9",
   "description": "基于pnpm+monorepo+webpack开发的前端脚手架,旨在为用户快速初始化项目。",
   "type": "module",
   "bin": {
@@ -15,12 +15,13 @@
   "license": "MIT",
   "dependencies": {
     "@obstinate/dev-utils": "workspace:*",
-    "@obstinate/react-cli": "^1.0.3",
     "boxen": "^7.0.1",
     "chalk": "4.0.0",
     "commander": "^10.0.0",
     "ejs": "^3.1.8",
-    "inquirer": "^9.1.4"
+    "glob": "^9.3.4",
+    "inquirer": "^9.1.4",
+    "xlsx-populate": "^1.21.0"
   },
   "homepage": "https://github.com/xun082/react-cli",
   "repository": {

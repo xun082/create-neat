@@ -2,7 +2,7 @@
 
 import { Command } from "commander";
 import chalk from "chalk";
-import { getCliPackageInfo, createApp, createLint } from "../lib/index.js";
+import { getCliPackageInfo, createApp, queryComponents } from "../lib/index.js";
 import createFile from "../lib/createFile.js";
 
 const program = new Command();
@@ -23,6 +23,11 @@ program
   .action((name, options) => {
     createFile(name, options);
   });
+
+program
+  .command("query [package]")
+  .description("查询组件库的使用次数")
+  .action(queryComponents);
 
 program.on("command:*", ([result]) => {
   console.log();
