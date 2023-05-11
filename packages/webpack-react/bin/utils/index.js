@@ -1,4 +1,4 @@
-const { resolveApp } = require("../../../utils");
+const { resolveApp } = require("@obstinate/dev-utils");
 const chalk = require("chalk");
 const fs = require("fs");
 

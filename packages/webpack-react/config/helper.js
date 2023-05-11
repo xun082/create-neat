@@ -1,4 +1,4 @@
-const { resolveApp } = require("../../utils");
+const { resolveApp } = require("@obstinate/dev-utils");
 
 const package = require(resolveApp("./package.json"));
 

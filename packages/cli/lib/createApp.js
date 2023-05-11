@@ -1,4 +1,4 @@
-import { resolveApp } from "@obstinate/dev-utils";
+import { resolveApp } from "../../utils/index.js";
 import fs from "fs";
 import childProcess from "child_process";
 import inquirer from "inquirer";
