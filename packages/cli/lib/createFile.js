@@ -1,4 +1,4 @@
-import { isUseTypescript, resolveApp } from "../../utils/index.js";
+import { isUseTypescript, resolveApp } from "@obstinate/dev-utils";
 import fs from "fs";
 import inquirer from "inquirer";
 import chalk from "chalk";
