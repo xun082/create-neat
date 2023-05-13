@@ -19,8 +19,7 @@ export default async function createLint(router) {
         ...commitInfo[key],
       };
     } else if (Array.isArray(commitInfo[key])) {
-      const isExist = packageInfo[key] === undefined ? [] : packageInfo[key];
-      packageInfo[key] = [...commitInfo[key], ...isExist];
+      packageInfo[key] = [...commitInfo[key], ...(packageInfo[key] ?? [])];
     } else {
       packageInfo[key] = commitInfo[key];
     }

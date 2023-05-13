@@ -3,13 +3,32 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prepare": "husky install",
+    "commit": "cz"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@changesets/cli": "^2.26.0"
+    "@changesets/cli": "^2.26.0",
+    "@commitlint/cli": "^17.4.2",
+    "@commitlint/config-conventional": "^17.4.2",
+    "commitizen": "^4.3.0",
+    "commitlint": "^17.4.2",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.1.0",
+    "cz-conventional-changelog": "^3.3.0"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": [
+      "prettier --write",
+      "eslint --fix"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
 }
