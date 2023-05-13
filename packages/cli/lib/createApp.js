@@ -10,11 +10,10 @@ import chalk from "chalk";
 import createLint from "./createLint.js";
 
 export default async function createApp(matter, options) {
+  const rootDirectory = resolveApp(matter);
   // 如果存在同名文件,且没有输入 -f,
   if (fs.existsSync(resolveApp(`./${matter}`)) && !options.force) {
-    const { action } = await inquirer.prompt(
-      removeExitMatter(resolveApp(matter))
-    );
+    const { action } = await inquirer.prompt(removeExitMatter(rootDirectory));
 
     // 删除已存在文件并创建新文件
     if (action === true) removeDirectory(matter);
@@ -26,8 +25,8 @@ export default async function createApp(matter, options) {
   );
   const createAppUrl = appTemplate.get(language).get(template);
 
-  childProcess.exec(`mkdir ${resolveApp(matter)}`);
-  childProcess.exec(`cd ${resolveApp(matter)}`);
+  childProcess.execSync(`mkdir ${rootDirectory}`);
+  childProcess.execSync(`cd ${rootDirectory}`);
 
   console.log(
     chalk.blue(
@@ -35,26 +34,16 @@ export default async function createApp(matter, options) {
     )
   );
 
-  childProcess.exec(
-    `git clone ${createAppUrl} ${matter}`,
-    (error, stdout, stderr) => {
-      if (error) {
-        console.log(error.message);
-        removeDirectory(matter);
-        process.exit(1);
-      }
+  childProcess.execSync(`git clone ${createAppUrl} ${matter}`);
 
-      if (stdout.length) console.log(stdout);
-      else {
-        // 删除.git文件
-        removeDirectory(resolveApp(`${matter}/.git`));
-        createSuccessInfo(matter, tool);
+  // 删除.git文件
+  removeDirectory(resolveApp(`${matter}/.git`));
 
-        // 是否开启代码提交检验
-        if (lint === true) {
-          createLint(matter);
-        }
-      }
-    }
-  );
+  // 是否开启代码提交检验
+  if (lint === true) createLint(matter);
+
+  childProcess.exec("git init", { cwd: rootDirectory });
+  childProcess.exec(`${tool} install`, { cwd: rootDirectory }, () => {
+    createSuccessInfo(matter, tool);
+  });
 }

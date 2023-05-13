@@ -20,6 +20,5 @@ export default function createSuccessInfo(name, tool) {
 
   console.log("👉 Get started with the following commands:");
   console.log(`\n\r\r cd ${chalk.cyan(name)}`);
-  console.log(`\r\r ${tool} install`);
   console.log(`\r\r ${tool} start \r\n`);
 }
