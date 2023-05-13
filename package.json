@@ -10,9 +10,9 @@
   "license": "ISC",
   "devDependencies": {
     "@changesets/cli": "^2.26.0",
+    "commitizen": "^4.3.0",
     "cz-conventional-changelog": "^3.3.0"
   },
-  "dependencies": {},
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
