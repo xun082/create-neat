@@ -2,6 +2,7 @@ import { getCliPackageInfo } from "./getPackageInfo.js";
 import createApp from "./createApp.js";
 import createLint from "./createLint.js";
 import queryComponents from "./queryComponents.js";
+import removeDirectory from "./removeDirectory.js";
 
 function simplifyPath(path) {
   const names = path.split("/");
@@ -33,4 +34,5 @@ export {
   simplifyPath,
   fileTypeRouter,
   createLint,
+  removeDirectory,
 };

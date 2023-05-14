@@ -11,12 +11,13 @@ import createLint from "./createLint.js";
 
 export default async function createApp(matter, options) {
   const rootDirectory = resolveApp(matter);
+
   // 如果存在同名文件,且没有输入 -f,
   if (fs.existsSync(resolveApp(`./${matter}`)) && !options.force) {
     const { action } = await inquirer.prompt(removeExitMatter(rootDirectory));
 
     // 删除已存在文件并创建新文件
-    if (action === true) removeDirectory(matter);
+    if (action === true) removeDirectory(matter, false);
     else process.exit(1);
   }
 
@@ -37,7 +38,7 @@ export default async function createApp(matter, options) {
   childProcess.execSync(`git clone ${createAppUrl} ${matter}`);
 
   // 删除.git文件
-  removeDirectory(resolveApp(`${matter}/.git`));
+  removeDirectory(resolveApp(`${matter}/.git`), false);
 
   // 是否开启代码提交检验
   if (lint === true) createLint(matter);

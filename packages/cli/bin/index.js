@@ -2,7 +2,12 @@
 
 import { Command } from "commander";
 import chalk from "chalk";
-import { getCliPackageInfo, createApp, queryComponents } from "../lib/index.js";
+import {
+  getCliPackageInfo,
+  createApp,
+  queryComponents,
+  removeDirectory,
+} from "../lib/index.js";
 import createFile from "../lib/createFile.js";
 
 const program = new Command();
@@ -28,6 +33,11 @@ program
   .command("query [package]")
   .description("查询组件库的使用次数")
   .action(queryComponents);
+
+program
+  .command("remove [router]")
+  .description("删除文件")
+  .action(removeDirectory);
 
 program.on("command:*", ([result]) => {
   console.log();
