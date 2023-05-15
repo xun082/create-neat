@@ -153,6 +153,9 @@ importers:
       stylelint:
         specifier: ^14.16.1
         version: 14.16.1
+      stylelint-webpack-plugin:
+        specifier: ^4.1.1
+        version: 4.1.1(stylelint@14.16.1)(webpack@5.75.0)
       terser-webpack-plugin:
         specifier: ^5.3.6
         version: 5.3.6(webpack@5.75.0)
@@ -1767,11 +1770,30 @@ packages:
       '@sinclair/typebox': 0.25.21
     dev: false
 
+  /@jest/schemas@29.4.3:
+    resolution: {integrity: sha512-VLYKXQmtmuEz6IxJsrZwzG9NvtkQsWNnWMsKxqWNu3+CnfzJQhp0WDDKWLVV9hLKr0l3SLLFRqcYHjhtyuDVxg==}
+    engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
+    dependencies:
+      '@sinclair/typebox': 0.25.21
+    dev: false
+
   /@jest/types@29.4.1:
     resolution: {integrity: sha512-zbrAXDUOnpJ+FMST2rV7QZOgec8rskg2zv8g2ajeqitp4tvZiyqTCYXANrKsM+ryj5o+LI+ZN2EgU9drrkiwSA==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
       '@jest/schemas': 29.4.0
+      '@types/istanbul-lib-coverage': 2.0.4
+      '@types/istanbul-reports': 3.0.1
+      '@types/node': 18.11.19
+      '@types/yargs': 17.0.22
+      chalk: 4.0.0
+    dev: false
+
+  /@jest/types@29.5.0:
+    resolution: {integrity: sha512-qbu7kN6czmVRc3xWFQcAN03RAUamgppVUdXrvl1Wr3jlNF93o9mJbGcDWrwGB6ht44u7efB1qCFgVQmca24Uog==}
+    engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
+    dependencies:
+      '@jest/schemas': 29.4.3
       '@types/istanbul-lib-coverage': 2.0.4
       '@types/istanbul-reports': 3.0.1
       '@types/node': 18.11.19
@@ -5189,6 +5211,18 @@ packages:
       picomatch: 2.3.1
     dev: false
 
+  /jest-util@29.5.0:
+    resolution: {integrity: sha512-RYMgG/MTadOr5t8KdhejfvUU82MxsCu5MF6KuDUHl+NuwzUt+Sm6jJWxTJVrDR1j5M/gJVCPKQEpWXY+yIQ6lQ==}
+    engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
+    dependencies:
+      '@jest/types': 29.5.0
+      '@types/node': 18.11.19
+      chalk: 4.0.0
+      ci-info: 3.7.1
+      graceful-fs: 4.2.10
+      picomatch: 2.3.1
+    dev: false
+
   /jest-worker@27.5.1:
     resolution: {integrity: sha512-7vuh85V5cdDofPyxn58nrPjBktZo0u9x1g8WtjQol+jZDaE+fhN+cIvTj11GndBnMnyfrUOG1sZQxCdjKh+DKg==}
     engines: {node: '>= 10.13.0'}
@@ -5204,6 +5238,16 @@ packages:
     dependencies:
       '@types/node': 18.11.19
       jest-util: 29.4.1
+      merge-stream: 2.0.0
+      supports-color: 8.1.1
+    dev: false
+
+  /jest-worker@29.5.0:
+    resolution: {integrity: sha512-NcrQnevGoSp4b5kg+akIpthoAFHxPBcb5P6mYPY0fUNT+sSvmtu6jlkEle3anczUKIKEbMxFimk9oTP/tpIPgA==}
+    engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
+    dependencies:
+      '@types/node': 18.11.19
+      jest-util: 29.5.0
       merge-stream: 2.0.0
       supports-color: 8.1.1
     dev: false
@@ -7369,6 +7413,22 @@ packages:
       browserslist: 4.21.5
       postcss: 8.4.21
       postcss-selector-parser: 6.0.11
+    dev: false
+
+  /stylelint-webpack-plugin@4.1.1(stylelint@14.16.1)(webpack@5.75.0):
+    resolution: {integrity: sha512-yOyd2AfrxfawxKDememazGVJX2vMq9o11E6HvBu4+SKvgK3ZulkjpYdI1muBTxItwoxH2UmfIZzQM+/M5V3kTQ==}
+    engines: {node: '>= 14.15.0'}
+    peerDependencies:
+      stylelint: ^13.0.0 || ^14.0.0 || ^15.0.0
+      webpack: ^5.0.0
+    dependencies:
+      globby: 11.1.0
+      jest-worker: 29.5.0
+      micromatch: 4.0.5
+      normalize-path: 3.0.0
+      schema-utils: 4.0.0
+      stylelint: 14.16.1
+      webpack: 5.75.0(webpack-cli@5.0.1)
     dev: false
 
   /stylelint@14.16.1:

@@ -5,7 +5,7 @@ const { resolveApp, isUseTypescript } = require("@obstinate/dev-utils");
 const CircularDependencyPlugin = require("circular-dependency-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
-
+const StylelintPlugin = require("stylelint-webpack-plugin");
 const webpackCommonConfig = require("./webpack.common");
 
 module.exports = merge(
@@ -36,6 +36,11 @@ module.exports = merge(
         failOnError: true,
         allowAsyncCycles: false,
         cwd: process.cwd(),
+      }),
+
+      new StylelintPlugin({
+        context: resolveApp("./src"),
+       
       }),
     ].filter(Boolean),
   },

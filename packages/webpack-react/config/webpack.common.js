@@ -68,14 +68,7 @@ module.exports = merge(
               loader: require.resolve("postcss-loader"),
               options: {
                 postcssOptions: {
-                  plugins: [
-                    require("autoprefixer"),
-                    stylelint({
-                      config: {
-                        rules: {},
-                      },
-                    }),
-                  ],
+                  plugins: [require("autoprefixer")],
                 },
               },
             },
