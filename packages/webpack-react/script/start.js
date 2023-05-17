@@ -21,7 +21,10 @@ portFinder.getPort(function (err, port) {
   devServerConfig.port = port;
   devServerConfig.open = `http://localhost:${port}`;
 
-  const server = new WebpackDevServer(devServerConfig, compiler);
+  const server = new WebpackDevServer(
+    { ...devServerConfig, ...devWebpackConfig.devServer },
+    compiler
+  );
 
   server.startCallback();
 });
