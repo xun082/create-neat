@@ -15,14 +15,16 @@ const compiler = webpack(devWebpackConfig);
 const portFinder = require("portfinder");
 const isInteractive = process.stdout.isTTY;
 
-portFinder.setBasePort(3000);
+// 支持用户自定义端口号,默认为 3000
+const { port, ...reset } = devWebpackConfig.devServer;
+portFinder.setBasePort(port || 3000);
 
 portFinder.getPort(function (err, port) {
   devServerConfig.port = port;
   devServerConfig.open = `http://localhost:${port}`;
 
   const server = new WebpackDevServer(
-    { ...devServerConfig, ...devWebpackConfig.devServer },
+    { ...devServerConfig, ...reset },
     compiler
   );
 
