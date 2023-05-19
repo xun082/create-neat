@@ -12,7 +12,7 @@ const userWebpackConfig = require(resolveApp("./webpack.config.js"));
 
 module.exports = merge(
   {
-    stats: "errors-only",
+    stats: "errors-warnings",
     entry: resolveApp(isUseTypescript ? "./src/index.tsx" : "./src/index.jsx"),
     output: {
       path: isDevelopment ? undefined : resolveApp("./dist"),
@@ -164,6 +164,14 @@ module.exports = merge(
         BASE_URL: '"./"',
       }),
     ].filter(Boolean),
+    cache: {
+      type: "filesystem",
+      store: "pack",
+      cacheDirectory: resolveApp("node_modules/.cache"),
+    },
+    infrastructureLogging: {
+      level: "none",
+    },
   },
   userWebpackConfig
 );

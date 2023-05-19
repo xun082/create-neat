@@ -23,7 +23,9 @@ module.exports = merge(
           ".cache/.eslintcache"
         ),
       }),
-      new ReactRefreshWebpackPlugin(),
+      new ReactRefreshWebpackPlugin({
+        overlay: false,
+      }),
 
       isUseTypescript &&
         new ForkTsCheckerWebpackPlugin({
@@ -40,9 +42,12 @@ module.exports = merge(
 
       new StylelintPlugin({
         context: resolveApp("./src"),
-       
       }),
     ].filter(Boolean),
+
+    cache: {
+      type: "filesystem",
+    },
   },
   webpackCommonConfig
 );

@@ -1,5 +1,5 @@
 const { resolveApp } = require("@obstinate/dev-utils");
-
+const { createHash } = require("crypto");
 const package = require(resolveApp("./package.json"));
 
 function useCssPreset(preset) {
@@ -9,6 +9,14 @@ function useCssPreset(preset) {
   );
 }
 
+function createEnvironmentHash(env) {
+  const hash = createHash("md5");
+  hash.update(JSON.stringify(env));
+
+  return hash.digest("hex");
+}
+
 module.exports = {
   useCssPreset,
+  createEnvironmentHash,
 };
