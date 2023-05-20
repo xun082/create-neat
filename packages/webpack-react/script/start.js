@@ -16,20 +16,28 @@ const portFinder = require("portfinder");
 const isInteractive = process.stdout.isTTY;
 
 // 支持用户自定义端口号,默认为 3000
-const { port, ...reset } = devWebpackConfig.devServer;
-portFinder.setBasePort(port || 3000);
+const port = devWebpackConfig?.devServer?.port;
 
-portFinder.getPort(function (err, port) {
-  devServerConfig.port = port;
-  devServerConfig.open = `http://localhost:${port}`;
+portFinder.getPort(
+  {
+    port: port || 3000,
+    stopPort: 9999,
+  },
+  (err, port) => {
+    console.log(port);
+    devServerConfig.port = port;
+    devServerConfig.open = `http://localhost:${port}`;
 
-  const server = new WebpackDevServer(
-    { ...devServerConfig, ...reset },
-    compiler
-  );
+    // 如果 port 有值,则要删除,否则会被合并到 devServer 中,导致端口号存在而报错
+    if (port) delete devWebpackConfig.devServer.port;
+    const server = new WebpackDevServer(
+      Object.assign(devServerConfig, devWebpackConfig.devServer),
+      compiler
+    );
 
-  server.startCallback();
-});
+    server.startCallback();
+  }
+);
 
 compiler.hooks.done.tap("done", async (stats) => {
   if (isInteractive) clearConsole();
