@@ -44,7 +44,14 @@ module.exports = merge(
         context: resolveApp("./src"),
       }),
     ].filter(Boolean),
-
+    optimization: {
+      splitChunks: {
+        chunks: "all",
+      },
+      runtimeChunk: {
+        name: "runtime",
+      },
+    },
     cache: {
       type: "filesystem",
     },
