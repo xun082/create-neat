@@ -57,7 +57,7 @@ compiler.hooks.done.tap("done", async (stats) => {
   if (isSuccessful && (isInteractive || isFirstCompile)) {
     friendlyPrints({
       localUrlForTerminal: `http://localhost:${devServerConfig.port}`,
-      lanUrlForTerminal: `${getIPAddress()}:${devServerConfig.port}`,
+      lanUrlForTerminal: `http://${getIPAddress()}:${devServerConfig.port}`,
     });
   }
 
