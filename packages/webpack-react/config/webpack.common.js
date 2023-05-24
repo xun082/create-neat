@@ -1,5 +1,4 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const WebpackBar = require("webpackbar");
 const { DefinePlugin } = require("webpack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { resolveApp, isUseTypescript } = require("@obstinate/dev-utils");
@@ -7,8 +6,11 @@ const stylelint = require("stylelint");
 const { merge } = require("webpack-merge");
 const { useCssPreset } = require("./helper");
 const isDevelopment = process.env.NODE_ENV === "development";
-
 const userWebpackConfig = require(resolveApp("./webpack.config.js"));
+const getClientEnvironment = require("./env");
+const { createEnvironmentHash } = require("./helper");
+
+const env = getClientEnvironment();
 
 module.exports = merge(
   {
@@ -162,10 +164,12 @@ module.exports = merge(
       // 定义全局常量
       new DefinePlugin({
         BASE_URL: '"./"',
+        ...env.stringified,
       }),
     ].filter(Boolean),
     cache: {
       type: "filesystem",
+      version: createEnvironmentHash(env.raw),
       store: "pack",
       cacheDirectory: resolveApp("node_modules/.cache"),
     },

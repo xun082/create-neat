@@ -1,6 +1,6 @@
 {
   "name": "@obstinate/react-script",
-  "version": "1.0.19",
+  "version": "1.0.26",
   "description": "基于pnpm+monorepo+webpack开发的前端脚手架,旨在为用户快速初始化项目。",
   "type": "commonjs",
   "bin": {
@@ -35,6 +35,8 @@
     "cross-spawn": "^7.0.3",
     "css-loader": "^6.7.3",
     "css-minimizer-webpack-plugin": "^4.2.2",
+    "dotenv": "^16.0.3",
+    "dotenv-expand": "^10.0.0",
     "eslint": "^8.33.0",
     "eslint-plugin-react": "^7.32.2",
     "eslint-webpack-plugin": "^4.0.0",
@@ -57,8 +59,7 @@
     "webpack-cli": "^5.0.1",
     "webpack-dev-server": "^4.11.1",
     "webpack-manifest-plugin": "^5.0.0",
-    "webpack-merge": "^5.8.0",
-    "webpackbar": "^5.0.2"
+    "webpack-merge": "^5.8.0"
   },
   "homepage": "https://github.com/xun082/react-cli",
   "repository": {

@@ -1,5 +1,7 @@
 process.env.NODE_ENV = "development";
 
+require("../config/env");
+
 const {
   clearConsole,
   formatWebpackMessages,
@@ -85,4 +87,11 @@ compiler.hooks.done.tap("done", async (stats) => {
         " to the line before.\n"
     );
   }
+});
+
+compiler.hooks.invalid.tap("invalid", () => {
+  if (isInteractive) {
+    clearConsole();
+  }
+  console.log("Compiling...");
 });
