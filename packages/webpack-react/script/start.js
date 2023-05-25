@@ -22,7 +22,7 @@ const userPort = devWebpackConfig?.devServer?.port;
 
 portFinder.getPort(
   {
-    port: userPort || 3000,
+    port: userPort || process.env.PORT || 3000,
     stopPort: 9999,
   },
   (err, port) => {

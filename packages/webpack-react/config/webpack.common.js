@@ -2,7 +2,6 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { DefinePlugin } = require("webpack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { resolveApp, isUseTypescript } = require("@obstinate/dev-utils");
-const stylelint = require("stylelint");
 const { merge } = require("webpack-merge");
 const { useCssPreset } = require("./helper");
 const isDevelopment = process.env.NODE_ENV === "development";
@@ -138,7 +137,6 @@ module.exports = merge(
       },
     },
     plugins: [
-      new WebpackBar(),
       new HtmlWebpackPlugin({
         template: resolveApp("./public/index.html"),
         filename: "index.html",
