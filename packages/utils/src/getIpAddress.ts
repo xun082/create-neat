@@ -1,6 +1,6 @@
-const os = require("os");
+import os from "node:os";
 
-function getIPAddress() {
+function getIPAddress(): string {
   const interfaces = os.networkInterfaces();
   for (const devName in interfaces) {
     const iface = interfaces[devName];
@@ -17,4 +17,4 @@ function getIPAddress() {
   }
 }
 
-module.exports = getIPAddress;
+export default getIPAddress;

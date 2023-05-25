@@ -1,5 +1,5 @@
-const resolveApp = require("./getPaths");
-const getHttpsConfig = require("./getHttpsConfig");
+import resolveApp from "./getPaths";
+import getHttpsConfig from "./getHttpsConfig";
 
 const host = process.env.HOST || "0.0.0.0";
 const sockHost = process.env.WDS_SOCKET_HOST;
@@ -36,4 +36,4 @@ const devServerConfig = {
   },
 };
 
-module.exports = devServerConfig;
+export default devServerConfig;

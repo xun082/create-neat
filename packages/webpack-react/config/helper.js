@@ -1,4 +1,4 @@
-const { resolveApp } = require("@obstinate/dev-utils");
+const { resolveApp } = require("@obstinate/utils");
 const { createHash } = require("crypto");
 const package = require(resolveApp("./package.json"));
 

@@ -8,7 +8,7 @@ const {
   friendlyPrints,
 } = require("../bin/utils/index");
 const chalk = require("chalk");
-const { devServerConfig, getIPAddress } = require("@obstinate/dev-utils");
+const { devServerConfig, getIPAddress } = require("@obstinate/utils");
 const WebpackDevServer = require("webpack-dev-server");
 const webpack = require("webpack");
 const devWebpackConfig = require("../config/webpack.dev");

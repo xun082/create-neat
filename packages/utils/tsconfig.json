@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "module": "CommonJS",
+    "target": "ES2018",
+    "moduleResolution": "nodenext",
+    "esModuleInterop": true,
+    "outDir": "./dist/cjs",
+    "declaration": true,
+    "isolatedModules": true,
+    "composite": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "rootDir": "src"
+  },
+  "include": ["src"],
+  "exclude": ["dist"],
+  "ts-node": {
+    "transpileOnly": true
+  }
+}

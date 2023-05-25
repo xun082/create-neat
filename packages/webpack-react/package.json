@@ -1,6 +1,6 @@
 {
   "name": "@obstinate/react-script",
-  "version": "1.0.32",
+  "version": "1.0.35",
   "description": "基于pnpm+monorepo+webpack开发的前端脚手架,旨在为用户快速初始化项目。",
   "type": "commonjs",
   "bin": {
@@ -22,7 +22,7 @@
     "@babel/preset-env": "^7.20.2",
     "@babel/preset-react": "^7.18.6",
     "@babel/preset-typescript": "^7.18.6",
-    "@obstinate/dev-utils": "workspace:*",
+    "@obstinate/utils": "workspace:*",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
     "@typescript-eslint/parser": "^5.52.0",
     "autoprefixer": "^10.4.13",

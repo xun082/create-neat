@@ -1,6 +1,6 @@
 {
   "name": "@obstinate/react-cli",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "基于pnpm+monorepo+webpack开发的前端脚手架,旨在为用户快速初始化项目。",
   "type": "module",
   "bin": {
@@ -14,7 +14,7 @@
   "author": "moment",
   "license": "MIT",
   "dependencies": {
-    "@obstinate/dev-utils": "workspace:*",
+    "@obstinate/utils": "workspace:*",
     "boxen": "^7.0.1",
     "chalk": "4.0.0",
     "commander": "^10.0.0",
