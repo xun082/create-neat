@@ -1,11 +1,6 @@
-import { readFileSync } from "fs";
-import resolveApp from "./getPaths";
+import packageInfo from "./getPackageInfo";
 
-const packageInfo: any = JSON.parse(
-  readFileSync(resolveApp("./package.json")).toString()
-);
-
-function useCssPreset(preset) {
+function useCssPreset(preset: string) {
   return (
     packageInfo.dependencies.hasOwnProperty(preset) ||
     packageInfo.devDependencies.hasOwnProperty(preset)

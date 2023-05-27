@@ -1,9 +1,10 @@
-const { resolveApp } = require("@obstinate/utils");
-const chalk = require("chalk");
-const fs = require("fs");
+import resolveApp from "./getPaths";
+import chalk from "chalk";
+import fs from "node:fs";
+import packageInfo from "./getPackageInfo";
 
-const packages = resolveApp("package.json");
-const appName = require(packages).name;
+const appName: string = packageInfo.name;
+const friendlySyntaxErrorLabel: string = "Syntax error:";
 
 function clearConsole() {
   process.stdout.write(
@@ -11,14 +12,12 @@ function clearConsole() {
   );
 }
 
-const friendlySyntaxErrorLabel = "Syntax error:";
-
-function isLikelyASyntaxError(message) {
+function isLikelyASyntaxError(message: string) {
   return message.indexOf(friendlySyntaxErrorLabel) !== -1;
 }
 
 // 清除webpack的错误信息
-function formatMessage(message) {
+function formatMessage(message: any) {
   let lines = [];
 
   if (typeof message === "string") {
@@ -107,7 +106,7 @@ function formatMessage(message) {
   return message.trim();
 }
 
-function formatWebpackMessages(json) {
+function formatWebpackMessages(json: any) {
   const formattedErrors = json.errors.map(formatMessage);
   const formattedWarnings = json.warnings.map(formatMessage);
   const result = { errors: formattedErrors, warnings: formattedWarnings };
@@ -118,13 +117,15 @@ function formatWebpackMessages(json) {
   return result;
 }
 
-let packageManagement;
+let packageManagement = "cnpm";
 if (fs.existsSync("package-lock.json")) packageManagement = "npm";
 else if (fs.existsSync("pnpm-lock.yaml")) packageManagement = "pnpm";
 else if (fs.existsSync("yarn.lock")) packageManagement = "yarn";
-else packageManagement = "cnpm";
 
-function friendlyPrints(urls) {
+function friendlyPrints(urls: {
+  localUrlForTerminal: string;
+  lanUrlForTerminal: string;
+}) {
   console.log();
   console.log(`You can now view ${chalk.bold(appName)} in the browser.`);
   console.log();
@@ -149,8 +150,4 @@ function friendlyPrints(urls) {
   console.log();
 }
 
-module.exports = {
-  clearConsole,
-  formatWebpackMessages,
-  friendlyPrints,
-};
+export { clearConsole, formatWebpackMessages, friendlyPrints };

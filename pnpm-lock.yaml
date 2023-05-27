@@ -46,6 +46,9 @@ importers:
 
   packages/utils:
     dependencies:
+      chalk:
+        specifier: 4.0.0
+        version: 4.0.0
       ts-node:
         specifier: ^10.9.1
         version: 10.9.1(@types/node@20.2.3)(typescript@5.0.4)
