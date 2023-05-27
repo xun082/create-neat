@@ -92,10 +92,11 @@ module.exports = merge(
       // 分包
       splitChunks: {
         chunks: "all",
+        minSize: 20000,
+        maxSize: 200000,
         cacheGroups: {
           vendor: {
             name: "vendors",
-            enforce: true, // ignore splitChunks.minSize, splitChunks.minChunks, splitChunks.maxAsyncRequests and splitChunks.maxInitialRequests
             test: /[\\/]node_modules[\\/]/,
             filename: "static/js/[id]_vendors.js",
             priority: 10,
