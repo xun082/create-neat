@@ -127,7 +127,7 @@ module.exports = merge(
                     },
                   ],
                   require.resolve("@vue/cli-plugin-babel/preset"),
-                  [
+                  isUseTypescript && [
                     require.resolve("@babel/preset-typescript"),
                     {
                       allExtensions: true,
@@ -142,12 +142,22 @@ module.exports = merge(
                 ].filter(Boolean),
               },
             },
+            require.resolve("@ant-design-vue/vue-jsx-hot-loader"),
           ],
         },
       ].filter(Boolean),
     },
     resolve: {
-      extensions: [".vue", ".tsx", ".ts", ".wasm", ".mjs", ".js", ".json"],
+      extensions: [
+        ".vue",
+        ".tsx",
+        ".ts",
+        ".wasm",
+        ".mjs",
+        ".js",
+        ".jsx",
+        ".json",
+      ],
     },
     plugins: [
       new HtmlWebpackPlugin({

@@ -92,6 +92,31 @@ module.exports = merge(
       // 分包
       splitChunks: {
         chunks: "all",
+        minSize: 20000,
+        maxSize: 200000,
+        cacheGroups: {
+          vendor: {
+            name: "vendors",
+            test: /[\\/]node_modules[\\/]/,
+            filename: "static/js/[id]_vendors.js",
+            priority: 10,
+          },
+          vue: {
+            test(module) {
+              return (
+                module.resource && module.resource.includes("node_modules/vue")
+              );
+            },
+            chunks: "initial",
+            filename: "vue.[contenthash].js",
+            priority: 1,
+            maxInitialRequests: 2,
+            minChunks: 1,
+          },
+        },
+      },
+      runtimeChunk: {
+        name: "runtime",
       },
     },
   },

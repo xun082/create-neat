@@ -1,30 +1,36 @@
 process.env.NODE_ENV = "development";
 
+require("../config/env");
+
 const {
   clearConsole,
   formatWebpackMessages,
   friendlyPrints,
 } = require("@obstinate/utils");
 const chalk = require("chalk");
+const { devServerConfig, getIPAddress } = require("@obstinate/utils");
 const WebpackDevServer = require("webpack-dev-server");
 const webpack = require("webpack");
-const { devServerConfig, getIPAddress } = require("@obstinate/utils");
 const devWebpackConfig = require("../config/webpack.dev");
 
 const compiler = webpack(devWebpackConfig);
-
 const portFinder = require("portfinder");
 const isInteractive = process.stdout.isTTY;
 
+// 支持用户自定义端口号,默认为 3000
+const userPort = devWebpackConfig?.devServer?.port;
+
 portFinder.getPort(
   {
-    port: 3000,
+    port: userPort || process.env.PORT || 3000,
     stopPort: 9999,
   },
   (err, port) => {
     devServerConfig.port = port;
     devServerConfig.open = `http://localhost:${port}`;
 
+    // 如果 userPort 有值,则要删除,否则会被合并到 devServer 中,导致端口号存在而报错
+    if (userPort) delete devWebpackConfig.devServer.port;
     const server = new WebpackDevServer(
       Object.assign(devServerConfig, devWebpackConfig.devServer),
       compiler
