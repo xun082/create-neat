@@ -1,8 +1,9 @@
-import { readFileSync } from "fs";
+import { readFileSync, existsSync } from "fs";
 import resolveApp from "./getPaths";
 
+const filePath = resolveApp("./package.json");
 const packageInfo: any = JSON.parse(
-  readFileSync(resolveApp("./package.json")).toString()
+  existsSync(filePath) ? readFileSync(filePath).toString() : '{}'
 );
 
 export default packageInfo;
