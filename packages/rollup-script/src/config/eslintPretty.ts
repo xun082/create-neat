@@ -42,7 +42,7 @@ export function compiledMessage(results: eslintResult[]) {
 
   if (errorCount && warningCount) {
     console.log(
-      `${baseInfo}${chalk.red(errorCount + " error")} and ${chalk.red(
+      `${baseInfo}${chalk.red(errorCount + " error")} and ${chalk.yellow(
         errorCount + " warning"
       )}`
     );

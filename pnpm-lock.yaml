@@ -120,6 +120,27 @@ importers:
         specifier: ^1.21.0
         version: 1.21.0
 
+  packages/eslint-config-memory:
+    dependencies:
+      '@typescript-eslint/eslint-plugin':
+        specifier: ^5.59.7
+        version: 5.59.7(@typescript-eslint/parser@5.52.0)(eslint@8.33.0)(typescript@5.1.3)
+      '@typescript-eslint/parser':
+        specifier: ^5.52.0
+        version: 5.52.0(eslint@8.33.0)(typescript@5.1.3)
+      eslint:
+        specifier: ^8.33.0
+        version: 8.33.0
+      eslint-plugin-import:
+        specifier: ^2.27.5
+        version: 2.27.5(@typescript-eslint/parser@5.52.0)(eslint@8.33.0)
+      eslint-plugin-react:
+        specifier: ^7.32.2
+        version: 7.32.2(eslint@8.33.0)
+      eslint-plugin-react-hooks:
+        specifier: ^4.6.0
+        version: 4.6.0(eslint@8.33.0)
+
   packages/rollup-script:
     dependencies:
       '@babel/core':
@@ -7383,7 +7404,7 @@ packages:
       has-proto: 1.0.1
       has-symbols: 1.0.3
       internal-slot: 1.0.5
-      is-array-buffer: 3.0.1
+      is-array-buffer: 3.0.2
       is-callable: 1.2.7
       is-negative-zero: 2.0.2
       is-regex: 1.1.4
@@ -7394,7 +7415,7 @@ packages:
       object-inspect: 1.12.3
       object-keys: 1.1.1
       object.assign: 4.1.4
-      regexp.prototype.flags: 1.4.3
+      regexp.prototype.flags: 1.5.0
       safe-regex-test: 1.0.0
       string.prototype.trimend: 1.0.6
       string.prototype.trimstart: 1.0.6
@@ -9111,20 +9132,12 @@ packages:
       has-tostringtag: 1.0.0
     dev: false
 
-  /is-array-buffer@3.0.1:
-    resolution: {integrity: sha512-ASfLknmY8Xa2XtB4wmbz13Wu202baeA18cJBCeCy0wXUHZF0IPyVEXqKEcd+t2fNSLLL1vC6k7lxZEojNbISXQ==}
-    dependencies:
-      call-bind: 1.0.2
-      get-intrinsic: 1.2.0
-      is-typed-array: 1.1.10
-
   /is-array-buffer@3.0.2:
     resolution: {integrity: sha512-y+FyyR/w8vfIRq4eQcM1EYgSTnmHXPqaF+IgzgraytCFq5Xh8lllDVmAZolPJiZttZLeFSINPYMaEJ7/vWUa1w==}
     dependencies:
       call-bind: 1.0.2
       get-intrinsic: 1.2.0
       is-typed-array: 1.1.10
-    dev: false
 
   /is-arrayish@0.2.1:
     resolution: {integrity: sha512-zz06S8t0ozoDXMG+ube26zeCTNXcKIPJZJi8hBrF4idCLms4CG9QtK7qBl1boi5ODzFpjswb5JPmHCbMpjaYzg==}
@@ -11323,14 +11336,6 @@ packages:
       '@babel/runtime': 7.22.3
     dev: false
 
-  /regexp.prototype.flags@1.4.3:
-    resolution: {integrity: sha512-fjggEOO3slI6Wvgjwflkc4NFRCTZAu5CnNfBd5qOMYhWdn67nJBBu34/TkD++eeFmd8C9r9jfXJ27+nSiRkSUA==}
-    engines: {node: '>= 0.4'}
-    dependencies:
-      call-bind: 1.0.2
-      define-properties: 1.2.0
-      functions-have-names: 1.2.3
-
   /regexp.prototype.flags@1.5.0:
     resolution: {integrity: sha512-0SutC3pNudRKgquxGoRGIz946MZVHqbNfPjBdxeOhBrdgDKlRoXmYLQN9xRbrR09ZXWeGAdPuif7egofn6v5LA==}
     engines: {node: '>= 0.4'}
@@ -11338,7 +11343,6 @@ packages:
       call-bind: 1.0.2
       define-properties: 1.2.0
       functions-have-names: 1.2.3
-    dev: false
 
   /regexpp@2.0.1:
     resolution: {integrity: sha512-lv0M6+TkDVniA3aD1Eg0DVpfU/booSu7Eev3TDO/mZKHBfVjgCGTV4t4buppESEYDtkArYFOxTJWv6S5C+iaNw==}
@@ -12127,7 +12131,7 @@ packages:
       get-intrinsic: 1.2.0
       has-symbols: 1.0.3
       internal-slot: 1.0.5
-      regexp.prototype.flags: 1.4.3
+      regexp.prototype.flags: 1.5.0
       side-channel: 1.0.4
     dev: false
 
