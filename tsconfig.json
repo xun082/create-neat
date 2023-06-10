@@ -28,9 +28,9 @@
     "composite": true
   },
   "references": [
-    // {
-    //   "path": "./packages/babel-preset-moment"
-    // }
+    {
+      "paths": "./packages/rollup-script"
+    }
   ],
   "exclude": ["**/node_modules", "**/.*/", "**/dist/", "**/build/"]
 }
