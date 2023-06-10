@@ -7,7 +7,7 @@ import glob from "tiny-glob/sync";
 const createLogger = require("progress-estimator");
 
 export async function cleanDistFolder() {
-  await fs.remove(resolveApp(".dist"));
+  await fs.remove(resolveApp("dist"));
 }
 
 export function writeCjsEntryFile(name: string) {
@@ -38,20 +38,10 @@ export async function moveTypes() {
   const pathExists = await fs.pathExists(appDistSrc);
   if (!pathExists) return;
 
-  // see note above about deprecation window
-  console.warn(
-    '[tsdx]: Your rootDir is currently set to "./". Please change your ' +
-      'rootDir to "./src".\n' +
-      "TSDX has deprecated setting tsconfig.compilerOptions.rootDir to " +
-      '"./" as it caused buggy output for declarationMaps and more.\n' +
-      'You may also need to change your include to remove "test", which also ' +
-      "caused declarations to be unnecessarily created for test files."
-  );
-
-  // Move the type declarations to the base of the ./dist folder
   await fs.copy(appDistSrc, resolveApp("dist"), {
     overwrite: true,
   });
+
   await fs.remove(appDistSrc);
 }
 
