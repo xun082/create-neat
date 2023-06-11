@@ -12,8 +12,6 @@ import resolve, {
 import sourceMaps from "rollup-plugin-sourcemaps";
 import typescript from "rollup-plugin-typescript2";
 import ts from "typescript";
-import { join } from "node:path";
-import { eslint } from "rollup-plugin-eslint";
 
 import { extractErrors } from "../utils/errors/extractErrors";
 import { babelPluginsConfig } from "./babelConfig";
@@ -114,13 +112,6 @@ export async function createRollupConfig(
           options.format === "umd"
             ? /\/node_modules\//
             : /\/regenerator-runtime\//,
-      }),
-      eslint({
-        throwOnError: true,
-        include: [
-          join(resolveApp(""), "src/**/*.ts"),
-          join(resolveApp(""), "src/**/*.ts"),
-        ],
       }),
       json(),
       {
