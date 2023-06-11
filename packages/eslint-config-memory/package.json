@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-memory",
-  "version": "1.0.8",
+  "version": "1.0.10",
   "description": "eslint 配置库",
   "main": "index.js",
   "type": "commonjs",
@@ -15,7 +15,6 @@
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.32.2",
-    "eslint-plugin-react-hooks": "^4.6.0",
     "prettier": "^2.8.8"
   }
 }

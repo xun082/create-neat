@@ -1,4 +1,4 @@
-import { WatchOptions, eslintResult } from "../types";
+import { WatchOptions } from "../types";
 import { createBuildConfigs } from "../config/createBuildConfig";
 import {
   cleanDistFolder,
@@ -14,7 +14,7 @@ import { clearConsole, logError } from "../utils";
 import chalk from "chalk";
 import { resolveApp } from "@obstinate/utils";
 import { join } from "node:path";
-import { reporter, compiledMessage } from "../config/eslintPretty";
+import { ESLint } from "eslint";
 
 export default async function watchProject(dirtyOpts: WatchOptions) {
   const options = await normalizeOptions(dirtyOpts);
@@ -61,7 +61,7 @@ export default async function watchProject(dirtyOpts: WatchOptions) {
     await killHooks();
 
     if (event.code === "START") {
-      if (!options.verbose) clearConsole();
+      clearConsole();
       spinner.start(chalk.bold.cyan("Compiling modules..."));
     }
 
@@ -72,35 +72,33 @@ export default async function watchProject(dirtyOpts: WatchOptions) {
     }
 
     if (event.code === "END") {
-      child_process.exec(
-        `npx eslint --format=json ${resolveApp(
-          "./src"
-        )} --ext .js,.ts,tsx,.jsx`,
-        async (_error, stdout: string, _stderr) => {
-          if (stdout) {
-            const results = JSON.parse(stdout) as eslintResult[];
-            reporter(results);
-            compiledMessage(results);
+      const srcDirectory = join(resolveApp("src"), "/**/*");
+      const eslint = new ESLint();
 
-            spinner.stop();
-          } else {
-            spinner.succeed(chalk.bold.green("Compiled successfully"));
-            console.log(`${chalk.dim("Watching for changes")}`);
+      const lintResults = await eslint.lintFiles([srcDirectory]);
 
-            try {
-              await moveTypes();
-              if (firstTime && options.onFailure) {
-                firstTime = false;
-                run(options.onFirstSuccess);
-              } else {
-                successKiller = run(options.onSuccess);
-              }
-            } catch (error) {
-              console.log(error);
-            }
-          }
+      const formatter = await eslint.loadFormatter("stylish");
+      const resultText = await formatter.format(lintResults);
+
+      if (!resultText.length) {
+        spinner.succeed(chalk.bold.green("Compiled successfully"));
+        console.log(`${chalk.dim("Watching for changes")}`);
+      } else {
+        spinner.stop();
+        console.log(resultText);
+      }
+
+      try {
+        await moveTypes();
+        if (firstTime && options.onFailure) {
+          firstTime = false;
+          run(options.onFirstSuccess);
+        } else {
+          successKiller = run(options.onSuccess);
         }
-      );
+      } catch (error) {
+        console.log(error);
+      }
     }
   });
 }
