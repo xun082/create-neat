@@ -63,6 +63,7 @@ programmer
     "build --extractErrors=https://reactjs.org/docs/error-decoder.html?invariant="
   )
   .action((dirtyOptions: BuildOptions) => buildProject(dirtyOptions));
+console.log(1111);
 
 programmer
   .command("lint")
