@@ -1,0 +1,25 @@
+{
+  "name": "create-moment-test",
+  "version": "1.0.0",
+  "description": "",
+  "license": "MIT",
+  "homepage": "https://github.com/sinoui/ts-lib-scripts",
+  "bugs": {
+    "url": "https://github.com/sinoui/ts-lib-scripts/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sinoui/ts-lib-scripts.git"
+  },
+  "bin": {
+    "neat": "./dist/index.js"
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "dependencies": {},
+  "peerDependencies": {
+    "typescript": ">=4.3.5"
+  },
+  "devDependencies": {}
+}

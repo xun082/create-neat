@@ -1,36 +1,26 @@
 {
   "compilerOptions": {
     "module": "CommonJS",
-    "target": "es2015",
-    "lib": ["es2015", "dom"],
+    "target": "es2017",
+    "allowJs": true,
     "importHelpers": true,
-    "declaration": true,
+    "esModuleInterop": true,
+    "declaration": false,
+    "moduleResolution": "node",
     "strict": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "strictPropertyInitialization": true,
-    "noImplicitThis": true,
-    "alwaysStrict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "moduleResolution": "node",
-    "jsx": "react-jsx",
-    "esModuleInterop": true,
-    "allowJs": false,
-    "incremental": true,
-    "skipLibCheck": true,
-    "resolveJsonModule": true,
-    "forceConsistentCasingInFileNames": true,
-    "isolatedModules": true,
-    "composite": true
+    "skipLibCheck": true
   },
   "references": [
+    {
+      "paths": "./packages/core"
+    },
     {
       "paths": "./packages/rollup-script"
     }
   ],
-  "exclude": ["**/node_modules", "**/.*/", "**/dist/", "**/build/"]
+  "exclude": ["**/node_modules", "**/dist/", "**/build/"]
 }
