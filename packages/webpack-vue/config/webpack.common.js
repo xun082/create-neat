@@ -7,8 +7,9 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { DefinePlugin } = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { merge } = require("webpack-merge");
-const userWebpackConfig = require(resolveApp("./webpack.config.js"));
 const isDevelopment = process.env.NODE_ENV === "development";
+const fs = require("node:fs");
+const userWebpackConfig = resolveApp("./webpack.config.js");
 
 module.exports = merge(
   {
@@ -190,5 +191,5 @@ module.exports = merge(
       }),
     ].filter(Boolean),
   },
-  userWebpackConfig
+  fs.existsSync(userWebpackConfig) && require(userWebpackConfig)
 );

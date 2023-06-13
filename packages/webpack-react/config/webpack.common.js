@@ -1,16 +1,14 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { DefinePlugin } = require("webpack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const {
-  resolveApp,
-  isUseTypescript,
-  useCssPreset,
-  createEnvironmentHash,
-} = require("@obstinate/utils");
+const { resolveApp, isUseTypescript } = require("@obstinate/utils");
 const { merge } = require("webpack-merge");
+const { useCssPreset } = require("./helper");
 const isDevelopment = process.env.NODE_ENV === "development";
-const userWebpackConfig = require(resolveApp("./webpack.config.js"));
 const getClientEnvironment = require("./env");
+const { createEnvironmentHash } = require("./helper");
+const fs = require("node:fs");
+const userWebpackConfig = resolveApp("./webpack.config.js");
 
 const env = getClientEnvironment();
 
@@ -178,5 +176,5 @@ module.exports = merge(
       level: "none",
     },
   },
-  userWebpackConfig
+  fs.existsSync(userWebpackConfig) && require(userWebpackConfig)
 );
