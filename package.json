@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "commit": "cz"
+    "commit": "cz",
+    "add": "pnpm changeset add",
+    "push": "pnpm changeset publish"
   },
   "keywords": [],
   "author": "",

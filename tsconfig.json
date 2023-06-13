@@ -22,5 +22,6 @@
       "paths": "./packages/rollup-script"
     }
   ],
-  "exclude": ["**/node_modules", "**/dist/", "**/build/"]
+  "exclude": ["**/node_modules", "**/dist/", "**/build/"],
+  "include": ["./packages/core", "./packages/rollup-script"]
 }
