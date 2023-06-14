@@ -1,0 +1,18 @@
+{
+  "name": "moment",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "vue-script start",
+    "build": "vue-script build"
+  },
+  "dependencies": {
+    "vue": "^3.3.4"
+  },
+  "author": "",
+  "devDependencies": {
+    "@obstinate/vue-script": "^1.0.11",
+    "@types/vue": "^2.0.0",
+    "typescript": "~4.5.5"
+  }
+}

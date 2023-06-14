@@ -1,0 +1,25 @@
+{
+  "name": "moment",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "candy-script start",
+    "build": "candy-script build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@obstinate/react-script": "^1.0.35",
+    "@types/node": "^20.2.3",
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.10",
+    "prettier": "^2.8.5",
+    "typescript": "^4.9.5"
+  },
+  "browserslist": ["last 2 version", "> 1%", "not dead"]
+}
