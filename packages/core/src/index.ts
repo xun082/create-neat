@@ -8,7 +8,7 @@ import { removeDirectory } from "./lib/fileController";
 const program = new Command();
 
 program.version(
-  chalk.greenBright(getPackageJsonInfo("../../package.json").version)
+  chalk.greenBright(getPackageJsonInfo("../../package.json", true).version)
 );
 
 program

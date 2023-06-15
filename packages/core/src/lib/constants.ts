@@ -5,6 +5,7 @@ const template: string[] = [
   "react-web-ts",
   "vue-web-js",
   "vue-web-ts",
+  "commit",
 ];
 
 export const packageVersion = "1.0.0";

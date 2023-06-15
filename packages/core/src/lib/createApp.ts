@@ -11,6 +11,7 @@ import createPackageJson from "./createPackageJsonFile";
 import { join } from "path";
 import ora from "ora";
 import createSuccessInfo from "./createSuccessInfo";
+import createCommitlint from "./createCommitlint";
 
 export default async function createApp(
   matter: string,
@@ -41,8 +42,11 @@ export default async function createApp(
     options: packageManage,
   })) as string;
 
+  const commitlint = (await confirm({
+    message: "Pick additional lint features:",
+  })) as boolean;
+
   execSync(`mkdir ${rootDirectory}`);
-  //   execSync(`cd ${rootDirectory}`);
 
   // 写入 package.json 文件
   fs.writeFileSync(
@@ -68,4 +72,6 @@ export default async function createApp(
 
     createSuccessInfo(matter, packageManageType);
   });
+
+  if (commitlint === true) createCommitlint(rootDirectory);
 }
