@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createEnvironmentHash = exports.packageInfo = exports.useCssPreset = exports.isUseTypescript = exports.devServerConfig = exports.resolveApp = exports.getIPAddress = exports.friendlyPrints = exports.formatWebpackMessages = exports.clearConsole = void 0;
+exports.createEnvironmentHash = exports.packageInfo = exports.useCssPreset = exports.isUseTypescript = exports.devServerConfig = exports.resolveApp = exports.getIPAddress = exports.friendlyPrints = exports.formatWebpackMessages = exports.clearConsole = exports.safeVariableName = exports.safePackageName = void 0;
 const getIpAddress_1 = __importDefault(require("./getIpAddress"));
 exports.getIPAddress = getIpAddress_1.default;
 const getPaths_1 = __importDefault(require("./getPaths"));
@@ -18,6 +18,9 @@ const getPackageInfo_1 = __importDefault(require("./getPackageInfo"));
 exports.packageInfo = getPackageInfo_1.default;
 const createHash_1 = __importDefault(require("./createHash"));
 exports.createEnvironmentHash = createHash_1.default;
+var safePackageName_1 = require("./safePackageName");
+Object.defineProperty(exports, "safePackageName", { enumerable: true, get: function () { return safePackageName_1.safePackageName; } });
+Object.defineProperty(exports, "safeVariableName", { enumerable: true, get: function () { return safePackageName_1.safeVariableName; } });
 var panelFriendConsole_1 = require("./panelFriendConsole");
 Object.defineProperty(exports, "clearConsole", { enumerable: true, get: function () { return panelFriendConsole_1.clearConsole; } });
 Object.defineProperty(exports, "formatWebpackMessages", { enumerable: true, get: function () { return panelFriendConsole_1.formatWebpackMessages; } });

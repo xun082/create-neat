@@ -364,6 +364,8 @@ importers:
 
   packages/template-common-lib: {}
 
+  packages/template-husky: {}
+
   packages/template-react-ui: {}
 
   packages/template-react-ui/template/example:

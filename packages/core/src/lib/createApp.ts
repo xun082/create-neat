@@ -17,6 +17,10 @@ export default async function createApp(
   matter: string,
   options: { force: boolean }
 ) {
+  process.on("SIGINT", () => {
+    process.exit(0);
+  });
+
   intro(chalk.green(" create-you-app "));
   const rootDirectory = resolveApp(matter);
 
