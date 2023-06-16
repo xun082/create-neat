@@ -8,7 +8,7 @@ const template: string[] = [
   "commit",
 ];
 
-export const packageVersion = "1.0.0";
+export const packageVersion = "2.0.0";
 
 function getProjectLink(templates: string[]): Map<string, string> {
   const map = new Map();
