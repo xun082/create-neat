@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { Command } from "commander";
-import { getPackageJsonInfo, createApp } from "./lib";
+import { getPackageJsonInfo, createApp, suggestCommands } from "./lib";
 import chalk from "chalk";
 import { removeDirectory } from "./lib/fileController";
 
@@ -25,5 +25,12 @@ program
   .action((name) => {
     removeDirectory(name, true);
   });
+
+program.on("command:*", ([result]) => {
+  console.log();
+  console.log(`  ` + chalk.red(`Unknown command ${chalk.yellow(result)}.`));
+  console.log();
+  suggestCommands(program, result);
+});
 
 program.parse(process.argv);
