@@ -34,6 +34,7 @@ module.exports = {
     "no-multi-spaces": 1, // 禁止使用多个空格
     "default-case": 1, // 要求 switch 语句中有 default 分支
     "no-dupe-args": 2, // 禁止 function 定义中出现重名参数
+    "prettier/prettier": ["error", { endOfLine: "auto" }],
   },
   settings: {
     react: {
