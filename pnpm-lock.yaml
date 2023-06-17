@@ -152,6 +152,9 @@ importers:
       tar:
         specifier: ^6.1.15
         version: 6.1.15
+      tslib:
+        specifier: ^2.5.3
+        version: 2.5.3
       typescript:
         specifier: '>=4.3.5'
         version: 4.9.5

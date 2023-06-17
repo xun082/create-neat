@@ -21,7 +21,6 @@ const errorCodeOpts = {
   errorMapFilePath: resolveApp("errors/codes.json"),
 };
 
-// shebang cache map thing because the transform only gets run once
 let shebang: any = {};
 
 export async function createRollupConfig(

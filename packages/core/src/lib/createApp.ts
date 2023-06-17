@@ -12,15 +12,12 @@ import { join } from "path";
 import ora from "ora";
 import createSuccessInfo from "./createSuccessInfo";
 import createCommitlint from "./createCommitlint";
+import createTemplateFile from "./createTemplateFile";
 
 export default async function createApp(
   matter: string,
   options: { force: boolean }
 ) {
-  process.on("SIGINT", () => {
-    process.exit(0);
-  });
-
   intro(chalk.green(" create-you-app "));
   const rootDirectory = resolveApp(matter);
 
@@ -36,6 +33,8 @@ export default async function createApp(
     } else process.exit(1);
   }
 
+  execSync(`mkdir ${rootDirectory}`);
+
   const projectType = (await select({
     message: "Pick a project type.",
     options: ProjectType,
@@ -50,12 +49,15 @@ export default async function createApp(
     message: "Pick additional lint features:",
   })) as boolean;
 
-  execSync(`mkdir ${rootDirectory}`);
-
   // 写入 package.json 文件
   fs.writeFileSync(
     join(rootDirectory, "package.json"),
     JSON.stringify(createPackageJson(projectType, matter), null, 2)
+  );
+  // 写入 .gitignore 文件
+  fs.writeFileSync(
+    join(rootDirectory, ".gitignore"),
+    createTemplateFile("gitignore")
   );
 
   // 下载 npm 包解压,并删除一些无用的代码文件
@@ -65,8 +67,8 @@ export default async function createApp(
     rootDirectory
   );
 
-  // 是否安装已经安装了 git
-  if (isGitInstalled()) exec("git init", { cwd: rootDirectory });
+  if (commitlint === true) createCommitlint(rootDirectory);
+
   const spinner = ora().start();
   spinner.start(
     chalk.bold.cyan("The dependency package is being installed...")
@@ -77,5 +79,6 @@ export default async function createApp(
     createSuccessInfo(matter, packageManageType);
   });
 
-  if (commitlint === true) createCommitlint(rootDirectory);
+  // 是否安装已经安装了 git
+  if (isGitInstalled()) exec("git init", { cwd: rootDirectory });
 }

@@ -1,6 +1,6 @@
 import { isAbsolute, resolve } from "path";
 import chalk from "chalk";
-import { packageInfo } from "@obstinate/utils";
+import { getJsonFileInfo, resolveApp } from "@obstinate/utils";
 import { PackageJson } from "../types";
 
 const SCOPE_NAME_REGEXP = /^@(.+)\//;
@@ -40,12 +40,16 @@ export function getOutputFilePath(
   format: "es" | "cjs" | "umd",
   env: "development" | "production"
 ): string {
+  const packageJson = resolveApp("./package.json");
   if (format === "es") {
-    return resolve(outDir, `${safePackageName(packageInfo.name)}.esm.js`);
+    return resolve(
+      outDir,
+      `${safePackageName(getJsonFileInfo(packageJson).name)}.esm.js`
+    );
   }
   return resolve(
     outDir,
-    `${safePackageName(packageInfo.name)}.${format}.${env}.js`
+    `${safePackageName(getJsonFileInfo(packageJson).name)}.${format}.${env}.js`
   );
 }
 

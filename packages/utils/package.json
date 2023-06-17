@@ -1,12 +1,12 @@
 {
   "name": "@obstinate/utils",
-  "version": "1.0.6",
+  "version": "1.0.9",
   "description": "",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/esm/index.d.ts",
   "scripts": {
-    "build": "crazy remove dist && tsc -p tsconfig.json && tsc -p tsconfig-esm.json"
+    "build": "tsc -p tsconfig.json && tsc -p tsconfig-esm.json"
   },
   "files": [
     "dist/**",

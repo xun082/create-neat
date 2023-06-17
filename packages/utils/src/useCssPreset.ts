@@ -1,9 +1,14 @@
-import packageInfo from "./getPackageInfo";
+import getJsonFileInfo from "./getJsonFileInfo";
+import resolveApp from "./getJsonFileInfo";
 
 function useCssPreset(preset: string) {
   return (
-    packageInfo.dependencies.hasOwnProperty(preset) ||
-    packageInfo.devDependencies.hasOwnProperty(preset)
+    getJsonFileInfo(resolveApp("./package.json")).dependencies.hasOwnProperty(
+      preset
+    ) ||
+    getJsonFileInfo(
+      resolveApp("./package.json")
+    ).devDependencies.hasOwnProperty(preset)
   );
 }
 

@@ -1,15 +1,15 @@
 {
   "name": "create-moment-test",
-  "version": "3.0.0",
+  "version": "10.0.1",
   "description": "",
   "license": "MIT",
-  "homepage": "https://github.com/sinoui/ts-lib-scripts",
+  "homepage": "https://github.com/xun082/react-cli",
   "bugs": {
-    "url": "https://github.com/sinoui/ts-lib-scripts/issues"
+    "url": "https://github.com/xun082/react-cli/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sinoui/ts-lib-scripts.git"
+    "url": "git+https://github.com/xun082/react-cli.git"
   },
   "bin": {
     "neat": "./dist/index.js"
@@ -19,7 +19,8 @@
     "start": "tsc -p tsconfig.json --watch"
   },
   "files": [
-    "dist/**/*"
+    "dist/**/*",
+    "template/**/*"
   ],
   "dependencies": {
     "@clack/prompts": "^0.6.3",
@@ -31,7 +32,8 @@
     "commander": "^10.0.0",
     "fs-extra": "^11.1.1",
     "ora": "^5.4.1",
-    "tar": "^6.1.15"
+    "tar": "^6.1.15",
+    "tslib": "^2.5.3"
   },
   "peerDependencies": {
     "typescript": ">=4.3.5"

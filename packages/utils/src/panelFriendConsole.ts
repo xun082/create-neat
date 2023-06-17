@@ -1,9 +1,8 @@
-import resolveApp from "./getPaths";
 import chalk from "chalk";
 import fs from "node:fs";
-import packageInfo from "./getPackageInfo";
+import getJsonFileInfo from "./getJsonFileInfo";
+import resolveApp from "./getPaths";
 
-const appName: string = packageInfo.name;
 const friendlySyntaxErrorLabel: string = "Syntax error:";
 
 function clearConsole() {
@@ -126,6 +125,7 @@ function friendlyPrints(urls: {
   localUrlForTerminal: string;
   lanUrlForTerminal: string;
 }) {
+  const appName: string = getJsonFileInfo(resolveApp("package.json")).name;
   console.log();
   console.log(`You can now view ${chalk.bold(appName)} in the browser.`);
   console.log();

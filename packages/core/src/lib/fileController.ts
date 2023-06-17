@@ -30,7 +30,8 @@ async function copyFolderRecursive(sourceDir: string, destinationDir: string) {
     await fs.ensureDir(destinationDir); // 确保目标目录存在，如果不存在则创建
     await fs.copy(sourceDir, destinationDir); // 复制源目录下的文件到目标目录
   } catch (error) {
-    console.error("文件复制失败：", error);
+    console.log(chalk.red("模板下载过程中出现错误,请重新尝试"));
+    process.exit(0);
   }
 }
 
@@ -61,7 +62,8 @@ export async function getNpmPackage(
       // 删除临时的 .tgz 文件
       fs.unlinkSync(tgzPath);
       await copyFolderRecursive(join(matter, "package/template"), matter);
-      await removeDirectory(join(matter, "package"), false);
+
+      removeDirectory(join(matter, "package"), false);
       spinner.succeed(chalk.bold.green("Project creation successfully"));
     })
     .catch((error) => {

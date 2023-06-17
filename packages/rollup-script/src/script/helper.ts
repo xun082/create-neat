@@ -1,4 +1,4 @@
-import { resolveApp, packageInfo } from "@obstinate/utils";
+import { resolveApp, getJsonFileInfo } from "@obstinate/utils";
 import * as fs from "fs-extra";
 import { safePackageName } from "../utils";
 import { NormalizedOptions, WatchOptions, ModuleFormat } from "../types";
@@ -48,10 +48,11 @@ export async function moveTypes() {
 export async function normalizeOptions(
   options: WatchOptions
 ): Promise<NormalizedOptions> {
+  const packageJson = resolveApp("./package.json");
   return {
     ...options,
-    name: options.name || packageInfo.name,
-    input: await getInputs(options.entry, packageInfo.source),
+    name: options.name || getJsonFileInfo(packageJson).name,
+    input: await getInputs(options.entry, getJsonFileInfo(packageJson).source),
     format: options.format.split(",").map((format: string) => {
       if (format === "es") {
         return "esm";
