@@ -3,12 +3,12 @@ import resolveApp from "./getJsonFileInfo";
 
 function useCssPreset(preset: string) {
   return (
-    getJsonFileInfo(resolveApp("./package.json")).dependencies.hasOwnProperty(
+    getJsonFileInfo(resolveApp("./package.json"))?.dependencies.hasOwnProperty(
       preset
     ) ||
     getJsonFileInfo(
       resolveApp("./package.json")
-    ).devDependencies.hasOwnProperty(preset)
+    )?.devDependencies.hasOwnProperty(preset)
   );
 }
 
