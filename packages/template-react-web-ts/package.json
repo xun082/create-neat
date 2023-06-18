@@ -5,7 +5,7 @@
     "react",
     "template"
   ],
-  "description": "The base template for Create React App.",
+  "description": "The base template for Create Neat.",
   "repository": {
     "type": "git",
     "url": "https://github.com/xun082/react-cli",

@@ -1,24 +1,8 @@
-{
-  "name": "@obstinate/react-ui",
-  "version": "1.0.0",
-  "keywords": [
-    "react",
-    "template"
-  ],
-  "description": "The base template for Create React App.",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/xun082/react-cli",
-    "directory": "packages/template-react-ui"
-  },
-  "license": "MIT",
-  "engines": {
-    "node": ">=14"
-  },
-  "bugs": {
-    "url": "https://github.com/xun082/react-cli/issues"
-  },
-  "files": [
-    "template"
-  ]
-}
+# Create-Neat-Template
+
+This is the official base template for [Create Neat](https://github.com/xun082/react-cli).
+
+For more information, please refer to:
+
+- [Getting Started](https://github.com/xun082/react-cli) – How to create a new app.
+
