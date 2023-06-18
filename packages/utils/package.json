@@ -1,7 +1,17 @@
 {
   "name": "@obstinate/utils",
   "version": "1.0.10",
-  "description": "",
+  "description": "Configuration and scripts for Create Neat.",
+  "license": "MIT",
+  "homepage": "https://github.com/xun082/react-cli",
+  "bugs": {
+    "url": "https://github.com/xun082/react-cli/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xun082/react-cli.git",
+    "directory": "packages/utils"
+  },
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/esm/index.d.ts",
@@ -15,7 +25,6 @@
   ],
   "keywords": [],
   "author": "moment",
-  "license": "MIT",
   "dependencies": {
     "chalk": "4.0.0",
     "ts-node": "^10.9.1"

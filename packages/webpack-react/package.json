@@ -1,7 +1,15 @@
 {
   "name": "@obstinate/react-script",
   "version": "1.0.38",
-  "description": "基于pnpm+monorepo+webpack开发的前端脚手架,旨在为用户快速初始化项目。",
+  "description": "Configuration and scripts for Create Neat.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xun082/react-cli.git",
+    "directory": "packages/webpack-react"
+  },
+  "bugs": {
+    "url": "https://github.com/xun082/react-cli/issues"
+  },
   "type": "commonjs",
   "bin": {
     "candy-script": "./bin/candy-script.js"
@@ -12,7 +20,7 @@
     "cli",
     "webpack"
   ],
-  "author": "",
+  "author": "moment",
   "license": "MIT",
   "dependencies": {
     "@babel/core": "^7.20.12",
@@ -61,9 +69,5 @@
     "webpack-manifest-plugin": "^5.0.0",
     "webpack-merge": "^5.8.0"
   },
-  "homepage": "https://github.com/xun082/react-cli",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/xun082/react-cli"
-  }
+  "homepage": "https://github.com/xun082/react-cli"
 }

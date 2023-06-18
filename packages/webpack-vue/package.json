@@ -1,17 +1,22 @@
 {
   "name": "@obstinate/vue-script",
   "version": "1.0.13",
-  "description": "基于pnpm+monorepo+webpack开发的前端脚手架,旨在为用户快速初始化项目。",
+  "description": "Configuration and scripts for Create Neat.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xun082/react-cli.git",
+    "directory": "packages/webpack-vue"
+  },
+  "bugs": {
+    "url": "https://github.com/xun082/react-cli/issues"
+  },
   "type": "commonjs",
   "bin": {
     "vue-script": "./bin/vue-script.js"
   },
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "keywords": [],
-  "author": "",
+  "author": "moment",
   "license": "MIT",
   "dependencies": {
     "@ant-design-vue/vue-jsx-hot-loader": "^0.1.4",
@@ -62,5 +67,6 @@
     "webpack-dev-server": "^4.11.1",
     "webpack-manifest-plugin": "^5.0.0",
     "webpack-merge": "^5.8.0"
-  }
+  },
+  "homepage": "https://github.com/xun082/react-cli"
 }
