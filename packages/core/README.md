@@ -1,24 +1,25 @@
-## 全局安装
+## Create Your App
+
+### npx
+
 ```
-npm install create-moment-test -g
+npx create-neat my-app
 ```
 
-创建项目
+### npm
+
 ```
-neat create my-app
+npm init neat my-app
 ```
 
-## npx
+### yarn
+
 ```
-npx create-moment-test my-app
+yarn create neat my-app
 ```
 
-## npm
-```
-npm init moment-test my-app
-```
+This package includes scripts and configuration used by [Create Neat](https://github.com/xun082/react-cli).
 
-## yarn
-```
-yarn create moment-test my-app
-```
+Please refer to its documentation:
+
+- [Getting Started](https://github.com/xun082/react-cli) – How to create a new app.

@@ -1,6 +1,6 @@
 {
   "name": "create-moment-test",
-  "version": "13.0.0",
+  "version": "20.0.0",
   "description": "",
   "license": "MIT",
   "homepage": "https://github.com/xun082/react-cli",
@@ -12,7 +12,7 @@
     "url": "git+https://github.com/xun082/react-cli.git"
   },
   "bin": {
-    "neat": "./dist/index.js"
+    "create-moment-test": "./dist/index.js"
   },
   "scripts": {
     "build": "tsc --build",
