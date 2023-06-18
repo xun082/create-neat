@@ -193,3 +193,7 @@ module.exports = {
 > 如果你正在使用这个项目或者对这个项目感兴趣，可以通过以下方式支持我:
 
 - **Star、Fork、Watch** 一键三连 🚀🚀
+
+> 我们很乐意在 `create-neat` 中得到您的帮助，看到您的贡献，如果你想获取到更多信息以及如何开始，请扫描进群:
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/c57a77397aec47c78fce1aaf03bb5659.jpeg)
