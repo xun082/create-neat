@@ -196,4 +196,4 @@ module.exports = {
 
 > 我们很乐意在 `create-neat` 中得到您的帮助，看到您的贡献，如果你想获取到更多信息以及如何开始，请扫描进群:
 
-<img src="https://img-blog.csdnimg.cn/c57a77397aec47c78fce1aaf03bb5659.jpeg"  alt="微信群">
+<img src="https://img-blog.csdnimg.cn/c57a77397aec47c78fce1aaf03bb5659.jpeg" width="300" height="200" alt="微信群">
