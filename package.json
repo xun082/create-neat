@@ -1,7 +1,7 @@
 {
   "name": "melody",
   "version": "1.0.0",
-  "description": "",
+  "description": "Zero configuration to quickly create your application",
   "scripts": {
     "commit": "cz",
     "add": "pnpm changeset add",
