@@ -1,6 +1,6 @@
 import path from "node:path";
 import { ESLint } from "eslint";
-import { resolveApp } from "@obstinate/utils";
+import { resolveApp } from "@laconic/utils";
 import ora from "ora";
 import chalk from "chalk";
 

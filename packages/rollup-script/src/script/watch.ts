@@ -12,7 +12,7 @@ import child_process from "node:child_process";
 import { RollupWatchOptions, watch, WatcherOptions } from "rollup";
 import { logError } from "../utils";
 import chalk from "chalk";
-import { resolveApp, clearConsole } from "@obstinate/utils";
+import { resolveApp, clearConsole } from "@laconic/utils";
 import { join } from "node:path";
 import { ESLint } from "eslint";
 

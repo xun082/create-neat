@@ -1,9 +1,13 @@
 {
-  "name": "@obstinate/template-vue-web-js",
-  "version": "5.0.0",
+  "name": "@laconic/template-vue-web-js",
+  "version": "1.0.0",
   "keywords": [
     "react",
-    "template"
+    "vue",
+    "webpack",
+    "rollup",
+    "cli",
+    "ts"
   ],
   "description": "The base template for Create React App.",
   "repository": {

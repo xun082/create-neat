@@ -1,7 +1,7 @@
 import fs from "fs";
 import { invertObject, evalToString } from "./helper";
 import { addDefault } from "@babel/helper-module-imports";
-import { resolveApp } from "@obstinate/utils";
+import { resolveApp } from "@laconic/utils";
 
 export default function transformErrorMessages(babel: any) {
   const t = babel.types;

@@ -1,4 +1,4 @@
-import { resolveApp } from "@obstinate/utils";
+import { resolveApp } from "@laconic/utils";
 import fs from "fs";
 import childProcess from "child_process";
 import inquirer from "inquirer";

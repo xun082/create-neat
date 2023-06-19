@@ -1,4 +1,4 @@
-import { resolveApp } from "@obstinate/utils";
+import { resolveApp } from "@laconic/utils";
 import fs from "fs-extra";
 import { execSync, exec } from "child_process";
 import { confirm, intro, select } from "@clack/prompts";

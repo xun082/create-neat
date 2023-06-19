@@ -1,6 +1,6 @@
 {
-  "name": "@obstinate/react-script",
-  "version": "1.0.38",
+  "name": "@laconic/react-script",
+  "version": "1.0.1",
   "description": "Configuration and scripts for Create Neat.",
   "repository": {
     "type": "git",
@@ -17,8 +17,11 @@
   "scripts": {},
   "keywords": [
     "react",
+    "vue",
+    "webpack",
+    "rollup",
     "cli",
-    "webpack"
+    "ts"
   ],
   "author": "moment",
   "license": "MIT",
@@ -30,7 +33,7 @@
     "@babel/preset-env": "^7.20.2",
     "@babel/preset-react": "^7.18.6",
     "@babel/preset-typescript": "^7.18.6",
-    "@obstinate/utils": "workspace:*",
+    "@laconic/utils": "workspace:*",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
     "@typescript-eslint/parser": "^5.52.0",
     "autoprefixer": "^10.4.13",

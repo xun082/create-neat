@@ -8,14 +8,14 @@ const template: string[] = [
   "commit",
 ];
 
-export const packageVersion = "5.0.0";
+export const packageVersion = "1.0.0";
 
 function getProjectLink(templates: string[]): Map<string, string> {
   const map = new Map();
   templates.forEach((template: string) => {
     map.set(
       template,
-      `https://registry.npmjs.org/@obstinate/template-${template}/-/template-${template}-${packageVersion}.tgz`
+      `https://registry.npmjs.org/@laconic/template-${template}/-/template-${template}-${packageVersion}.tgz`
     );
   });
   return map;

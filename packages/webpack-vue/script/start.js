@@ -6,9 +6,9 @@ const {
   clearConsole,
   formatWebpackMessages,
   friendlyPrints,
-} = require("@obstinate/utils");
+} = require("@laconic/utils");
 const chalk = require("chalk");
-const { devServerConfig, getIPAddress } = require("@obstinate/utils");
+const { devServerConfig, getIPAddress } = require("@laconic/utils");
 const WebpackDevServer = require("webpack-dev-server");
 const webpack = require("webpack");
 const devWebpackConfig = require("../config/webpack.dev");

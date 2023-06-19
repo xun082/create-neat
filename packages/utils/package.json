@@ -1,6 +1,6 @@
 {
-  "name": "@obstinate/utils",
-  "version": "1.0.10",
+  "name": "@laconic/utils",
+  "version": "1.0.0",
   "description": "Configuration and scripts for Create Neat.",
   "license": "MIT",
   "homepage": "https://github.com/xun082/react-cli",
@@ -23,7 +23,14 @@
     "package.json",
     "tsconfig.json"
   ],
-  "keywords": [],
+  "keywords": [
+    "react",
+    "vue",
+    "webpack",
+    "rollup",
+    "cli",
+    "ts"
+  ],
   "author": "moment",
   "dependencies": {
     "chalk": "4.0.0",

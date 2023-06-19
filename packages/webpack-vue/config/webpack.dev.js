@@ -1,6 +1,6 @@
 const { merge } = require("webpack-merge");
 const path = require("node:path");
-const { isUseTypescript, resolveApp } = require("@obstinate/utils");
+const { isUseTypescript, resolveApp } = require("@laconic/utils");
 const CircularDependencyPlugin = require("circular-dependency-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const webpackCommonConfig = require("./webpack.common");

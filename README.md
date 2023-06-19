@@ -32,6 +32,22 @@ npm start
 
 如果你之前已经通过 `npm install -g create-neat` 全局安装了 `create-neat`，我们建议你使用 `npm uninstall -g create-neat` 或 `yarn global remove create-neat` 来卸载这个包，以确保 npx 总是使用最新的版本。
 
+当你在终端中输入 `npx create-neat my-app` 时，控制台会有以下选项功能选择:
+
+![在这里插入图片描述](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b1423eca147545c698bec5b7f30f2da2~tplv-k3u1fbpfcp-zoom-1.image)
+
+`create-neat` 会根据你的创建不同的应用程序，这些应用程序都是开箱即用，无需配置，其中:
+
+- `common-lib`：一个基础的 `Typescript` 库，您可以使用该模板来编写一个类似于 `lodash` 的工具库;
+- `react-ui`: 为你快速创建一个 `react` 组件库，内置 `storybook` 让你快速编写你的组件库文档，并且使用 `standard-version` 自动为你生成 `CHANGELOG` 文件;
+- 剩下的四个都是为你创建不用的 `web` 应用程序，其中 `vue` 同时支持 `.vue` 和 `.tsx` 的语法。
+
+如果项目创建成功，会有如下效果图所示:
+
+![在这里插入图片描述](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/fe46e77448d54c14aebf4557db949883~tplv-k3u1fbpfcp-zoom-1.image)
+
+> 更多使用方式后续会在 [掘金](https://juejin.cn/user/3782764966460398/posts) 中以文章方式呈现出来，感兴趣的小伙伴可以关注一下。
+
 ### 四、 创建应用程序 📕
 
 要创建一个新的应用程序，您可以选择以下方法之一:
@@ -102,7 +118,7 @@ cd my-app
 
 #### `npm start`、`pnpm start` 或者 `yarn start`
 
-如果你使用的是 `web` 相对应的项目类型，则在开发模式下运行应用程序并自动打开 [http://localhost:3000] 在浏览器中进行查看，否则则使用 `Rollup` 中的 `watch` 钩子在命令行终端中监听您文件的变化。
+如果你使用的是 `web` 相对应的项目类型，则在开发模式下运行应用程序并自动打开 [http://localhost:3000](http://localhost:3000) 在浏览器中进行查看，否则则使用 `Rollup` 中的 `watch` 钩子在命令行终端中监听您文件的变化。
 
 #### `npm build`、`pnpm build` 或者 `yarn build`
 
@@ -196,6 +212,6 @@ module.exports = {
 
 > 我们很乐意在 `create-neat` 中得到您的帮助，看到您的贡献，如果你想获取到更多信息以及如何开始，请扫描进群:
 
-<div style="text-align: center;">
-<img src="https://img-blog.csdnimg.cn/c57a77397aec47c78fce1aaf03bb5659.jpeg" width="400" height="300" alt="微信群">
-</div>
+<center>
+<img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5cd5949ed05749968c36edaddb024f5d~tplv-k3u1fbpfcp-watermark.image?" width="400" height="300" alt="微信群">
+</center>

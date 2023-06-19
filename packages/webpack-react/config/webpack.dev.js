@@ -1,7 +1,7 @@
 const { merge } = require("webpack-merge");
 const ESLintPlugin = require("eslint-webpack-plugin");
 const path = require("path");
-const { resolveApp, isUseTypescript } = require("@obstinate/utils");
+const { resolveApp, isUseTypescript } = require("@laconic/utils");
 const CircularDependencyPlugin = require("circular-dependency-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");

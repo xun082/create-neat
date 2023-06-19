@@ -3,7 +3,7 @@ import * as fs from "fs-extra";
 import { concatAllArray } from "jpjs";
 import { InnOptions, NormalizedOptions } from "../types";
 import { createRollupConfig } from "./rollupConfig";
-import { resolveApp } from "@obstinate/utils";
+import { resolveApp } from "@laconic/utils";
 
 let InnConfig = {
   rollup(config: RollupOptions, _options: InnOptions) {

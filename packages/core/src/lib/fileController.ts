@@ -1,4 +1,4 @@
-import { resolveApp } from "@obstinate/utils";
+import { resolveApp } from "@laconic/utils";
 import chalk from "chalk";
 import ora from "ora";
 import fs from "fs-extra";
@@ -30,7 +30,9 @@ async function copyFolderRecursive(sourceDir: string, destinationDir: string) {
     await fs.ensureDir(destinationDir); // 确保目标目录存在，如果不存在则创建
     await fs.copy(sourceDir, destinationDir); // 复制源目录下的文件到目标目录
   } catch (error) {
-    console.log(chalk.red("模板下载过程中出现错误,请重新尝试"));
+    console.log(
+      chalk.red("\n 😡😡😡模板下载过程中可能出现网络错误,请重新尝试")
+    );
     process.exit(0);
   }
 }

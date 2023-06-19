@@ -1,5 +1,5 @@
 import glob from "glob";
-import { resolveApp } from "@obstinate/utils";
+import { resolveApp } from "@laconic/utils";
 import fs from "fs";
 import path from "path";
 import XlsxPopulate from "xlsx-populate";

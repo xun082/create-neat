@@ -1,4 +1,4 @@
-import { resolveApp, getJsonFileInfo } from "@obstinate/utils";
+import { resolveApp, getJsonFileInfo } from "@laconic/utils";
 import * as fs from "fs-extra";
 import { safePackageName } from "../utils";
 import { NormalizedOptions, WatchOptions, ModuleFormat } from "../types";

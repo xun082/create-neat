@@ -1,4 +1,4 @@
-import { resolveApp } from "@obstinate/utils";
+import { resolveApp } from "@laconic/utils";
 import { require } from "./getPackageInfo.js";
 import fs from "fs";
 

@@ -1,6 +1,6 @@
 {
   "name": "moment",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "scripts": {
     "start": "candy-script start",
@@ -14,7 +14,7 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@obstinate/react-script": "^1.0.35",
+    "@laconic/react-script": "^1.0.1",
     "prettier": "^2.8.5"
   },
   "browserslist": ["last 2 version", "> 1%", "not dead"]

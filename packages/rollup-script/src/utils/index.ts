@@ -1,6 +1,6 @@
 import { isAbsolute, resolve } from "path";
 import chalk from "chalk";
-import { getJsonFileInfo, resolveApp } from "@obstinate/utils";
+import { getJsonFileInfo, resolveApp } from "@laconic/utils";
 import { PackageJson } from "../types";
 
 const SCOPE_NAME_REGEXP = /^@(.+)\//;

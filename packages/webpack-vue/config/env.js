@@ -1,5 +1,5 @@
 const fs = require("fs");
-const { resolveApp } = require("@obstinate/utils");
+const { resolveApp } = require("@laconic/utils");
 const dotenvExpand = require("dotenv-expand");
 const dotenv = require("dotenv");
 

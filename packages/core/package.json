@@ -1,7 +1,7 @@
 {
-  "name": "create-moment-test",
-  "version": "20.0.0",
-  "description": "",
+  "name": "create-neat",
+  "version": "1.0.1",
+  "description": "Zero configuration to quickly create your application",
   "license": "MIT",
   "homepage": "https://github.com/xun082/react-cli",
   "bugs": {
@@ -12,7 +12,7 @@
     "url": "git+https://github.com/xun082/react-cli.git"
   },
   "bin": {
-    "create-moment-test": "./dist/index.js"
+    "create-neat": "./dist/index.js"
   },
   "scripts": {
     "build": "tsc --build",
@@ -22,9 +22,17 @@
     "dist/**/*",
     "template/**/*"
   ],
+  "keywords": [
+    "react",
+    "vue",
+    "webpack",
+    "rollup",
+    "cli",
+    "ts"
+  ],
   "dependencies": {
     "@clack/prompts": "^0.6.3",
-    "@obstinate/utils": "workspace:*",
+    "@laconic/utils": "workspace:*",
     "axios": "^1.4.0",
     "boxen": "^5.0.0",
     "chalk": "4.0.0",

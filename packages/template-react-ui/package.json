@@ -1,9 +1,13 @@
 {
-  "name": "@obstinate/template-react-ui",
-  "version": "5.0.0",
+  "name": "@laconic/template-react-ui",
+  "version": "1.0.0",
   "keywords": [
     "react",
-    "template"
+    "vue",
+    "webpack",
+    "rollup",
+    "cli",
+    "ts"
   ],
   "description": "The base template for Create Neat.",
   "repository": {

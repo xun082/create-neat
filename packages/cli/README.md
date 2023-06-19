@@ -3,7 +3,7 @@
 ## 全局安装
 
 ```sh
-npm install @obstinate/react-cli -g
+npm install @laconic/react-cli -g
 ```
 
 该脚手架提供的的全局指令为 `crazy`,查看该脚手架帮助,你可以直接使用:
@@ -30,10 +30,10 @@ crazy create <projectName> [options]
 crazy create moment -f
 ```
 
-如果你不想安装该脚手架,你也可以使用 `npx` 执行,使用 `npx @obstinate/react-cli` 代替 `crazy` 命令,例如,你要创建一个项目,你可以执行以下命令:
+如果你不想安装该脚手架,你也可以使用 `npx` 执行,使用 `npx @laconic/react-cli` 代替 `crazy` 命令,例如,你要创建一个项目,你可以执行以下命令:
 
 ```sh
-npx @obstinate/react-cli create moment -f
+npx @laconic/react-cli create moment -f
 ```
 
 如果没有输入 `-f`,则会在后面的交互信息询问是否覆盖当前已存在的文件夹。

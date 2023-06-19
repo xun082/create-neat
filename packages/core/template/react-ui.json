@@ -20,7 +20,7 @@
     "react": ">=16"
   },
   "devDependencies": {
-    "@obstinate/rollup-script": "^1.1.33",
+    "@laconic/rollup-script": "^1.0.0",
     "@storybook/addon-essentials": "^7.0.20",
     "@storybook/addon-info": "^5.3.21",
     "@storybook/addon-links": "^7.0.20",

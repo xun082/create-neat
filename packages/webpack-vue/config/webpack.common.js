@@ -1,8 +1,4 @@
-const {
-  resolveApp,
-  isUseTypescript,
-  useCssPreset,
-} = require("@obstinate/utils");
+const { resolveApp, isUseTypescript, useCssPreset } = require("@laconic/utils");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { DefinePlugin } = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");

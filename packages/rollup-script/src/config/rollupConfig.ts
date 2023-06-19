@@ -1,5 +1,5 @@
 import { safePackageName, safeVariableName, external } from "../utils";
-import { resolveApp } from "@obstinate/utils";
+import { resolveApp } from "@laconic/utils";
 import { RollupOptions } from "rollup";
 import { terser } from "rollup-plugin-terser";
 import { DEFAULT_EXTENSIONS as DEFAULT_BABEL_EXTENSIONS } from "@babel/core";

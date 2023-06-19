@@ -1,7 +1,7 @@
 import fs from "fs-extra";
 import { parse, ParserOptions } from "@babel/parser";
 import traverse from "@babel/traverse";
-import { resolveApp } from "@obstinate/utils";
+import { resolveApp } from "@laconic/utils";
 import { safeVariableName } from "../index";
 import { pascalCase } from "pascal-case";
 import { invertObject, evalToString } from "./helper";

@@ -1,5 +1,5 @@
 import { deleteSync } from "del";
-import { resolveApp } from "@obstinate/utils";
+import { resolveApp } from "@laconic/utils";
 import chalk from "chalk";
 
 /**
