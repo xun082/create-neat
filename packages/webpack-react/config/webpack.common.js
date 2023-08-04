@@ -4,7 +4,6 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const {
   resolveApp,
   isUseTypescript,
-  useCssPreset,
   createEnvironmentHash,
 } = require("@laconic/utils");
 const { merge } = require("webpack-merge");
@@ -12,7 +11,7 @@ const isDevelopment = process.env.NODE_ENV === "development";
 const getClientEnvironment = require("./env");
 const fs = require("node:fs");
 const userWebpackConfig = resolveApp("./webpack.config.js");
-
+const { useCssPreset } = require("./utils");
 const env = getClientEnvironment();
 
 module.exports = merge(
