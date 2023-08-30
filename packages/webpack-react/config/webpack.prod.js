@@ -4,8 +4,6 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const copyWebpackPlugin = require("copy-webpack-plugin");
 const { resolveApp } = require("@laconic/utils");
 const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
-const BundleAnalyzerPlugin =
-  require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const CompressionWebpackPlugin = require("compression-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const HtmlMinimizerPlugin = require("html-minimizer-webpack-plugin");
@@ -34,8 +32,6 @@ module.exports = merge(
           },
         ],
       }),
-      // 打包体积分析
-      new BundleAnalyzerPlugin(),
       new CompressionWebpackPlugin({
         filename: "[path][base].gz",
         algorithm: "gzip",
