@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createEnvironmentHash = exports.getJsonFileInfo = exports.useCssPreset = exports.isUseTypescript = exports.devServerConfig = exports.resolveApp = exports.getIPAddress = exports.friendlyPrints = exports.formatWebpackMessages = exports.clearConsole = void 0;
+exports.getPackagePath = exports.createEnvironmentHash = exports.getJsonFileInfo = exports.useCssPreset = exports.isUseTypescript = exports.devServerConfig = exports.resolveApp = exports.getIPAddress = exports.friendlyPrints = exports.formatWebpackMessages = exports.clearConsole = void 0;
 const getIpAddress_1 = __importDefault(require("./getIpAddress"));
 exports.getIPAddress = getIpAddress_1.default;
 const getPaths_1 = __importDefault(require("./getPaths"));
@@ -18,6 +18,8 @@ const createHash_1 = __importDefault(require("./createHash"));
 exports.createEnvironmentHash = createHash_1.default;
 const getJsonFileInfo_1 = __importDefault(require("./getJsonFileInfo"));
 exports.getJsonFileInfo = getJsonFileInfo_1.default;
+const getPackagePath_1 = __importDefault(require("./getPackagePath"));
+exports.getPackagePath = getPackagePath_1.default;
 var panelFriendConsole_1 = require("./panelFriendConsole");
 Object.defineProperty(exports, "clearConsole", { enumerable: true, get: function () { return panelFriendConsole_1.clearConsole; } });
 Object.defineProperty(exports, "formatWebpackMessages", { enumerable: true, get: function () { return panelFriendConsole_1.formatWebpackMessages; } });
