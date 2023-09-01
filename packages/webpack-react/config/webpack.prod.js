@@ -1,3 +1,4 @@
+const path = require("path")
 const { merge } = require("webpack-merge");
 const webpackCommonConfig = require("./webpack.common");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
@@ -9,6 +10,42 @@ const TerserPlugin = require("terser-webpack-plugin");
 const HtmlMinimizerPlugin = require("html-minimizer-webpack-plugin");
 const { gzip } = require("zlib");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+
+// 收集所有的依赖的包路径
+const topLevelFrameworkPaths = []
+const visitedFrameworkPackages = new Set()
+
+// 收集某个包的所有依赖
+const addPackagePath = (packageName, relativeToPath) => {
+  try {
+    if (visitedFrameworkPackages.has(packageName)) {
+      return
+    }
+    visitedFrameworkPackages.add(packageName)
+
+    const packageJsonPath = require.resolve(`${packageName}/package.json`, {
+      paths: [relativeToPath],
+    })
+    // 收集到该包在 node_modules 的路径（文件夹），如“xxxx/nodu_modules/react/”
+    const directory = path.join(packageJsonPath, '../')
+    if (topLevelFrameworkPaths.includes(directory)) return
+    topLevelFrameworkPaths.push(directory)
+
+    // 拿到该包的所有依赖
+    const dependencies = require(packageJsonPath).dependencies || {}
+    for (const name of Object.keys(dependencies)) {
+      // 递归收集改包的所有依赖
+      addPackagePath(name, directory)
+    }
+  } catch (_) {
+    // don't error on failing to resolve framework packages
+  }
+}
+const dir = '.'
+// 收集 react/react-dom 的所有依赖
+for (const packageName of ['react', 'react-dom']) {
+  addPackagePath(packageName, dir)
+}
 
 module.exports = merge(
   {
@@ -99,10 +136,8 @@ module.exports = merge(
           },
           react: {
             test(module) {
-              return (
-                module.resource &&
-                module.resource.includes("node_modules/react")
-              );
+              const resource = module.nameForCondition && module.nameForCondition()
+              return resource ? topLevelFrameworkPaths.some((pkgPath) => resource.startsWith(pkgPath)) : false
             },
             chunks: "initial",
             filename: "react.[contenthash].js",
