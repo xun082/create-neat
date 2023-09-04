@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Zero configuration to quickly create your application",
   "scripts": {
-    "commit": "cz",
+    "commit": "git-cz && git push",
     "add": "pnpm changeset add",
     "push": "pnpm changeset publish"
   },
@@ -13,12 +13,15 @@
   "devDependencies": {
     "@changesets/cli": "^2.26.0",
     "commitizen": "^4.3.0",
+    "@commitlint/cli": "^17.6.5",
+    "@commitlint/config-conventional": "^17.6.5",
     "cz-conventional-changelog": "^3.3.0",
+    "cz-git": "^1.6.1",
     "typescript": "^4.9.5"
   },
   "config": {
     "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
+      "path": "node_modules/cz-git"
     }
   }
 }
