@@ -1,4 +1,4 @@
-const path = require('path');
+import path from 'node:path';
 
 const getPackagePath = (packageNames: string[], dirName: string): string[] => {
   // 收集所有的依赖的包路径
@@ -37,7 +37,7 @@ const getPackagePath = (packageNames: string[], dirName: string): string[] => {
     addPackagePath(packageName, dirName);
   }
 
-  return topLevelPackagePaths
+  return topLevelPackagePaths;
 };
 
 export default getPackagePath;
