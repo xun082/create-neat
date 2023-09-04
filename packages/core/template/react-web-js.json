@@ -4,7 +4,8 @@
   "description": "",
   "scripts": {
     "start": "candy-script start",
-    "build": "candy-script build"
+    "build": "candy-script build",
+    "analyzer": "candy-script analyzer"
   },
   "keywords": [],
   "author": "",
@@ -14,7 +15,7 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@laconic/react-script": "^1.0.1",
+    "@laconic/react-script": "^1.2.0",
     "prettier": "^2.8.5"
   },
   "browserslist": ["last 2 version", "> 1%", "not dead"]
