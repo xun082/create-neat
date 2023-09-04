@@ -1,2 +1,3 @@
 node_modules
 dist
+packages/*/dist  # 忽略packages目录下所有dist目录
