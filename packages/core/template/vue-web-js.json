@@ -5,7 +5,8 @@
   "private": true,
   "scripts": {
     "start": "vue-script start",
-    "build": "vue-script build"
+    "build": "vue-script build",
+    "analyzer": "vue-script analyzer"
   },
   "dependencies": {
     "vue": "^3.3.4"

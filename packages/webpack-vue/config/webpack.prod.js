@@ -4,15 +4,13 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const copyWebpackPlugin = require("copy-webpack-plugin");
 const { resolveApp, getPackagePath } = require("@laconic/utils");
 const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
-const BundleAnalyzerPlugin =
-  require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const CompressionWebpackPlugin = require("compression-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const HtmlMinimizerPlugin = require("html-minimizer-webpack-plugin");
 const { gzip } = require("zlib");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
-const topLevelFrameworkPaths = getPackagePath(['vue'], '.')
+const topLevelFrameworkPaths = getPackagePath(["vue"], ".");
 
 module.exports = merge(
   {
@@ -36,8 +34,6 @@ module.exports = merge(
           },
         ],
       }),
-      // 打包体积分析
-      new BundleAnalyzerPlugin(),
       new CompressionWebpackPlugin({
         filename: "[path][base].gz",
         algorithm: "gzip",
@@ -105,8 +101,13 @@ module.exports = merge(
           },
           vue: {
             test(module) {
-              const resource = module.nameForCondition && module.nameForCondition()
-              return resource ? topLevelFrameworkPaths.some((pkgPath) => resource.startsWith(pkgPath)) : false
+              const resource =
+                module.nameForCondition && module.nameForCondition();
+              return resource
+                ? topLevelFrameworkPaths.some((pkgPath) =>
+                    resource.startsWith(pkgPath)
+                  )
+                : false;
             },
             chunks: "initial",
             filename: "vue.[contenthash].js",

@@ -3,7 +3,7 @@
 const crossSpawn = require("cross-spawn");
 const argument = process.argv.slice(2);
 
-if (["start", "build"].includes(argument[0])) {
+if (["start", "build", "analyzer"].includes(argument[0])) {
   const result = crossSpawn.sync(
     process.execPath,
     [require.resolve(`../script/${argument[0]}.js`)],
