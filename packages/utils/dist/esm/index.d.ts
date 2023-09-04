@@ -5,5 +5,6 @@ import isUseTypescript from "./isUseTypescript";
 import useCssPreset from "./useCssPreset";
 import createEnvironmentHash from "./createHash";
 import getJsonFileInfo from "./getJsonFileInfo";
+import getPackagePath from "./getPackagePath";
 export { clearConsole, formatWebpackMessages, friendlyPrints, } from "./panelFriendConsole";
-export { getIPAddress, resolveApp, devServerConfig, isUseTypescript, useCssPreset, getJsonFileInfo, createEnvironmentHash, };
+export { getIPAddress, resolveApp, devServerConfig, isUseTypescript, useCssPreset, getJsonFileInfo, createEnvironmentHash, getPackagePath };

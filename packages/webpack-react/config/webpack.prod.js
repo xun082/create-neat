@@ -2,13 +2,15 @@ const { merge } = require("webpack-merge");
 const webpackCommonConfig = require("./webpack.common");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const copyWebpackPlugin = require("copy-webpack-plugin");
-const { resolveApp } = require("@laconic/utils");
+const { resolveApp, getPackagePath } = require("@laconic/utils");
 const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
 const CompressionWebpackPlugin = require("compression-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const HtmlMinimizerPlugin = require("html-minimizer-webpack-plugin");
 const { gzip } = require("zlib");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+
+const topLevelFrameworkPaths = getPackagePath(['react', 'react-dom'], ".")
 
 module.exports = merge(
   {
@@ -99,10 +101,8 @@ module.exports = merge(
           },
           react: {
             test(module) {
-              return (
-                module.resource &&
-                module.resource.includes("node_modules/react")
-              );
+              const resource = module.nameForCondition && module.nameForCondition()
+              return resource ? topLevelFrameworkPaths.some((pkgPath) => resource.startsWith(pkgPath)) : false
             },
             chunks: "initial",
             filename: "react.[contenthash].js",

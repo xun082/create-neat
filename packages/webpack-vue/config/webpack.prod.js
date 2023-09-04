@@ -2,7 +2,7 @@ const { merge } = require("webpack-merge");
 const webpackCommonConfig = require("./webpack.common");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const copyWebpackPlugin = require("copy-webpack-plugin");
-const { resolveApp } = require("@laconic/utils");
+const { resolveApp, getPackagePath } = require("@laconic/utils");
 const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
 const BundleAnalyzerPlugin =
   require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
@@ -11,6 +11,8 @@ const TerserPlugin = require("terser-webpack-plugin");
 const HtmlMinimizerPlugin = require("html-minimizer-webpack-plugin");
 const { gzip } = require("zlib");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+
+const topLevelFrameworkPaths = getPackagePath(['vue'], '.')
 
 module.exports = merge(
   {
@@ -103,9 +105,8 @@ module.exports = merge(
           },
           vue: {
             test(module) {
-              return (
-                module.resource && module.resource.includes("node_modules/vue")
-              );
+              const resource = module.nameForCondition && module.nameForCondition()
+              return resource ? topLevelFrameworkPaths.some((pkgPath) => resource.startsWith(pkgPath)) : false
             },
             chunks: "initial",
             filename: "vue.[contenthash].js",

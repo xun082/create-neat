@@ -5,6 +5,7 @@ import isUseTypescript from "./isUseTypescript";
 import useCssPreset from "./useCssPreset";
 import createEnvironmentHash from "./createHash";
 import getJsonFileInfo from "./getJsonFileInfo";
+import getPackagePath from "./getPackagePath";
 
 export {
   clearConsole,
@@ -20,4 +21,5 @@ export {
   useCssPreset,
   getJsonFileInfo,
   createEnvironmentHash,
+  getPackagePath
 };
