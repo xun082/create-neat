@@ -1,0 +1,45 @@
+name: "报告 Bug  🐛"
+description: 发现了一个问题？请告诉我们！
+labels: [
+  "bug"
+]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: "📝 问题描述"
+      description: 描述你的问题
+      placeholder: 描述你的问题...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: "🤔 期望行为"
+      description: 请述你期望的行为
+      placeholder: 我期望的是...
+    validations:
+      required: true
+  - type: textarea
+    id: current
+    attributes:
+      label: "👀 当前行为"
+      description: 请描述当前的行为
+      placeholder: 当前的行为是...
+    validations:
+      required: true
+  - type: input
+    id: browser
+    attributes:
+      label: 🖥️ Browser
+      description: 你使用的浏览器和版本
+      placeholder: Chrome X
+    validations:
+      required: true
+  - type: textarea
+    id: additional
+    attributes:
+      label: "📄 更多信息"
+      description: 更多的信息或截图
+    validations:
+      required: false

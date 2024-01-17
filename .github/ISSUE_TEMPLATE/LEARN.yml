@@ -1,0 +1,21 @@
+name: "知识储备学习"
+description: 知识储备学习
+labels: [
+  "learn"
+]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: "📝 知识储备"
+      description: 描述需要的技术知识
+      placeholder: 描述需要的技术知识...
+    validations:
+      required: true
+  - type: textarea
+    id: links
+    attributes:
+      label: "📄 相关链接"
+      description: 技术相关的文档链接等
+    validations:
+      required: false

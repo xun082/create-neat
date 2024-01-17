@@ -1,0 +1,21 @@
+---
+name: "💬 讨论"
+description: 开始讨论
+title: "[Discuss]: Discuss title"
+labels: [discuss]
+assignees: []
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: 讨论话题 
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: 截屏
+  - type: textarea
+    id: observed-behavior
+    attributes:
+      label: 链接
