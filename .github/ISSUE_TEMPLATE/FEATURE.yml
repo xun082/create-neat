@@ -1,0 +1,21 @@
+name: "新增功能"
+description: 新增功能
+labels: [
+  "feature request"
+]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: "📝 想要新增的功能"
+      description: 新增功能描述
+      placeholder: 新增功能描述...
+    validations:
+      required: true
+  - type: textarea
+    id: links
+    attributes:
+      label: "📄 相关技术"
+      description: 需要的技术相关的文档链接等
+    validations:
+      required: false

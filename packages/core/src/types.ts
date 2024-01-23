@@ -9,5 +9,5 @@ export interface PackageJson {
   author?: string;
   peerDependencies?: Object;
   config?: Object;
-  "lint-staged"?: Object;
+  'lint-staged'?: Object;
 }
