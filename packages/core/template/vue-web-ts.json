@@ -1,0 +1,20 @@
+{
+  "name": "moment",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "vue-script start",
+    "build": "vue-script build",
+    "analyzer": "vue-script analyzer"
+  },
+  "dependencies": {
+    "vue": "^3.3.4"
+  },
+  "author": "",
+  "devDependencies": {
+    "@laconic/vue-script": "^1.0.0",
+    "@types/vue": "^2.0.0",
+    "typescript": "~4.5.5"
+  },
+  "browserslist": ["last 2 version", "> 1%", "not dead"]
+}

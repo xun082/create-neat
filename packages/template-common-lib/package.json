@@ -1,0 +1,28 @@
+{
+  "name": "@laconic/template-common-lib",
+  "version": "1.0.1",
+  "keywords": [
+    "react",
+    "vue",
+    "webpack",
+    "rollup",
+    "cli",
+    "ts"
+  ],
+  "description": "The base template for Create React App.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xun082/react-cli",
+    "directory": "packages/template-common-lib"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=14"
+  },
+  "bugs": {
+    "url": "https://github.com/xun082/react-cli/issues"
+  },
+  "files": [
+    "template"
+  ]
+}
