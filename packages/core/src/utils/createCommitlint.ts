@@ -7,7 +7,7 @@ import { getNpmPackage } from "./fileController";
 import { projectLink } from "./constants";
 import getPackageJsonInfo from "./getPackageInfo";
 
-export default function createCommitLint(matter: string): void {
+export default function createCommitlint(matter: string): void {
   const commit = "commit";
   getNpmPackage(projectLink.get(commit) as string, commit, matter);
 

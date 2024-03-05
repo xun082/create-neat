@@ -11,7 +11,7 @@ import { ProjectTypes, PackageManagers } from "./questions";
 import { projectLink } from "./constants";
 import isGitInstalled from "./checkGitInstallation";
 import createSuccessInfo from "./createSuccessInfo";
-import createCommitLint from "./createCommitLint";
+import createCommitlint from "./createCommitlint";
 import { createPackageJson, createTemplateFile } from "./createFile";
 
 // 创建项目文件
@@ -74,7 +74,7 @@ export default async function createApp(matter: string, options: { force: boolea
 
   // 注入 lint 规则
   if (commitLint === true) {
-    createCommitLint(rootDirectory);
+    createCommitlint(rootDirectory);
   }
 
   // 安装相关依赖，暂时不用
