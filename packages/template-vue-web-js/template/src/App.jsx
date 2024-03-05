@@ -17,7 +17,7 @@ export default defineComponent({
             <a href="https://juejin.cn/user/3782764966460398/posts">掘金地址</a>
           </div>
           <div>
-            <a href="https://github.com/xun082/react-cli">Github地址</a>
+            <a href="https://github.com/xun082/create-neat.git">Github地址</a>
           </div>
         </h1>
       </div>

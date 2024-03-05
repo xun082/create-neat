@@ -4,6 +4,8 @@
   "compilerOptions": {
     "outDir": "dist",
     "rootDir": "src",
-    "types": ["node"]
+    "types": ["node"],
+    "target": "ESNext",
+    "moduleResolution": "node"
   }
 }

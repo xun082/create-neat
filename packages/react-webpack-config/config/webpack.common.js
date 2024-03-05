@@ -2,12 +2,16 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { DefinePlugin } = require("webpack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { merge } = require("webpack-merge");
-const { resolveApp, isUseTypescript, createEnvironmentHash } = require("@laconic/utils");
+const {
+  resolveApp,
+  isUseTypescript,
+  createEnvironmentHash,
+  useCssPreset,
+} = require("@laconic/utils");
 const fs = require("node:fs");
 
-const getClientEnvironment = require("./env");
+const getClientEnvironment = require("../utils/env");
 const userWebpackConfig = resolveApp("./webpack.config.js");
-const { useCssPreset } = require("./utils");
 
 const isDevelopment = process.env.NODE_ENV === "development";
 const env = getClientEnvironment();

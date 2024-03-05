@@ -12,7 +12,7 @@
   "description": "The base template for Create Neat.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/xun082/react-cli",
+    "url": "https://github.com/xun082/create-neat.git",
     "directory": "packages/template-husky"
   },
   "license": "MIT",
@@ -20,7 +20,7 @@
     "node": ">=14"
   },
   "bugs": {
-    "url": "https://github.com/xun082/react-cli/issues"
+    "url": "https://github.com/xun082/create-neat.git/issues"
   },
   "files": [
     "template"

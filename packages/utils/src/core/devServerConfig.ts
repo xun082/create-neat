@@ -1,10 +1,11 @@
 import { resolveApp } from "./getResolveApp";
-import { getHttpsConfig } from "./getHttpsConfig";
+import getHttpsConfig from "./getHttpsConfig";
 
 const host = process.env.HOST || "0.0.0.0";
 const sockHost = process.env.WDS_SOCKET_HOST;
 const sockPath = process.env.WDS_SOCKET_PATH; // default: '/ws'
 const sockPort = process.env.WDS_SOCKET_PORT;
+console.log(getHttpsConfig());
 
 export const devServerConfig = {
   host, // webpack.config.js 文件中的 host 配置优先级最高
@@ -28,7 +29,7 @@ export const devServerConfig = {
     "Access-Control-Allow-Methods": "*",
     "Access-Control-Allow-Headers": "*",
   },
-  https: getHttpsConfig(),
+  // server: "https",
   static: {
     watch: {
       ignored: resolveApp("src"),
