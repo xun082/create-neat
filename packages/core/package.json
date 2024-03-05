@@ -14,7 +14,7 @@
     "directory": "packages/core"
   },
   "bin": {
-    "moment": "./dist/index.js"
+    "create-neat": "./dist/index.js"
   },
   "scripts": {
     "build": "rollup -c --bundleConfigAsCjs",
