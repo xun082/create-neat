@@ -6,12 +6,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/xun082/react-cli.git",
+    "url": "https://github.com/xun082/create-neat.git",
     "directory": "packages/utils"
   },
-  "homepage": "https://github.com/xun082/react-cli",
+  "homepage": "https://github.com/xun082/create-neat.git",
   "bugs": {
-    "url": "https://github.com/xun082/react-cli/issues"
+    "url": "https://github.com/xun082/create-neat.git/issues"
   },
   "keywords": [
     "react",
@@ -36,7 +36,5 @@
   "devDependencies": {
     "@types/node": "^20.11.22"
   },
-  "dependencies": {
-    "chalk": "^5.3.0"
-  }
+  "dependencies": {}
 }

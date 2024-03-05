@@ -1,16 +1,17 @@
 process.env.NODE_ENV = "development";
 
-require("../config/env");
+require("../utils/env");
 
-const { clearConsole, formatWebpackMessages, friendlyPrints } = require("@laconic/utils");
 const chalk = require("chalk");
 const { devServerConfig, getIPAddress } = require("@laconic/utils");
 const WebpackDevServer = require("webpack-dev-server");
 const webpack = require("webpack");
-const compiler = webpack(devWebpackConfig);
 const portFinder = require("portfinder");
 
 const devWebpackConfig = require("../config/webpack.dev");
+const { clearConsole, formatWebpackMessages, friendlyPrints } = require("../utils");
+
+const compiler = webpack(devWebpackConfig);
 
 const isInteractive = process.stdout.isTTY;
 
@@ -23,6 +24,7 @@ portFinder.getPort(
     stopPort: 9999,
   },
   (err, port) => {
+    console.log(port, devServerConfig);
     devServerConfig.port = port;
     devServerConfig.open = `http://localhost:${port}`;
 

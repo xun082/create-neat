@@ -5,6 +5,7 @@
   "description": "Zero configuration to quickly create your application",
   "license": "MIT",
   "homepage": "https://github.com/xun082/create-neat",
+  "type": "commonjs",
   "bugs": {
     "url": "https://github.com/xun082/create-neat/issues"
   },
@@ -17,8 +18,8 @@
     "moment": "./dist/index.js"
   },
   "scripts": {
-    "build": "rollup -c --bundleConfigAsCjs",
-    "dev": "rollup -c -w --bundleConfigAsCjs"
+    "build": "tsc",
+    "dev": "tsc -w"
   },
   "files": [
     "dist/**/*",
@@ -36,11 +37,11 @@
     "@clack/prompts": "^0.7.0",
     "@laconic/utils": "workspace:*",
     "axios": "^1.6.7",
-    "boxen": "^7.1.1",
-    "chalk": "^5.3.0",
+    "boxen": "^5.0.0",
+    "chalk": "^4.0.0",
     "commander": "^12.0.0",
     "fs-extra": "^11.2.0",
-    "ora": "^8.0.1",
+    "ora": "^5.4.1",
     "tar": "^6.2.0"
   },
   "devDependencies": {

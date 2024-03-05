@@ -74,7 +74,7 @@
     "webpack-manifest-plugin": "^5.0.0",
     "webpack-merge": "^5.10.0"
   },
-  "homepage": "https://github.com/xun082/react-cli",
+  "homepage": "https://github.com/xun082/create-neat.git",
   "devDependencies": {
     "@types/circular-dependency-plugin": "^5.0.8",
     "@types/webpack-bundle-analyzer": "^4.7.0"

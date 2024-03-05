@@ -44,4 +44,4 @@ function getHttpsConfig() {
   return isHttps;
 }
 
-export { getHttpsConfig };
+export default getHttpsConfig;
