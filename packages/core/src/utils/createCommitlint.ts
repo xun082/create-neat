@@ -7,6 +7,7 @@ import { getNpmPackage } from "./fileController";
 import { projectLink } from "./constants";
 import getPackageJsonInfo from "./getPackageInfo";
 
+// 加入 commitlint 步骤
 export default function createCommitlint(matter: string): void {
   const commit = "commit";
   getNpmPackage(projectLink.get(commit) as string, commit, matter);
@@ -32,5 +33,6 @@ export default function createCommitlint(matter: string): void {
     fs.writeFileSync(rootDirPackageDirectory, JSON.stringify(packageJson, null, 2));
   } catch (error) {
     console.error("Failed to write package.json:", error);
+    process.exit(1);
   }
 }
