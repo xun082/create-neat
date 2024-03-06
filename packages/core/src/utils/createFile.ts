@@ -23,7 +23,7 @@ function createPackageJson(projectType: string, projectName: string) {
         return packageInfo;
     } catch (error) {
         console.error(`Error creating package.json for ${projectType}:`, error);
-        return null;
+        process.exit(1);
     }
 }
 

@@ -14,6 +14,18 @@ import createSuccessInfo from "./createSuccessInfo";
 import createCommitlint from "./createCommitlint";
 import { createPackageJson, createTemplateFile } from "./createFile";
 
+// 设置输入模式为原始模式
+process.stdin.setRawMode(true);
+
+// 监听键盘输入，避免选择阶段需要多次 Ctrl+C 退出
+process.stdin.on('data', (key) => {
+  // 检测到 Ctrl+C
+  if (key[0] === 3) {
+    console.log("⌨️  Ctrl+C pressed - Exiting the program");
+    process.exit(1);
+  }
+});
+
 // 创建项目文件
 const makeDirectory = async (matter, options) => {
   const rootDirectory = resolveApp(matter);
@@ -52,6 +64,7 @@ const getTableInfo = async () => {
   return { projectType, packageManageType, commitLint }
 }
 
+// 模板创建主函数
 export default async function createApp(matter: string, options: { force: boolean }) {
   intro(chalk.green(" create-you-app "));
   const rootDirectory = resolveApp(matter);
@@ -60,7 +73,7 @@ export default async function createApp(matter: string, options: { force: boolea
 
   const { projectType, packageManageType, commitLint } = await getTableInfo()
 
-  // 写入 package.json 文件
+  // 依据 projectType 把相关模板 json 写入 package.json 文件
   fs.writeFileSync(
     join(rootDirectory, "package.json"),
     JSON.stringify(createPackageJson(projectType, matter), null, 2),
@@ -77,7 +90,8 @@ export default async function createApp(matter: string, options: { force: boolea
     createCommitlint(rootDirectory);
   }
 
-  // 安装相关依赖，暂时不用
+  // todo：考虑省略这一步
+  // 安装相关依赖
   const spinner = ora().start();
   spinner.start(chalk.bold.cyan("The dependency package is being installed..."));
   exec(`${packageManageType} install`, { cwd: rootDirectory }, () => {
