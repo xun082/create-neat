@@ -1,21 +1,23 @@
----
-name: "💬 讨论"
-description: 开始讨论
-title: "[Discuss]: Discuss title"
-labels: [discuss]
+name: "💬 Discussion"
+description: Start a discussion
+title: "[Discuss]: Discussion Title"
+labels: [discussion]
 assignees: []
 body:
   - type: textarea
-    id: description
+    id: topic
     attributes:
-      label: 讨论话题 
+      label: Discussion Topic
+      description: "Please provide a clear and concise topic for discussion."
     validations:
       required: true
   - type: textarea
-    id: reproduction
+    id: screenshots
     attributes:
-      label: 截屏
+      label: Screenshots
+      description: "If applicable, add screenshots to help explain your topic."
   - type: textarea
-    id: observed-behavior
+    id: links
     attributes:
-      label: 链接
+      label: Links
+      description: "Include any relevant links that could provide more context for the discussion."
