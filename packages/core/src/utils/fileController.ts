@@ -72,5 +72,6 @@ export async function getNpmPackage(
   } catch (error) {
     spinner.fail(chalk.bold.red("Project creation failed"));
     console.error("Error:", error);
+    process.exit(1);
   }
 }
