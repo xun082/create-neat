@@ -18,7 +18,7 @@ import { createPackageJson, createTemplateFile } from "./createFile";
 process.stdin.setRawMode(true);
 
 // 监听键盘输入，避免选择阶段需要多次 Ctrl+C 退出
-process.stdin.on('data', (key) => {
+process.stdin.on("data", (key) => {
   // 检测到 Ctrl+C
   if (key[0] === 3) {
     console.log("⌨️  Ctrl+C pressed - Exiting the program");
@@ -61,8 +61,8 @@ const getTableInfo = async () => {
     message: "Pick additional lint features:",
   })) as boolean;
 
-  return { projectType, packageManageType, commitLint }
-}
+  return { projectType, packageManageType, commitLint };
+};
 
 // 模板创建主函数
 export default async function createApp(matter: string, options: { force: boolean }) {
@@ -71,7 +71,7 @@ export default async function createApp(matter: string, options: { force: boolea
 
   await makeDirectory(matter, options);
 
-  const { projectType, packageManageType, commitLint } = await getTableInfo()
+  const { projectType, packageManageType, commitLint } = await getTableInfo();
 
   // 依据 projectType 把相关模板 json 写入 package.json 文件
   fs.writeFileSync(
@@ -105,4 +105,3 @@ export default async function createApp(matter: string, options: { force: boolea
     exec("git init", { cwd: rootDirectory });
   }
 }
-
