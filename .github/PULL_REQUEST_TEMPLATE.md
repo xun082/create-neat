@@ -1,15 +1,17 @@
 ## PR Checklist
+
 Please check if your PR fulfills the following requirements:
 
-- [ ] The commit message follows our guidelines: https://github.com/nestjs/nest/blob/master/CONTRIBUTING.md
+- [ ] The commit message follows our guidelines: https://github.com/xun082/create-neat/blob/master/CONTRIBUTING.md
 - [ ] Tests for the changes have been added (for bug fixes / features)
 - [ ] Docs have been added / updated (for bug fixes / features)
 
-
 ## PR Type
+
 What kind of change does this PR introduce?
 
 <!-- Please check the one that applies to this PR using "x". -->
+
 ```
 [ ] Bugfix
 [ ] Feature
@@ -29,14 +31,13 @@ What kind of change does this PR introduce?
 
 <!-- Please describe the changes this PR makes and why it should be merged. Include any relevant issues it addresses. -->
 
-
 ## Does this PR introduce a breaking change?
+
 ```
 [ ] Yes
 [ ] No
 ```
 
 <!-- If this PR contains a breaking change, please describe the impact and migration path for existing applications below. -->
-
 
 ## Other information
