@@ -13,18 +13,18 @@ import getPackageJsonInfo from "./getPackageInfo";
  */
 
 function createPackageJson(projectType: string, projectName: string) {
-    try {
-        const packageInfo = getPackageJsonInfo(`../../template/${projectType}.json`, true);
-        if (!packageInfo) throw new Error("Package info is undefined.");
+  try {
+    const packageInfo = getPackageJsonInfo(`../../template/${projectType}.json`, true);
+    if (!packageInfo) throw new Error("Package info is undefined.");
 
-        packageInfo.author = os.userInfo().username;
-        packageInfo.name = projectName;
+    packageInfo.author = os.userInfo().username;
+    packageInfo.name = projectName;
 
-        return packageInfo;
-    } catch (error) {
-        console.error(`Error creating package.json for ${projectType}:`, error);
-        process.exit(1);
-    }
+    return packageInfo;
+  } catch (error) {
+    console.error(`Error creating package.json for ${projectType}:`, error);
+    process.exit(1);
+  }
 }
 
 /**
@@ -34,7 +34,7 @@ function createPackageJson(projectType: string, projectName: string) {
  */
 
 function createTemplateFile(file: string) {
-    return readFileSync(join(__dirname, "../../template/", file)).toString();
+  return readFileSync(join(__dirname, "../../template/", file)).toString();
 }
 
 export { createPackageJson, createTemplateFile };
