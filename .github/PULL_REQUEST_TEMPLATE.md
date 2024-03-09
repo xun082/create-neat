@@ -1,15 +1,43 @@
-<!-- 请认真填写 PR 描述 -->
+## PR Checklist
 
-#### 描述 (必填)
+Please check if your PR fulfills the following requirements:
 
-<!-- 请描述您提议的更改，以及原因 -->
+- [ ] The commit message follows our guidelines: https://github.com/xun082/create-neat/blob/master/CONTRIBUTING.md
+- [ ] Tests for the changes have been added (for bug fixes / features)
+- [ ] Docs have been added / updated (for bug fixes / features)
 
-#### 相关 issues (可选)
+## PR Type
 
-- Closes #<!-- 如果此 PR 将关闭该 issue，请添加 issue 编号。 -->
-- Related to #<!-- 如果此 PR 与其他问题相关，请添加 issue 编号。 -->
+What kind of change does this PR introduce?
 
-#### 截图
+<!-- Please check the one that applies to this PR using "x". -->
 
-<!-- 如果改动的是跟 UI 相关的，不论是 CLI 还是 WEB 都应该截图或者录屏 -->
-<!-- 如果改动的是跟 Server 相关的，请保证你的终端不报错 -->
+```
+[ ] Bugfix
+[ ] Feature
+[ ] Code style update (formatting, local variables)
+[ ] Refactoring (no functional changes, no api changes)
+[ ] Build related changes
+[ ] CI related changes
+[ ] Other... Please describe:
+```
+
+## What is the current behavior?
+
+- Closes #<!-- If this PR closes an issue, please include the issue number. -->
+- Related to #<!-- If this PR is related to other issues, please include their numbers. -->
+
+## What is the new behavior?
+
+<!-- Please describe the changes this PR makes and why it should be merged. Include any relevant issues it addresses. -->
+
+## Does this PR introduce a breaking change?
+
+```
+[ ] Yes
+[ ] No
+```
+
+<!-- If this PR contains a breaking change, please describe the impact and migration path for existing applications below. -->
+
+## Other information

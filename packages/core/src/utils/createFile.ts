@@ -1,4 +1,6 @@
 import os from "node:os";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 
 import getPackageJsonInfo from "./getPackageInfo";
 
@@ -21,8 +23,18 @@ function createPackageJson(projectType: string, projectName: string) {
     return packageInfo;
   } catch (error) {
     console.error(`Error creating package.json for ${projectType}:`, error);
-    return null;
+    process.exit(1);
   }
 }
 
-export default createPackageJson;
+/**
+ * @description 读取 template 中的 json 文件内容
+ * @param file 文件名
+ * @returns 返回对应 file 的 json 文件信息
+ */
+
+function createTemplateFile(file: string) {
+  return readFileSync(join(__dirname, "../../template/", file)).toString();
+}
+
+export { createPackageJson, createTemplateFile };
