@@ -134,6 +134,9 @@ importers:
       minimist:
         specifier: ^1.2.8
         version: 1.2.8
+      minimist:
+        specifier: ^1.2.8
+        version: 1.2.8
       ora:
         specifier: ^5.4.1
         version: 5.4.1
