@@ -12,9 +12,9 @@ NC='\033[0m' # No Color
 # 定义提交信息规范函数
 check_commit_message() {
     commit_msg="$1"
-    # 提交信息必须以特定关键词开头，后面可以跟着提交信息和issue号（可选）
-    if ! echo "$commit_msg" | grep -qE "^(feat|fix|docs|style|refactor|test|chore|ci): .+( #[0-9]+)?$"; then
-        echo -e "${RED}Error:${NC} Commit message format is incorrect. It should be '${BLUE}(feat|fix|docs|style|refactor|test|chore|ci): commit message (?issue_number)${NC}'." >&2
+    # 检查提交信息是否以指定的前缀开头
+    if ! echo "$commit_msg" | grep -qE "^(feat|fix|docs|style|refactor|test|chore|ci):"; then
+        echo -e "${RED}Error:${NC} Commit message format is incorrect. It should start with one of '${BLUE}feat|fix|docs|style|refactor|test|chore|ci:${NC}'." >&2
         exit 1
     fi
 }
