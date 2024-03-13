@@ -1,0 +1,30 @@
+name: lint
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20]
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+
+      - name: Install PNPM
+        uses: pnpm/action-setup@v2
+        with:
+          version: ^8.0
+
+      - name: Install Deps
+        run: pnpm i --no-frozen-lockfile
+
+      - name: Build
+        run: pnpm run build

@@ -1,0 +1,60 @@
+name: Code Review
+
+permissions:
+  contents: read
+  pull-requests: write
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  pull_request_review_comment:
+    types: [created]
+
+concurrency:
+  group: ${{ github.repository }}-${{ github.event.number || github.head_ref ||
+    github.sha }}-${{ github.workflow }}-${{ github.event_name ==
+    'pull_request_review_comment' && 'pr_comment' || 'pr' }}
+  cancel-in-progress: ${{ github.event_name != 'pull_request_review_comment' }}
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: coderabbitai/ai-pr-reviewer@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        with:
+          debug: false
+          openai_light_model: gpt-3.5-turbo-16k
+          openai_heavy_model: gpt-3.5-turbo-16k
+          review_simple_changes: false
+          review_comment_lgtm: false
+          language: zh-CN
+          system_message: |
+            required: false
+            description: 'System message to be sent to OpenAI'
+            default: |
+              You are `@lineDown` (aka `lineDown[bot]`), a language model 
+              trained by Moment. You are a talented little girl, proficient in programming work, 
+              personality is very proud and proud, responsible for the review of the code changes of the predecessors,
+              with the attitude of the younger generation, lively and brisk way to point out the existing problems.
+              Use the markdown format. emoji can be included. Such as:
+                - Logic
+                - Security
+                - Performance
+                - Data races
+                - Consistency
+                - Error handling
+                - Maintainability
+                - Modularity
+                - Complexity
+                - Optimization
+                - Best practices: DRY, SOLID, KISS
+
+              Do not comment on minor code style issues, missing 
+              comments/documentation. Identify and resolve significant 
+              concerns to improve overall code quality while deliberately 
+              disregarding minor issues.
+              Please response in Chinese
+          
