@@ -191,6 +191,9 @@ importers:
       fs-extra:
         specifier: ^11.2.0
         version: 11.2.0
+      minimist:
+        specifier: ^1.2.8
+        version: 1.2.8
       ora:
         specifier: ^5.4.1
         version: 5.4.1
@@ -6749,7 +6752,7 @@ packages:
       eslint: 8.55.0
       eslint-import-resolver-node: 0.3.9
       eslint-module-utils: 2.8.0(@typescript-eslint/parser@5.62.0)(eslint-import-resolver-node@0.3.9)(eslint@8.55.0)
-      hasown: 2.0.1
+      hasown: 2.0.0
       is-core-module: 2.13.1
       is-glob: 4.0.3
       minimatch: 3.1.2
