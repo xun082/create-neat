@@ -9,7 +9,7 @@ import ora from "ora";
 import { removeDirectory, getNpmPackage } from "./fileController";
 import { ProjectTypes, PackageManagers } from "./questions";
 import { projectLink } from "./constants";
-import isGitInstalled from "./checkGitInstallation";
+import isGitInstalled from "./gitCheck";
 import createSuccessInfo from "./createSuccessInfo";
 import createCommitlint from "./createCommitlint";
 import { createPackageJson, createTemplateFile } from "./createFile";
