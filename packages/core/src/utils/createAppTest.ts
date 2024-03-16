@@ -6,8 +6,7 @@ import chalk from "chalk";
 
 // import { removeDirectory } from "./fileController";
 import { projectSelect } from "./select";
-import isGitInstalled from "./checkGitInstallation";
-// import { createPackageJson } from "./createFile";
+import gitCheck from "./gitCheck";
 import PackageAPI from "./packageAPI";
 import { createFiles } from "./createFiles";
 import { type Preset, getFilesForProject, getNpmForPackage } from "./preset";
@@ -39,7 +38,7 @@ export default async function createAppTest(projectName: string, options) {
     // 删除已存在文件并创建新文件
     console.log(shouldContinue);
 
-    execSync(`mkdir ${rootDirectory}`);
+    await execSync(`mkdir ${rootDirectory}`);
   }
 
   // 获取用户选择预设
@@ -69,12 +68,12 @@ export default async function createAppTest(projectName: string, options) {
   // 拉取模板
   // todo: 新模板未开发，先模拟过程
   console.log("Creating a project...");
+  await execSync(`mkdir ${rootDirectory}/src`);
 
   // 初始化 Git 仓库
-  if (isGitInstalled()) exec("git init", { cwd: rootDirectory });
+  if (gitCheck(rootDirectory)) exec("git init", { cwd: rootDirectory });
 
   // todo: 插件未开发，先模拟过程
-
   // 安装插件至 package.json
   Object.keys(packageContent.devDependencies).forEach(async (dep) => {
     console.log(dep, "installed");
