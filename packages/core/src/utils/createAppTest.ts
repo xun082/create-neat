@@ -4,10 +4,11 @@ import { execSync, exec } from "child_process";
 import { confirm } from "@clack/prompts";
 import chalk from "chalk";
 
-import { removeDirectory } from "./fileController";
+// import { removeDirectory } from "./fileController";
 import { projectSelect } from "./select";
 import isGitInstalled from "./checkGitInstallation";
 // import { createPackageJson } from "./createFile";
+import PackageAPI from "./packageAPI";
 import { createFiles } from "./createFiles";
 import { type Preset, getFilesForProject, getNpmForPackage } from "./preset";
 import createSuccessInfo from "./createSuccessInfo";
@@ -36,9 +37,7 @@ export default async function createAppTest(projectName: string, options) {
     });
 
     // 删除已存在文件并创建新文件
-    if (shouldContinue === true) {
-      removeDirectory(projectName, true);
-    } else process.exit(1);
+    console.log(shouldContinue);
 
     execSync(`mkdir ${rootDirectory}`);
   }
@@ -46,11 +45,26 @@ export default async function createAppTest(projectName: string, options) {
   // 获取用户选择预设
   const preset: Preset = await projectSelect();
 
-  console.log(rootDirectory);
   // 创建package.json
-  await createFiles(rootDirectory, {
-    "package.json": "{}", // todo:具体内容待重构
+  console.log(chalk.blue(`\n📄  Generating package.json...`));
+  const packageContent = {
+    name: projectName,
+    version: "0.1.0",
+    private: true,
+    devDependencies: {},
+  };
+  // 遍历 preset.plugins，插入依赖
+  Object.keys(preset.plugins).forEach((dep) => {
+    console.log("dep:", dep);
+    // todo: 更多的处理依据 preset.plugins[dep] 后续的变化而插入
+    let { version } = preset.plugins[dep];
+    if (!version) {
+      version = "latest";
+    }
+    packageContent.devDependencies[dep] = version;
   });
+  const packageJson = new PackageAPI(rootDirectory);
+  await packageJson.createPackageJson(packageContent);
 
   // 拉取模板
   // todo: 新模板未开发，先模拟过程
@@ -62,10 +76,10 @@ export default async function createAppTest(projectName: string, options) {
   // todo: 插件未开发，先模拟过程
 
   // 安装插件至 package.json
-  Object.keys(preset.plugins).forEach(async (plugin) => {
-    console.log(plugin, "installed");
+  Object.keys(packageContent.devDependencies).forEach(async (dep) => {
+    console.log(dep, "installed");
     // 进入仓库
-    // await execSync(`npm install ${plugin}`)
+    // await execSync(`npm install ${dep}`)
   });
 
   // 运行生成器创建项目所需文件和结构
@@ -85,7 +99,7 @@ export default async function createAppTest(projectName: string, options) {
   console.log("npmList", npmList);
 
   // 其他剩余操作，如创建 md 文档，或其他首位操作
-  console.log("📄  Generating README.md...");
+  console.log(chalk.blue(`📄  Generating README.md...`));
   await createFiles(rootDirectory, {
     "README.md": "",
   });

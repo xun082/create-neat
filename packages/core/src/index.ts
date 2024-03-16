@@ -4,7 +4,7 @@ import { Command } from "commander";
 import chalk from "chalk";
 import minimist from "minimist";
 
-import { getPackageJsonInfo, createApp } from "./utils";
+import { getPackageJsonInfo } from "./utils";
 import createAppTest from "./utils/createAppTest";
 
 const program = new Command();
@@ -16,18 +16,18 @@ program
   .option("-f, --force", "Overwrite target directory if it exists")
   .option("--dev", "Use development mode")
   .action((name, options) => {
-    // createApp(name, options);
     createAppTest(name, options);
   });
 
 program
-  .command('add <plugin> [pluginOptions]')
-  .description('Install a plugin and invoke its generator in an existing project')
-  .option('--registry <url>', 'Specify an npm registry URL for installing dependencies (npm only)')
+  .command("add <plugin> [pluginOptions]")
+  .description("Install a plugin and invoke its generator in an existing project")
+  .option("--registry <url>", "Specify an npm registry URL for installing dependencies (npm only)")
   .allowUnknownOption()
   .action((plugin) => {
     const pluginOptions = minimist(process.argv.slice(3));
+    console.log(pluginOptions, plugin);
     // addPlugin(plugin, pluginOptions)
   });
 
-program.parse(process.argv)
+program.parse(process.argv);
