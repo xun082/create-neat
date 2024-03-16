@@ -9,10 +9,6 @@ import { join } from "node:path";
 import { packageVersion } from "./constants";
 
 /**
- * @param directoryPath 删除文件的路径，默认 node_modules
- * @param verbose 如果为true，则显示删除信息
- */
-/**
  * @author moment
  * @param directoryPath 删除文件的路径，默认 node_modules
  * @param verbose 如果为true，则显示删除信息
