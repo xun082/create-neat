@@ -11,6 +11,7 @@ import PackageAPI from "./packageAPI";
 import { createFiles } from "./createFiles";
 import { type Preset, getFilesForProject, getNpmForPackage } from "./preset";
 import createSuccessInfo from "./createSuccessInfo";
+import dependenciesInstall from "./dependenciesInstall";
 
 // 设置输入模式为原始模式
 process.stdin.setRawMode(true);
@@ -58,6 +59,7 @@ export default async function createAppTest(projectName: string, options: Record
 
   // 获取用户选择预设
   const preset: Preset = await projectSelect();
+  const { packageManager } = preset;
 
   // 创建package.json
   console.log(chalk.blue(`\n📄  Generating package.json...`));
@@ -107,7 +109,8 @@ export default async function createAppTest(projectName: string, options: Record
   });
 
   // 安装附加依赖
-  // todo: npm 安装逻辑需要等待设置包管理工具，目前默认 npm，后续优化
+  // todo: 待映射部分完成再测试
+  await dependenciesInstall(rootDirectory, packageManager);
   // todo: configMap 的 npm 也需要改为对象，传入包依赖模式（-S，-D）
   const npmList = getNpmForPackage(preset);
   console.log("npmList", npmList);
