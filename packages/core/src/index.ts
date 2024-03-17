@@ -16,8 +16,6 @@ program
   .description("Create a directory for your project files")
   .option("-f, --force", "Overwrite target directory if it exists")
   .action((name: string, options: Record<string, any>) => {
-    console.log(options);
-
     createAppTest(name, options);
   });
 
