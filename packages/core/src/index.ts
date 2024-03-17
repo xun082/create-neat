@@ -15,7 +15,7 @@ program
   .description("Create a directory for your project files")
   .option("-f, --force", "Overwrite target directory if it exists")
   .option("--dev", "Use development mode")
-  .action((name, options) => {
+  .action((name: string, options: Record<string, any>) => {
     createAppTest(name, options);
   });
 
