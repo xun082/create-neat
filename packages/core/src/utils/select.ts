@@ -7,6 +7,7 @@ interface Responses {
   template: string;
   buildTool: string;
   plugins: string[];
+  packageManager: string;
 }
 
 /**
@@ -18,6 +19,7 @@ async function projectSelect() {
     template: "",
     buildTool: "",
     plugins: [],
+    packageManager: "",
   };
 
   intro(chalk.green(" create-you-app "));
@@ -58,7 +60,22 @@ async function projectSelect() {
     required: false,
   })) as string[];
 
-  return getPreset(responses.template, responses.buildTool, responses.plugins);
+  // 选择devDependencies安装方式
+  responses.packageManager = (await select({
+    message: "Pick a packageManager for your project",
+    options: [
+      { value: "pnpm", label: "pnpm" },
+      { value: "yarn", label: "yarn" },
+      { value: "npm", label: "npm" },
+    ],
+  })) as string;
+
+  return getPreset(
+    responses.template,
+    responses.buildTool,
+    responses.plugins,
+    responses.packageManager,
+  );
 }
 
 export { projectSelect };
