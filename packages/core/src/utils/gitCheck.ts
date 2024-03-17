@@ -20,7 +20,7 @@ const hasProjectGit = (cwd: string): boolean => {
   }
 };
 
-export default function gitCheck(rootDirectory: string): boolean {
+export default function gitCheck(rootDirectory?: string): boolean {
   if (!hasGit()) return false;
   return !hasProjectGit(rootDirectory);
 }
