@@ -1,0 +1,14 @@
+{
+  "name": "@plugin/plugin-babel",
+  "version": "1.0.0",
+  "description": "babel plugin for create-neat",
+  "main": "index.ts",
+  "dependencies": {
+    "@babel/core": "^7.12.16",
+    "babel-loader": "^8.2.2",
+    "webpack": "^5.54.0"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.12.16"
+  }
+}

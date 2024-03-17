@@ -7,7 +7,7 @@ import chalk from "chalk";
 // import { removeDirectory } from "./fileController";
 import { projectSelect } from "./select";
 import gitCheck from "./gitCheck";
-import PackageAPI from "./packageAPI";
+import PackageAPI from "./PackageAPI";
 import { createFiles } from "./createFiles";
 import { type Preset, getFilesForProject, getNpmForPackage } from "./preset";
 import createSuccessInfo from "./createSuccessInfo";
