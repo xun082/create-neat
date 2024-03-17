@@ -1,14 +1,18 @@
 import { resolveApp } from "@laconic/utils";
 import fs from "fs-extra";
 import { execSync, exec } from "child_process";
-import { confirm } from '@clack/prompts';
+import { confirm } from "@clack/prompts";
 import chalk from "chalk";
 
 import { removeDirectory } from "./fileController";
 import { projectSelect } from "./select";
-import isGitInstalled from "./checkGitInstallation";
-import { createPackageJson } from "./createFile"
+import gitCheck from "./gitCheck";
+import PackageAPI from "./packageAPI";
 import { createFiles } from "./createFiles";
+import { type Preset, getFilesForProject, getNpmForPackage } from "./preset";
+import createSuccessInfo from "./createSuccessInfo";
+import dependenciesInstall from "./dependenciesInstall";
+import { createReadmeString } from "./createFile";
 
 // 设置输入模式为原始模式
 process.stdin.setRawMode(true);
@@ -82,7 +86,7 @@ export default async function createAppTest(projectName: string, options: Record
   // 拉取模板
   // todo: 新模板未开发，先模拟过程
   console.log("Creating a project...");
-  execSync(`mkdir ${rootDirectory}/src`);
+//   execSync(`mkdir ${rootDirectory}/src`);
 
   // 初始化 Git 仓库
   if (gitCheck(rootDirectory)) exec("git init", { cwd: rootDirectory });
@@ -115,8 +119,8 @@ export default async function createAppTest(projectName: string, options: Record
   // 其他剩余操作，如创建 md 文档，或其他首位操作
   console.log(chalk.blue(`📄  Generating README.md...`));
   await createFiles(rootDirectory, {
-    "README.md": "",
-  });
-
+   "README.md": createReadmeString(preset.packageManager, preset.template, "README.md"),
+   "README-EN.md": createReadmeString(preset.packageManager, preset.template, "README-EN.md"),
+ });
   createSuccessInfo(projectName, "npm");
 }

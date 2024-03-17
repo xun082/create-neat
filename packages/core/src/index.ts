@@ -11,8 +11,6 @@ const program = new Command();
 
 program.version(chalk.greenBright(getPackageJsonInfo("../../package.json", true).version));
 
-program
-  .version(chalk.greenBright(getPackageJsonInfo("../../package.json", true).version))
 
 program
   .command('create <project-name>')

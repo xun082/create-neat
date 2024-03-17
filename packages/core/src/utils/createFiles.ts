@@ -1,5 +1,5 @@
 
-import fs from "fs";
+import fs from "fs-extra";
 import path from "path";
 
 /**
