@@ -4,6 +4,7 @@ interface Preset {
   template: string;
   buildTool: string;
   plugins: Record<string, any>;
+  packageManager: string;
 }
 
 /**
@@ -14,11 +15,17 @@ interface Preset {
  * @return 用户预设
  */
 // todo: 目前没有使用到 defaultPreset，后续考虑加入默认配置
-const getPreset = (template: string, buildTool: string, plugins: string[]): Preset => {
+const getPreset = (
+  template: string,
+  buildTool: string,
+  plugins: string[],
+  packageManager: string,
+): Preset => {
   const preset: Preset = {
     template,
     buildTool,
     plugins: {},
+    packageManager,
   };
 
   // todo: 插件配置目前设置为空，且没有使用情况，后续优化
@@ -35,6 +42,7 @@ const defaultPreset: Preset = {
   plugins: {
     eslint: {},
   },
+  packageManager: "npm",
   // todo: 更多配置随构建需要添加
 };
 
