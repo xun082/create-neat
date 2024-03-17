@@ -4,7 +4,7 @@ import { execSync, exec } from "child_process";
 import { confirm } from "@clack/prompts";
 import chalk from "chalk";
 
-// import { removeDirectory } from "./fileController";
+import { removeDirectory } from "./fileController";
 import { projectSelect } from "./select";
 import gitCheck from "./gitCheck";
 import PackageAPI from "./packageAPI";
@@ -24,22 +24,37 @@ process.stdin.on("data", (key) => {
   }
 });
 
+// 创建项目文件夹
+async function createFolder(rootDirectory: string, options: Record<string, any>) {
+  // 检查目录是否存在
+  if (fs.existsSync(rootDirectory)) {
+    let proceed = options.force; // 如果强制创建，则默认继续
+
+    // 如果不是强制创建，询问用户是否覆盖
+    if (!proceed) {
+      proceed = await confirm({
+        message:
+          "Whether to overwrite a file with the same name that exists in the current directory?",
+      });
+    }
+
+    // 根据用户的选择或强制选项决定是否继续
+    if (proceed) {
+      removeDirectory(rootDirectory, false); // 删除已存在的目录
+    } else {
+      process.exit(1); // 用户选择不覆盖，退出程序
+    }
+  }
+
+  // 创建目录，如果之前已经删除或目录不存在
+  fs.mkdirSync(rootDirectory, { recursive: true });
+}
+
 // 模板创建主函数
-export default async function createAppTest(projectName: string, options) {
+export default async function createAppTest(projectName: string, options: Record<string, any>) {
   const rootDirectory = resolveApp(projectName);
 
-  // 创建项目文件夹
-  if (fs.existsSync(rootDirectory) && !options.force) {
-    const shouldContinue = await confirm({
-      message:
-        "Whether to overwrite a file with the same name that exists in the current directory ?",
-    });
-
-    // 删除已存在文件并创建新文件
-    console.log(shouldContinue);
-
-    await execSync(`mkdir ${rootDirectory}`);
-  }
+  await createFolder(rootDirectory, options);
 
   // 获取用户选择预设
   const preset: Preset = await projectSelect();
@@ -68,7 +83,7 @@ export default async function createAppTest(projectName: string, options) {
   // 拉取模板
   // todo: 新模板未开发，先模拟过程
   console.log("Creating a project...");
-  await execSync(`mkdir ${rootDirectory}/src`);
+  execSync(`mkdir ${rootDirectory}/src`);
 
   // 初始化 Git 仓库
   if (gitCheck(rootDirectory)) exec("git init", { cwd: rootDirectory });

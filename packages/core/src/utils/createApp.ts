@@ -100,7 +100,7 @@ export default async function createApp(matter: string, options: { force: boolea
   });
 
   // 是否安装已经安装了 git
-  if (isGitInstalled()) {
+  if (isGitInstalled(rootDirectory)) {
     exec("git init", { cwd: rootDirectory });
   }
 }
