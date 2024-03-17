@@ -4,7 +4,7 @@ import { execSync, exec } from "child_process";
 import { confirm } from "@clack/prompts";
 import chalk from "chalk";
 
-// import { removeDirectory } from "./fileController";
+import { removeDirectory } from "./fileController";
 import { projectSelect } from "./select";
 import gitCheck from "./gitCheck";
 import PackageAPI from "./packageAPI";
@@ -25,8 +25,9 @@ process.stdin.on("data", (key) => {
 });
 
 // 模板创建主函数
-export default async function createAppTest(projectName: string, options) {
+export default async function createAppTest(projectName: string, options: Record<string, any>) {
   const rootDirectory = resolveApp(projectName);
+  console.log(!options.force, "options.force", fs.existsSync(rootDirectory));
 
   // 创建项目文件夹
   if (fs.existsSync(rootDirectory) && !options.force) {
@@ -36,9 +37,15 @@ export default async function createAppTest(projectName: string, options) {
     });
 
     // 删除已存在文件并创建新文件
-    console.log(shouldContinue);
+    if (shouldContinue === true) {
+      removeDirectory(rootDirectory, false);
+    } else {
+      process.exit(1);
+    }
 
-    await execSync(`mkdir ${rootDirectory}`);
+    fs.mkdirSync(rootDirectory, { recursive: true });
+  } else {
+    fs.mkdirSync(rootDirectory, { recursive: true });
   }
 
   // 获取用户选择预设
@@ -68,7 +75,7 @@ export default async function createAppTest(projectName: string, options) {
   // 拉取模板
   // todo: 新模板未开发，先模拟过程
   console.log("Creating a project...");
-  await execSync(`mkdir ${rootDirectory}/src`);
+  execSync(`mkdir ${rootDirectory}/src`);
 
   // 初始化 Git 仓库
   if (gitCheck(rootDirectory)) exec("git init", { cwd: rootDirectory });
