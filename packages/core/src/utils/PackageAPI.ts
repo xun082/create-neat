@@ -2,7 +2,7 @@ import fs from "fs";
 
 import { createFiles } from "./createFiles";
 
-class packageAPI {
+class PackageAPI {
   private filePath: string;
 
   constructor(filePath: string) {
@@ -61,4 +61,4 @@ class packageAPI {
   }
 }
 
-export default packageAPI;
+export default PackageAPI;

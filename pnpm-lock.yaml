@@ -95,6 +95,10 @@ importers:
 
   apps/template-vue-web-ts: {}
 
+  packages/@plugin/plugin-eslint: {}
+
+  packages/@plugin/plugin-typescript: {}
+
   docs:
     dependencies:
       '@giscus/vue':
