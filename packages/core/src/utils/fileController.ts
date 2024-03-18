@@ -66,7 +66,6 @@ export async function getNpmPackage(
       const hasLocalTemplate = fs.existsSync(templateDir)
       if (hasLocalTemplate) {
         await getPackageFromLocal(currentDir, templateDir);
-        spinner.succeed(chalk.bold.green("Project creation successful"));
         return;
       }
     }
