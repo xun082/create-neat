@@ -28,6 +28,30 @@ function createPackageJson(projectType: string, projectName: string) {
 }
 
 /**
+ * @author ljq
+ * @description 生成readme文件
+ * @param packageManager 包管理器
+ * @param template 框架名称
+ * @returns 返回 readme.md 字符串
+ */
+
+function createReadmeString(packageManager: string, template: string, fileName: string) {
+  try {
+    const readmeInfo = readFileSync(join(__dirname, "../../template/", fileName)).toString();
+    // 框架首字母大写 Vue React
+    const newTemplate = template.charAt(0).toUpperCase() + template.slice(1);
+    if (!readmeInfo) throw new Error("README info is undefined.");
+    const newReadmeInfo = readmeInfo
+      .replace(/\${packageManager}/g, packageManager)
+      .replace(/\${template}/g, newTemplate);
+    return newReadmeInfo;
+  } catch (error) {
+    console.error(`Error creating readme.md :`, error);
+    process.exit(1);
+  }
+}
+
+/**
  * @description 读取 template 中的 json 文件内容
  * @param file 文件名
  * @returns 返回对应 file 的 json 文件信息
@@ -37,4 +61,4 @@ function createTemplateFile(file: string) {
   return readFileSync(join(__dirname, "../../template/", file)).toString();
 }
 
-export { createPackageJson, createTemplateFile };
+export { createPackageJson, createTemplateFile, createReadmeString };
