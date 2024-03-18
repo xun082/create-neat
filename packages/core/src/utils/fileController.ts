@@ -56,3 +56,18 @@ export async function removeDirectory(
 export function readTemplateFileContent(file: string) {
   return readFileSync(join(__dirname, "../../template/", file)).toString();
 }
+
+export async function getPackageFromLocal(currentDir: string, targetFile: string) {
+  const spinner = ora(chalk.bold.cyan("Creating a project...")).start();
+  try {
+    await tar.extract({
+      file: targetFile,
+      cwd: currentDir,
+    });
+    spinner.succeed(chalk.bold.green("Project creation successful"));
+  } catch (error) {
+    spinner.fail(chalk.bold.red("Project creation failed"));
+    console.error("Error:", error);
+    process.exit(1);
+  }
+}
