@@ -5,7 +5,7 @@ on:
     types: [opened, synchronize, reopened]
 
 jobs:
-check-commit-message:
+  check-commit-message:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -15,7 +15,7 @@ check-commit-message:
 
       - name: Check commit messages in PR
         run: ./scripts/check_commit_msg.sh ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }}
-  
+
   test:
     runs-on: ubuntu-latest
     strategy:
