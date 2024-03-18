@@ -4,7 +4,7 @@ import { Command } from "commander";
 import chalk from "chalk";
 import minimist from "minimist";
 
-import { getPackageJsonInfo } from "./utils";
+import { getPackageJsonInfo, createApp } from "./utils";
 import createAppTest from "./utils/createAppTest";
 
 const program = new Command();
@@ -20,9 +20,9 @@ program
   });
 
 program
-  .command("add <plugin> [pluginOptions]")
-  .description("Install a plugin and invoke its generator in an existing project")
-  .option("--registry <url>", "Specify an npm registry URL for installing dependencies (npm only)")
+  .command('add <plugin> [pluginOptions]')
+  .description('Install a plugin and invoke its generator in an existing project')
+  .option('--registry <url>', 'Specify an npm registry URL for installing dependencies (npm only)')
   .allowUnknownOption()
   .action((plugin) => {
     const pluginOptions = minimist(process.argv.slice(3));
@@ -30,4 +30,4 @@ program
     console.log(plugin, pluginOptions);
   });
 
-program.parse(process.argv);
+program.parse(process.argv)
