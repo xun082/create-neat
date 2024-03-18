@@ -41,11 +41,13 @@
     "chalk": "^4.0.0",
     "commander": "^12.0.0",
     "fs-extra": "^11.2.0",
+    "minimist": "^1.2.8",
     "ora": "^5.4.1",
     "tar": "^6.2.0"
   },
   "devDependencies": {
     "@types/fs-extra": "^11.0.4",
+    "@types/minimist": "^1.2.5",
     "@types/node": "^20.11.22",
     "@types/tar": "^6.1.11"
   },
