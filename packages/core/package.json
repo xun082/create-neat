@@ -15,8 +15,7 @@
     "directory": "packages/core"
   },
   "bin": {
-    "create-neat": "./dist/index.js",
-    "c": "./dist/index.js"
+    "create-neat": "./dist/index.js"
   },
   "scripts": {
     "build": "tsc",
