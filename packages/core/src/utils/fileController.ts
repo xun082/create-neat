@@ -50,7 +50,7 @@ export async function getNpmPackage(
   packageURL: string,
   packageName: string,
   projectName: string,
-  isDev: boolean | undefined,
+  isDev?: boolean | undefined,
 ): Promise<void> {
   const spinner = ora(chalk.bold.cyan("Creating a project...")).start();
   try {
@@ -66,6 +66,7 @@ export async function getNpmPackage(
       const hasLocalTemplate = fs.existsSync(templateDir)
       if (hasLocalTemplate) {
         await getPackageFromLocal(currentDir, templateDir);
+        spinner.succeed(chalk.bold.green("Project creation successful"));
         return;
       }
     }
