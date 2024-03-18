@@ -6,7 +6,7 @@ import chalk from "chalk";
 import { join } from "path";
 import ora from "ora";
 
-import { removeDirectory, getNpmPackage, getPackageFromLocal } from "./fileController";
+import { removeDirectory, getNpmPackage } from "./fileController";
 import { ProjectTypes, PackageManagers } from "./questions";
 import { projectLink } from "./constants";
 import isGitInstalled from "./checkGitInstallation";
@@ -81,12 +81,8 @@ export default async function createApp(matter: string, options: { force: boolea
 
   // 写入 .gitignore 文件
   fs.writeFileSync(join(rootDirectory, ".gitignore"), createTemplateFile("gitignore"));
-  if (!options.dev) {
-    // 下载 npm 包解压,获取目标模板导入文件,并删除一些无用的代码文件
-    getNpmPackage(projectLink.get(projectType) as string, projectType, rootDirectory);
-  } else {
-    getPackageFromLocal(rootDirectory);
-  }
+  // 下载 npm 包解压,获取目标模板导入文件,并删除一些无用的代码文件
+  getNpmPackage(projectLink.get(projectType) as string, projectType, rootDirectory, options.dev);
 
   // 注入 lint 规则
   if (commitLint === true) {

@@ -50,13 +50,28 @@ export async function getNpmPackage(
   packageURL: string,
   packageName: string,
   projectName: string,
+  isDev: boolean | undefined,
 ): Promise<void> {
   const spinner = ora(chalk.bold.cyan("Creating a project...")).start();
   try {
+    const currentDir = resolveApp(projectName);
+    // 如果是dev mode，检查并使用本地模板
+    if (isDev) {
+      const root = resolve(__dirname, "../../../../apps/");
+      // 通过dist/index.js，找到模板文件的路径
+      const templateDir = resolve(
+        root,
+        "template-react-web-ts/laconic-template-react-web-ts-1.0.1.tgz",
+      );
+      const hasLocalTemplate = fs.existsSync(templateDir)
+      if (hasLocalTemplate) {
+        await getPackageFromLocal(currentDir, templateDir);
+        return;
+      }
+    }
     const response = await axios.get(packageURL, {
       responseType: "arraybuffer",
     });
-    const currentDir = resolveApp(projectName);
     const tgzPath = join(currentDir, `${packageName}-${packageVersion}.tgz`);
     fs.writeFileSync(tgzPath, response.data);
 
@@ -76,19 +91,11 @@ export async function getNpmPackage(
   }
 }
 
-export async function getPackageFromLocal(projectName: string) {
+export async function getPackageFromLocal(currentDir: string, targetFile: string) {
   const spinner = ora(chalk.bold.cyan("Creating a project...")).start();
   try {
-    const currentDir = resolveApp(projectName);
-    const root = resolve(__dirname, "../../../../apps/");
-    // 通过dist/index.js，找到模板文件的路径
-    const templateDir = resolve(
-      root,
-      "template-react-web-ts/laconic-template-react-web-ts-1.0.1.tgz",
-    );
-
     await tar.extract({
-      file: templateDir,
+      file: targetFile,
       cwd: currentDir,
     });
     spinner.succeed(chalk.bold.green("Project creation successful"));
