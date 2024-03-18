@@ -63,7 +63,7 @@ export async function getNpmPackage(
         root,
         "template-react-web-ts/laconic-template-react-web-ts-1.0.1.tgz",
       );
-      const hasLocalTemplate = fs.existsSync(templateDir)
+      const hasLocalTemplate = fs.existsSync(templateDir);
       if (hasLocalTemplate) {
         await getPackageFromLocal(currentDir, templateDir);
         return;
