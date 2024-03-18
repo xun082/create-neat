@@ -36,8 +36,8 @@ const dependenciesInstall = (packageJsonFile: string, packageManager: string): P
           ([dep, version]) => `${dep}@${version}`,
         );
         // 执行具体命令
-        const pm = spawn(
-          packageManager,
+       try{const pm = spawn(
+          packageManager + (process.platform === "win32" ? ".cmd" : ""),
           [installCommand[packageManager], installParams[packageManager], ...devDepsArray],
           {
             stdio: "ignore",
@@ -58,7 +58,9 @@ const dependenciesInstall = (packageJsonFile: string, packageManager: string): P
             reject(`${packageManager} ${installCommand[packageManager]} exited with code ${code}`);
           }
         });
-      } else {
+      }catch(err){
+         console.log("Installing devDependencies failed: ",err)
+      }} else {
         console.log("No devDependencies found in package.json.");
         reject("No devDependencies found in package.json.");
       }
