@@ -60,7 +60,7 @@ async function projectSelect() {
     required: false,
   })) as string[];
 
-  // 选择devDependencies安装方式
+  // 选择包管理器
   responses.packageManager = (await select({
     message: "Pick a packageManager for your project",
     options: [
