@@ -2,7 +2,7 @@
 
 我们很乐意您为 create-neat 做出贡献，并帮助它变得比今天更好!作为贡献者，以下是我们希望您遵循的指导方针:
 
-- [疑问或问题?](# Question)
+- [疑问或问题?](#Question)
 
 - [问题和 bug](#issue)
 
@@ -14,7 +14,7 @@
 
 - [编码规则](#规则)
 
-- [提交消息指引](# Commit)
+- [提交消息指引](#Commit)
 
 ## <a name="question"></a>有疑问或问题吗?
 
@@ -30,11 +30,11 @@
 
 ##  <a name="feature"></a>缺了一个 feature ?
 
-你可以通过[提交 issue](#submit-issue)到我们的 GitHub Repository 来请求一个新特性。如果你想* *实现* *一个新功能，请首先提交一个带有工作建议的 issue，以确保我们可以使用它。请考虑它是什么样的更改:
+你可以通过[提交 issue](#submit-issue)到我们的 GitHub Repository 来请求一个新特性。如果你想**实现**一个新功能，请首先提交一个带有工作建议的 issue，以确保我们可以使用它。请考虑它是什么样的更改:
 
  
 
-- 对于一个**主要功能**，首先打开一个 issue 并概述你的提案，以便进行讨论。这也将使我们能够更好地协调我们的工作，防止重复工作，并帮助您精心设计更改，以便它成功地被接受到项目中。对于您的 issue 名称，请在您的提案前加上‘[discussion]’，例如“[discussion]:您的feature idea”。
+- 对于一个**主要功能**，首先打开一个 issue 并概述你的提案，以便进行讨论。这也将使我们能够更好地协调我们的工作，防止重复工作，并帮助您精心设计更改，以便它成功地被接受到项目中。对于您的 issue 名称，请在您的提案前加上`[discussion]`，例如"[discussion]:您的feature idea"。
 
 - **小功能**可以制作并直接[作为拉取请求提交](#submit-pr)。
 
@@ -46,7 +46,7 @@
 
 我们希望尽快修复所有问题，但在修复一个 bug 之前，我们需要复现并确认它。为了重现 bug，我们将系统地要求您使用存储库或[Gist](https://gist.github.com/)提供一个最小的再现场景。拥有一个活生生的、可重现的场景，可以为我们提供丰富的重要信息，而不必带着额外的问题来回询问你，比如:
 
-- create-neatJS 使用的版本
+- create-neat 使用的版本
 
 - 第三方库及其版本
 
@@ -67,7 +67,7 @@ Fork 这个仓库。
 在一个新的git 分支中进行更改:
 
 ```
-git checkout -b my-fix-branch master . git 
+git checkout -b my-fix-branch master
 ```
 
 创建你的补丁，**包括适当的测试用例**。
@@ -101,7 +101,8 @@ git push origin my-fix-branch
 - 重新设置分支并强制推送到 GitHub 存储库(这将更新您的 Pull Request): 
 
   ```
-  git rebase master -i git push -f
+    git rebase master -i
+    git push -f
   ```
 
 就是这样!感谢大家的贡献!
@@ -244,7 +245,7 @@ fix(core): need to depend on latest rxjs and zone.js
 
 **ci**:更改我们的 ci 配置文件和脚本(示例范围:Travis, Circle, BrowserStack, SauceLabs)
 
-**文档**:文档只发生了变化
+**docs**:文档只发生了变化
 
 **feat**:一个新功能
 
@@ -252,13 +253,13 @@ fix(core): need to depend on latest rxjs and zone.js
 
 **perf**:提高性能的代码更改
 
-**重构**:既没有修复 bug 也没有添加新功能的代码更改
+**refactor**:既没有修复 bug 也没有添加新功能的代码更改
 
-**样式**:不影响代码含义的更改(空格、格式化、缺少分号等)
+**style**:不影响代码含义的更改(空格、格式化、缺少分号等)
 
-**测试**:添加缺失的测试或修正现有的测试
+**test**:添加缺失的测试或修正现有的测试
 
-**样例**:对样例的修改
+**sample**:对样例的修改
 
 ### 范围
 
@@ -268,17 +269,17 @@ fix(core): need to depend on latest rxjs and zone.js
 
 **common**:用于对`packages/common`目录所做的更改
 
-**核心**:用于查看`packages/core`目录的更改
+**core**:用于查看`packages/core`目录的更改
 
-**样本**:查看`packages/sample`目录下的更改
+**sample**:查看`packages/sample`目录下的更改
 
-**微服务**:用于查看`packages/microservices`目录上的更改
+**microservices**:用于查看`packages/microservices`目录上的更改
 
 **express**:用于查看`packages/platform-express`目录上的更改
 
 **fastify**:查看`packages/platform-fastify`目录上的更改
 
-* *套接字。Io **:用于查看在`packages/platform-socket. js `上所做的更改。io 的目录
+**socket.io**:用于查看在`packages/platform-socket.io `上所做的更改
 
 **ws**:用于查看在`packages/platform-ws`目录上所做的更改
 
@@ -286,15 +287,15 @@ fix(core): need to depend on latest rxjs and zone.js
 
 **websockets**:用于查看`packages/websockets`目录的更改
 
-如果您的更改影响多个包，请使用逗号分隔作用域(例如。“共同核心”)。目前“使用包名”规则有一些例外:
+如果您的更改影响多个包，请使用逗号分隔作用域(例如。`common, core`)。目前"使用包名"规则有一些例外:
 
-**打包**:用于更改我们所有包中的 NPM 包布局，例如公共路径更改、打包。对所有包所做的 Json 更改，d.ts 文件/格式更改，对包的更改等。
+- **packaging**:用于更改我们所有包中的 NPM 包布局，例如公共路径更改、打包。对所有包所做的 Json 更改，d.ts 文件/格式更改，对包的更改等。
 
-**changelog**:用于更新 CHANGELOG.md 中的发行说明
+- **changelog**:用于更新 CHANGELOG.md 中的发行说明
 
-**sample/#**:对于示例应用目录，将#替换为示例应用编号
+- **sample/#**:对于示例应用目录，将#替换为示例应用编号
 
-none/空字符串:用于在所有包中进行的“样式”、“测试”和“重构”更改(例如:`style:添加缺失的分号`)
+- none/空字符串:用于在所有包中进行的“样式”、“测试”和“重构”更改(例如:`style:添加缺失的分号`)
 
 ### 话题
 
