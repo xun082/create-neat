@@ -4,7 +4,7 @@ import ora from "ora";
 import fs from "fs-extra";
 import tar from "tar";
 import axios from "axios";
-import { join } from "node:path";
+import { join, resolve } from "node:path";
 
 import { packageVersion } from "./constants";
 
@@ -68,6 +68,29 @@ export async function getNpmPackage(
     await fs.unlink(tgzPath);
     await copyFolderRecursive(join(projectName, "package/template"), projectName);
     await removeDirectory(join(projectName, "package"), false);
+    spinner.succeed(chalk.bold.green("Project creation successful"));
+  } catch (error) {
+    spinner.fail(chalk.bold.red("Project creation failed"));
+    console.error("Error:", error);
+    process.exit(1);
+  }
+}
+
+export async function getPackageFromLocal(projectName: string) {
+  const spinner = ora(chalk.bold.cyan("Creating a project...")).start();
+  try {
+    const currentDir = resolveApp(projectName);
+    const root = resolve(__dirname, "../../../../apps/");
+    // 通过dist/index.js，找到模板文件的路径
+    const templateDir = resolve(
+      root,
+      "template-react-web-ts/laconic-template-react-web-ts-1.0.1.tgz",
+    );
+
+    await tar.extract({
+      file: templateDir,
+      cwd: currentDir,
+    });
     spinner.succeed(chalk.bold.green("Project creation successful"));
   } catch (error) {
     spinner.fail(chalk.bold.red("Project creation failed"));
