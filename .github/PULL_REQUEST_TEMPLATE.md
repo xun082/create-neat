@@ -12,7 +12,6 @@ What kind of change does this PR introduce?
 
 <!-- Please check the one that applies to this PR using "x". -->
 
-```
 [ ] Bugfix
 [ ] Feature
 [ ] Code style update (formatting, local variables)
@@ -20,7 +19,6 @@ What kind of change does this PR introduce?
 [ ] Build related changes
 [ ] CI related changes
 [ ] Other... Please describe:
-```
 
 ## What is the current behavior?
 
@@ -33,10 +31,8 @@ What kind of change does this PR introduce?
 
 ## Does this PR introduce a breaking change?
 
-```
 [ ] Yes
 [ ] No
-```
 
 <!-- If this PR contains a breaking change, please describe the impact and migration path for existing applications below. -->
 
