@@ -54,12 +54,10 @@ const { template, buildTool, plugins } = mapForPreset;
  */
 const getFilesForProject = (preset: Preset) => {
   let fileList = [...template[preset.template].files, ...buildTool[preset.buildTool].files];
-
   // 独立处理 plugins
   Object.keys(preset.plugins).forEach((item) => {
     fileList = [...fileList, ...plugins[item].files];
   });
-
   return fileList;
 };
 
