@@ -1,12 +1,21 @@
-name: lint
+name: Commit Message Check on PR
 
 on:
-  push:
-    branches: [main]
   pull_request:
-    branches: [main]
+    types: [opened, synchronize, reopened]
 
 jobs:
+  check-commit-message:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # 获取所有提交记录以便检查提交信息
+
+      - name: Check commit messages in PR
+        run: ./scripts/check_commit_msg.sh ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }}
+
   test:
     runs-on: ubuntu-latest
     strategy:
@@ -32,6 +41,3 @@ jobs:
 
       - name: Lint
         run: pnpm run lint:ci
-
-      - name: Build
-        run: pnpm run build

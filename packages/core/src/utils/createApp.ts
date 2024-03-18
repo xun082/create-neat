@@ -65,7 +65,7 @@ const getTableInfo = async () => {
 };
 
 // 模板创建主函数
-export default async function createApp(matter: string, options: { force: boolean }) {
+export default async function createApp(matter: string, options: { force: boolean; dev: boolean }) {
   intro(chalk.green(" create-you-app "));
   const rootDirectory = resolveApp(matter);
 
@@ -81,9 +81,8 @@ export default async function createApp(matter: string, options: { force: boolea
 
   // 写入 .gitignore 文件
   fs.writeFileSync(join(rootDirectory, ".gitignore"), createTemplateFile("gitignore"));
-
   // 下载 npm 包解压,获取目标模板导入文件,并删除一些无用的代码文件
-  getNpmPackage(projectLink.get(projectType) as string, projectType, rootDirectory);
+  getNpmPackage(projectLink.get(projectType) as string, projectType, rootDirectory, options.dev);
 
   // 注入 lint 规则
   if (commitLint === true) {
