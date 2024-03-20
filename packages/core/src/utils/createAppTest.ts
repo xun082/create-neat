@@ -102,6 +102,7 @@ export default async function createAppTest(projectName: string, options: Record
   console.log(chalk.blue(`🚀  Invoking generators...`));
   const fileList = getFilesForProject(preset);
   console.log("fileList", fileList);
+
   fileList.forEach(async (file) => {
     await createFiles(rootDirectory, {
       [file]: "", // todo: 写入的内容还待设计，考虑修改 configMap 的 files 为对象

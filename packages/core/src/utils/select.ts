@@ -3,7 +3,7 @@ import chalk from "chalk";
 import { execSync } from "child_process";
 
 import { getPreset } from "./preset";
-import { getNpmSource } from "./getNpmSource";
+import { getNpmSource } from "./getnpmSource";
 const registryInfo = execSync("npm config get registry").toString().trim();
 const npmSource: any = getNpmSource();
 interface Responses {
