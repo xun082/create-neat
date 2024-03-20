@@ -40,6 +40,7 @@
     "boxen": "^5.0.0",
     "chalk": "^4.0.0",
     "commander": "^12.0.0",
+    "cross-spawn": "^7.0.3",
     "fs-extra": "^11.2.0",
     "minimist": "^1.2.8",
     "ora": "^5.4.1",
@@ -49,7 +50,8 @@
     "@types/fs-extra": "^11.0.4",
     "@types/minimist": "^1.2.5",
     "@types/node": "^20.11.22",
-    "@types/tar": "^6.1.11"
+    "@types/tar": "^6.1.11",
+    "@types/cross-spawn": "^6.0.6"
   },
   "engines": {
     "node": ">=14.0.0",
