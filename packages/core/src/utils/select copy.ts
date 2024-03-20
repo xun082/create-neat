@@ -1,50 +1,13 @@
 import { multiselect, select, intro } from "@clack/prompts";
 import chalk from "chalk";
-import https from "https";
-import { execSync } from "child_process";
 
 import { getPreset } from "./preset";
-import getPackageJsonInfo from "./getPackageInfo";
-const npmJson: any = getPackageJsonInfo("../../../../registries.json", true);
-const npmSources: any = [];
-for (const key in npmJson) {
-  npmSources.push({ label: key, value: npmJson[key].registry });
-}
-const registryInfo = execSync("npm config get registry").toString().trim();
-const checkSourceSpeed = (source: any) => {
-  return new Promise((resolve, reject) => {
-    const startTime = Date.now();
-    const req = https.request(source.registry, () => {
-      const endTime = Date.now();
-      const duration = endTime - startTime;
-      resolve({ sourceName: source, duration });
-    });
-    req.on("error", (error) => {
-      reject(error);
-    });
 
-    req.end();
-  });
-};
-// 为每个源创建Promise
-const promises = Object.keys(npmJson).map((sourceName) => {
-  const source = npmJson[sourceName];
-  return checkSourceSpeed(source);
-});
-// 使用Promise.race找出哪个源最快
-Promise.race(promises)
-  .then((fastestSource: any) => {
-    npmSources.push({ label: "Fastest source", value: fastestSource.sourceName.registry });
-  })
-  .catch((error) => {
-    console.error("检测源速度时发生错误:", error);
-  });
 interface Responses {
   template: string;
   buildTool: string;
   plugins: string[];
   packageManager: string;
-  npmSource: string;
 }
 
 /**
@@ -57,7 +20,6 @@ async function projectSelect() {
     buildTool: "",
     plugins: [],
     packageManager: "",
-    npmSource: "",
   };
 
   intro(chalk.green(" create-you-app "));
@@ -108,19 +70,11 @@ async function projectSelect() {
     ],
   })) as string;
 
-  // 选择npm源
-  responses.npmSource = (await select({
-    message: "Pick a npm source for your project",
-    initialValue: registryInfo,
-    options: npmSources,
-  })) as string;
-
   return getPreset(
     responses.template,
     responses.buildTool,
     responses.plugins,
     responses.packageManager,
-    responses.npmSource,
   );
 }
 

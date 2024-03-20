@@ -60,15 +60,35 @@ export default async function createAppTest(projectName: string, options: Record
 
   // 获取用户选择预设
   const preset: Preset = await projectSelect();
-  const { packageManager } = preset;
-
+  const { packageManager, npmSource } = preset;
   // 创建package.json
   console.log(chalk.blue(`\n📄  Generating package.json...`));
   const packageContent = {
     name: projectName,
     version: "0.1.0",
     private: true,
-    devDependencies: {},
+    devDependencies: {
+      // "@clack/prompts": "^0.7.0",
+      // "@commitlint/config-conventional": "^18.4.3",
+      // "@typescript-eslint/parser": "^6.13.1",
+      // axios: "^1.6.7",
+      // boxen: "^5.0.0",
+      // chalk: "^4.0.0",
+      // commander: "^12.0.0",
+      // commitizen: "^4.3.0",
+      // "cross-spawn": "^7.0.3",
+      // "cz-git": "^1.7.1",
+      // eslint: "^8.55.0",
+      // "eslint-plugin-import": "^2.29.0",
+      // "fs-extra": "^11.2.0",
+      // husky: "^8.0.3",
+      // "lint-staged": "^15.2.0",
+      // minimist: "^1.2.8",
+      // ora: "^5.4.1",
+      // prettier: "^3.1.0",
+      // tar: "^6.2.0",
+      // typescript: "^5.3.2",
+    },
   };
   // 遍历 preset.plugins，插入依赖
   Object.keys(preset.plugins).forEach((dep) => {
@@ -108,10 +128,11 @@ export default async function createAppTest(projectName: string, options: Record
       [file]: "", // todo: 写入的内容还待设计，考虑修改 configMap 的 files 为对象
     });
   });
-
+  console.log(fileList, "fileList");
+  return;
   // 安装附加依赖
   // todo: 待映射部分完成再测试
-  await dependenciesInstall(rootDirectory, packageManager);
+  await dependenciesInstall(rootDirectory, packageManager, npmSource);
   // todo: configMap 的 npm 也需要改为对象，传入包依赖模式（-S，-D）
   const npmList = getNpmForPackage(preset);
   console.log("npmList", npmList);

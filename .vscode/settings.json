@@ -4,5 +4,27 @@
     "source.fixAll.eslint": "explicit"
   },
   "typescript.tsdk": "node_modules/typescript/lib",
-  "cSpell.words": ["interaciton"]
+  "cSpell.words": [
+    "interaciton"
+  ],
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#b554da",
+    "activityBar.background": "#b554da",
+    "activityBar.foreground": "#15202b",
+    "activityBar.inactiveForeground": "#15202b99",
+    "activityBarBadge.background": "#ddbb62",
+    "activityBarBadge.foreground": "#15202b",
+    "commandCenter.border": "#e7e7e799",
+    "sash.hoverBorder": "#b554da",
+    "statusBar.background": "#a22dce",
+    "statusBar.foreground": "#e7e7e7",
+    "statusBarItem.hoverBackground": "#b554da",
+    "statusBarItem.remoteBackground": "#a22dce",
+    "statusBarItem.remoteForeground": "#e7e7e7",
+    "titleBar.activeBackground": "#a22dce",
+    "titleBar.activeForeground": "#e7e7e7",
+    "titleBar.inactiveBackground": "#a22dce99",
+    "titleBar.inactiveForeground": "#e7e7e799"
+  },
+  "peacock.color": "#a22dce"
 }
