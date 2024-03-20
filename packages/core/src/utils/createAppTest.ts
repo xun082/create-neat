@@ -68,26 +68,11 @@ export default async function createAppTest(projectName: string, options: Record
     version: "0.1.0",
     private: true,
     devDependencies: {
-      // "@clack/prompts": "^0.7.0",
-      // "@commitlint/config-conventional": "^18.4.3",
-      // "@typescript-eslint/parser": "^6.13.1",
-      // axios: "^1.6.7",
-      // boxen: "^5.0.0",
-      // chalk: "^4.0.0",
-      // commander: "^12.0.0",
-      // commitizen: "^4.3.0",
-      // "cross-spawn": "^7.0.3",
-      // "cz-git": "^1.7.1",
-      // eslint: "^8.55.0",
-      // "eslint-plugin-import": "^2.29.0",
-      // "fs-extra": "^11.2.0",
-      // husky: "^8.0.3",
-      // "lint-staged": "^15.2.0",
-      // minimist: "^1.2.8",
-      // ora: "^5.4.1",
-      // prettier: "^3.1.0",
-      // tar: "^6.2.0",
-      // typescript: "^5.3.2",
+      typescript: "^5.3.2",
+      "@laconic/vue-script": "^1.0.0",
+    },
+    dependencies: {
+      vue: "^3.3.4",
     },
   };
   // 遍历 preset.plugins，插入依赖
@@ -128,8 +113,6 @@ export default async function createAppTest(projectName: string, options: Record
       [file]: "", // todo: 写入的内容还待设计，考虑修改 configMap 的 files 为对象
     });
   });
-  console.log(fileList, "fileList");
-  return;
   // 安装附加依赖
   // todo: 待映射部分完成再测试
   await dependenciesInstall(rootDirectory, packageManager, npmSource);

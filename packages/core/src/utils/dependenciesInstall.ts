@@ -39,15 +39,6 @@ const dependenciesInstall = (
         const devDepsArray = Object.entries(devDependencies).map(
           ([dep, version]) => `${dep}@${version}`,
         );
-
-        console.log(
-          packageManager,
-          [installCommand[packageManager], "set", "--registry", npmSource],
-          {
-            stdio: "ignore",
-            cwd: packageJsonFile,
-          },
-        );
         // 执行具体命令
         try {
           const pm = spawn(
