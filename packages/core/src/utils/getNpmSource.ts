@@ -23,19 +23,22 @@ export const getNpmSource = () => {
       req.end();
     });
   };
-  // 为每个源创建Promise
-  const promises = Object.keys(npmJson).map((sourceName) => {
-    const source = npmJson[sourceName];
-    return checkSourceSpeed(source);
-  });
-  // 使用Promise.race找出哪个源最快
-  Promise.race(promises)
-    .then((fastestSource: any) => {
-      npmSources.push({ label: "Fastest source", value: fastestSource.sourceName.registry });
-    })
-    .catch((error) => {
-      console.error("检测源速度时发生错误:", error);
-    });
+  (async () => {
+    try {
+      // 为每个源创建 Promise
+      const promises = Object.keys(npmJson).map((sourceName) => {
+        const source = npmJson[sourceName];
+        return checkSourceSpeed(source);
+      });
 
+      // 使用 Promise.race 找出哪个源最快，并用 await 等待结果
+      const fastestSource: any = await Promise.race(promises);
+
+      // 将最快源的 registry 添加到 npmSources 中
+      npmSources.push({ label: "Fastest source", value: fastestSource.sourceName.registry });
+    } catch (error) {
+      console.error("检测源速度时发生错误:", error);
+    }
+  })();
   return npmSources;
 };

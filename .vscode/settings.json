@@ -4,9 +4,6 @@
     "source.fixAll.eslint": "explicit"
   },
   "typescript.tsdk": "node_modules/typescript/lib",
-  "cSpell.words": [
-    "interaciton"
-  ],
   "workbench.colorCustomizations": {
     "activityBar.activeBackground": "#b554da",
     "activityBar.background": "#b554da",

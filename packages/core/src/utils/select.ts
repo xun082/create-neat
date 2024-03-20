@@ -5,7 +5,7 @@ import { execSync } from "child_process";
 import { getPreset } from "./preset";
 import { getNpmSource } from "./getNpmSource";
 const registryInfo = execSync("npm config get registry").toString().trim();
-const npmSource = getNpmSource();
+const npmSource: any = getNpmSource();
 interface Responses {
   template: string;
   buildTool: string;

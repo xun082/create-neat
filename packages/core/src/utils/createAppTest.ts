@@ -67,13 +67,7 @@ export default async function createAppTest(projectName: string, options: Record
     name: projectName,
     version: "0.1.0",
     private: true,
-    devDependencies: {
-      typescript: "^5.3.2",
-      "@laconic/vue-script": "^1.0.0",
-    },
-    dependencies: {
-      vue: "^3.3.4",
-    },
+    devDependencies: {},
   };
   // 遍历 preset.plugins，插入依赖
   Object.keys(preset.plugins).forEach((dep) => {
