@@ -1,5 +1,5 @@
 import fs from "fs";
-import { spawn } from "child_process";
+import { spawn } from "cross-spawn";
 import path from "path";
 
 /**
