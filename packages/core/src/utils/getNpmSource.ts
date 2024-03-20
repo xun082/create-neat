@@ -8,6 +8,7 @@ export const getNpmSource = () => {
   for (const key in npmJson) {
     npmSources.push({ label: key, value: npmJson[key].registry });
   }
+
   const checkSourceSpeed = (source: any) => {
     return new Promise((resolve, reject) => {
       const startTime = Date.now();
@@ -23,6 +24,7 @@ export const getNpmSource = () => {
       req.end();
     });
   };
+
   (async () => {
     try {
       // 为每个源创建 Promise
