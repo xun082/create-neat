@@ -60,8 +60,7 @@ export default async function createAppTest(projectName: string, options: Record
 
   // 获取用户选择预设
   const preset: Preset = await projectSelect();
-  const { packageManager } = preset;
-
+  const { packageManager, npmSource } = preset;
   // 创建package.json
   console.log(chalk.blue(`\n📄  Generating package.json...`));
   const packageContent = {
@@ -108,10 +107,9 @@ export default async function createAppTest(projectName: string, options: Record
       [file]: "", // todo: 写入的内容还待设计，考虑修改 configMap 的 files 为对象
     });
   });
-
   // 安装附加依赖
   // todo: 待映射部分完成再测试
-  await dependenciesInstall(rootDirectory, packageManager);
+  await dependenciesInstall(rootDirectory, packageManager, npmSource);
   // todo: configMap 的 npm 也需要改为对象，传入包依赖模式（-S，-D）
   const npmList = getNpmForPackage(preset);
   console.log("npmList", npmList);
