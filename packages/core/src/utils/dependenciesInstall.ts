@@ -31,6 +31,7 @@ const dependenciesInstall = (
   return new Promise((resolve, reject) => {
     try {
       const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf-8"));
+
       const devDependencies = packageJson.devDependencies;
 
       if (devDependencies) {
