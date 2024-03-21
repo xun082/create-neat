@@ -176,9 +176,6 @@ importers:
       '@laconic/utils':
         specifier: workspace:*
         version: link:../utils
-      '@types/cross-spawn':
-        specifier: ^6.0.6
-        version: 6.0.6
       axios:
         specifier: ^1.6.7
         version: 1.6.7
@@ -207,6 +204,9 @@ importers:
         specifier: ^6.2.0
         version: 6.2.0
     devDependencies:
+      '@types/cross-spawn':
+        specifier: ^6.0.6
+        version: 6.0.6
       '@types/fs-extra':
         specifier: ^11.0.4
         version: 11.0.4
@@ -3075,7 +3075,7 @@ packages:
     resolution: {integrity: sha512-fXRhhUkG4H3TQk5dBhQ7m/JDdSNHKwR2BBia62lhwEIq9xGiQKLxd6LymNhn47SjXhsUEPmxi+PKw2OkW4LLjA==}
     dependencies:
       '@types/node': 20.11.22
-    dev: false
+    dev: true
 
   /@types/eslint-scope@3.7.7:
     resolution: {integrity: sha512-MzMFlSLBqNF2gcHWO0G1vP/YQyfvrxZ0bF+u7mzUdZ1/xK4A4sru+nraZz5i3iEIk1l1uyicaDVTB4QbbEkAYg==}
