@@ -61,6 +61,7 @@ export default async function createAppTest(projectName: string, options: Record
   // 获取用户选择预设
   const preset: Preset = await projectSelect();
   const { packageManager, npmSource } = preset;
+
   // 创建package.json
   console.log(chalk.blue(`\n📄  Generating package.json...`));
   const packageContent = {
