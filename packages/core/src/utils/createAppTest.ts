@@ -70,6 +70,7 @@ export default async function createAppTest(projectName: string, options: Record
     private: true,
     devDependencies: {},
   };
+
   // 遍历 preset.plugins，插入依赖
   Object.keys(preset.plugins).forEach((dep) => {
     console.log("dep:", dep);
