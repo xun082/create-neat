@@ -9,27 +9,36 @@ import { join, resolve } from "node:path";
 import { packageVersion } from "./constants";
 
 /**
- * @param directoryPath 删除文件的路径，默认 node_modules
- * @param verbose 如果为true，则显示删除信息
- */
-/**
  * @author moment
  * @param directoryPath 删除文件的路径，默认 node_modules
  * @param verbose 如果为true，则显示删除信息
  */
-export async function removeDirectory(directoryPath = "node_modules", verbose = true) {
+export async function removeDirectory(
+  directoryPath: string = "node_modules",
+  verbose: boolean = true,
+) {
   const fullPath = resolveApp(directoryPath);
-  if (verbose) {
-    const spinner = ora(chalk.bold.cyan("File being deleted...")).start();
+
+  async function deleteDirectory() {
     try {
       await fs.remove(fullPath);
-      spinner.succeed(chalk.bold.green("Deleted successfully"));
+      return true; // 成功删除
     } catch (error) {
+      console.error(chalk.bold.red("Deletion failed"), error);
+      return false; // 删除失败
+    }
+  }
+
+  if (verbose) {
+    const spinner = ora(chalk.bold.cyan("File being deleted...")).start();
+    const success = await deleteDirectory();
+    if (success) {
+      spinner.succeed(chalk.bold.green("Deleted successfully"));
+    } else {
       spinner.fail(chalk.bold.red("Deletion failed"));
-      console.error(error);
     }
   } else {
-    await fs.remove(fullPath);
+    await deleteDirectory();
   }
 }
 

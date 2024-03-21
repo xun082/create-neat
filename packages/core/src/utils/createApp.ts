@@ -9,7 +9,7 @@ import ora from "ora";
 import { removeDirectory, getNpmPackage } from "./fileController";
 import { ProjectTypes, PackageManagers } from "./questions";
 import { projectLink } from "./constants";
-import isGitInstalled from "./checkGitInstallation";
+import isGitInstalled from "./gitCheck";
 import createSuccessInfo from "./createSuccessInfo";
 import createCommitlint from "./createCommitlint";
 import { createPackageJson, createTemplateFile } from "./createFile";
@@ -84,7 +84,7 @@ export default async function createApp(matter: string, options: { force: boolea
   // 下载 npm 包解压,获取目标模板导入文件,并删除一些无用的代码文件
   getNpmPackage(projectLink.get(projectType) as string, projectType, rootDirectory, options.dev);
 
-  // 注入 lint 规则
+  // 注入 commitlint 规则
   if (commitLint === true) {
     createCommitlint(rootDirectory);
   }
@@ -100,7 +100,7 @@ export default async function createApp(matter: string, options: { force: boolea
   });
 
   // 是否安装已经安装了 git
-  if (isGitInstalled()) {
+  if (isGitInstalled(rootDirectory)) {
     exec("git init", { cwd: rootDirectory });
   }
 }
