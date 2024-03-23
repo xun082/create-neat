@@ -7,7 +7,11 @@ import path from "path";
  * @param packageJsonFile packageJson文件父路径
  * @param packageManager  包管理器
  */
-const dependenciesInstall = (packageJsonFile: string, packageManager: string): Promise<string> => {
+const dependenciesInstall = (
+  packageJsonFile: string,
+  packageManager: string,
+  npmSource: string,
+): Promise<string> => {
   /** 不同安装方式的命令枚举  */
   const installCommand = {
     npm: "install",
@@ -27,6 +31,7 @@ const dependenciesInstall = (packageJsonFile: string, packageManager: string): P
   return new Promise((resolve, reject) => {
     try {
       const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf-8"));
+
       const devDependencies = packageJson.devDependencies;
 
       if (devDependencies) {
@@ -39,7 +44,14 @@ const dependenciesInstall = (packageJsonFile: string, packageManager: string): P
         try {
           const pm = spawn(
             packageManager,
-            [installCommand[packageManager], installParams[packageManager], ...devDepsArray],
+            [
+              installCommand[packageManager],
+              installParams[packageManager],
+              ...devDepsArray,
+              "set",
+              "--registry",
+              npmSource,
+            ],
             {
               stdio: "ignore",
               cwd: packageJsonFile,
