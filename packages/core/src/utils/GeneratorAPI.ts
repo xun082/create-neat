@@ -1,7 +1,7 @@
 // import fs from 'fs'
 
 /**
- * @description 为执行 generator 提供系一列 api
+ * @description 为执行插件 generator 提供系一列 api
  * @param plugin 插件名
  * @param generator 生成器实例
  * @param options 传入的生成器选项
