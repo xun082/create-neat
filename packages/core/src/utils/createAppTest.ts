@@ -71,6 +71,7 @@ export default async function createAppTest(projectName: string, options: Record
     private: true,
     devDependencies: {},
   };
+
   // 遍历 preset.plugins，插入依赖
   Object.keys(preset.plugins).forEach((dep) => {
     console.log("dep:", dep);
@@ -92,7 +93,6 @@ export default async function createAppTest(projectName: string, options: Record
   if (gitCheck(rootDirectory)) exec("git init", { cwd: rootDirectory });
 
   // todo: 插件未开发，先模拟过程
-
   // 安装插件至 package.json
   Object.keys(preset.plugins).forEach(async (plugin) => {
     console.log(plugin, "installed");
@@ -119,4 +119,6 @@ export default async function createAppTest(projectName: string, options: Record
     "README-EN.md": createReadmeString(preset.packageManager, preset.template, "README-EN.md"),
   });
   createSuccessInfo(projectName, "npm");
+
+  // gitignore
 }
