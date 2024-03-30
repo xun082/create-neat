@@ -19,7 +19,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "dev": "tsc -w"
+    "dev": "tsc -w -p ./tsconfig.dev.json"
   },
   "files": [
     "dist/**/*",
