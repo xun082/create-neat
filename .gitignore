@@ -39,4 +39,7 @@ yarn-error.log*
 
 # Webstorm
 .idea/
-.vscode/
+
+# VSCode
+.vscode/*
+!.vscode/launch.json
