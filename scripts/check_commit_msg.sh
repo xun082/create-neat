@@ -18,7 +18,7 @@ check_commit_message() {
         exit 1
     fi
 }
-
+ 
 # 获取本地尚未推送的提交SHA值
 commit_sha_list=$(git log origin/main..HEAD --format="%H")
 
