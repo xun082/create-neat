@@ -1,6 +1,21 @@
 // Generator.ts
+import path from "path";
+
 import { createFiles } from "./createFiles";
 import GeneratorAPI from "./GeneratorAPI";
+
+function loadModule(modulePath, rootDirectory) {
+  const resolvedPath = path.resolve(rootDirectory, modulePath);
+  try {
+    // 尝试加载模块
+    const module = require(resolvedPath);
+    return module;
+  } catch (error) {
+    // 处理加载模块失败的情况
+    console.error(`Error loading module at ${resolvedPath}:`, error);
+    return null;
+  }
+}
 
 /**
  * @description 生成器，实现插件的文件注入、配置拓展
@@ -10,7 +25,6 @@ class Generator {
   private plugins: Record<string, any>;
   private files: Record<string, string> = {};
   private rootOptions: Record<string, any> = {};
-
   constructor(rootDirectory: string, plugins = {}) {
     this.rootDirectory = rootDirectory;
     this.plugins = plugins;
@@ -26,7 +40,8 @@ class Generator {
         this.plugins[pluginName],
         this.rootOptions,
       );
-
+      console.log(generatorAPI);
+      console.log(pluginName);
       const pluginPath = `${pluginName}/generator`;
       const pluginGenerator = loadModule(pluginPath, this.rootDirectory);
       if (pluginGenerator && typeof pluginGenerator.generate === "function") {

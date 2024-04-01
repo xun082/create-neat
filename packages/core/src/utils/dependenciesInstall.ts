@@ -36,31 +36,35 @@ const dependenciesInstall = (packageJsonFile: string, packageManager: string): P
           ([dep, version]) => `${dep}@${version}`,
         );
         // 执行具体命令
-       try{const pm = spawn(
-          packageManager + (process.platform === "win32" ? ".cmd" : ""),
-          [installCommand[packageManager], installParams[packageManager], ...devDepsArray],
-          {
-            stdio: "ignore",
-            cwd: packageJsonFile,
-          },
-        );
+        try {
+          const pm = spawn(
+            packageManager + (process.platform === "win32" ? ".cmd" : ""),
+            [installCommand[packageManager], installParams[packageManager], ...devDepsArray],
+            {
+              stdio: "ignore",
+              cwd: packageJsonFile,
+            },
+          );
 
-        // 监听安装命令的输出
-        pm.on("close", (code) => {
-          if (code === 0) {
-            // code为0代表安装成功
-            resolve("devDependencies installed successfully.");
-            console.log("devDependencies installed successfully.");
-          } else {
-            console.error(
-              `${packageManager} ${installCommand[packageManager]} exited with code ${code}`,
-            );
-            reject(`${packageManager} ${installCommand[packageManager]} exited with code ${code}`);
-          }
-        });
-      }catch(err){
-         console.log("Installing devDependencies failed: ",err)
-      }} else {
+          // 监听安装命令的输出
+          pm.on("close", (code) => {
+            if (code === 0) {
+              // code为0代表安装成功
+              resolve("devDependencies installed successfully.");
+              console.log("devDependencies installed successfully.");
+            } else {
+              console.error(
+                `${packageManager} ${installCommand[packageManager]} exited with code ${code}`,
+              );
+              reject(
+                `${packageManager} ${installCommand[packageManager]} exited with code ${code}`,
+              );
+            }
+          });
+        } catch (err) {
+          console.log("Installing devDependencies failed: ", err);
+        }
+      } else {
         console.log("No devDependencies found in package.json.");
         reject("No devDependencies found in package.json.");
       }
