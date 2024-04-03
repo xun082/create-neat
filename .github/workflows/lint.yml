@@ -41,3 +41,6 @@ jobs:
 
       - name: Lint
         run: pnpm run lint:ci
+              
+      - name: Check
+        run: pnpm run check
