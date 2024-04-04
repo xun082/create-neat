@@ -4,11 +4,11 @@ import path from "path";
 import { createFiles } from "./createFiles";
 import GeneratorAPI from "./GeneratorAPI";
 
-function loadModule(modulePath, rootDirectory) {
-  const resolvedPath = path.resolve(rootDirectory, modulePath);
+async function loadModule(modulePath, cwd) {
+  const resolvedPath = path.resolve(cwd, modulePath);
   try {
     // 尝试加载模块
-    const module = require(resolvedPath);
+    const module = await import(resolvedPath);
     return module;
   } catch (error) {
     // 处理加载模块失败的情况
@@ -42,8 +42,11 @@ class Generator {
       );
       console.log(generatorAPI);
       console.log(pluginName);
-      const pluginPath = `${pluginName}/generator`;
-      const pluginGenerator = loadModule(pluginPath, this.rootDirectory);
+      let pluginGenerator = null;
+      if (process.env.NODE_ENV === "DEV") {
+        const pluginPath = `packages/@plugin/plugin-${pluginName.toLowerCase()}`;
+        pluginGenerator = await loadModule(pluginPath, process.cwd());
+      }
       if (pluginGenerator && typeof pluginGenerator.generate === "function") {
         await pluginGenerator.generate(generatorAPI);
       }

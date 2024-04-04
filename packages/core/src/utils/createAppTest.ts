@@ -29,6 +29,8 @@ process.stdin.on("data", (key) => {
 
 // 创建项目文件夹
 async function createFolder(rootDirectory: string, options: Record<string, any>) {
+  // 记录开发环境并设置环境变量
+  process.env.NODE_ENV = options.dev ? "DEV" : "PROD";
   // 检查目录是否存在
   if (fs.existsSync(rootDirectory)) {
     let proceed = options.force; // 如果强制创建，则默认继续
