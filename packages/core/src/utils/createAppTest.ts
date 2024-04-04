@@ -105,17 +105,17 @@ export default async function createAppTest(projectName: string, options: Record
     // await execSync(`npm install ${plugin}`)
   });
 
+  // 运行生成器创建项目所需文件和结构
+  console.log(chalk.blue(`🚀  Invoking generators...`));
+  const generators = new Generator(rootDirectory, preset.plugins);
+  await generators.generate();
+
   // 安装附加依赖
   // todo: 待映射部分完成再测试
   await dependenciesInstall(rootDirectory, packageManager);
   // todo: configMap 的 npm 也需要改为对象，传入包依赖模式（-S，-D）
   const npmList = getNpmForPackage(preset);
   console.log("npmList", npmList);
-
-  // 运行生成器创建项目所需文件和结构
-  console.log(chalk.blue(`🚀  Invoking generators...`));
-  const generators = new Generator(rootDirectory, preset.plugins);
-  await generators.generate();
 
   // 其他剩余操作，如创建 md 文档，或其他首位操作
   console.log(chalk.blue(`📄  Generating README.md...`));
