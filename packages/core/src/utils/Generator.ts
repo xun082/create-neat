@@ -42,10 +42,12 @@ class Generator {
       );
       console.log(generatorAPI);
       console.log(pluginName);
-      const pluginPath = `${pluginName}/generator`;
+      const newPluginName = pluginName.toLowerCase();
+      const pluginPath = `node_modules/${newPluginName}-plugin-test-ljq`;
       const pluginGenerator = loadModule(pluginPath, this.rootDirectory);
-      if (pluginGenerator && typeof pluginGenerator.generate === "function") {
-        await pluginGenerator.generate(generatorAPI);
+      if (pluginGenerator && typeof pluginGenerator.generator === "function") {
+        const i = await pluginGenerator.generator(generatorAPI);
+        console.log(i);
       }
     }
 
