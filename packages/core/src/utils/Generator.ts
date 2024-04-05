@@ -44,11 +44,14 @@ class Generator {
       console.log(pluginName);
       let pluginGenerator = null;
       if (process.env.NODE_ENV === "DEV") {
-        const pluginPath = `packages/@plugin/plugin-${pluginName.toLowerCase()}`;
-        pluginGenerator = await loadModule(pluginPath, process.cwd());
+        const pluginPathInDev = `packages/@plugin/plugin-${pluginName.toLowerCase()}`;
+        pluginGenerator = await loadModule(pluginPathInDev, process.cwd());
+      } else if (process.env.NODE_ENV === "PROD") {
+        const pluginPathInProd = `node_modules/${pluginName.toLowerCase()}-plugin-test-ljq`;
+        pluginGenerator = await loadModule(pluginPathInProd, this.rootDirectory);
       }
-      if (pluginGenerator && typeof pluginGenerator.generate === "function") {
-        await pluginGenerator.generate(generatorAPI);
+      if (pluginGenerator && typeof pluginGenerator.generator === "function") {
+        await pluginGenerator.generator(generatorAPI);
       }
     }
 

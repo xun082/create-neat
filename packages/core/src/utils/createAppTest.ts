@@ -83,6 +83,11 @@ export default async function createAppTest(projectName: string, options: Record
       version = "latest";
     }
     packageContent.devDependencies[dep] = version;
+    // todo:现在只有babel-plugin-test-ljq这一个包，先试一下，后续发包
+    if (dep === "Babel") {
+      const pluginName = `${dep.toLowerCase()}-plugin-test-ljq`;
+      packageContent.devDependencies[pluginName] = "latest";
+    }
   });
   const packageJson = new PackageAPI(rootDirectory);
   await packageJson.createPackageJson(packageContent);
