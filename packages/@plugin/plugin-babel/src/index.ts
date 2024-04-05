@@ -1,3 +1,4 @@
+import generate from "./generator";
 const buildToolConfigs = {
   webpack: (config) => {
     if (config.resolve.alias) {
@@ -26,4 +27,4 @@ const pluginBable = (api, options) => {
   // ……
 };
 
-export { pluginBable };
+export { pluginBable, generate };

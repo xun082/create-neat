@@ -4,11 +4,11 @@ import path from "path";
 import { createFiles } from "./createFiles";
 import GeneratorAPI from "./GeneratorAPI";
 
-function loadModule(modulePath, rootDirectory) {
-  const resolvedPath = path.resolve(rootDirectory, modulePath);
+async function loadModule(modulePath, cwd) {
+  const resolvedPath = path.resolve(cwd, modulePath);
   try {
     // 尝试加载模块
-    const module = require(resolvedPath);
+    const module = await import(resolvedPath);
     return module;
   } catch (error) {
     // 处理加载模块失败的情况
