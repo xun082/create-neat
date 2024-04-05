@@ -4,12 +4,24 @@ import { PackageJsonType } from "../types";
 
 import { getJsonFileInfo } from "./getJsonFileInfo";
 
+/**
+ * 获取指定包名的所有依赖包路径。
+ * 
+ * @param packageNames - 要收集依赖的包名数组。
+ * @param dirName - 相对路径的基础目录。
+ * @returns 所有依赖包的路径数组。
+ */
 const getPackagePath = (packageNames: string[], dirName: string): string[] => {
   // 收集所有的依赖的包路径
   const topLevelPackagePaths: string[] = [];
   const visitedPackagePackages = new Set<string>();
 
-  // 收集某个包的所有依赖
+    /**
+   * 递归添加指定包的路径及其依赖的路径。
+   * 
+   * @param packageName - 要添加路径的包名。
+   * @param relativeToPath - 相对路径的基础目录。
+   */
   const addPackagePath = (packageName: string, relativeToPath: string) => {
     try {
       if (visitedPackagePackages.has(packageName)) {
