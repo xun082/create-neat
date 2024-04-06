@@ -55,6 +55,9 @@ async function createFolder(rootDirectory: string, options: Record<string, any>)
 
 // 模板创建主函数
 export default async function createAppTest(projectName: string, options: Record<string, any>) {
+  // 记录开发环境并设置环境变量
+  process.env.NODE_ENV = options.dev ? "DEV" : "PROD";
+
   const rootDirectory = resolveApp(projectName);
 
   await createFolder(rootDirectory, options);
