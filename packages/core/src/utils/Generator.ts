@@ -40,14 +40,18 @@ class Generator {
         this.plugins[pluginName],
         this.rootOptions,
       );
-      console.log(generatorAPI);
-      console.log(pluginName);
-      const newPluginName = pluginName.toLowerCase();
-      const pluginPath = `node_modules/${newPluginName}-plugin-test-ljq`;
-      const pluginGenerator = loadModule(pluginPath, this.rootDirectory);
+      let pluginGenerator;
+      if (process.env.NODE_ENV === "DEV") {
+        const pluginPathInDev = `packages/@plugin/plugin-${pluginName.toLowerCase()}`;
+        pluginGenerator = await loadModule(pluginPathInDev, process.cwd());
+      } else if (process.env.NODE_ENV === "PROD") {
+        const pluginPathInProd = `node_modules/${pluginName.toLowerCase()}-plugin-test-ljq`;
+        pluginGenerator = await loadModule(pluginPathInProd, this.rootDirectory);
+      } else {
+        throw new Error("NODE_ENV is not set");
+      }
       if (pluginGenerator && typeof pluginGenerator.generator === "function") {
-        const i = await pluginGenerator.generator(generatorAPI);
-        console.log(i);
+        await pluginGenerator.generator(generatorAPI);
       }
     }
 
