@@ -1,0 +1,9 @@
+{
+  "name": "myApp",
+  "version": "0.1.0",
+  "private": true,
+  "devDependencies": {
+    "Babel": "latest",
+    "babel-plugin-test-ljq": "latest"
+  }
+}
