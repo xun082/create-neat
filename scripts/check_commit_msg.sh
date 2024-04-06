@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# 获取两个参数：起始SHA和结束SHA
+start_sha=$1
+end_sha=$2
+
 # 设置颜色变量
 RED='\033[0;31m'
 BLUE='\033[0;34m'
@@ -15,10 +19,10 @@ check_commit_message() {
     if ! echo "$commit_msg" | grep -qE "^($rules):"; then
         echo -e "${RED}Error:${NC} Commit message format is incorrect for the following message:" >&2
         echo "$commit_msg" >&2
-        exit 1
+        return 1  # 返回非零状态以表示检查失败
     fi
 }
- 
+
 # 获取本地尚未推送的提交SHA值
 commit_sha_list=$(git log origin/main..HEAD --format="%H")
 
@@ -26,6 +30,9 @@ commit_sha_list=$(git log origin/main..HEAD --format="%H")
 for sha in $commit_sha_list; do
     commit_msg=$(git show --format=%B -s $sha)
     check_commit_message "$commit_msg"
+    if [ $? -ne 0 ]; then
+        exit 1  # 如果消息检查失败，退出循环并终止脚本
+    fi
 done
 
 # 输出成功校验
