@@ -9,12 +9,15 @@ RED='\033[0;31m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
+# 从commitlint.config.js导入rules变量
+rules=$(node -e "console.log(require('./commitlint.config.js').rules['type-enum'][2].join('|'))")
+
 # 定义提交信息规范函数
 check_commit_message() {
     commit_msg="$1"
     # 检查提交信息是否以指定的前缀开头
-    if ! echo "$commit_msg" | grep -qE "^(feat|fix|docs|style|refactor|test|chore|ci):"; then
-        echo -e "${RED}Error:${NC} Commit message format is incorrect. It should start with one of '${BLUE}feat|fix|docs|style|refactor|test|chore|ci:${NC}'." >&2
+    if ! echo "$commit_msg" | grep -qE "^($rules):"; then
+        echo -e "${RED}Error:${NC} Commit message format is incorrect. It should start with one of '${BLUE}^($rules):${NC}'." >&2
         exit 1
     fi
 }
