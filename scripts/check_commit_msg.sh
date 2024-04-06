@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # 获取两个参数：起始SHA和结束SHA
 start_sha=$1
@@ -9,20 +9,31 @@ RED='\033[0;31m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
+# 从commitlint.config.js导入rules变量
+rules=$(node -e "console.log(require('./commitlint.config.js').rules['type-enum'][2].join('|'))")
+
 # 定义提交信息规范函数
 check_commit_message() {
     commit_msg="$1"
     # 检查提交信息是否以指定的前缀开头
-    if ! echo "$commit_msg" | grep -qE "^(feat|fix|docs|style|refactor|test|chore|ci):"; then
-        echo -e "${RED}Error:${NC} Commit message format is incorrect. It should start with one of '${BLUE}feat|fix|docs|style|refactor|test|chore|ci:${NC}'." >&2
-        exit 1
+    if ! echo "$commit_msg" | grep -qE "^($rules):"; then
+        echo -e "${RED}Error:${NC} Commit message format is incorrect for the following message:" >&2
+        echo "$commit_msg" >&2
+        return 1  # 返回非零状态以表示检查失败
     fi
 }
 
-# 遍历从start_sha到end_sha的所有提交
-for sha in $(git rev-list $start_sha..$end_sha); do
+# 获取本地尚未推送的提交SHA值
+commit_sha_list=$(git log origin/main..HEAD --format="%H")
+
+# 遍历所有尚未推送的提交，并检查提交消息格式
+for sha in $commit_sha_list; do
     commit_msg=$(git show --format=%B -s $sha)
     check_commit_message "$commit_msg"
+    if [ $? -ne 0 ]; then
+        exit 1  # 如果消息检查失败，退出循环并终止脚本
+    fi
 done
 
+# 输出成功校验
 echo -e "${BLUE}Commit message check passed.${NC}\n"
