@@ -4,11 +4,11 @@ import path from "path";
 import { createFiles } from "./createFiles";
 import GeneratorAPI from "./GeneratorAPI";
 
-function loadModule(modulePath, rootDirectory) {
-  const resolvedPath = path.resolve(rootDirectory, modulePath);
+async function loadModule(modulePath, rootDirectory) {
+  const resolvedPath = path.resolve(rootDirectory, "../../", modulePath);
   try {
     // 尝试加载模块
-    const module = require(resolvedPath);
+    const module = await require(resolvedPath);
     return module;
   } catch (error) {
     // 处理加载模块失败的情况
@@ -25,6 +25,7 @@ class Generator {
   private plugins: Record<string, any>;
   private files: Record<string, string> = {};
   private rootOptions: Record<string, any> = {};
+
   constructor(rootDirectory: string, plugins = {}) {
     this.rootDirectory = rootDirectory;
     this.plugins = plugins;
@@ -40,9 +41,11 @@ class Generator {
         this.plugins[pluginName],
         this.rootOptions,
       );
+
+      // pluginGenerator 是一个函数，接受一个 GeneratorAPI 实例作为参数
       let pluginGenerator;
       if (process.env.NODE_ENV === "DEV") {
-        const pluginPathInDev = `packages/@plugin/plugin-${pluginName.toLowerCase()}`;
+        const pluginPathInDev = `packages/@plugin/plugin-${pluginName.toLowerCase()}/generator/index.cjs`;
         pluginGenerator = await loadModule(pluginPathInDev, process.cwd());
       } else if (process.env.NODE_ENV === "PROD") {
         const pluginPathInProd = `node_modules/${pluginName.toLowerCase()}-plugin-test-ljq`;
@@ -50,8 +53,8 @@ class Generator {
       } else {
         throw new Error("NODE_ENV is not set");
       }
-      if (pluginGenerator && typeof pluginGenerator.generator === "function") {
-        await pluginGenerator.generator(generatorAPI);
+      if (pluginGenerator && typeof pluginGenerator === "function") {
+        await pluginGenerator(generatorAPI);
       }
     }
 
@@ -80,6 +83,11 @@ class Generator {
    */
   getFiles(): Record<string, string> {
     return this.files;
+  }
+
+  // 获取到 rootDirectory 路径
+  getRootDirectory(): string {
+    return this.rootDirectory;
   }
 }
 
