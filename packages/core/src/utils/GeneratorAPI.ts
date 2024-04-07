@@ -1,6 +1,9 @@
 import fs from "fs";
 import path from "path";
 import ejs from "ejs";
+
+import Generator from "./Generator";
+
 /**
  * @description 为执行 generator 提供系一列 api
  * @param plugin 插件名
@@ -43,7 +46,7 @@ class GeneratorAPI {
       ...options,
     };
     // 获取当前项目的package.json
-    const pkgPath = path.resolve((this.generator as any).rootDirectory, "package.json");
+    const pkgPath = path.resolve(this.generator.getRootDirectory(), "package.json");
     // 读取package.json中的内容
     let pkg = {};
     try {

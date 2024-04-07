@@ -58,16 +58,18 @@ export default async function createAppTest(projectName: string, options: Record
   // 记录开发环境并设置环境变量
   process.env.NODE_ENV = options.dev ? "DEV" : "PROD";
 
+  // 获取到项目的根目录
   const rootDirectory = resolveApp(projectName);
 
   await createFolder(rootDirectory, options);
 
   // 获取用户选择预设
   const preset: Preset = await projectSelect();
-  const { packageManager } = preset;
+  const { packageManager, plugins } = preset;
 
-  // 创建package.json
+  /* ----------从下面的代码开始，创建package.json---------- */
   console.log(chalk.blue(`\n📄  Generating package.json...`));
+  // 1. 生成 package.json 基本内容
   const packageContent = {
     name: projectName,
     version: "0.1.0",
@@ -75,19 +77,20 @@ export default async function createAppTest(projectName: string, options: Record
     devDependencies: {},
   };
 
-  // 遍历 preset.plugins，插入依赖
-  Object.keys(preset.plugins).forEach((dep) => {
+  // 2. 遍历 plugins，插入依赖
+  Object.keys(plugins).forEach((dep) => {
     console.log("dep:", dep);
-    // todo: 更多的处理依据 preset.plugins[dep] 后续的变化而插入
-    let { version } = preset.plugins[dep];
+    // todo: 更多的处理依据 plugins[dep] 后续的变化而插入
+    let { version } = plugins[dep];
     if (!version) {
-      version = "latest";
+      version = "latest"; // 默认版本号为 latest
     }
-    packageContent.devDependencies[dep] = version;
-    // todo:现在只有babel-plugin-test-ljq这一个包，先试一下，后续发包
+    packageContent.devDependencies[dep] = version; // 插件都是以 devDependencies 安装
+    // todo:现在只有 babel-plugin-test-ljq 这一个包，先试一下，后续发包
     if (dep === "Babel") {
       const pluginName = `${dep.toLowerCase()}-plugin-test-ljq`;
       packageContent.devDependencies[pluginName] = "latest";
+      delete packageContent.devDependencies["Babel"];
     }
   });
   const packageJson = new PackageAPI(rootDirectory);
@@ -100,23 +103,18 @@ export default async function createAppTest(projectName: string, options: Record
   // 初始化 Git 仓库
   if (gitCheck(rootDirectory)) exec("git init", { cwd: rootDirectory });
 
-  // todo: 插件未开发，先模拟过程
-  // 安装插件至 package.json
-  Object.keys(preset.plugins).forEach(async (plugin) => {
-    console.log(plugin, "installed");
-    // 进入仓库
-    // await execSync(`npm install ${plugin}`)
-  });
+  // 安装传入的依赖
+  await dependenciesInstall(rootDirectory, packageManager);
 
   // 运行生成器创建项目所需文件和结构
   console.log(chalk.blue(`🚀  Invoking generators...`));
-  const generators = new Generator(rootDirectory, preset.plugins);
+  const generators = new Generator(rootDirectory, plugins);
   await generators.generate();
 
   // 安装附加依赖
   // todo: 待映射部分完成再测试
   await dependenciesInstall(rootDirectory, packageManager);
-  // todo: configMap 的 npm 也需要改为对象，传入包依赖模式（-S，-D）
+  // todo: configMap 功能目前无用，考虑改为针对于架构的特异化插件选择，目前不影响功能
   const npmList = getNpmForPackage(preset);
   console.log("npmList", npmList);
 
