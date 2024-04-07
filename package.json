@@ -10,7 +10,8 @@
     "lint": "eslint \"**/*.{ts,tsx,js,jsx}\" --fix",
     "lint:ci": "eslint \"**/*.{ts,js}\"",
     "commit": "git-cz",
-    "postinstall": "husky install"
+    "postinstall": "husky install",
+    "check":"npx tsc --noEmit"
   },
   "sideEffects": false,
   "config": {
@@ -21,7 +22,8 @@
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [
       "prettier --check --write",
-      "eslint"
+      "eslint",
+      "pnpm check"
     ]
   },
   "repository": {
