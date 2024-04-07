@@ -1,8 +1,8 @@
-export default (generatorAPI) => {
+module.exports = (generatorAPI) => {
   generatorAPI.extendPackage({
     babel: {
       presets: ["@babel/preset-env"],
-      plugin: [
+      plugins: [
         [
           "@babel/plugin-transform-runtime",
           {
