@@ -17,13 +17,24 @@ import { createPackageJson, createTemplateFile } from "./createFile";
 // 设置输入模式为原始模式
 process.stdin.setRawMode(true);
 
+// Ctrl+C 退出时打印的提示信息
+const exitMsg: string = "⌨️  Ctrl+C pressed - Exiting the program";
+
 // 监听键盘输入，避免选择阶段需要多次 Ctrl+C 退出
 process.stdin.on("data", (key) => {
   // 检测到 Ctrl+C
   if (key[0] === 3) {
-    console.log("⌨️  Ctrl+C pressed - Exiting the program");
+    console.log(exitMsg);
     process.exit(1);
   }
+});
+
+// 这里的监听是为了：当用户输入完预设，此时项目文件夹已经创建并且在下载依赖，
+// 这时如果用户使用 Ctrl+C 终止了程序，那么清理掉初始化一半的文件夹
+process.on("SIGINT", () => {
+  console.log("\n" + exitMsg);
+  removeDirectory(rootDirectory, true);
+  process.exit(1);
 });
 
 // 创建项目文件
@@ -64,14 +75,17 @@ const getTableInfo = async () => {
   return { projectType, packageManageType, commitLint };
 };
 
+// rootDirectory 由 create-neat 所在的系统根目录和用户输入的文件夹名称拼接而成
+let rootDirectory: string;
+
 // 模板创建主函数
 export default async function createApp(matter: string, options: { force: boolean; dev: boolean }) {
   intro(chalk.green(" create-you-app "));
   const rootDirectory = resolveApp(matter);
 
-  await makeDirectory(matter, options);
-
   const { projectType, packageManageType, commitLint } = await getTableInfo();
+
+  await makeDirectory(matter, options);
 
   // 依据 projectType 把相关模板 json 写入 package.json 文件
   fs.writeFileSync(
