@@ -71,6 +71,7 @@
   },
   "dependencies": {
     "@types/node": "^20.11.22",
+    "create-neat": "^1.0.6",
     "ejs": "^3.1.9"
   }
 }

@@ -1,0 +1,21 @@
+{
+  "0 debug pnpm:scope": {
+    "selected": 1,
+    "workspacePrefix": "D:\\git-hub-repositories\\create-neat"
+  },
+  "1 error pnpm": {
+    "errno": 1,
+    "code": "ELIFECYCLE",
+    "pkgid": "create-neat@",
+    "stage": "dev",
+    "script": "turbo dev --concurrency=15",
+    "pkgname": "create-neat",
+    "err": {
+      "name": "pnpm",
+      "message": "create-neat@ dev: `turbo dev --concurrency=15`\nExit status 1",
+      "code": "ELIFECYCLE",
+      "stack": "pnpm: create-neat@ dev: `turbo dev --concurrency=15`\nExit status 1\n    at EventEmitter.<anonymous> (C:\\Users\\党乙豪\\AppData\\Roaming\\npm\\node_modules\\pnpm\\dist\\pnpm.cjs:106952:20)\n    at EventEmitter.emit (node:events:517:28)\n    at ChildProcess.<anonymous> (C:\\Users\\党乙豪\\AppData\\Roaming\\npm\\node_modules\\pnpm\\dist\\pnpm.cjs:93518:18)\n    at ChildProcess.emit (node:events:517:28)\n    at maybeClose (node:internal/child_process:1098:16)\n    at ChildProcess._handle.onexit (node:internal/child_process:303:5)"
+    }
+  },
+  "2 warn pnpm:global": " Local package.json exists, but node_modules missing, did you mean to install?"
+}
