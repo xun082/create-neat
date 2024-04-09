@@ -3,6 +3,7 @@ import fs from "fs-extra";
 import { execSync, exec } from "child_process";
 import { confirm } from "@clack/prompts";
 import chalk from "chalk";
+import path from "path";
 
 // import { removeDirectory } from "./fileController";
 import { projectSelect } from "./select";
@@ -36,7 +37,12 @@ export default async function createAppTest(projectName: string, options) {
     });
 
     // 删除已存在文件并创建新文件
-    console.log(shouldContinue);
+    if (shouldContinue) {
+      await fs.remove(rootDirectory);
+    } else {
+      console.log(`目录中已存在${projectName}`);
+      return;
+    }
 
     await execSync(`mkdir ${rootDirectory}`);
   }
@@ -68,7 +74,8 @@ export default async function createAppTest(projectName: string, options) {
   // 拉取模板
   // todo: 新模板未开发，先模拟过程
   console.log("Creating a project...");
-  await execSync(`mkdir ${rootDirectory}/src`);
+  console.log("src", path.resolve(rootDirectory, "src"));
+  await execSync(`mkdir ${path.resolve(rootDirectory, "src")}`);
 
   // 初始化 Git 仓库
   if (gitCheck(rootDirectory)) exec("git init", { cwd: rootDirectory });
