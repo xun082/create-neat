@@ -5,7 +5,7 @@ import { createFiles } from "./createFiles";
 import GeneratorAPI from "./GeneratorAPI";
 
 async function loadModule(modulePath, rootDirectory) {
-  const resolvedPath = path.resolve(rootDirectory, "../../../../", modulePath);
+  const resolvedPath = path.resolve(rootDirectory, modulePath);
   try {
     // 尝试加载模块
     const module = await require(resolvedPath);
@@ -46,7 +46,10 @@ class Generator {
       let pluginGenerator;
       if (process.env.NODE_ENV === "DEV") {
         const pluginPathInDev = `packages/@plugin/plugin-${pluginName.toLowerCase()}/generator/index.cjs`;
-        pluginGenerator = await loadModule(pluginPathInDev, __dirname);
+        pluginGenerator = await loadModule(
+          pluginPathInDev,
+          path.resolve(__dirname, "../../../../"),
+        );
       } else if (process.env.NODE_ENV === "PROD") {
         const pluginPathInProd = `node_modules/${pluginName.toLowerCase()}-plugin-test-ljq`;
         pluginGenerator = await loadModule(pluginPathInProd, this.rootDirectory);
