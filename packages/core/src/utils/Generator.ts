@@ -5,6 +5,11 @@ import { createFiles } from "./createFiles";
 import GeneratorAPI from "./GeneratorAPI";
 import ConfigTransform from "./ConfigTransform";
 
+/**
+ * 为文件内容添加换行符
+ * @param str 文件内容
+ * @returns 末尾添加换行符后得文件内容
+ */
 const ensureEOL = (str) => {
   if (str.charAt(str.length - 1) !== "\n") {
     return str + "\n";
@@ -130,23 +135,21 @@ class Generator {
     // 重写pakcage.json文件，消除generatorAPI中拓展package.json带来得副作用
     this.files["package.json"] = JSON.stringify(this.pkg, null, 2);
 
-    // Object.keys(this.plugins).forEach((pluginName: string) => {
-    //   const fileName = pluginToFilename[pluginName];
-    //   this.files[fileName] = "";
-    // });
-
-    console.log(this.files, "-----this.files");
     // 安装文件
     await createFiles(this.rootDirectory, this.files);
     console.log("Files have been generated and written to disk.");
   }
 
+  /**
+   * 提取配置文件
+   */
   async extractConfigFiles() {
     const ConfigTransforms = Object.assign(
       this.configTransforms,
       this.defaultConfigTransforms,
       this.reservedConfigTransforms,
     );
+    // extra方法执行后会再this.files中添加一个属性，key为配置文件名称，值为对应得内容
     const extra = (key: string) => {
       if (
         ConfigTransforms[key] &&
@@ -154,9 +157,12 @@ class Generator {
         // do not extract if the field exists in original package.json
         !this.originalPkg[key]
       ) {
+        // this.pkg[key]存在而originalPkg[key]不存在，说明该配置文件是再执行generatorAPI之后添加到pkg中得，需要生成额外的配置文件
+        // 并且再添加到this.files中后需要再pkg中删除该属性
         const value = this.pkg[key];
 
         const configTransform = ConfigTransforms[key];
+        // 转换生成文件内容
         const res = configTransform.thransform(value, this.files, this.rootDirectory);
         const { content, filename } = res;
         this.files[filename] = ensureEOL(content);

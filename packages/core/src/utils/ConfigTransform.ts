@@ -4,6 +4,13 @@ export default class ConfigTransform {
     this.fileDesc = fileDesc.file;
   }
 
+  /**
+   *
+   * @param value 文件初始内容
+   * @param files file tree对象(目前没用到)
+   * @param context 上下文
+   * @returns {filename, content} filename为文件名 content为转化后得文件内容
+   */
   thransform(value, files, context) {
     const file = this.getDefaultFile();
     const { type, filename } = file;
@@ -15,6 +22,10 @@ export default class ConfigTransform {
     };
   }
 
+  /**
+   * 获取文件类型和文件名
+   * @returns {type, filename} type为需要生成得文件类型，filename为文件名
+   */
   getDefaultFile() {
     const [type] = Object.keys(this.fileDesc);
     const [filename] = this.fileDesc[type];
