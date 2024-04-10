@@ -107,12 +107,14 @@ export default async function createAppTest(projectName: string, options: Record
   await dependenciesInstall(rootDirectory, packageManager);
 
   // 运行生成器创建项目所需文件和结构
+
   console.log(chalk.blue(`🚀  Invoking generators...`));
-  const generators = new Generator(rootDirectory, plugins);
+  const generators = new Generator(rootDirectory, plugins, packageContent);
   await generators.generate();
 
   // 安装附加依赖
   // todo: 待映射部分完成再测试
+
   await dependenciesInstall(rootDirectory, packageManager);
   // todo: configMap 功能目前无用，考虑改为针对于架构的特异化插件选择，目前不影响功能
   const npmList = getNpmForPackage(preset);

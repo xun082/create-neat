@@ -3,6 +3,63 @@ import path from "path";
 
 import { createFiles } from "./createFiles";
 import GeneratorAPI from "./GeneratorAPI";
+import ConfigTransform from "./ConfigTransform";
+
+/**
+ * @description 为文件内容添加换行符
+ * @param str 文件内容
+ * @returns 末尾添加换行符后得文件内容
+ */
+const ensureEOL = (str) => {
+  if (str.charAt(str.length - 1) !== "\n") {
+    return str + "\n";
+  }
+  return str;
+};
+
+// 插件对应的配置文件
+const defaultConfigTransforms = {
+  babel: new ConfigTransform({
+    file: {
+      js: ["babel.config.js"],
+    },
+  }),
+  postcss: new ConfigTransform({
+    file: {
+      js: ["postcss.config.js"],
+      json: [".postcssrc.json", ".postcssrc"],
+      yaml: [".postcssrc.yaml", ".postcssrc.yml"],
+    },
+  }),
+  eslintConfig: new ConfigTransform({
+    file: {
+      js: [".eslintrc.js"],
+      json: [".eslintrc", ".eslintrc.json"],
+      yaml: [".eslintrc.yaml", ".eslintrc.yml"],
+    },
+  }),
+  browserslist: new ConfigTransform({
+    file: {
+      lines: [".browserslistrc"],
+    },
+  }),
+  "lint-staged": new ConfigTransform({
+    file: {
+      js: ["lint-staged.config.js"],
+      json: [".lintstagedrc", ".lintstagedrc.json"],
+      yaml: [".lintstagedrc.yaml", ".lintstagedrc.yml"],
+    },
+  }),
+};
+
+// vue项目对应的配置文件
+const reservedConfigTransforms = {
+  vue: new ConfigTransform({
+    file: {
+      js: ["vue.config.js"],
+    },
+  }),
+};
 
 async function loadModule(modulePath, rootDirectory) {
   const resolvedPath = path.resolve(rootDirectory, "../../", modulePath);
@@ -25,10 +82,19 @@ class Generator {
   private plugins: Record<string, any>;
   private files: Record<string, string> = {};
   private rootOptions: Record<string, any> = {};
+  private configTransforms: Record<string, ConfigTransform> = {};
+  private defaultConfigTransforms;
+  private reservedConfigTransforms;
+  public pkg; // 执行generatorAPI之后带有key值为plugin
+  public originalPkg; // 原始package.json
 
-  constructor(rootDirectory: string, plugins = {}) {
+  constructor(rootDirectory: string, plugins = {}, pkg = {}) {
     this.rootDirectory = rootDirectory;
     this.plugins = plugins;
+    this.defaultConfigTransforms = defaultConfigTransforms;
+    this.reservedConfigTransforms = reservedConfigTransforms;
+    this.originalPkg = pkg;
+    this.pkg = Object.assign({}, pkg);
   }
 
   // 创建所有插件的相关文件
@@ -62,10 +128,49 @@ class Generator {
     // 整合需要安装的文件
     // 这里假设 GeneratorAPI 有一个方法来更新这个 Generator 实例的 files
     // createFiles 函数需要你根据自己的逻辑实现文件创建和写入磁盘的逻辑
+    // extract configs from package.json into dedicated files.
+    // 从package.json中生成额外得的文件
+    await this.extractConfigFiles();
+
+    // 重写pakcage.json文件，消除generatorAPI中拓展package.json带来得副作用
+    this.files["package.json"] = JSON.stringify(this.pkg, null, 2);
 
     // 安装文件
     await createFiles(this.rootDirectory, this.files);
     console.log("Files have been generated and written to disk.");
+  }
+
+  /**
+   * @description 提取配置文件
+   */
+  async extractConfigFiles() {
+    const ConfigTransforms = Object.assign(
+      this.configTransforms,
+      this.defaultConfigTransforms,
+      this.reservedConfigTransforms,
+    );
+    // extra方法执行后会再this.files中添加一个属性，key为配置文件名称，值为对应得内容
+    const extra = (key: string) => {
+      if (
+        ConfigTransforms[key] &&
+        this.pkg[key] &&
+        // do not extract if the field exists in original package.json
+        !this.originalPkg[key]
+      ) {
+        // this.pkg[key]存在而originalPkg[key]不存在，说明该配置文件是再执行generatorAPI之后添加到pkg中得，需要生成额外的配置文件
+        // 并且再添加到this.files中后需要再pkg中删除该属性
+        const value = this.pkg[key];
+
+        const configTransform = ConfigTransforms[key];
+        // 转换生成文件内容
+        const res = configTransform.thransform(value, this.files, this.rootDirectory);
+        const { content, filename } = res;
+        this.files[filename] = ensureEOL(content);
+        delete this.pkg[key];
+      }
+    };
+
+    extra("babel");
   }
 
   /**
