@@ -6,7 +6,7 @@ import GeneratorAPI from "./GeneratorAPI";
 import ConfigTransform from "./ConfigTransform";
 
 /**
- * 为文件内容添加换行符
+ * @description 为文件内容添加换行符
  * @param str 文件内容
  * @returns 末尾添加换行符后得文件内容
  */
@@ -141,7 +141,7 @@ class Generator {
   }
 
   /**
-   * 提取配置文件
+   * @description 提取配置文件
    */
   async extractConfigFiles() {
     const ConfigTransforms = Object.assign(

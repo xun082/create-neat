@@ -1,4 +1,11 @@
 const transformJS = {
+  /**
+   * @description 写文件
+   * @param filename 文件名称
+   * @param context 上下文
+   * @param value 原始文件值
+   * @returns 转化后的文件值
+   */
   write(filename, context, value) {
     return `module.exports = ${JSON.stringify(value, null, 2)}`;
   },
@@ -18,7 +25,7 @@ export default class ConfigTransform {
   }
 
   /**
-   * 获取文件类型和文件名
+   * @description 获取文件类型和文件名
    * @returns {type, filename} type为需要生成得文件类型，filename为文件名
    */
   getDefaultFile() {
@@ -28,7 +35,7 @@ export default class ConfigTransform {
   }
 
   /**
-   *
+   * @description 文件转化
    * @param value 文件初始内容
    * @param files file tree对象(目前没用到)
    * @param context 上下文
