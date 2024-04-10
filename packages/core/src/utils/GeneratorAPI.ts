@@ -47,14 +47,16 @@ class GeneratorAPI {
     };
     // 获取当前项目的package.json
     const pkgPath = path.resolve(this.generator.getRootDirectory(), "package.json");
-    // 读取package.json中的内容
-    let pkg = {};
-    try {
-      pkg = JSON.parse(fs.readFileSync(pkgPath, "utf-8"));
-    } catch (err) {
-      console.error(`Failed to read package.json: ${err}`);
-      return;
-    }
+    // // 读取package.json中的内容
+    // let pkg = {};
+    // try {
+    //   pkg = JSON.parse(fs.readFileSync(pkgPath, "utf-8"));
+    // } catch (err) {
+    //   console.error(`Failed to read package.json: ${err}`);
+    //   return;
+    // }
+    // 获取当前项目的package.json
+    const pkg = this.generator.pkg;
     // 将filds合并到package.json中
     for (const key in fields) {
       const value = fields[key];
