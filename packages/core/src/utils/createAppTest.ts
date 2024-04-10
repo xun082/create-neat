@@ -109,7 +109,7 @@ export default async function createAppTest(projectName: string, options: Record
   // 运行生成器创建项目所需文件和结构
 
   console.log(chalk.blue(`🚀  Invoking generators...`));
-  const generators = new Generator(rootDirectory, preset.plugins, packageContent);
+  const generators = new Generator(rootDirectory, plugins, packageContent);
   await generators.generate();
 
   // 安装附加依赖

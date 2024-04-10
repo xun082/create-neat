@@ -17,7 +17,7 @@ const ensureEOL = (str) => {
   return str;
 };
 
-// 插件对应得配置文件
+// 插件对应的配置文件
 const defaultConfigTransforms = {
   babel: new ConfigTransform({
     file: {
@@ -52,7 +52,7 @@ const defaultConfigTransforms = {
   }),
 };
 
-// vue项目对应得配置文件
+// vue项目对应的配置文件
 const reservedConfigTransforms = {
   vue: new ConfigTransform({
     file: {
