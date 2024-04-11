@@ -3,7 +3,9 @@
 
 echo 'running pre-commit checks ...'
 
-npx lint-staged -q
+npx lint-staged -q\
+
+echo 'running pre-commit workflow ...'
 
 node ./scripts/preCommitExec.mjs
 

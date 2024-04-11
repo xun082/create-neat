@@ -6,7 +6,7 @@
 
 尽管 `Typescript` 已经流行了很久，但是要从零设计一个 `Typescript` 库依旧麻烦，本人也曾有过从零搭建一个 `React` 组件库的想法，但是对一堆陌生的配置望而生畏。
 
-`Create-Neat` 就是为了解决这些问题应运而生的，解决以上所有问题，开箱即用，零配置 🚀🚀🚀
+`Create-Neat` 就是为了解决这些问题应运而生的。解决以上所有问题，开箱即用，零配置 🚀🚀🚀
 
 ### 二、特性 🧰
 
@@ -204,14 +204,15 @@ module.exports = {
 };
 ```
 
-### 五、捐赠 🍵
+### 五、贡献 🍵
 
 > 如果你正在使用这个项目或者对这个项目感兴趣，可以通过以下方式支持我:
 
-- **Star、Fork、Watch** 一键三连 🚀🚀
+- **Star、Fork、Watch** 一键三连 🚀🚀🚀
 
 > 我们很乐意在 `create-neat` 中得到您的帮助，看到您的贡献，如果你想获取到更多信息以及如何开始，请扫描进群:
 
 <center>
-<img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5cd5949ed05749968c36edaddb024f5d~tplv-k3u1fbpfcp-watermark.image?" width="400" height="300" alt="微信群">
+<img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/cca82f4647a54c18b7b67e8bd2dffbb6~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1079&h=811&s=263717&e=jpg&b=bca3b7" width="400" height="300" alt="微信群">
 </center>
+

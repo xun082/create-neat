@@ -1,7 +1,5 @@
 import { resolve } from "node:path";
 import { execSync } from "node:child_process";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
 
 main();
 
@@ -33,7 +31,11 @@ function copyRootReadmeToTarget() {
   }
 }
 
-
+/**
+ * transform the files array to the absolute path.
+ * @param files
+ * @returns {string[]}
+ */
 function mapFilesToPath(files) {
   return files.map((file) => resolve(process.cwd(), file));
 }
