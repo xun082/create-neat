@@ -5,7 +5,7 @@ import crypto from "node:crypto";
 import { resolveApp } from "./getResolveApp";
 
 /**
- * 读取环境文件内容。
+ * @description 读取环境文件内容。
  * @param file 环境文件路径。
  * @param type 环境文件类型。
  * @returns 包含环境文件内容的 Buffer 对象。
@@ -19,7 +19,7 @@ function readEnvFile(file: string, type: string): Buffer {
 }
 
 /**
- * 验证证书和密钥是否有效。
+ * @description 验证证书和密钥是否有效。
  * @param cert 证书内容。
  * @param key 密钥内容。
  * @param keyFile 密钥文件路径。
@@ -42,7 +42,7 @@ function validateKeyAndCerts({ cert, key, keyFile, crtFile }) {
 }
 
 /**
- * 获取 HTTPS 配置信息。
+ * @description 获取 HTTPS 配置信息。
  * @returns HTTPS 配置对象或布尔值（如果未启用 HTTPS）。
  */
 function getHttpsConfig() {

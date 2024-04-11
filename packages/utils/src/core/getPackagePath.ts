@@ -5,7 +5,7 @@ import { PackageJsonType } from "../types";
 import { getJsonFileInfo } from "./getJsonFileInfo";
 
 /**
- * 获取包路径列表。
+ * @description 获取包路径列表。
  * @param packageNames 要收集的包名称列表。
  * @param dirName 指定目录名称。
  * @returns 包路径列表。
@@ -16,7 +16,7 @@ const getPackagePath = (packageNames: string[], dirName: string): string[] => {
   const visitedPackagePackages = new Set<string>();
 
   /**
-   * 添加包路径。
+   * @description 添加包路径。
    * @param packageName 包名称。
    * @param relativeToPath 相对路径。
    */

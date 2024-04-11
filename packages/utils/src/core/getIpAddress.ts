@@ -1,7 +1,7 @@
 import os from "node:os";
 
 /**
- * 获取本机 IP 地址。
+ * @description 获取本机 IP 地址。
  * @returns 本机 IPv4 地址。
  */
 export function getIPAddress(): string {
