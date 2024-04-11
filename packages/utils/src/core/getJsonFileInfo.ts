@@ -1,4 +1,5 @@
 import { readFileSync, existsSync } from "fs";
+
 /**
  * 获取 JSON 文件的信息。
  * @param {string} router JSON 文件的路径。

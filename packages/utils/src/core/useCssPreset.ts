@@ -2,6 +2,7 @@ import { PackageJsonType } from "../types";
 
 import { getJsonFileInfo } from "./getJsonFileInfo";
 import { resolveApp } from "./getResolveApp";
+
 /**
  * 检查项目是否使用特定的 CSS 预设。
  * @param {string} preset 要检查的 CSS 预设名称。

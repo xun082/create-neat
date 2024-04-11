@@ -3,6 +3,7 @@ import path from "node:path";
 import { PackageJsonType } from "../types";
 
 import { getJsonFileInfo } from "./getJsonFileInfo";
+
 /**
  * 获取指定包名称的所有依赖包路径。
  * @param {string[]} packageNames 要收集依赖的包名称数组。
@@ -14,7 +15,11 @@ const getPackagePath = (packageNames: string[], dirName: string): string[] => {
   const topLevelPackagePaths: string[] = [];
   const visitedPackagePackages = new Set<string>();
 
-  // 收集某个包的所有依赖
+  /**
+   * @description 添加包路径。
+   * @param packageName 包名称。
+   * @param relativeToPath 相对路径。
+   */
   const addPackagePath = (packageName: string, relativeToPath: string) => {
     try {
       if (visitedPackagePackages.has(packageName)) {
