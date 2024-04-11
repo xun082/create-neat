@@ -5,5 +5,7 @@ echo 'running pre-commit checks ...'
 
 npx lint-staged -q
 
+node ./scripts/preCommitExec.mjs
+
 echo -e 'pre-commit success!\n'
 
