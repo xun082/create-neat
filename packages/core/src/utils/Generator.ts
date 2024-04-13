@@ -34,6 +34,7 @@ class Generator {
   // 创建所有插件的相关文件
   async generate() {
     // 为每个 plugin 创建 GeneratorAPI 实例，调用插件中的 generate
+    const createNeatRootPath = path.resolve(__dirname, "../../../../");
     for (const pluginName of Object.keys(this.plugins)) {
       const generatorAPI = new GeneratorAPI(
         pluginName,
@@ -46,10 +47,7 @@ class Generator {
       let pluginGenerator;
       if (process.env.NODE_ENV === "DEV") {
         const pluginPathInDev = `packages/@plugin/plugin-${pluginName.toLowerCase()}/generator/index.cjs`;
-        pluginGenerator = await loadModule(
-          pluginPathInDev,
-          path.resolve(__dirname, "../../../../"),
-        );
+        pluginGenerator = await loadModule(pluginPathInDev, createNeatRootPath);
       } else if (process.env.NODE_ENV === "PROD") {
         const pluginPathInProd = `node_modules/${pluginName.toLowerCase()}-plugin-test-ljq`;
         pluginGenerator = await loadModule(pluginPathInProd, this.rootDirectory);
