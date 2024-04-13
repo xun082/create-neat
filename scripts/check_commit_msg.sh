@@ -16,7 +16,7 @@ rules=$(node -e "console.log(require('./commitlint.config.js').rules['type-enum'
 check_commit_message() {
     commit_msg="$1"
     # 检查提交信息是否以指定的前缀开头
-    if ! echo "$commit_msg" | grep -qE "^($rules):"; then
+    if ! echo "$commit_msg" | grep -qE "^($rules):|^Revert\"(($rules):.+)\"$"; then
         echo -e "${RED}Error:${NC} Commit message format is incorrect. It should start with one of '${BLUE}^($rules):${NC}'." >&2
         exit 1
     fi
