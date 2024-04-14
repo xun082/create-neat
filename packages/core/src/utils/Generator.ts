@@ -1,6 +1,7 @@
 // Generator.ts
 import path from "path";
 
+import { relativePathToRoot } from "./constants";
 import { createFiles } from "./createFiles";
 import GeneratorAPI from "./GeneratorAPI";
 import ConfigTransform from "./ConfigTransform";
@@ -62,7 +63,7 @@ const reservedConfigTransforms = {
 };
 
 async function loadModule(modulePath, rootDirectory) {
-  const resolvedPath = path.resolve(rootDirectory, "../../", modulePath);
+  const resolvedPath = path.resolve(rootDirectory, modulePath);
   try {
     // 尝试加载模块
     const module = await require(resolvedPath);
@@ -100,6 +101,7 @@ class Generator {
   // 创建所有插件的相关文件
   async generate() {
     // 为每个 plugin 创建 GeneratorAPI 实例，调用插件中的 generate
+
     for (const pluginName of Object.keys(this.plugins)) {
       const generatorAPI = new GeneratorAPI(
         pluginName,
@@ -112,7 +114,10 @@ class Generator {
       let pluginGenerator;
       if (process.env.NODE_ENV === "DEV") {
         const pluginPathInDev = `packages/@plugin/plugin-${pluginName.toLowerCase()}/generator/index.cjs`;
-        pluginGenerator = await loadModule(pluginPathInDev, process.cwd());
+        pluginGenerator = await loadModule(
+          pluginPathInDev,
+          path.resolve(__dirname, relativePathToRoot),
+        );
       } else if (process.env.NODE_ENV === "PROD") {
         const pluginPathInProd = `node_modules/${pluginName.toLowerCase()}-plugin-test-ljq`;
         pluginGenerator = await loadModule(pluginPathInProd, this.rootDirectory);
