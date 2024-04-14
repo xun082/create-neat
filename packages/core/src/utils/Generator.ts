@@ -1,7 +1,7 @@
 // Generator.ts
 import path from "path";
 
-import createNeatRootPath from "./constants";
+import { relativePathToRoot } from "./constants";
 import { createFiles } from "./createFiles";
 import GeneratorAPI from "./GeneratorAPI";
 
@@ -48,7 +48,10 @@ class Generator {
       let pluginGenerator;
       if (process.env.NODE_ENV === "DEV") {
         const pluginPathInDev = `packages/@plugin/plugin-${pluginName.toLowerCase()}/generator/index.cjs`;
-        pluginGenerator = await loadModule(pluginPathInDev, createNeatRootPath);
+        pluginGenerator = await loadModule(
+          pluginPathInDev,
+          path.resolve(__dirname, relativePathToRoot),
+        );
       } else if (process.env.NODE_ENV === "PROD") {
         const pluginPathInProd = `node_modules/${pluginName.toLowerCase()}-plugin-test-ljq`;
         pluginGenerator = await loadModule(pluginPathInProd, this.rootDirectory);

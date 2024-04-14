@@ -1,4 +1,3 @@
-import path from "path";
 const template: string[] = [
   "common-lib",
   "react-ui",
@@ -21,4 +20,4 @@ const getProjectLink = (templates: string[]): Map<string, string> =>
 
 export const projectLink: Map<string, string> = getProjectLink(template);
 
-export const createNeatRootPath = path.resolve(__dirname, "../../../../");
+export const relativePathToRoot = "../../../../";
