@@ -19,3 +19,5 @@ const getProjectLink = (templates: string[]): Map<string, string> =>
   );
 
 export const projectLink: Map<string, string> = getProjectLink(template);
+
+export const relativePathToRoot = "../../../../";
