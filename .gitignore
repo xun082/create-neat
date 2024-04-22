@@ -39,3 +39,6 @@ yarn-error.log*
 
 # Webstorm
 .idea/
+
+# vitepress
+docs/.vitepress/cache
