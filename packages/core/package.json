@@ -44,7 +44,12 @@
     "fs-extra": "^11.2.0",
     "minimist": "^1.2.8",
     "ora": "^5.4.1",
-    "tar": "^6.2.0"
+    "tar": "^6.2.0",
+    "webpack-chain": "^6.5.1",
+    "@babel/parser": "^7.24.0",
+    "@babel/generator": "^7.24.4",
+    "@babel/types": "^7.24.0",
+    "@babel/traverse": "^7.24.0"
   },
   "devDependencies": {
     "@types/fs-extra": "^11.0.4",
