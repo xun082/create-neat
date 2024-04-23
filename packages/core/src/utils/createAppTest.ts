@@ -79,13 +79,16 @@ export default async function createAppTest(projectName: string, options: Record
 
   // 2. 遍历 plugins，插入依赖
   Object.keys(plugins).forEach((dep) => {
-    console.log("dep:", dep);
     // todo: 更多的处理依据 plugins[dep] 后续的变化而插入
     let { version } = plugins[dep];
     if (!version) {
       version = "latest"; // 默认版本号为 latest
     }
-    packageContent.devDependencies[dep] = version; // 插件都是以 devDependencies 安装
+    // 插件都是以 devDependencies 安装
+
+    // 包名错误导致出错，暂时注释
+    // packageContent.devDependencies[dep] = version;
+
     // todo:现在只有 babel-plugin-test-ljq 这一个包，先试一下，后续发包
     if (dep === "Babel") {
       const pluginName = `${dep.toLowerCase()}-plugin-test-ljq`;
@@ -95,7 +98,6 @@ export default async function createAppTest(projectName: string, options: Record
   });
   const packageJson = new PackageAPI(rootDirectory);
   await packageJson.createPackageJson(packageContent);
-
   // 拉取模板
   // todo: 新模板未开发，先模拟过程
   console.log("Creating a project...");
@@ -104,10 +106,10 @@ export default async function createAppTest(projectName: string, options: Record
   if (gitCheck(rootDirectory)) exec("git init", { cwd: rootDirectory });
 
   // 安装传入的依赖
-  await dependenciesInstall(rootDirectory, packageManager);
-
+  if (process.env.NODE_ENV === "PROD") {
+    await dependenciesInstall(rootDirectory, packageManager);
+  }
   // 运行生成器创建项目所需文件和结构
-
   console.log(chalk.blue(`🚀  Invoking generators...`));
   const generators = new Generator(rootDirectory, plugins, packageContent);
   await generators.generate();

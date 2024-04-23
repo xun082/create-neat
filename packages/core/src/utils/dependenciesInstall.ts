@@ -28,7 +28,6 @@ const dependenciesInstall = (packageJsonFile: string, packageManager: string): P
     try {
       const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf-8"));
       const devDependencies = packageJson.devDependencies;
-
       if (devDependencies) {
         console.log("Installing devDependencies...");
         // 将devDependencies对象转换为数组，然后拼接成安装命令的字符串
