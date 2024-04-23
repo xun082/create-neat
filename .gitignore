@@ -43,3 +43,5 @@ yarn-error.log*
 # VSCode
 .vscode/*
 !.vscode/launch.json
+# vitepress
+docs/.vitepress/cache
