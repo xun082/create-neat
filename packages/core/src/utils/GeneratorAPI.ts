@@ -13,24 +13,18 @@ import Generator from "./Generator";
  */
 
 class GeneratorAPI {
-  private plugin: string;
   private generator: Generator;
-  private options: object;
-  private rootOptions: object;
 
-  constructor(plugin, generator, options, rootOptions) {
-    this.plugin = plugin;
+  constructor(generator: Generator) {
     this.generator = generator;
-    this.options = options;
-    this.rootOptions = rootOptions;
   }
 
   /**
    * @description 扩展项目的 package.json 内容
-   * @param fields  合并内容
+   * @param fields 合并内容
    * @param {object} [options] 操作选项
    */
-  extendPackage(fields, options = {}) {
+  extendPackage(fields: object, options: object = {}) {
     // 扩展 package.json
     // options 就是一个可扩展对象
     const extendOptions = {
@@ -47,14 +41,6 @@ class GeneratorAPI {
     };
     // 获取当前项目的package.json
     const pkgPath = path.resolve(this.generator.getRootDirectory(), "package.json");
-    // // 读取package.json中的内容
-    // let pkg = {};
-    // try {
-    //   pkg = JSON.parse(fs.readFileSync(pkgPath, "utf-8"));
-    // } catch (err) {
-    //   console.error(`Failed to read package.json: ${err}`);
-    //   return;
-    // }
     // 获取当前项目的package.json
     const pkg = this.generator.pkg;
     // 将filds合并到package.json中
@@ -101,7 +87,7 @@ class GeneratorAPI {
    * @param {object} [additionalData] - 可供模板使用的额外数据。
    * @param {object} [ejsOptions] - ejs 的选项。
    */
-  render(source, additionalData = {}, ejsOptions = {}) {
+  render(source: string | object, additionalData: object = {}, ejsOptions: object = {}) {
     const rootDir = (this.generator as any).rootDirectory;
     let content = "";
     // 处理模板路径

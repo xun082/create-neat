@@ -6,19 +6,23 @@ import { createFiles } from "./createFiles";
 import GeneratorAPI from "./GeneratorAPI";
 import ConfigTransform from "./ConfigTransform";
 
+interface ConfigFileData {
+  file: Record<string, string[]>;
+}
+
 /**
  * @description 为文件内容添加换行符
  * @param str 文件内容
  * @returns 末尾添加换行符后得文件内容
  */
-const ensureEOL = (str) => {
+const ensureEOL = (str: string) => {
   if (str.charAt(str.length - 1) !== "\n") {
     return str + "\n";
   }
   return str;
 };
 
-// 插件对应的配置文件
+// 提前预置的插件对应的配置文件清单
 const defaultConfigTransforms = {
   babel: new ConfigTransform({
     file: {
@@ -62,14 +66,13 @@ const reservedConfigTransforms = {
   }),
 };
 
-async function loadModule(modulePath, rootDirectory) {
+// 根据传入的路径，加载模块并返回
+async function loadModule(modulePath: string, rootDirectory: string) {
   const resolvedPath = path.resolve(rootDirectory, modulePath);
   try {
-    // 尝试加载模块
     const module = await require(resolvedPath);
     return module;
   } catch (error) {
-    // 处理加载模块失败的情况
     console.error(`Error loading module at ${resolvedPath}:`, error);
     return null;
   }
@@ -84,10 +87,10 @@ class Generator {
   private files: Record<string, string> = {};
   private rootOptions: Record<string, any> = {};
   private configTransforms: Record<string, ConfigTransform> = {};
-  private defaultConfigTransforms;
-  private reservedConfigTransforms;
-  public pkg; // 执行generatorAPI之后带有key值为plugin
-  public originalPkg; // 原始package.json
+  private defaultConfigTransforms: Record<string, ConfigTransform>;
+  private reservedConfigTransforms: Record<string, ConfigTransform>;
+  public pkg: object; // 执行generatorAPI之后带有key值为plugin
+  public originalPkg: object; // 原始package.json
 
   constructor(rootDirectory: string, plugins = {}, pkg = {}) {
     this.rootDirectory = rootDirectory;
@@ -101,17 +104,14 @@ class Generator {
   // 创建所有插件的相关文件
   async generate() {
     // 为每个 plugin 创建 GeneratorAPI 实例，调用插件中的 generate
-
     for (const pluginName of Object.keys(this.plugins)) {
-      const generatorAPI = new GeneratorAPI(
-        pluginName,
-        this,
-        this.plugins[pluginName],
-        this.rootOptions,
-      );
+      const generatorAPI = new GeneratorAPI(this);
 
       // pluginGenerator 是一个函数，接受一个 GeneratorAPI 实例作为参数
-      let pluginGenerator;
+      let pluginGenerator: (generatorAPI: GeneratorAPI) => Promise<void>;
+
+      // 根据环境变量加载插件
+      // TODO: 改用每个 plugin 的 API 来加载
       if (process.env.NODE_ENV === "DEV") {
         const pluginPathInDev = `packages/@plugin/plugin-${pluginName.toLowerCase()}/generator/index.cjs`;
         pluginGenerator = await loadModule(
@@ -124,6 +124,7 @@ class Generator {
       } else {
         throw new Error("NODE_ENV is not set");
       }
+
       if (pluginGenerator && typeof pluginGenerator === "function") {
         await pluginGenerator(generatorAPI);
       }
@@ -134,7 +135,7 @@ class Generator {
     // 这里假设 GeneratorAPI 有一个方法来更新这个 Generator 实例的 files
     // createFiles 函数需要你根据自己的逻辑实现文件创建和写入磁盘的逻辑
     // extract configs from package.json into dedicated files.
-    // 从package.json中生成额外得的文件
+    // 从package.json中生成额外的的文件
     await this.extractConfigFiles();
 
     // 重写pakcage.json文件，消除generatorAPI中拓展package.json带来得副作用
@@ -149,33 +150,41 @@ class Generator {
    * @description 提取配置文件
    */
   async extractConfigFiles() {
+    // 将所有的配置项合并到ConfigTransforms中
     const ConfigTransforms = Object.assign(
       this.configTransforms,
       this.defaultConfigTransforms,
       this.reservedConfigTransforms,
     );
-    // extra方法执行后会再this.files中添加一个属性，key为配置文件名称，值为对应得内容
-    const extra = (key: string) => {
-      if (
-        ConfigTransforms[key] &&
-        this.pkg[key] &&
-        // do not extract if the field exists in original package.json
-        !this.originalPkg[key]
-      ) {
-        // this.pkg[key]存在而originalPkg[key]不存在，说明该配置文件是再执行generatorAPI之后添加到pkg中得，需要生成额外的配置文件
-        // 并且再添加到this.files中后需要再pkg中删除该属性
-        const value = this.pkg[key];
 
+    // extra方法执行后会在this.files中添加一个属性，key为配置文件名称，值为对应的内容
+    const extra = (key: string) => {
+      // 校验：ConfigTransforms中存在该配置文件，且this.pkg中存在该配置文件，且originalPkg中不存在该配置文件
+      if (ConfigTransforms[key] && this.pkg[key] && !this.originalPkg[key]) {
+        // this.pkg[key]存在而originalPkg[key]不存在，说明该配置文件是在执行generatorAPI之后添加到pkg中的，需要生成额外的配置文件
+        // 并且在添加到this.files中后需要再pkg中删除该属性
+        const value = this.pkg[key];
         const configTransform = ConfigTransforms[key];
         // 转换生成文件内容
-        const res = configTransform.thransform(value, this.files, this.rootDirectory);
+        const res = configTransform.transform(value, this.files, this.rootDirectory);
         const { content, filename } = res;
         this.files[filename] = ensureEOL(content);
         delete this.pkg[key];
       }
     };
-
     extra("babel");
+  }
+
+  /**
+   * @description 扩展配置文件
+   */
+  async extendConfigFile(fileName: string, data: ConfigFileData) {
+    if (!this.configTransforms[fileName]) {
+      this.configTransforms[fileName] = new ConfigTransform(data);
+    } else {
+      // 如果已经存在该配置文件，则合并其file字段
+      this.configTransforms[fileName].extend(data);
+    }
   }
 
   /**
