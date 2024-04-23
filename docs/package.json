@@ -1,0 +1,33 @@
+{
+  "name": "@create-neat/docs",
+  "version": "0.1.0",
+  "license": "MIT",
+  "author": "Moment",
+  "homepage": "https://github.com/xun082/create-neat",
+  "description": "基于 PNPM 和 Turborepo 开发了前端脚手架，旨在为用户快速创建各种类型的项目。",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:xun082/create-neat.git",
+    "directory": "docs"
+  },
+  "scripts": {
+    "docs:dev": "vitepress dev",
+    "docs:build": "vitepress build",
+    "docs:preview": "vitepress preview"
+  },
+  "keywords": [
+    "react",
+    "vue",
+    "webpack",
+    "rollup",
+    "cli",
+    "ts"
+  ],
+  "devDependencies": {
+    "vitepress": "^1.1.3"
+  },
+  "dependencies": {
+    "@giscus/vue": "^3.0.0",
+    "vue": "^3.4.23"
+  }
+}
