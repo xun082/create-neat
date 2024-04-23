@@ -238,9 +238,6 @@ importers:
       tar:
         specifier: ^6.2.0
         version: 6.2.1
-      webpack-chain:
-        specifier: ^6.5.1
-        version: 6.5.1
     devDependencies:
       '@types/cross-spawn':
         specifier: ^6.0.6
@@ -257,12 +254,6 @@ importers:
       '@types/tar':
         specifier: ^6.1.11
         version: 6.1.12
-
-  packages/core/a:
-    devDependencies:
-      babel-plugin-test-ljq:
-        specifier: ^1.0.0
-        version: 1.0.0
 
   packages/eslint-config-memory:
     dependencies:
@@ -4894,10 +4885,6 @@ packages:
       '@babel/helper-define-polyfill-provider': 0.6.1(@babel/core@7.24.4)
     transitivePeerDependencies:
       - supports-color
-
-  /babel-plugin-test-ljq@1.0.0:
-    resolution: {integrity: sha512-JjyUNh1KzqKCu4UWw763Zk01NoL89LGaLQH6iS9EhYP3P6rWxECZ4slI3rCN1/YRMUAvF+Fwy9hMrtbH+gkZHg==}
-    dev: true
 
   /babel-plugin-transform-rename-import@2.3.0:
     resolution: {integrity: sha512-dPgJoT57XC0PqSnLgl2FwNvxFrWlspatX2dkk7yjKQj5HHGw071vAcOf+hqW8ClqcBDMvEbm6mevn5yHAD8mlQ==}

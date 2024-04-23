@@ -1,7 +1,6 @@
 const buildToolConfigs = {
   // 支持拓展loader和plugin
   webpack: () => {
-    const a = new RegExp();
     return {
       rules: [
         {
