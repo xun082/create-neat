@@ -11,7 +11,7 @@
     "lint:ci": "eslint \"**/*.{ts,js}\"",
     "commit": "git-cz",
     "postinstall": "husky install",
-    "check":"npx tsc --noEmit"
+    "check": "npx tsc --noEmit"
   },
   "sideEffects": false,
   "config": {

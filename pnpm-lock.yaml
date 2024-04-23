@@ -126,14 +126,14 @@ importers:
     dependencies:
       '@giscus/vue':
         specifier: ^3.0.0
-        version: 3.0.0(vue@3.4.23)
+        version: 3.0.0(vue@3.4.24)
       vue:
         specifier: ^3.4.23
-        version: 3.4.23
+        version: 3.4.24(typescript@5.3.2)
     devDependencies:
       vitepress:
         specifier: ^1.1.3
-        version: 1.1.3(@algolia/client-search@4.23.3)(search-insights@2.13.0)
+        version: 1.1.3(@algolia/client-search@4.23.3)(@types/node@18.19.2)(search-insights@2.13.0)(typescript@5.3.2)
 
   packages/babel-preset-moment:
     dependencies:
@@ -2567,13 +2567,13 @@ packages:
     resolution: {integrity: sha512-Ys+3g2TaW7gADOJzPt83SJtCDhMjndcDMFVQ/Tj9iA1BfJzFKD9mAUXT3OenpuPHbI6P/myECxRJrofUsDx/5g==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
 
-  /@giscus/vue@3.0.0(vue@3.4.23):
+  /@giscus/vue@3.0.0(vue@3.4.24):
     resolution: {integrity: sha512-ZoSUmlc3ee2a+kdumCaXFDZaB4h9b1BYWzsmmRP7zoGEQKYopdAnzGvJK7RdvrYGAzNqZtGUxI0NnBl8/UA6bQ==}
     peerDependencies:
       vue: '>=3.2.0'
     dependencies:
       giscus: 1.5.0
-      vue: 3.4.23
+      vue: 3.4.24(typescript@5.3.2)
     dev: false
 
   /@hapi/hoek@9.3.0:
@@ -2897,16 +2897,29 @@ packages:
       picomatch: 2.3.1
       rollup: 4.6.1
 
+<<<<<<< HEAD
   /@rollup/rollup-android-arm-eabi@4.14.1:
     resolution: {integrity: sha512-fH8/o8nSUek8ceQnT7K4EQbSiV7jgkHq81m9lWZFIXjJ7lJzpWXbQFpT/Zh6OZYnpFykvzC3fbEvEAFZu03dPA==}
+=======
+  /@rollup/rollup-android-arm-eabi@4.16.2:
+    resolution: {integrity: sha512-VGodkwtEuZ+ENPz/CpDSl091koMv8ao5jHVMbG1vNK+sbx/48/wVzP84M5xSfDAC69mAKKoEkSo+ym9bXYRK9w==}
     cpu: [arm]
     os: [android]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@rollup/rollup-android-arm64@4.16.1:
-    resolution: {integrity: sha512-ttWB6ZCfRLuDIUiE0yiu5gcqOsYjA5F7kEV1ggHMj20FwLZ8A1FMeahZJFl/pnOmcnD2QL0z4AcDuo27utGU8A==}
+  /@rollup/rollup-android-arm-eabi@4.6.1:
+    resolution: {integrity: sha512-0WQ0ouLejaUCRsL93GD4uft3rOmB8qoQMU05Kb8CmMtMBe7XUDLAltxVZI1q6byNqEtU7N1ZX1Vw5lIpgulLQA==}
+>>>>>>> e27de68 (ci: 🎡 修改提交规范,允许提交 feat(xxx) 等带括号的描述 (#125))
+    cpu: [arm]
+    os: [android]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@rollup/rollup-android-arm64@4.16.2:
+    resolution: {integrity: sha512-5/W1xyIdc7jw6c/f1KEtg1vYDBWnWCsLiipK41NiaWGLG93eH2edgE6EgQJ3AGiPERhiOLUqlDSfjRK08C9xFg==}
     cpu: [arm64]
     os: [android]
     requiresBuild: true
@@ -2921,8 +2934,8 @@ packages:
     dev: true
     optional: true
 
-  /@rollup/rollup-darwin-arm64@4.16.1:
-    resolution: {integrity: sha512-QLDvPLetbqjHojTGFw9+nuSP3YY/iz2k1cep6crYlr97sS+ZJ0W43b8Z0zC00+lnFZj6JSNxiA4DjboNQMuh1A==}
+  /@rollup/rollup-darwin-arm64@4.16.2:
+    resolution: {integrity: sha512-vOAKMqZSTbPfyPVu1jBiy+YniIQd3MG7LUnqV0dA6Q5tyhdqYtxacTHP1+S/ksKl6qCtMG1qQ0grcIgk/19JEA==}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
@@ -2937,8 +2950,8 @@ packages:
     dev: true
     optional: true
 
-  /@rollup/rollup-darwin-x64@4.16.1:
-    resolution: {integrity: sha512-TAUK/D8khRrRIa1KwRzo8JNKk3tcqaeXWdtsiLgA8zmACWwlWLjPCJ4DULGHQrMkeBjp1Cd3Yuwx04lZgFx5Vg==}
+  /@rollup/rollup-darwin-x64@4.16.2:
+    resolution: {integrity: sha512-aIJVRUS3Dnj6MqocBMrcXlatKm64O3ITeQAdAxVSE9swyhNyV1dwnRgw7IGKIkDQofatd8UqMSyUxuFEa42EcA==}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
@@ -2953,10 +2966,11 @@ packages:
     dev: true
     optional: true
 
-  /@rollup/rollup-linux-arm-gnueabihf@4.16.1:
-    resolution: {integrity: sha512-KO+WGZjrh6zyFTD1alIFkfdtxf8B4BC+hqd3kBZHscPLvE5FR/6QKsyuCT0JlERxxYBSUKNUQ/UHyX5uwO1x2A==}
+  /@rollup/rollup-linux-arm-gnueabihf@4.16.2:
+    resolution: {integrity: sha512-/bjfUiXwy3P5vYr6/ezv//Yle2Y0ak3a+Av/BKoi76nFryjWCkki8AuVoPR7ZU/ckcvAWFo77OnFK14B9B5JsA==}
     cpu: [arm]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     dev: true
     optional: true
@@ -2969,16 +2983,17 @@ packages:
     dev: true
     optional: true
 
-  /@rollup/rollup-linux-arm-musleabihf@4.16.1:
-    resolution: {integrity: sha512-NqxbllzIB1WoAo4ThUXVtd21iiM5IHMTTXmXySKBLVcZvkU0HIZmatlP7hLzb5yQubcmdIeWmncd2NdsjocEiw==}
+  /@rollup/rollup-linux-arm-musleabihf@4.16.2:
+    resolution: {integrity: sha512-S24b+tJHwpq2TNRz9T+r71FjMvyBBApY8EkYxz8Cwi/rhH6h+lu/iDUxyc9PuHf9UvyeBFYkWWcrDahai/NCGw==}
     cpu: [arm]
     os: [linux]
+    libc: [musl]
     requiresBuild: true
     dev: true
     optional: true
 
-  /@rollup/rollup-linux-arm64-gnu@4.16.1:
-    resolution: {integrity: sha512-snma5NvV8y7IECQ5rq0sr0f3UUu+92NVmG/913JXJMcXo84h9ak9TA5UI9Cl2XRM9j3m37QwDBtEYnJzRkSmxA==}
+  /@rollup/rollup-linux-arm64-gnu@4.16.2:
+    resolution: {integrity: sha512-UN7VAXLyeyGbCQWiOtQN7BqmjTDw1ON2Oos4lfk0YR7yNhFEJWZiwGtvj9Ay4lsT/ueT04sh80Sg2MlWVVZ+Ug==}
     cpu: [arm64]
     os: [linux]
     libc: [glibc]
@@ -2994,8 +3009,8 @@ packages:
     dev: true
     optional: true
 
-  /@rollup/rollup-linux-arm64-musl@4.16.1:
-    resolution: {integrity: sha512-KOvqGprlD84ueivhCi2flvcUwDRD20mAsE3vxQNVEI2Di9tnPGAfEu6UcrSPZbM+jG2w1oSr43hrPo0RNg6GGg==}
+  /@rollup/rollup-linux-arm64-musl@4.16.2:
+    resolution: {integrity: sha512-ZBKvz3+rIhQjusKMccuJiPsStCrPOtejCHxTe+yWp3tNnuPWtyCh9QLGPKz6bFNFbwbw28E2T6zDgzJZ05F1JQ==}
     cpu: [arm64]
     os: [linux]
     libc: [musl]
@@ -3011,8 +3026,8 @@ packages:
     dev: true
     optional: true
 
-  /@rollup/rollup-linux-powerpc64le-gnu@4.16.1:
-    resolution: {integrity: sha512-/gsNwtiGLqYwN4vP+EIdUC6Q6LTlpupWqokqIndvZcjn9ig/5P01WyaYCU2wvfL/2Z82jp5kX8c1mDBOvCP3zg==}
+  /@rollup/rollup-linux-powerpc64le-gnu@4.16.2:
+    resolution: {integrity: sha512-LjMMFiVBRL3wOe095vHAekL4b7nQqf4KZEpdMWd3/W+nIy5o9q/8tlVKiqMbfieDypNXLsxM9fexOxd9Qcklyg==}
     cpu: [ppc64]
     os: [linux]
     libc: [glibc]
@@ -3020,8 +3035,8 @@ packages:
     dev: true
     optional: true
 
-  /@rollup/rollup-linux-riscv64-gnu@4.16.1:
-    resolution: {integrity: sha512-uU8zuGkQfGqfD9w6VRJZI4IuG4JIfNxxJgEmLMAmPVHREKGsxFVfgHy5c6CexQF2vOfgjB33OsET3Vdn2lln9A==}
+  /@rollup/rollup-linux-riscv64-gnu@4.16.2:
+    resolution: {integrity: sha512-ohkPt0lKoCU0s4B6twro2aft+QROPdUiWwOjPNTzwTsBK5w+2+iT9kySdtOdq0gzWJAdiqsV4NFtXOwGZmIsHA==}
     cpu: [riscv64]
     os: [linux]
     libc: [glibc]
@@ -3029,8 +3044,8 @@ packages:
     dev: true
     optional: true
 
-  /@rollup/rollup-linux-s390x-gnu@4.16.1:
-    resolution: {integrity: sha512-lsjLtDgtcGFEuBP6yrXwkRN5/wKlvUZtfbKZZu0yaoNpiBL4epgnO21osAALIspVRnl4qZgyLFd8xjCYYWgwfw==}
+  /@rollup/rollup-linux-s390x-gnu@4.16.2:
+    resolution: {integrity: sha512-jm2lvLc+/gqXfndlpDw05jKvsl/HKYxUEAt1h5UXcMFVpO4vGpoWmJVUfKDtTqSaHcCNw1his1XjkgR9aort3w==}
     cpu: [s390x]
     os: [linux]
     libc: [glibc]
@@ -3038,8 +3053,8 @@ packages:
     dev: true
     optional: true
 
-  /@rollup/rollup-linux-x64-gnu@4.16.1:
-    resolution: {integrity: sha512-N2ZizKhUryqqrMfdCnjhJhZRgv61C6gK+hwVtCIKC8ts8J+go+vqENnGexwg21nHIOvLN5mBM8a7DI2vlyIOPg==}
+  /@rollup/rollup-linux-x64-gnu@4.16.2:
+    resolution: {integrity: sha512-oc5/SlITI/Vj/qL4UM+lXN7MERpiy1HEOnrE+SegXwzf7WP9bzmZd6+MDljCEZTdSY84CpvUv9Rq7bCaftn1+g==}
     cpu: [x64]
     os: [linux]
     libc: [glibc]
@@ -3076,8 +3091,8 @@ packages:
     dev: true
     optional: true
 
-  /@rollup/rollup-linux-x64-musl@4.16.1:
-    resolution: {integrity: sha512-5ICeMxqg66FrOA2AbnBQ2TJVxfvZsKLxmof0ibvPLaYtbsJqnTUtJOofgWb46Gjd4uZcA4rdsp4JCxegzQPqCg==}
+  /@rollup/rollup-linux-x64-musl@4.16.2:
+    resolution: {integrity: sha512-/2VWEBG6mKbS2itm7hzPwhIPaxfZh/KLWrYg20pCRLHhNFtF+epLgcBtwy3m07bl/k86Q3PFRAf2cX+VbZbwzQ==}
     cpu: [x64]
     os: [linux]
     libc: [musl]
@@ -3093,8 +3108,8 @@ packages:
     dev: true
     optional: true
 
-  /@rollup/rollup-win32-arm64-msvc@4.16.1:
-    resolution: {integrity: sha512-1vIP6Ce02L+qWD7uZYRiFiuAJo3m9kARatWmFSnss0gZnVj2Id7OPUU9gm49JPGasgcR3xMqiH3fqBJ8t00yVg==}
+  /@rollup/rollup-win32-arm64-msvc@4.16.2:
+    resolution: {integrity: sha512-Wg7ANh7+hSilF0lG3e/0Oy8GtfTIfEk1327Bw8juZOMOoKmJLs3R+a4JDa/4cHJp2Gs7QfCDTepXXcyFD0ubBg==}
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
@@ -3109,8 +3124,8 @@ packages:
     dev: true
     optional: true
 
-  /@rollup/rollup-win32-ia32-msvc@4.16.1:
-    resolution: {integrity: sha512-Y3M92DcVsT6LoP+wrKpoUWPaazaP1fzbNkp0a0ZSj5Y//+pQVfVe/tQdsYQQy7dwXR30ZfALUIc9PCh9Izir6w==}
+  /@rollup/rollup-win32-ia32-msvc@4.16.2:
+    resolution: {integrity: sha512-J/jCDKVMWp0Y2ELnTjpQFYUCUWv1Jr+LdFrJVZtdqGyjDo0PHPa7pCamjHvJel6zBFM3doFFqAr7cmXYWBAbfw==}
     cpu: [ia32]
     os: [win32]
     requiresBuild: true
@@ -3125,8 +3140,8 @@ packages:
     dev: true
     optional: true
 
-  /@rollup/rollup-win32-x64-msvc@4.16.1:
-    resolution: {integrity: sha512-x0fvpHMuF7fK5r8oZxSi8VYXkrVmRgubXpO/wcf15Lk3xZ4Jvvh5oG+u7Su1776A7XzVKZhD2eRc4t7H50gL3w==}
+  /@rollup/rollup-win32-x64-msvc@4.16.2:
+    resolution: {integrity: sha512-3nIf+SJMs2ZzrCh+SKNqgLVV9hS/UY0UjT1YU8XQYFGLiUfmHYJ/5trOU1XSvmHjV5gTF/K3DjrWxtyzKKcAHA==}
     cpu: [x64]
     os: [win32]
     requiresBuild: true
@@ -4104,15 +4119,15 @@ packages:
   /@ungap/structured-clone@1.2.0:
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
 
-  /@vitejs/plugin-vue@5.0.4(vite@5.2.10)(vue@3.4.23):
+  /@vitejs/plugin-vue@5.0.4(vite@5.2.10)(vue@3.4.24):
     resolution: {integrity: sha512-WS3hevEszI6CEVEx28F8RjTX97k3KsrcY6kvTg7+Whm5y3oYvcqzVeGCU3hxSAn4uY2CLCkeokkGKpoctccilQ==}
     engines: {node: ^18.0.0 || >=20.0.0}
     peerDependencies:
       vite: ^5.0.0
       vue: ^3.2.25
     dependencies:
-      vite: 5.2.10
-      vue: 3.4.23
+      vite: 5.2.10(@types/node@18.19.2)
+      vue: 3.4.24(typescript@5.3.2)
     dev: true
 
   /@vue/babel-helper-vue-jsx-merge-props@1.4.0:
@@ -4521,11 +4536,11 @@ packages:
       source-map-js: 1.2.0
     dev: false
 
-  /@vue/compiler-core@3.4.23:
-    resolution: {integrity: sha512-HAFmuVEwNqNdmk+w4VCQ2pkLk1Vw4XYiiyxEp3z/xvl14aLTUBw2OfVH3vBcx+FtGsynQLkkhK410Nah1N2yyQ==}
+  /@vue/compiler-core@3.4.24:
+    resolution: {integrity: sha512-vbW/tgbwJYj62N/Ww99x0zhFTkZDTcGh3uwJEuadZ/nF9/xuFMC4693P9r+3sxGXISABpDKvffY5ApH9pmdd1A==}
     dependencies:
       '@babel/parser': 7.24.4
-      '@vue/shared': 3.4.23
+      '@vue/shared': 3.4.24
       entities: 4.5.0
       estree-walker: 2.0.2
       source-map-js: 1.2.0
@@ -4537,11 +4552,11 @@ packages:
       '@vue/shared': 3.4.21
     dev: false
 
-  /@vue/compiler-dom@3.4.23:
-    resolution: {integrity: sha512-t0b9WSTnCRrzsBGrDd1LNR5HGzYTr7LX3z6nNBG+KGvZLqrT0mY6NsMzOqlVMBKKXKVuusbbB5aOOFgTY+senw==}
+  /@vue/compiler-dom@3.4.24:
+    resolution: {integrity: sha512-4XgABML/4cNndVsQndG6BbGN7+EoisDwi3oXNovqL/4jdNhwvP8/rfRMTb6FxkxIxUUtg6AI1/qZvwfSjxJiWA==}
     dependencies:
-      '@vue/compiler-core': 3.4.23
-      '@vue/shared': 3.4.23
+      '@vue/compiler-core': 3.4.24
+      '@vue/shared': 3.4.24
 
   /@vue/compiler-sfc@3.4.21:
     resolution: {integrity: sha512-me7epoTxYlY+2CUM7hy9PCDdpMPfIwrOvAXud2Upk10g4YLv9UBW7kL798TvMeDhPthkZ0CONNrK2GoeI1ODiQ==}
@@ -4557,14 +4572,14 @@ packages:
       source-map-js: 1.2.0
     dev: false
 
-  /@vue/compiler-sfc@3.4.23:
-    resolution: {integrity: sha512-fSDTKTfzaRX1kNAUiaj8JB4AokikzStWgHooMhaxyjZerw624L+IAP/fvI4ZwMpwIh8f08PVzEnu4rg8/Npssw==}
+  /@vue/compiler-sfc@3.4.24:
+    resolution: {integrity: sha512-nRAlJUK02FTWfA2nuvNBAqsDZuERGFgxZ8sGH62XgFSvMxO2URblzulExsmj4gFZ8e+VAyDooU9oAoXfEDNxTA==}
     dependencies:
       '@babel/parser': 7.24.4
-      '@vue/compiler-core': 3.4.23
-      '@vue/compiler-dom': 3.4.23
-      '@vue/compiler-ssr': 3.4.23
-      '@vue/shared': 3.4.23
+      '@vue/compiler-core': 3.4.24
+      '@vue/compiler-dom': 3.4.24
+      '@vue/compiler-ssr': 3.4.24
+      '@vue/shared': 3.4.24
       estree-walker: 2.0.2
       magic-string: 0.30.10
       postcss: 8.4.38
@@ -4577,6 +4592,15 @@ packages:
       '@vue/shared': 3.4.21
     dev: false
 
+<<<<<<< HEAD
+=======
+  /@vue/compiler-ssr@3.4.24:
+    resolution: {integrity: sha512-ZsAtr4fhaUFnVcDqwW3bYCSDwq+9Gk69q2r/7dAHDrOMw41kylaMgOP4zRnn6GIEJkQznKgrMOGPMFnLB52RbQ==}
+    dependencies:
+      '@vue/compiler-dom': 3.4.24
+      '@vue/shared': 3.4.24
+
+>>>>>>> e27de68 (ci: 🎡 修改提交规范,允许提交 feat(xxx) 等带括号的描述 (#125))
   /@vue/component-compiler-utils@3.3.0:
     resolution: {integrity: sha512-97sfH2mYNU+2PzGrmK2haqffDpVASuib9/w2/noxiFi31Z54hW+q3izKQXXQZSNhtiUpAI36uSuYepeBe4wpHQ==}
     dependencies:
@@ -4646,15 +4670,15 @@ packages:
       - whiskers
     dev: false
 
-  /@vue/devtools-api@7.0.27(vue@3.4.23):
+  /@vue/devtools-api@7.0.27(vue@3.4.24):
     resolution: {integrity: sha512-BFCFCusSDcw2UcOFD/QeK7OxD1x2C/m+uAN30Q7jLKECSW53hmz0urzJmX834GuWDZX/hIxkyUKnLLfEIP1c/w==}
     dependencies:
-      '@vue/devtools-kit': 7.0.27(vue@3.4.23)
+      '@vue/devtools-kit': 7.0.27(vue@3.4.24)
     transitivePeerDependencies:
       - vue
     dev: true
 
-  /@vue/devtools-kit@7.0.27(vue@3.4.23):
+  /@vue/devtools-kit@7.0.27(vue@3.4.24):
     resolution: {integrity: sha512-/A5xM38pPCFX5Yhl/lRFAzjyK6VNsH670nww2WbjFKWqlu3I+lMxWKzQkCW6A1V8bduITgl2kHORfg2gTw6QaA==}
     peerDependencies:
       vue: ^3.0.0
@@ -4664,7 +4688,7 @@ packages:
       mitt: 3.0.1
       perfect-debounce: 1.0.0
       speakingurl: 14.0.1
-      vue: 3.4.23
+      vue: 3.4.24(typescript@5.3.2)
     dev: true
 
   /@vue/devtools-shared@7.0.27:
@@ -4673,44 +4697,122 @@ packages:
       rfdc: 1.3.1
     dev: true
 
-  /@vue/reactivity@3.4.23:
-    resolution: {integrity: sha512-GlXR9PL+23fQ3IqnbSQ8OQKLodjqCyoCrmdLKZk3BP7jN6prWheAfU7a3mrltewTkoBm+N7qMEb372VHIkQRMQ==}
+  /@vue/reactivity@3.4.24:
+    resolution: {integrity: sha512-nup3fSYg4i4LtNvu9slF/HF/0dkMQYfepUdORBcMSsankzRPzE7ypAFurpwyRBfU1i7Dn1kcwpYsE1wETSh91g==}
     dependencies:
-      '@vue/shared': 3.4.23
+      '@vue/shared': 3.4.24
 
-  /@vue/runtime-core@3.4.23:
-    resolution: {integrity: sha512-FeQ9MZEXoFzFkFiw9MQQ/FWs3srvrP+SjDKSeRIiQHIhtkzoj0X4rWQlRNHbGuSwLra6pMyjAttwixNMjc/xLw==}
+  /@vue/runtime-core@3.4.24:
+    resolution: {integrity: sha512-c7iMfj6cJMeAG3s5yOn9Rc5D9e2/wIuaozmGf/ICGCY3KV5H7mbTVdvEkd4ZshTq7RUZqj2k7LMJWVx+EBiY1g==}
     dependencies:
-      '@vue/reactivity': 3.4.23
-      '@vue/shared': 3.4.23
+      '@vue/reactivity': 3.4.24
+      '@vue/shared': 3.4.24
 
-  /@vue/runtime-dom@3.4.23:
-    resolution: {integrity: sha512-RXJFwwykZWBkMiTPSLEWU3kgVLNAfActBfWFlZd0y79FTUxexogd0PLG4HH2LfOktjRxV47Nulygh0JFXe5f9A==}
+  /@vue/runtime-dom@3.4.24:
+    resolution: {integrity: sha512-uXKzuh/Emfad2Y7Qm0ABsLZZV6H3mAJ5ZVqmAOlrNQRf+T5mxpPGZBfec1hkP41t6h6FwF6RSGCs/gd8WbuySQ==}
     dependencies:
-      '@vue/runtime-core': 3.4.23
-      '@vue/shared': 3.4.23
+      '@vue/runtime-core': 3.4.24
+      '@vue/shared': 3.4.24
       csstype: 3.1.3
 
-  /@vue/server-renderer@3.4.23(vue@3.4.23):
-    resolution: {integrity: sha512-LDwGHtnIzvKFNS8dPJ1SSU5Gvm36p2ck8wCZc52fc3k/IfjKcwCyrWEf0Yag/2wTFUBXrqizfhK9c/mC367dXQ==}
+  /@vue/server-renderer@3.4.24(vue@3.4.24):
+    resolution: {integrity: sha512-H+DLK4sQF6sRgzKyofmlEVBIV/9KrQU6HIV7nt6yIwSGGKvSwlV8pqJlebUKLpbXaNHugdSfAbP6YmXF69lxow==}
     peerDependencies:
-      vue: 3.4.23
+      vue: 3.4.24
     dependencies:
-      '@vue/compiler-ssr': 3.4.23
-      '@vue/shared': 3.4.23
-      vue: 3.4.23
+      '@vue/compiler-ssr': 3.4.24
+      '@vue/shared': 3.4.24
+      vue: 3.4.24(typescript@5.3.2)
 
   /@vue/shared@3.4.21:
     resolution: {integrity: sha512-PuJe7vDIi6VYSinuEbUIQgMIRZGgM8e4R+G+/dQTk0X1NEdvgvvgv7m+rfmDH1gZzyA1OjjoWskvHlfRNfQf3g==}
     dev: false
 
-  /@vue/shared@3.4.23:
-    resolution: {integrity: sha512-wBQ0gvf+SMwsCQOyusNw/GoXPV47WGd1xB5A1Pgzy0sQ3Bi5r5xm3n+92y3gCnB3MWqnRDdvfkRGxhKtbBRNgg==}
+  /@vue/shared@3.4.24:
+    resolution: {integrity: sha512-BW4tajrJBM9AGAknnyEw5tO2xTmnqgup0VTnDAMcxYmqOX0RG0b9aSUGAbEKolD91tdwpA6oCwbltoJoNzpItw==}
 
   /@vue/web-component-wrapper@1.3.0:
     resolution: {integrity: sha512-Iu8Tbg3f+emIIMmI2ycSI8QcEuAUgPTgHwesDU1eKMLE4YC/c/sFbGc70QgMq31ijRftV0R7vCm9co6rldCeOA==}
     dev: false
 
+<<<<<<< HEAD
+=======
+  /@vueuse/core@10.9.0(vue@3.4.24):
+    resolution: {integrity: sha512-/1vjTol8SXnx6xewDEKfS0Ra//ncg4Hb0DaZiwKf7drgfMsKFExQ+FnnENcN6efPen+1kIzhLQoGSy0eDUVOMg==}
+    dependencies:
+      '@types/web-bluetooth': 0.0.20
+      '@vueuse/metadata': 10.9.0
+      '@vueuse/shared': 10.9.0(vue@3.4.24)
+      vue-demi: 0.14.7(vue@3.4.24)
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - vue
+    dev: true
+
+  /@vueuse/integrations@10.9.0(focus-trap@7.5.4)(vue@3.4.24):
+    resolution: {integrity: sha512-acK+A01AYdWSvL4BZmCoJAcyHJ6EqhmkQEXbQLwev1MY7NBnS+hcEMx/BzVoR9zKI+UqEPMD9u6PsyAuiTRT4Q==}
+    peerDependencies:
+      async-validator: '*'
+      axios: '*'
+      change-case: '*'
+      drauu: '*'
+      focus-trap: '*'
+      fuse.js: '*'
+      idb-keyval: '*'
+      jwt-decode: '*'
+      nprogress: '*'
+      qrcode: '*'
+      sortablejs: '*'
+      universal-cookie: '*'
+    peerDependenciesMeta:
+      async-validator:
+        optional: true
+      axios:
+        optional: true
+      change-case:
+        optional: true
+      drauu:
+        optional: true
+      focus-trap:
+        optional: true
+      fuse.js:
+        optional: true
+      idb-keyval:
+        optional: true
+      jwt-decode:
+        optional: true
+      nprogress:
+        optional: true
+      qrcode:
+        optional: true
+      sortablejs:
+        optional: true
+      universal-cookie:
+        optional: true
+    dependencies:
+      '@vueuse/core': 10.9.0(vue@3.4.24)
+      '@vueuse/shared': 10.9.0(vue@3.4.24)
+      focus-trap: 7.5.4
+      vue-demi: 0.14.7(vue@3.4.24)
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - vue
+    dev: true
+
+  /@vueuse/metadata@10.9.0:
+    resolution: {integrity: sha512-iddNbg3yZM0X7qFY2sAotomgdHK7YJ6sKUvQqbvwnf7TmaVPxS4EJydcNsVejNdS8iWCtDk+fYXr7E32nyTnGA==}
+    dev: true
+
+  /@vueuse/shared@10.9.0(vue@3.4.24):
+    resolution: {integrity: sha512-Uud2IWncmAfJvRaFYzv5OHDli+FbOzxiVEQdLCKQKLyhz94PIyFC3CHcH7EDMwIn8NPtD06+PNbC/PiO0LGLtw==}
+    dependencies:
+      vue-demi: 0.14.7(vue@3.4.24)
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - vue
+    dev: true
+
+>>>>>>> e27de68 (ci: 🎡 修改提交规范,允许提交 feat(xxx) 等带括号的描述 (#125))
   /@webassemblyjs/ast@1.11.6:
     resolution: {integrity: sha512-IN1xI7PwOvLPgjcf180gC1bqn3q/QaOCwYUahIOhbYUu8KA/3tw2RT/T0Gidi1l7Hhj5D/INhJxiICObqpMu4Q==}
     dependencies:
@@ -11685,13 +11787,19 @@ packages:
       '@types/node': 20.11.22
     dev: true
 
+<<<<<<< HEAD
   /rollup@4.14.1:
     resolution: {integrity: sha512-4LnHSdd3QK2pa1J6dFbfm1HN0D7vSK/ZuZTsdyUAlA6Rr1yTouUTL13HaDOGJVgby461AhrNGBS7sCGXXtT+SA==}
+=======
+  /rollup@4.16.2:
+    resolution: {integrity: sha512-sxDP0+pya/Yi5ZtptF4p3avI+uWCIf/OdrfdH2Gbv1kWddLKk0U7WE3PmQokhi5JrektxsK3sK8s4hzAmjqahw==}
+>>>>>>> e27de68 (ci: 🎡 修改提交规范,允许提交 feat(xxx) 等带括号的描述 (#125))
     engines: {node: '>=18.0.0', npm: '>=8.0.0'}
     hasBin: true
     dependencies:
       '@types/estree': 1.0.5
     optionalDependencies:
+<<<<<<< HEAD
       '@rollup/rollup-android-arm-eabi': 4.14.1
       '@rollup/rollup-android-arm64': 4.14.1
       '@rollup/rollup-darwin-arm64': 4.14.1
@@ -11707,6 +11815,44 @@ packages:
       '@rollup/rollup-win32-arm64-msvc': 4.14.1
       '@rollup/rollup-win32-ia32-msvc': 4.14.1
       '@rollup/rollup-win32-x64-msvc': 4.14.1
+=======
+      '@rollup/rollup-android-arm-eabi': 4.16.2
+      '@rollup/rollup-android-arm64': 4.16.2
+      '@rollup/rollup-darwin-arm64': 4.16.2
+      '@rollup/rollup-darwin-x64': 4.16.2
+      '@rollup/rollup-linux-arm-gnueabihf': 4.16.2
+      '@rollup/rollup-linux-arm-musleabihf': 4.16.2
+      '@rollup/rollup-linux-arm64-gnu': 4.16.2
+      '@rollup/rollup-linux-arm64-musl': 4.16.2
+      '@rollup/rollup-linux-powerpc64le-gnu': 4.16.2
+      '@rollup/rollup-linux-riscv64-gnu': 4.16.2
+      '@rollup/rollup-linux-s390x-gnu': 4.16.2
+      '@rollup/rollup-linux-x64-gnu': 4.16.2
+      '@rollup/rollup-linux-x64-musl': 4.16.2
+      '@rollup/rollup-win32-arm64-msvc': 4.16.2
+      '@rollup/rollup-win32-ia32-msvc': 4.16.2
+      '@rollup/rollup-win32-x64-msvc': 4.16.2
+      fsevents: 2.3.3
+    dev: true
+
+  /rollup@4.6.1:
+    resolution: {integrity: sha512-jZHaZotEHQaHLgKr8JnQiDT1rmatjgKlMekyksz+yk9jt/8z9quNjnKNRoaM0wd9DC2QKXjmWWuDYtM3jfF8pQ==}
+    engines: {node: '>=18.0.0', npm: '>=8.0.0'}
+    hasBin: true
+    optionalDependencies:
+      '@rollup/rollup-android-arm-eabi': 4.6.1
+      '@rollup/rollup-android-arm64': 4.6.1
+      '@rollup/rollup-darwin-arm64': 4.6.1
+      '@rollup/rollup-darwin-x64': 4.6.1
+      '@rollup/rollup-linux-arm-gnueabihf': 4.6.1
+      '@rollup/rollup-linux-arm64-gnu': 4.6.1
+      '@rollup/rollup-linux-arm64-musl': 4.6.1
+      '@rollup/rollup-linux-x64-gnu': 4.6.1
+      '@rollup/rollup-linux-x64-musl': 4.6.1
+      '@rollup/rollup-win32-arm64-msvc': 4.6.1
+      '@rollup/rollup-win32-ia32-msvc': 4.6.1
+      '@rollup/rollup-win32-x64-msvc': 4.6.1
+>>>>>>> e27de68 (ci: 🎡 修改提交规范,允许提交 feat(xxx) 等带括号的描述 (#125))
       fsevents: 2.3.3
     dev: true
 
@@ -12909,6 +13055,115 @@ packages:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
 
+<<<<<<< HEAD
+=======
+  /vite@5.2.10(@types/node@18.19.2):
+    resolution: {integrity: sha512-PAzgUZbP7msvQvqdSD+ErD5qGnSFiGOoWmV5yAKUEI0kdhjbH6nMWVyZQC/hSc4aXwc0oJ9aEdIiF9Oje0JFCw==}
+    engines: {node: ^18.0.0 || >=20.0.0}
+    hasBin: true
+    peerDependencies:
+      '@types/node': ^18.0.0 || >=20.0.0
+      less: '*'
+      lightningcss: ^1.21.0
+      sass: '*'
+      stylus: '*'
+      sugarss: '*'
+      terser: ^5.4.0
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+      less:
+        optional: true
+      lightningcss:
+        optional: true
+      sass:
+        optional: true
+      stylus:
+        optional: true
+      sugarss:
+        optional: true
+      terser:
+        optional: true
+    dependencies:
+      '@types/node': 18.19.2
+      esbuild: 0.20.2
+      postcss: 8.4.38
+      rollup: 4.16.2
+    optionalDependencies:
+      fsevents: 2.3.3
+    dev: true
+
+  /vitepress@1.1.3(@algolia/client-search@4.23.3)(@types/node@18.19.2)(search-insights@2.13.0)(typescript@5.3.2):
+    resolution: {integrity: sha512-hGrIYN0w9IHWs0NQSnlMjKV/v/HLfD+Ywv5QdvCSkiT32mpNOOwUrZjnqZv/JL/WBPpUc94eghTUvmipxw0xrA==}
+    hasBin: true
+    peerDependencies:
+      markdown-it-mathjax3: ^4
+      postcss: ^8
+    peerDependenciesMeta:
+      markdown-it-mathjax3:
+        optional: true
+      postcss:
+        optional: true
+    dependencies:
+      '@docsearch/css': 3.6.0
+      '@docsearch/js': 3.6.0(@algolia/client-search@4.23.3)(search-insights@2.13.0)
+      '@shikijs/core': 1.3.0
+      '@shikijs/transformers': 1.3.0
+      '@types/markdown-it': 14.0.1
+      '@vitejs/plugin-vue': 5.0.4(vite@5.2.10)(vue@3.4.24)
+      '@vue/devtools-api': 7.0.27(vue@3.4.24)
+      '@vueuse/core': 10.9.0(vue@3.4.24)
+      '@vueuse/integrations': 10.9.0(focus-trap@7.5.4)(vue@3.4.24)
+      focus-trap: 7.5.4
+      mark.js: 8.11.1
+      minisearch: 6.3.0
+      shiki: 1.3.0
+      vite: 5.2.10(@types/node@18.19.2)
+      vue: 3.4.24(typescript@5.3.2)
+    transitivePeerDependencies:
+      - '@algolia/client-search'
+      - '@types/node'
+      - '@types/react'
+      - '@vue/composition-api'
+      - async-validator
+      - axios
+      - change-case
+      - drauu
+      - fuse.js
+      - idb-keyval
+      - jwt-decode
+      - less
+      - lightningcss
+      - nprogress
+      - qrcode
+      - react
+      - react-dom
+      - sass
+      - search-insights
+      - sortablejs
+      - stylus
+      - sugarss
+      - terser
+      - typescript
+      - universal-cookie
+    dev: true
+
+  /vue-demi@0.14.7(vue@3.4.24):
+    resolution: {integrity: sha512-EOG8KXDQNwkJILkx/gPcoL/7vH+hORoBaKgGe+6W7VFMvCYJfmF2dGbvgDroVnI8LU7/kTu8mbjRZGBU1z9NTA==}
+    engines: {node: '>=12'}
+    hasBin: true
+    requiresBuild: true
+    peerDependencies:
+      '@vue/composition-api': ^1.0.0-rc.1
+      vue: ^3.0.0-0 || ^2.6.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+    dependencies:
+      vue: 3.4.24(typescript@5.3.2)
+    dev: true
+
+>>>>>>> e27de68 (ci: 🎡 修改提交规范,允许提交 feat(xxx) 等带括号的描述 (#125))
   /vue-eslint-parser@9.4.2(eslint@8.55.0):
     resolution: {integrity: sha512-Ry9oiGmCAK91HrKMtCrKFWmSFWvYkpGglCeFAIqDdr9zdXmMMpJOmUJS7WWsW7fX81h6mwHmUZCQQ1E0PkSwYQ==}
     engines: {node: ^14.17.0 || >=16.0.0}
@@ -13045,6 +13300,24 @@ packages:
     resolution: {integrity: sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==}
     dev: false
 
+<<<<<<< HEAD
+=======
+  /vue@3.4.24(typescript@5.3.2):
+    resolution: {integrity: sha512-NPdx7dLGyHmKHGRRU5bMRYVE+rechR+KDU5R2tSTNG36PuMwbfAJ+amEvOAw7BPfZp5sQulNELSLm5YUkau+Sg==}
+    peerDependencies:
+      typescript: '*'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      '@vue/compiler-dom': 3.4.24
+      '@vue/compiler-sfc': 3.4.24
+      '@vue/runtime-dom': 3.4.24
+      '@vue/server-renderer': 3.4.24(vue@3.4.24)
+      '@vue/shared': 3.4.24
+      typescript: 5.3.2
+
+>>>>>>> e27de68 (ci: 🎡 修改提交规范,允许提交 feat(xxx) 等带括号的描述 (#125))
   /watchpack@2.4.0:
     resolution: {integrity: sha512-Lcvm7MGST/4fup+ifyKi2hjyIAwcdI4HRgtvTpIUxBRhB+RFtUh8XtDOxUfctVCnhVi+QQj49i91OyvzkJl6cg==}
     engines: {node: '>=10.13.0'}
