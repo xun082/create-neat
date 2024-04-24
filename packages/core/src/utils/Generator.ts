@@ -51,6 +51,16 @@ const defaultConfigTransforms = {
       yaml: [".lintstagedrc.yaml", ".lintstagedrc.yml"],
     },
   }),
+  prettier: new ConfigTransform({
+    file: {
+      json: [".prettierrc"],
+    },
+  }),
+  typescript: new ConfigTransform({
+    file: {
+      json: ["tsconfig.json"],
+    },
+  }),
 };
 
 // vue项目对应的配置文件
@@ -97,38 +107,48 @@ class Generator {
     this.originalPkg = pkg;
     this.pkg = Object.assign({}, pkg);
   }
+  //处理单个插件的相关文件
+  async pluginGenerate(pluginName){
+    const generatorAPI = new GeneratorAPI(
+      pluginName,
+      this,
+      this.plugins[pluginName],
+      this.rootOptions,
+    );
+
+    // pluginGenerator 是一个函数，接受一个 GeneratorAPI 实例作为参数
+    let pluginGenerator;
+    if (process.env.NODE_ENV === "DEV") {
+      const pluginPathInDev = `packages/@plugin/plugin-${pluginName.toLowerCase()}/generator/index.cjs`;
+      pluginGenerator = await loadModule(
+        pluginPathInDev,
+        path.resolve(__dirname, relativePathToRoot),
+      );
+    } else if (process.env.NODE_ENV === "PROD") {
+      const pluginPathInProd = `node_modules/${pluginName.toLowerCase()}-plugin-test-ljq`;
+      pluginGenerator = await loadModule(pluginPathInProd, this.rootDirectory);
+    } else {
+      throw new Error("NODE_ENV is not set");
+    }
+    if (pluginGenerator && typeof pluginGenerator === "function") {
+      await pluginGenerator(generatorAPI);
+    }
+  }
 
   // 创建所有插件的相关文件
   async generate() {
     // 为每个 plugin 创建 GeneratorAPI 实例，调用插件中的 generate
+    // 有限处理ts插件
+    if(Object.keys(this.plugins).includes("typescript")){
+      this.pluginGenerate("typescript");
+      //删除typescript对应处理，防止重新处理
+      let index=Object.keys(this.plugins).indexOf("typescript");
+      this.plugins.splice(index,1)
 
-    for (const pluginName of Object.keys(this.plugins)) {
-      const generatorAPI = new GeneratorAPI(
-        pluginName,
-        this,
-        this.plugins[pluginName],
-        this.rootOptions,
-      );
-
-      // pluginGenerator 是一个函数，接受一个 GeneratorAPI 实例作为参数
-      let pluginGenerator;
-      if (process.env.NODE_ENV === "DEV") {
-        const pluginPathInDev = `packages/@plugin/plugin-${pluginName.toLowerCase()}/generator/index.cjs`;
-        pluginGenerator = await loadModule(
-          pluginPathInDev,
-          path.resolve(__dirname, relativePathToRoot),
-        );
-      } else if (process.env.NODE_ENV === "PROD") {
-        const pluginPathInProd = `node_modules/${pluginName.toLowerCase()}-plugin-test-ljq`;
-        pluginGenerator = await loadModule(pluginPathInProd, this.rootDirectory);
-      } else {
-        throw new Error("NODE_ENV is not set");
-      }
-      if (pluginGenerator && typeof pluginGenerator === "function") {
-        await pluginGenerator(generatorAPI);
-      }
     }
-
+    for (const pluginName of Object.keys(this.plugins)) {
+      this.pluginGenerate(pluginName)
+    }
     // 在文件生成之前提取配置文件
     // 整合需要安装的文件
     // 这里假设 GeneratorAPI 有一个方法来更新这个 Generator 实例的 files
@@ -136,7 +156,6 @@ class Generator {
     // extract configs from package.json into dedicated files.
     // 从package.json中生成额外得的文件
     await this.extractConfigFiles();
-
     // 重写pakcage.json文件，消除generatorAPI中拓展package.json带来得副作用
     this.files["package.json"] = JSON.stringify(this.pkg, null, 2);
 
@@ -157,10 +176,10 @@ class Generator {
     // extra方法执行后会再this.files中添加一个属性，key为配置文件名称，值为对应得内容
     const extra = (key: string) => {
       if (
-        ConfigTransforms[key] &&
-        this.pkg[key] &&
+        ConfigTransforms[key] !== undefined &&
+        this.pkg[key] !== undefined &&
         // do not extract if the field exists in original package.json
-        !this.originalPkg[key]
+        this.originalPkg[key] === undefined
       ) {
         // this.pkg[key]存在而originalPkg[key]不存在，说明该配置文件是再执行generatorAPI之后添加到pkg中得，需要生成额外的配置文件
         // 并且再添加到this.files中后需要再pkg中删除该属性
@@ -174,8 +193,9 @@ class Generator {
         delete this.pkg[key];
       }
     };
-
-    extra("babel");
+    for (const i of Object.keys(this.plugins)) {
+      extra(i.toLowerCase());
+    }
   }
 
   /**
