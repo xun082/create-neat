@@ -11,8 +11,22 @@ const transformJS = {
   },
 };
 
+const transformJSON = {
+  /**
+   * @description 写文件
+   * @param filename 文件名称
+   * @param context 上下文
+   * @param value 原始文件值
+   * @returns 转化后的文件值
+   */
+  write(filename, context, value) {
+    return JSON.stringify(value, null, 2);
+  },
+};
+
 const transforms = {
   js: transformJS,
+  json: transformJSON,
 };
 
 /**
@@ -44,6 +58,7 @@ export default class ConfigTransform {
   thransform(value, files, context) {
     const file = this.getDefaultFile();
     const { type, filename } = file;
+    console.log("file", file);
     const transform = transforms[type];
     const content = transform.write(filename, context, value);
     return {
