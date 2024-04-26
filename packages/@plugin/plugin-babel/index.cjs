@@ -12,7 +12,7 @@ const buildToolConfigs = {
   // 添加其他构建工具的配置...
 };
 
-const bablePlugin = (api, options) => {
+const pluginBable = (api, options) => {
   const { buildTool } = options.preset;
   const configHandler = buildToolConfigs[buildTool];
 
@@ -26,4 +26,4 @@ const bablePlugin = (api, options) => {
   // ……
 };
 
-export { bablePlugin };
+export { pluginBable };

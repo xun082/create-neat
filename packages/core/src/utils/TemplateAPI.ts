@@ -77,10 +77,6 @@ class TemplateAPI {
 
   // 递归渲染ejs模板
   async renderTemplates(src: string, dest: string, options: any) {
-    console.log("src:", src);
-    console.log("dest:", dest);
-    console.log("options:", options);
-
     // 确保目标目录存在
     await fs.ensureDir(dest);
 
@@ -89,7 +85,7 @@ class TemplateAPI {
 
     for (const entry of entries) {
       const srcPath = path.join(src, entry.name);
-      const destPath = path.join(dest, entry.name.replace(/\.ejs$/, "")); // 移除 .ejs 扩展名，当然框架后缀名要根据你自己来定义
+      const destPath = path.join(dest, entry.name);
 
       if (entry.isDirectory()) {
         // 递归处理文件夹

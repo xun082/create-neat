@@ -1,7 +1,11 @@
 <template>
   <div>
-    <%- VueEjs.name %>
-    <%- VueEjs.data %>
+    <span>
+      <%- VueEjs.name %>
+    </span>
+    <div>
+      <%- VueEjs.data %>
+    </div>
   </div>
 </template>
 

@@ -151,6 +151,8 @@ class Generator {
     /* ----------拉取对应模板，并进行ejs渲染---------- */
     const templatePath = path.resolve(__dirname, "../../../../", `apps/${this.templateName}`);
     const templateAPI = new TemplateAPI(this);
+
+    // TODO: 此处的 ejs 渲染配置是测试用数据，实际应用中需要根据使用不同的模板进行具体的配置，具体如何实现 options 的集中管理有待商榷
     const options = {
       packageEjs: {
         name: "template_test",
