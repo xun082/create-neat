@@ -26,7 +26,6 @@ program
   .allowUnknownOption()
   .action((plugin) => {
     const pluginOptions = minimist(process.argv.slice(3));
-    console.log(pluginOptions, plugin);
     // addPlugin(plugin, pluginOptions)
     console.log(plugin, pluginOptions);
   });
