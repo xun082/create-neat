@@ -52,16 +52,13 @@ export default class ConfigTransform {
    * @param value 文件初始内容
    * @param files file tree对象(目前没用到)
    * @param context 上下文
-   * @returns {filename, content} filename为文件名 content为转化后得文件内容
+   * @returns {filename, content} filename为文件名 content为转化后的文件内容
    */
   transform(value, files, context) {
     const file = this.getDefaultFile();
     const { type, filename } = file;
     const transform = transforms[type];
     const content = transform.write(filename, context, value);
-    return {
-      filename,
-      content,
-    };
+    return { filename, content };
   }
 }

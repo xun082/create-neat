@@ -79,20 +79,20 @@ class GeneratorAPI {
   }
 
   /**
-   * @description 将生成器的模板文件渲染到虚拟文件树对象中。
+   * @description 将 Generator 的模板文件渲染到虚拟文件树对象中。
    * @param {string | object | FileMiddleware} source - 可以是以下之一：
-   *   - 相对路径到一个目录；
+   *   - 于项目根目录的相对路径；
    *   - { sourceTemplate: targetFile } 映射的对象哈希；
    *   - 自定义文件中间件函数。
    * @param {object} [additionalData] - 可供模板使用的额外数据。
    * @param {object} [ejsOptions] - ejs 的选项。
    */
   render(source: string | object, additionalData: object = {}, ejsOptions: object = {}) {
-    const rootDir = (this.generator as any).rootDirectory;
+    const rootDir = this.generator.getRootDirectory(); // 拿到项目的根目录绝对路径
     let content = "";
     // 处理模板路径
     if (typeof source === "string") {
-      // 如果是字符串 则拼接路径
+      // 如果source是字符串，则拼接路径
       const templatePath = path.resolve(rootDir, source);
       if (!fs.existsSync(templatePath)) {
         console.error(`Template ${source} not found`);

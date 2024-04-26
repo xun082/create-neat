@@ -1,3 +1,7 @@
+import fs from "fs-extra";
+import path from "path";
+import ejs from "ejs";
+
 import Generator from "./Generator";
 import GeneratorAPI from "./GeneratorAPI";
 
@@ -69,6 +73,34 @@ class TemplateAPI {
       packageData: this.packageData,
       configFilesData: this.configFilesData,
     };
+  }
+
+  // 递归渲染ejs模板
+  async renderTemplates(src: string, dest: string, options: any) {
+    console.log("src:", src);
+    console.log("dest:", dest);
+    console.log("options:", options);
+
+    // 确保目标目录存在
+    await fs.ensureDir(dest);
+
+    // 读取源目录中的所有文件和文件夹
+    const entries = await fs.readdir(src, { withFileTypes: true });
+
+    for (const entry of entries) {
+      const srcPath = path.join(src, entry.name);
+      const destPath = path.join(dest, entry.name.replace(/\.ejs$/, "")); // 移除 .ejs 扩展名，当然框架后缀名要根据你自己来定义
+
+      if (entry.isDirectory()) {
+        // 递归处理文件夹
+        await this.renderTemplates(srcPath, destPath, options);
+      } else {
+        // 读取和渲染 EJS 模板
+        const content = await fs.readFile(srcPath, "utf-8");
+        const rendered = ejs.render(content, options, {});
+        await fs.writeFile(destPath, rendered);
+      }
+    }
   }
 }
 

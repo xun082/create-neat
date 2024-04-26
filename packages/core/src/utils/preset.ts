@@ -1,10 +1,10 @@
 import { mapForPreset } from "./configMap";
 
 interface Preset {
-  template: string;
-  buildTool: string;
-  plugins: Record<string, any>;
-  packageManager: string;
+  template: string; // 预设模板选择
+  buildTool: string; // 构建工具选择
+  plugins: Record<string, any>; // 插件选择
+  packageManager: string; // 包管理工具选择
 }
 
 /**

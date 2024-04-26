@@ -17,6 +17,5 @@ export const pluginTypeScript = (generator: Generator, options: Record<string, o
     });
   }
 
-  // 在生成流程的最后，调用 generateFiles 提交数据给 Generator
   templateAPI.generateFiles();
 };

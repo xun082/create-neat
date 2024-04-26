@@ -31,6 +31,7 @@ async function projectSelect() {
       { value: "common-lib", label: "common-lib" },
       { value: "vue", label: "vue" },
       { value: "react", label: "react" },
+      { value: "template-test", label: "test" },
     ],
   })) as string;
 
