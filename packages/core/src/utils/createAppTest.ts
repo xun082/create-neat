@@ -109,6 +109,7 @@ export default async function createAppTest(projectName: string, options: Record
   // 拉取模板
   // todo: 新模板未开发，先模拟过程
   console.log("Creating a project...");
+  //   execSync(`mkdir ${rootDirectory}/src`);
 
   // 初始化 Git 仓库
   if (gitCheck(rootDirectory)) exec("git init", { cwd: rootDirectory });
