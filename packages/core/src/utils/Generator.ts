@@ -108,7 +108,7 @@ class Generator {
     this.pkg = Object.assign({}, pkg);
   }
   //处理单个插件的相关文件
-  async pluginGenerate(pluginName){
+  async pluginGenerate(pluginName: string) {
     const generatorAPI = new GeneratorAPI(
       pluginName,
       this,
@@ -139,15 +139,14 @@ class Generator {
   async generate() {
     // 为每个 plugin 创建 GeneratorAPI 实例，调用插件中的 generate
     // 有限处理ts插件
-    if(Object.keys(this.plugins).includes("typescript")){
+    if (Object.keys(this.plugins).includes("typescript")) {
       this.pluginGenerate("typescript");
       //删除typescript对应处理，防止重新处理
-      let index=Object.keys(this.plugins).indexOf("typescript");
-      this.plugins.splice(index,1)
-
+      const index = Object.keys(this.plugins).indexOf("typescript");
+      this.plugins.splice(index, 1);
     }
     for (const pluginName of Object.keys(this.plugins)) {
-      this.pluginGenerate(pluginName)
+      this.pluginGenerate(pluginName);
     }
     // 在文件生成之前提取配置文件
     // 整合需要安装的文件

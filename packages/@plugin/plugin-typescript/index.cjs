@@ -19,7 +19,7 @@ const buildToolConfigs = {
   // 添加其他构建工具的配置...
 };
 
-const pluginTypeScript = (buildTool) => {
+const pluginTypescript = (buildTool) => {
   const configHandler = buildToolConfigs[buildTool];
 
   if (configHandler) {
@@ -32,4 +32,4 @@ const pluginTypeScript = (buildTool) => {
   // ……
 };
 
-module.exports = pluginTypeScript;
+module.exports = pluginTypescript;
