@@ -21,9 +21,8 @@
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [
-      "prettier --check --write",
-      "eslint",
-      "pnpm check"
+      "pnpm format",
+      "eslint"
     ]
   },
   "repository": {

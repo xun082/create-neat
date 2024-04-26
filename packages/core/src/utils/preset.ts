@@ -5,6 +5,7 @@ interface Preset {
   buildTool: string;
   plugins: Record<string, any>;
   packageManager: string;
+  npmSource: string;
 }
 
 /**
@@ -21,12 +22,14 @@ const getPreset = (
   buildTool: string,
   plugins: string[],
   packageManager: string,
+  npmSource: string,
 ): Preset => {
   const preset: Preset = {
     template,
     buildTool,
     plugins: {},
     packageManager,
+    npmSource,
   };
 
   // todo: 插件配置目前设置为空，且没有使用情况，后续优化
@@ -44,6 +47,7 @@ const defaultPreset: Preset = {
     eslint: {},
   },
   packageManager: "npm",
+  npmSource: "",
   // todo: 更多配置随构建需要添加
 };
 
