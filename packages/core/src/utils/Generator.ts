@@ -56,6 +56,11 @@ const defaultConfigTransforms = {
       yaml: [".lintstagedrc.yaml", ".lintstagedrc.yml"],
     },
   }),
+  prettier: new ConfigTransform({
+    file: {
+      json: [".prettierrc"],
+    },
+  }),
 };
 
 // vue项目对应的配置文件
@@ -132,7 +137,6 @@ class Generator {
         await pluginGenerator(generatorAPI);
       }
     }
-
     // 在文件生成之前提取配置文件
     // 整合需要安装的文件
     // 这里假设 GeneratorAPI 有一个方法来更新这个 Generator 实例的 files
@@ -140,7 +144,6 @@ class Generator {
     // extract configs from package.json into dedicated files.
     // 从package.json中生成额外的的文件
     await this.extractConfigFiles();
-
     // 重写pakcage.json文件，消除generatorAPI中拓展package.json带来得副作用
     this.files["package.json"] = JSON.stringify(this.pkg, null, 2);
 
@@ -179,10 +182,14 @@ class Generator {
 
     // extra方法执行后会在this.files中添加一个属性，key为配置文件名称，值为对应的内容
     const extra = (key: string) => {
-      // 校验：ConfigTransforms中存在该配置文件，且this.pkg中存在该配置文件，且originalPkg中不存在该配置文件
-      if (ConfigTransforms[key] && this.pkg[key] && !this.originalPkg[key]) {
-        // this.pkg[key]存在而originalPkg[key]不存在，说明该配置文件是在执行generatorAPI之后添加到pkg中的，需要生成额外的配置文件
-        // 并且在添加到this.files中后需要在pkg中删除该属性
+      if (
+        ConfigTransforms[key] !== undefined &&
+        this.pkg[key] !== undefined &&
+        // do not extract if the field exists in original package.json
+        this.originalPkg[key] === undefined
+      ) {
+        // this.pkg[key]存在而originalPkg[key]不存在，说明该配置文件是再执行generatorAPI之后添加到pkg中得，需要生成额外的配置文件
+        // 并且再添加到this.files中后需要再pkg中删除该属性
         const value = this.pkg[key];
         const configTransform = ConfigTransforms[key];
         // 转换生成文件内容
@@ -192,7 +199,9 @@ class Generator {
         delete this.pkg[key];
       }
     };
-    extra("babel");
+    for (const i of Object.keys(this.plugins)) {
+      extra(i.toLowerCase());
+    }
   }
 
   /**
