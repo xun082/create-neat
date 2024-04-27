@@ -4,7 +4,7 @@ const buildToolConfigs = {
     return {
       rules: [
         {
-          test: /\tsx?$/, // 匹配所有以 .ts 结尾的文件
+          test: /\ts$/, // 匹配所有以 .ts 结尾的文件
           exclude: /node_modules/, // 排除 node_modules 目录
           use: {
             loader: "ts-loader", // 指定 Babel Loader

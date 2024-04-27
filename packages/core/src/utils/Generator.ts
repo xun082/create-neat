@@ -138,8 +138,9 @@ class Generator {
   // 创建所有插件的相关文件
   async generate() {
     // 为每个 plugin 创建 GeneratorAPI 实例，调用插件中的 generate
-    // 有限处理ts插件
+    // 优先处理ts插件
     if (Object.keys(this.plugins).includes("typescript")) {
+      process.env.isTs = "true";
       this.pluginGenerate("typescript");
       //删除typescript对应处理，防止重新处理
       const index = Object.keys(this.plugins).indexOf("typescript");
