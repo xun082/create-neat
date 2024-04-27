@@ -1,13 +1,17 @@
 import { multiselect, select, intro } from "@clack/prompts";
 import chalk from "chalk";
+import { execSync } from "child_process";
 
 import { getPreset } from "./preset";
-
+import { getNpmSource } from "./getnpmSource";
+const registryInfo = execSync("npm config get registry").toString().trim();
+const npmSource: any = getNpmSource();
 interface Responses {
   template: string;
   buildTool: string;
   plugins: string[];
   packageManager: string;
+  npmSource: string;
 }
 
 /**
@@ -20,6 +24,7 @@ async function projectSelect() {
     buildTool: "",
     plugins: [],
     packageManager: "",
+    npmSource: "",
   };
 
   intro(chalk.green(" create-you-app "));
@@ -31,6 +36,7 @@ async function projectSelect() {
       { value: "common-lib", label: "common-lib" },
       { value: "vue", label: "vue" },
       { value: "react", label: "react" },
+      { value: "template-test", label: "test" },
     ],
   })) as string;
 
@@ -70,11 +76,19 @@ async function projectSelect() {
     ],
   })) as string;
 
+  // 选择npm源
+  responses.npmSource = (await select({
+    message: "Pick a npm source for your project",
+    initialValue: registryInfo,
+    options: npmSource,
+  })) as string;
+
   return getPreset(
     responses.template,
     responses.buildTool,
     responses.plugins,
     responses.packageManager,
+    responses.npmSource,
   );
 }
 

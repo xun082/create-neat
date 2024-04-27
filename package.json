@@ -20,7 +20,7 @@
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [
-      "prettier --check --write",
+      "pnpm format",
       "eslint"
     ]
   },
