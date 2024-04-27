@@ -60,6 +60,11 @@ const defaultConfigTransforms = {
       json: [".prettierrc"],
     },
   }),
+  typescript: new ConfigTransform({
+    file: {
+      json: ["tsconfig.json"],
+    },
+  }),
 };
 
 // vue项目对应的配置文件
@@ -108,30 +113,46 @@ class Generator {
     this.templateName = templateName;
   }
 
+  // 单独处理一个插件相关文件
+  async pluginGenerate(pluginName: string) {
+    const generatorAPI = new GeneratorAPI(this);
+
+    // pluginGenerator 是一个函数，接受一个 GeneratorAPI 实例作为参数
+    let pluginGenerator: (generatorAPI: GeneratorAPI) => Promise<void>;
+
+    // 根据环境变量加载插件
+    // TODO: 改用每个 plugin 的 API 来加载
+    if (process.env.NODE_ENV === "DEV") {
+      const pluginPathInDev = `packages/@plugin/plugin-${pluginName.toLowerCase()}/generator/index.cjs`;
+      pluginGenerator = await loadModule(
+        pluginPathInDev,
+        path.resolve(__dirname, relativePathToRoot),
+      );
+    } else if (process.env.NODE_ENV === "PROD") {
+      const pluginPathInProd = `node_modules/${pluginName.toLowerCase()}-plugin-test-ljq`;
+      pluginGenerator = await loadModule(pluginPathInProd, this.rootDirectory);
+    } else {
+      throw new Error("NODE_ENV is not set");
+    }
+
+    if (pluginGenerator && typeof pluginGenerator === "function") {
+      await pluginGenerator(generatorAPI);
+    }
+  }
   // 创建所有插件的相关文件
   async generate() {
+    // 优先处理ts插件
+    if (Object.keys(this.plugins).includes("typescript")) {
+      //设置环境变量
+      process.env.isTs = "true";
+      this.pluginGenerate("typescript");
+      //删除typescript对应处理，防止重新处理
+      const index = Object.keys(this.plugins).indexOf("typescript");
+      this.plugins.splice(index, 1);
+    }
     // 为每个 plugin 创建 GeneratorAPI 实例，调用插件中的 generate
     for (const pluginName of Object.keys(this.plugins)) {
-      const generatorAPI = new GeneratorAPI(this);
-
-      // pluginGenerator 是一个函数，接受一个 GeneratorAPI 实例作为参数
-      let pluginGenerator: (generatorAPI: GeneratorAPI) => Promise<void>;
-
-      // 根据环境变量加载插件
-      // TODO: 改用每个 plugin 的 API 来加载
-      if (process.env.NODE_ENV === "DEV") {
-        const pluginPathInDev = `packages/@plugin/plugin-${pluginName.toLowerCase()}/generator/index.cjs`;
-        pluginGenerator = await loadModule(pluginPathInDev, process.cwd());
-      } else if (process.env.NODE_ENV === "PROD") {
-        const pluginPathInProd = `node_modules/${pluginName.toLowerCase()}-plugin-test-ljq`;
-        pluginGenerator = await loadModule(pluginPathInProd, this.rootDirectory);
-      } else {
-        throw new Error("NODE_ENV is not set");
-      }
-
-      if (pluginGenerator && typeof pluginGenerator === "function") {
-        await pluginGenerator(generatorAPI);
-      }
+      this.pluginGenerate(pluginName);
     }
     // 在文件生成之前提取配置文件
     // 整合需要安装的文件
