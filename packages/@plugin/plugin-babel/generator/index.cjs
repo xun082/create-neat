@@ -1,5 +1,6 @@
 module.exports = (generatorAPI) => {
   generatorAPI.extendPackage({
+    // babel 的文件内容↓
     babel: {
       presets: ["@babel/preset-env"],
       plugins: [
@@ -11,6 +12,7 @@ module.exports = (generatorAPI) => {
         ],
       ],
     },
+    // package.json 的文件内容↓
     dependencies: {
       "core-js": "^3.8.3",
     },
