@@ -140,6 +140,7 @@ class Generator {
     // 为每个 plugin 创建 GeneratorAPI 实例，调用插件中的 generate
     // 优先处理ts插件
     if (Object.keys(this.plugins).includes("typescript")) {
+      //设置环境变量
       process.env.isTs = "true";
       this.pluginGenerate("typescript");
       //删除typescript对应处理，防止重新处理
