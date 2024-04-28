@@ -5,7 +5,7 @@ layout: home
 hero:
   name: "create-neat"
   text: ""
-  tagline: "🚀🚀🚀 基于 PNPM 和 Turborepo 开发了前端脚手架，旨在为用户快速创建各种类型的项目。"
+  tagline: "🚀🚀🚀 Developed a front-end scaffold based on PNPM and Turborepo, aimed at quickly creating various types of projects for users."
   actions:
     - theme: brand
       text: 开始
