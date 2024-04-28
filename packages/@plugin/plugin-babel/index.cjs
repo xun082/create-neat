@@ -1,23 +1,30 @@
 const buildToolConfigs = {
-  webpack: (config) => {
-    if (config.resolve.alias) {
-      config.resolve.alias.set("a", "b");
-    } else {
-      config.resolve.alias = { a: "b" };
-    }
+  // 支持拓展loader和plugin
+  webpack: () => {
+    return {
+      rules: [
+        {
+          test: /\.js$/, // 匹配所有以 .js 结尾的文件
+          exclude: /node_modules/, // 排除 node_modules 目录
+          use: {
+            loader: "babel-loader", // 指定 Babel Loader
+          },
+        },
+      ],
+      plugins: [{ name: "a", params: [], import: { name: "a", from: "b" } }],
+    };
   },
-  vite: (options) => {
-    options.alias = [{ find: "a", replacement: "b" }];
+  vite: () => {
+    return {};
   },
   // 添加其他构建工具的配置...
 };
 
-const pluginBable = (api, options) => {
-  const { buildTool } = options.preset;
+const pluginBabel = (buildTool) => {
   const configHandler = buildToolConfigs[buildTool];
 
   if (configHandler) {
-    configHandler(api, options);
+    return configHandler();
   } else {
     console.warn(`Unsupported build tool: ${buildTool}`);
   }
@@ -26,4 +33,4 @@ const pluginBable = (api, options) => {
   // ……
 };
 
-export { pluginBable };
+module.exports = pluginBabel;

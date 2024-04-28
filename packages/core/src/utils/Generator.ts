@@ -1,10 +1,13 @@
 // Generator.ts
 import path from "path";
+import generator from "@babel/generator";
+import fs from "fs-extra";
 
 import { createFiles } from "./createFiles";
 import GeneratorAPI from "./GeneratorAPI";
 import TemplateAPI from "./TemplateAPI";
 import ConfigTransform from "./ConfigTransform";
+import { mergeWebpackConfigAst } from "./ast";
 
 interface ConfigFileData {
   file: Record<string, string[]>;
@@ -102,8 +105,15 @@ class Generator {
   public pkg: object; // 执行generatorAPI之后带有key值为plugin
   public originalPkg: object; // 原始package.json
   public templateName: string; // 需要拉取的模板名称
+  public buildToolConfig;
 
-  constructor(rootDirectory: string, plugins = {}, pkg = {}, templateName: string) {
+  constructor(
+    rootDirectory: string,
+    plugins = {},
+    pkg = {},
+    templateName: string,
+    buildToolConfig = {},
+  ) {
     this.rootDirectory = rootDirectory;
     this.plugins = plugins;
     this.defaultConfigTransforms = defaultConfigTransforms;
@@ -111,6 +121,7 @@ class Generator {
     this.originalPkg = pkg;
     this.pkg = Object.assign({}, pkg);
     this.templateName = templateName;
+    this.buildToolConfig = buildToolConfig;
   }
 
   // 单独处理一个插件相关文件
@@ -137,6 +148,24 @@ class Generator {
 
     if (pluginGenerator && typeof pluginGenerator === "function") {
       await pluginGenerator(generatorAPI);
+    }
+    // 执行plugin的入口文件，把config写进来
+    const pluginEntry = await loadModule(
+      `packages/@plugin/plugin-${pluginName.toLowerCase()}/index.cjs`,
+      path.resolve(__dirname, relativePathToRoot),
+    );
+    // 处理webpack config
+    if (this.buildToolConfig.buildTool === "webpack") {
+      const { rules, plugins } = pluginEntry(this.buildToolConfig.buildTool);
+      mergeWebpackConfigAst(rules, plugins, this.buildToolConfig.ast);
+      // 把ast转换成代码，写入文件
+      const result = generator(this.buildToolConfig.ast).code;
+      fs.writeFileSync(
+        path.resolve(this.rootDirectory, `${this.buildToolConfig.buildTool}.config.js`),
+        result,
+      );
+    } else if (this.buildToolConfig.buildTool === "vite") {
+      // 处理vite config
     }
   }
   // 创建所有插件的相关文件
