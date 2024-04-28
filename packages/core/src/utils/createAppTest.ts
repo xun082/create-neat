@@ -85,11 +85,11 @@ export default async function createAppTest(projectName: string, options: Record
     if (!version) version = "latest"; // 默认版本号为 latest
     packageContent.devDependencies[dep] = version; // 插件都是以 devDependencies 安装
     // TODO: 现在只有 babel-plugin-test-ljq 这一个包，先试一下，后续发包
-    // if (dep === "Babel") {
-    //   const pluginName = `${dep.toLowerCase()}-plugin-test-ljq`;
-    //   packageContent.devDependencies[pluginName] = "latest";
-    //   delete packageContent.devDependencies["Babel"];
-    // }
+    if (dep === "Babel") {
+      const pluginName = `${dep.toLowerCase()}-plugin-test-ljq`;
+      packageContent.devDependencies[pluginName] = "latest";
+      delete packageContent.devDependencies["Babel"];
+    }
   });
   const packageJson = new PackageAPI(rootDirectory);
   await packageJson.createPackageJson(packageContent);
