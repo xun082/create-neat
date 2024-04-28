@@ -3,6 +3,8 @@ import fs from "fs-extra";
 import { exec } from "child_process";
 import { confirm } from "@clack/prompts";
 import chalk from "chalk";
+import { parse } from "@babel/parser";
+import path from "path";
 
 import { removeDirectory } from "./fileController";
 import { projectSelect } from "./select";
@@ -65,7 +67,7 @@ export default async function createAppTest(projectName: string, options: Record
 
   // 获取用户选择预设
   const preset: Preset = await projectSelect();
-  const { template, packageManager, plugins } = preset;
+  const { template, packageManager, plugins, buildTool } = preset;
 
   /* ----------从下面的代码开始，创建package.json---------- */
   console.log(chalk.blue(`\n📄  Generating package.json...`));
@@ -77,7 +79,17 @@ export default async function createAppTest(projectName: string, options: Record
     devDependencies: {},
   };
 
-  // 2. 遍历 plugins，插入依赖
+  // 2. 初始化构建工具配置文件
+  const buildToolConfigTemplate = fs.readFileSync(
+    path.resolve(fs.realpathSync(process.cwd()), `./template/${buildTool}.config.js`),
+    "utf-8",
+  );
+  const buildToolConfigAst = parse(buildToolConfigTemplate, {
+    sourceType: "module",
+  });
+  fs.writeFileSync(path.resolve(rootDirectory, `${buildTool}.config.js`), buildToolConfigTemplate);
+
+  // 3. 遍历 plugins，插入依赖
   Object.keys(plugins).forEach((dep) => {
     console.log("dep:", dep);
     // TODO: 更多的处理依据 plugins[dep] 后续的变化而插入
@@ -107,7 +119,10 @@ export default async function createAppTest(projectName: string, options: Record
   // 运行生成器创建项目所需文件和结构
   console.log(chalk.blue(`🚀  Invoking generators...`));
   // 传入根目录路径、插件列表、package.json内容创建生成器实例
-  const generators = new Generator(rootDirectory, plugins, packageContent, template);
+  const generators = new Generator(rootDirectory, plugins, packageContent, template, {
+    ast: buildToolConfigAst,
+    buildTool,
+  });
   await generators.generate();
 
   // 安装附加依赖

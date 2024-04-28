@@ -1,9 +1,5 @@
 lockfileVersion: '6.0'
 
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
-
 importers:
 
   .:
@@ -137,6 +133,18 @@ importers:
 
   packages/core:
     dependencies:
+      '@babel/generator':
+        specifier: ^7.24.4
+        version: 7.24.4
+      '@babel/parser':
+        specifier: ^7.24.0
+        version: 7.24.4
+      '@babel/traverse':
+        specifier: ^7.24.0
+        version: 7.24.1
+      '@babel/types':
+        specifier: ^7.24.0
+        version: 7.24.0
       '@clack/prompts':
         specifier: ^0.7.0
         version: 0.7.0
@@ -13153,3 +13161,7 @@ packages:
     resolution: {integrity: sha512-9bnSc/HEW2uRy67wc+T8UwauLuPJVn28jb+GtJY16iiKWyvmYJRXVT4UamsAEGQfPohgr2q4Tq0sQbQlxTfi1g==}
     engines: {node: '>=12.20'}
     dev: false
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
