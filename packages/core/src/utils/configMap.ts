@@ -47,7 +47,14 @@ const plugins: configMap = {
   },
   Eslint: {
     files: [],
-    npm: [],
+    npm: [
+      "@babel/core",
+      "@babel/eslint-parser",
+      "eslint",
+      "eslint-plugin-import",
+      "eslint-plugin-jsx-a11y",
+      "eslint-plugin-n",
+    ],
   },
   Prettier: {
     files: [],
