@@ -10,8 +10,19 @@ import {
 } from "@babel/types";
 import traverse from "@babel/traverse";
 
+/**
+ * 创建default import ast
+ * @param name default导出的名
+ * @param import from 来源
+ */
 export const createImportDeclaration = (name: string, from: string) =>
   importDeclaration([importDefaultSpecifier(identifier(name))], stringLiteral(from));
+
+/**
+ * 创建新建对象语法ast
+ * @param name 构造函数名
+ * @param parameters 构造函数参数
+ */
 export const createNewExpression = (
   name: string,
   parameters: Parameters<typeof newExpression>[1],
@@ -20,9 +31,22 @@ export const createNewExpression = (
     identifier(name), // 对象标识符
     parameters, // 构造函数参数
   );
+
+/**
+ * 创建对象属性ast
+ * @param name 对象属性名
+ * @param value 对象属性值
+ */
 export const createObjectProperty = (name: string, value: Parameters<typeof objectProperty>[1]) =>
   objectProperty(identifier(name), value);
 
+/**
+ * 合并webpack config ast
+ * 目前支持loaders、plugins
+ * @param rules 本次合并的loader rules
+ * @param plugins 本次合并的插件
+ * @param ast 初始ast
+ */
 export const mergeWebpackConfigAst = (rules, plugins, ast) => {
   traverse(ast, {
     ExpressionStatement(path) {
