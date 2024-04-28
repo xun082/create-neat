@@ -10,21 +10,25 @@ import {
 } from "@babel/types";
 import traverse from "@babel/traverse";
 
-export const createImportDeclaration = () => {
-  return importDeclaration([importDefaultSpecifier(identifier("React"))], stringLiteral("react"));
-};
+export const createImportDeclaration = (name: string, from: string) =>
+  importDeclaration([importDefaultSpecifier(identifier(name))], stringLiteral(from));
+export const createNewExpression = (
+  name: string,
+  parameters: Parameters<typeof newExpression>[1],
+) =>
+  newExpression(
+    identifier(name), // 对象标识符
+    parameters, // 构造函数参数
+  );
+export const createObjectProperty = (name: string, value: Parameters<typeof objectProperty>[1]) =>
+  objectProperty(identifier(name), value);
 
 export const mergeWebpackConfigAst = (rules, plugins, ast) => {
   traverse(ast, {
     ExpressionStatement(path) {
       plugins.forEach((plugin) => {
         // 不是default也得处理
-        path.container.unshift(
-          importDeclaration(
-            [importDefaultSpecifier(identifier(plugin.import.name))],
-            stringLiteral(plugin.import.from),
-          ),
-        );
+        path.container.unshift(createImportDeclaration(plugin.import.name, plugin.import.from));
       });
 
       path.node.expression.right.properties.forEach((item) => {
@@ -32,12 +36,7 @@ export const mergeWebpackConfigAst = (rules, plugins, ast) => {
         if (item.key.name === "plugins") {
           const pluginAsts = [];
           plugins.forEach((plugin) => {
-            pluginAsts.push(
-              newExpression(
-                identifier(plugin.name), // 对象标识符
-                [], // 构造函数参数
-              ),
-            );
+            pluginAsts.push(createNewExpression(plugin.name, []));
           });
           pluginAsts.forEach((ast) => item.value.elements.push(ast));
         }
@@ -47,10 +46,10 @@ export const mergeWebpackConfigAst = (rules, plugins, ast) => {
           rules.forEach((rule) => {
             const formatReg = (str) => str.substring(1, str.length - 1);
             const ruleAstNode = objectExpression([
-              objectProperty(identifier("test"), regExpLiteral(formatReg(`${rule.test}`))),
-              objectProperty(identifier("exclude"), regExpLiteral(formatReg(`${rule.exclude}`))),
-              objectProperty(
-                identifier("use"),
+              createObjectProperty("test", regExpLiteral(formatReg(`${rule.test}`))),
+              createObjectProperty("exclude", regExpLiteral(formatReg(`${rule.exclude}`))),
+              createObjectProperty(
+                "use",
                 objectExpression([
                   objectProperty(identifier("loader"), stringLiteral(rule.use.loader)),
                 ]),
