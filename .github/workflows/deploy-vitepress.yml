@@ -21,16 +21,10 @@ jobs:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: "20"
-          cache: "pnpm"
-
       - name: Install PNPM
         uses: pnpm/action-setup@v2
         with:
-          version: "8"
+          version: "^8.0"
 
       - name: Install Dependencies
         run: pnpm install
