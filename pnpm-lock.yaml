@@ -116,6 +116,8 @@ importers:
 
   packages/@plugin/plugin-eslint: {}
 
+  packages/@plugin/plugin-prettier: {}
+
   packages/@plugin/plugin-typescript: {}
 
   docs:

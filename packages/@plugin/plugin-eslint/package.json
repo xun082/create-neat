@@ -1,5 +1,11 @@
 {
   "name": "@plugin/plugin-eslint",
   "version": "1.0.0",
-  "dependencies": {}
+  "description": "eslint plugin for crate-neat",
+  "type": "module",
+  "main": "index.ts",
+  "engines": {
+    "node": ">=16.0.0"
+ }
 }
+  
