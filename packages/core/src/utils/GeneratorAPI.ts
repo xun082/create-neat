@@ -1,6 +1,5 @@
 import fs from "fs";
 import path from "path";
-import ejs from "ejs";
 
 import Generator from "./Generator";
 
@@ -76,50 +75,6 @@ class GeneratorAPI {
       console.error(`Failed to write package.json: ${err}`);
       return;
     }
-  }
-
-  /**
-   * @description 将 Generator 的模板文件渲染到虚拟文件树对象中。
-   * @param {string | object | FileMiddleware} source - 可以是以下之一：
-   *   - 于项目根目录的相对路径；
-   *   - { sourceTemplate: targetFile } 映射的对象哈希；
-   *   - 自定义文件中间件函数。
-   * @param {object} [additionalData] - 可供模板使用的额外数据。
-   * @param {object} [ejsOptions] - ejs 的选项。
-   */
-  render(source: string | object, additionalData: object = {}, ejsOptions: object = {}) {
-    const rootDir = this.generator.getRootDirectory(); // 拿到项目的根目录绝对路径
-    let content = "";
-    // 处理模板路径
-    if (typeof source === "string") {
-      // 如果source是字符串，则拼接路径
-      const templatePath = path.resolve(rootDir, source);
-      if (!fs.existsSync(templatePath)) {
-        console.error(`Template ${source} not found`);
-        return;
-      }
-      content = fs.readFileSync(templatePath, "utf-8");
-    } else if (typeof source === "object") {
-      for (const sourceTemplate in source) {
-        const targetFile = source[sourceTemplate];
-        const templatePath = path.resolve(rootDir, sourceTemplate);
-        if (!fs.existsSync(templatePath)) {
-          console.error(`Template ${sourceTemplate} not found`);
-          continue;
-        }
-        const templateContent = fs.readFileSync(templatePath, "utf-8");
-        const renderedContent = ejs.render(templateContent, additionalData, ejsOptions);
-        fs.writeFileSync(path.resolve(rootDir, targetFile), renderedContent);
-      }
-      return;
-    } else {
-      console.error("Invalid template source");
-      return;
-    }
-    // 渲染模板
-    const renderedContent = ejs.render(content, additionalData, ejsOptions);
-    console.log(renderedContent);
-    return renderedContent;
   }
 }
 
