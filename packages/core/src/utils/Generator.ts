@@ -184,11 +184,7 @@ class Generator {
     for (const pluginName of Object.keys(this.plugins)) {
       this.pluginGenerate(pluginName);
     }
-    // 在文件生成之前提取配置文件
-    // 整合需要安装的文件
-    // 这里假设 GeneratorAPI 有一个方法来更新这个 Generator 实例的 files
-    // createFiles 函数需要你根据自己的逻辑实现文件创建和写入磁盘的逻辑
-    // extract configs from package.json into dedicated files.
+
     // 从package.json中生成额外的的文件
     await this.extractConfigFiles();
     // 重写pakcage.json文件，消除generatorAPI中拓展package.json带来得副作用
