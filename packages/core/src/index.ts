@@ -5,7 +5,7 @@ import chalk from "chalk";
 import minimist from "minimist";
 
 import { getPackageJsonInfo } from "./utils";
-import createAppTest from "./utils/createAppTest";
+import createApp from "./utils/createApp";
 
 const program = new Command();
 
@@ -16,7 +16,7 @@ program
   .option("-f, --force", "Overwrite target directory if it exists")
   .option("--dev", "Use development mode")
   .action((name: string, options: Record<string, any>) => {
-    createAppTest(name, options);
+    createApp(name, options);
   });
 
 program
