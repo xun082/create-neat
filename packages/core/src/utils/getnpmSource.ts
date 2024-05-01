@@ -1,15 +1,16 @@
 import https from "https";
 
-import getPackageJsonInfo from "./getPackageInfo";
-// 获取npm源以及最快的npm源
+import { npmRegistries, type Source, type RegistryInfo } from "../configs/npmRegistries";
+
+// 获取 npm 源以及最快的 npm 源
 export const getNpmSource = () => {
-  const npmJson: any = getPackageJsonInfo("../../../../registries.json", true);
-  const npmSources: any = [];
-  for (const key in npmJson) {
-    npmSources.push({ label: key, value: npmJson[key].registry });
+  const npmSources = [];
+
+  for (const key in npmRegistries) {
+    npmSources.push({ label: key, value: npmRegistries[key].registry });
   }
 
-  const checkSourceSpeed = (source: any) => {
+  const checkSourceSpeed = (source: RegistryInfo): Promise<Source> => {
     return new Promise((resolve, reject) => {
       const startTime = Date.now();
       const req = https.request(source.registry, () => {
@@ -28,13 +29,13 @@ export const getNpmSource = () => {
   (async () => {
     try {
       // 为每个源创建 Promise
-      const promises = Object.keys(npmJson).map((sourceName) => {
-        const source = npmJson[sourceName];
+      const promises = Object.keys(npmRegistries).map((sourceName) => {
+        const source = npmRegistries[sourceName];
         return checkSourceSpeed(source);
       });
 
       // 使用 Promise.race 找出哪个源最快，并用 await 等待结果
-      const fastestSource: any = await Promise.race(promises);
+      const fastestSource: Source = await Promise.race(promises);
 
       // 将最快源的 registry 添加到 npmSources 中
       npmSources.push({ label: "Fastest source", value: fastestSource.sourceName.registry });
