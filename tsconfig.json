@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "strict": true,
     "jsx": "react-jsx",
     "allowUnreachableCode": false, // 报告执行不到的代码错误
     "allowUnusedLabels": false, // 不报告未使用的标签错误
@@ -29,6 +30,11 @@
       "es2017"
     ]
   },
-  "include": ["packages"],
-  "exclude": ["node_modules", "apps"]
+  "include": [
+    "packages"
+  ],
+  "exclude": [
+    "node_modules",
+    "apps"
+  ]
 }

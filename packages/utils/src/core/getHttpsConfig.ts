@@ -15,13 +15,13 @@ function validateKeyAndCerts({ cert, key, keyFile, crtFile }) {
   let encrypted: Buffer | undefined;
   try {
     encrypted = crypto.publicEncrypt(cert, Buffer.from("test"));
-  } catch (err) {
+  } catch (err: any) {
     throw new Error(`The certificate "${crtFile}" is invalid.\n${err.message}`);
   }
 
   try {
     crypto.privateDecrypt(key, encrypted);
-  } catch (err) {
+  } catch (err: any) {
     throw new Error(`The certificate key "${keyFile}" is invalid.\n${err.message}`);
   }
 }

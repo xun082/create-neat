@@ -23,6 +23,7 @@ export async function removeDirectory(directoryPath = "node_modules", verbose = 
     const spinner = ora(chalk.bold.cyan("File being deleted...")).start();
     try {
       await fs.remove(fullPath);
+      console.log("delete success");
       spinner.succeed(chalk.bold.green("Deleted successfully"));
     } catch (error) {
       spinner.fail(chalk.bold.red("Deletion failed"));
@@ -52,23 +53,24 @@ export async function getNpmPackage(
   projectName: string,
   isDev?: boolean | undefined,
 ): Promise<void> {
-  const spinner = ora(chalk.bold.cyan("Creating a project...")).start();
+  // 初始化spinner
+  const spinner = ora();
   try {
+    // 获取当前路径
     const currentDir = resolveApp(projectName);
     // 如果是dev mode，检查并使用本地模板
     if (isDev) {
+      // 本地模板路径
       const root = resolve(__dirname, "../../../../apps/");
-      // 通过dist/index.js，找到模板文件的路径
-      const templateDir = resolve(
-        root,
-        "template-react-web-ts/laconic-template-react-web-ts-1.0.1.tgz",
-      );
+      // 通过dist/index.js，找到模板文件目录的路径
+      const templateDir = resolve(root, `template-${packageName}`);
       const hasLocalTemplate = fs.existsSync(templateDir);
       if (hasLocalTemplate) {
         await getPackageFromLocal(currentDir, templateDir);
         return;
       }
     }
+    spinner.start(chalk.bold.cyan("Creating a project..."));
     const response = await axios.get(packageURL, {
       responseType: "arraybuffer",
     });
@@ -79,7 +81,6 @@ export async function getNpmPackage(
       file: tgzPath,
       cwd: currentDir,
     });
-
     await fs.unlink(tgzPath);
     await copyFolderRecursive(join(projectName, "package/template"), projectName);
     await removeDirectory(join(projectName, "package"), false);
@@ -91,13 +92,10 @@ export async function getNpmPackage(
   }
 }
 
-export async function getPackageFromLocal(currentDir: string, targetFile: string) {
-  const spinner = ora(chalk.bold.cyan("Creating a project...")).start();
+export async function getPackageFromLocal(currentDir: string, templateDir: string) {
+  const spinner = ora(chalk.bold.cyan("coping Template from Local")).start();
   try {
-    await tar.extract({
-      file: targetFile,
-      cwd: currentDir,
-    });
+    await copyFolderRecursive(join(templateDir, "template"), currentDir);
     spinner.succeed(chalk.bold.green("Project creation successful"));
   } catch (error) {
     spinner.fail(chalk.bold.red("Project creation failed"));

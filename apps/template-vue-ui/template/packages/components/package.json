@@ -1,0 +1,13 @@
+{
+  "name": "@pg-kit/components",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "sass": "^1.58.0",
+    "vue": "^3.2.45"
+  }
+}

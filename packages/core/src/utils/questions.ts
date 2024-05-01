@@ -15,6 +15,7 @@ export const ProjectTypes: ISelectType[] = [
   createSelectType("react-web-ts", "react+tsx web应用程序 🚀"),
   createSelectType("vue-web-js", "vue+js web应用程序 🚀"),
   createSelectType("vue-web-ts", "vue+ts web应用程序 🚀"),
+  createSelectType("vue-ui", "vue ui 组件库🚀"),
 ];
 
 export const PackageManagers: ISelectType[] = [

@@ -1,0 +1,16 @@
+{
+    "name": "pg-kit",
+    "version": "1.0.0",
+    "description": "组件库",
+    "keywords": [],
+    "author": "kongweigen",
+    "license": "ISC",
+    "peerDependencies": {
+        "vue": "^3.2.45"
+    },
+    "scripts": {
+        "dev": "pnpm -C ./apps/vue3-admin dev",
+        "build":"pnpm -C ./packages/ui build"
+
+    }
+}

@@ -1,0 +1,27 @@
+{
+    "name": "@laconic/template-vue-ui",
+    "version": "1.0.1",
+    "keywords": [
+        "vue",
+        "webpack",
+        "rollup",
+        "cli",
+        "ts"
+    ],
+    "description": "The base template for Create Vue UI",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/xun082/create-neat.git",
+        "directory": "packages/template-vue-web-js"
+    },
+    "license": "MIT",
+    "engines": {
+        "node": ">=14"
+    },
+    "bugs": {
+        "url": "https://github.com/xun082/create-neat.git/issues"
+    },
+    "files": [
+        "template"
+    ]
+}

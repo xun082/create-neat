@@ -1,0 +1,25 @@
+{
+  "type": "module",
+  "name": "pg-kit",
+  "private": true,
+  "version": "1.0.0",
+  "main": "./dist/ui.umd.js",
+  "module": "./dist/ui.es.js",
+  "scripts": {
+    "build": "vite build"
+  },
+  "devDependencies": {
+    "@iconify-json/ic": "1.1.4",
+    "typescript": "^4.9.4",
+    "vite": "^4.0.4"
+  },
+  "dependencies": {
+    "@pg-kit/components": "workspace:^1.0.0",
+    "@vitejs/plugin-vue": "^4.0.0",
+    "sass": "^1.58.0",
+    "vite-plugin-dts": "^1.7.2"
+  },
+  "peerDependencies": {
+    "vue": "^3.2.45"
+  }
+}

@@ -1,11 +1,20 @@
 {
   "extends": "../../tsconfig.json",
-  "include": ["src"],
+  "include": [
+    "src"
+  ],
   "compilerOptions": {
     "outDir": "dist",
     "rootDir": "src",
-    "types": ["node"],
+    "types": [
+      "node"
+    ],
     "target": "ESNext",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "paths": {
+      "@laconic/*": [
+        "/*"
+      ]
+    }
   }
 }
