@@ -3,14 +3,18 @@
 import { Command } from "commander";
 import chalk from "chalk";
 import minimist from "minimist";
+import fs from "fs";
+import path from "path";
 
-import { getPackageJsonInfo } from "./utils";
 import createApp from "./utils/createApp";
+
+const packagePath = path.join(__dirname, "../package.json");
+const version = JSON.parse(fs.readFileSync(packagePath, "utf8")).version;
 
 const program = new Command();
 
 program
-  .version(chalk.greenBright(getPackageJsonInfo("../../package.json", true).version))
+  .version(chalk.greenBright(version))
   .arguments("<project-name>")
   .description("Create a directory for your project files")
   .option("-f, --force", "Overwrite target directory if it exists")

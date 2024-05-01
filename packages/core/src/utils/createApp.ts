@@ -6,16 +6,16 @@ import chalk from "chalk";
 import { parse } from "@babel/parser";
 import path from "path";
 
+import PackageAPI from "../models/PackageAPI";
+import Generator from "../models/Generator";
+
 import { removeDirectory } from "./fileController";
 import { projectSelect } from "./select";
 import gitCheck from "./gitCheck";
-import Generator from "./Generator";
-import PackageAPI from "./PackageAPI";
-import { createFiles } from "./createFiles";
-import { type Preset, getNpmForPackage } from "./preset";
+import { createFiles, createReadmeString } from "./createFiles";
+import { type Preset } from "./preset";
 import createSuccessInfo from "./createSuccessInfo";
 import dependenciesInstall from "./dependenciesInstall";
-import { createReadmeString } from "./createFile";
 
 // 设置输入模式为原始模式
 process.stdin.setRawMode(true);
@@ -69,7 +69,6 @@ export default async function createAppTest(projectName: string, options: Record
   const preset: Preset = await projectSelect();
   const { template, packageManager, plugins, buildTool } = preset;
 
-  /* ----------从下面的代码开始，创建package.json---------- */
   console.log(chalk.blue(`\n📄  Generating package.json...`));
   // 1. 配置文件基本内容，包含不仅仅是package.json的字段
   const packageContent = {
@@ -84,6 +83,7 @@ export default async function createAppTest(projectName: string, options: Record
     path.resolve(fs.realpathSync(process.cwd()), `./template/${buildTool}.config.js`),
     "utf-8",
   );
+
   const buildToolConfigAst = parse(buildToolConfigTemplate, {
     sourceType: "module",
   });
@@ -127,12 +127,7 @@ export default async function createAppTest(projectName: string, options: Record
   await generators.generate();
 
   // 安装附加依赖
-  // TODO: 待映射部分完成再测试
-
   await dependenciesInstall(rootDirectory, packageManager);
-  // TODO: configMap 功能目前无用，考虑改为针对于架构的特异化插件选择，目前不影响功能
-  const npmList = getNpmForPackage(preset);
-  console.log("npmList", npmList);
 
   // 其他剩余操作，如创建 md 文档，或其他首位操作
   console.log(chalk.blue(`📄  Generating README.md...`));
