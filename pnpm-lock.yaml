@@ -283,14 +283,20 @@ importers:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> a639efd (refactor: 整理 core 中部分逻辑，优化项目结构 (#143))
   packages/core/test001:
     devDependencies:
       babel-plugin-test-ljq:
         specifier: ^1.0.0
         version: 1.0.0
 
+<<<<<<< HEAD
 >>>>>>> b4a9b39 (refactor: 整理 core 中部分逻辑，优化项目结构)
+=======
+>>>>>>> a639efd (refactor: 整理 core 中部分逻辑，优化项目结构 (#143))
   packages/eslint-config-memory:
     dependencies:
       '@typescript-eslint/eslint-plugin':
