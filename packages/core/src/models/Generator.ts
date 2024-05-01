@@ -3,12 +3,13 @@ import path from "path";
 import generator from "@babel/generator";
 import fs from "fs-extra";
 
-import { relativePathToRoot } from "./constants";
-import { createFiles } from "./createFiles";
+import { relativePathToRoot } from "../utils/constants";
+import { createFiles } from "../utils/createFiles";
+import { mergeWebpackConfigAst } from "../utils/ast";
+
 import GeneratorAPI from "./GeneratorAPI";
 import TemplateAPI from "./TemplateAPI";
 import ConfigTransform from "./ConfigTransform";
-import { mergeWebpackConfigAst } from "./ast";
 
 interface ConfigFileData {
   file: Record<string, string[]>;

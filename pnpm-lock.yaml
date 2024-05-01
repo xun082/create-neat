@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 importers:
 
   .:
@@ -278,6 +282,15 @@ importers:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+  packages/core/test001:
+    devDependencies:
+      babel-plugin-test-ljq:
+        specifier: ^1.0.0
+        version: 1.0.0
+
+>>>>>>> b4a9b39 (refactor: 整理 core 中部分逻辑，优化项目结构)
   packages/eslint-config-memory:
     dependencies:
       '@typescript-eslint/eslint-plugin':
@@ -5539,6 +5552,10 @@ packages:
       '@babel/helper-define-polyfill-provider': 0.6.1(@babel/core@7.24.4)
     transitivePeerDependencies:
       - supports-color
+
+  /babel-plugin-test-ljq@1.0.0:
+    resolution: {integrity: sha512-JjyUNh1KzqKCu4UWw763Zk01NoL89LGaLQH6iS9EhYP3P6rWxECZ4slI3rCN1/YRMUAvF+Fwy9hMrtbH+gkZHg==}
+    dev: true
 
   /babel-plugin-transform-rename-import@2.3.0:
     resolution: {integrity: sha512-dPgJoT57XC0PqSnLgl2FwNvxFrWlspatX2dkk7yjKQj5HHGw071vAcOf+hqW8ClqcBDMvEbm6mevn5yHAD8mlQ==}
@@ -13977,7 +13994,3 @@ packages:
     resolution: {integrity: sha512-9bnSc/HEW2uRy67wc+T8UwauLuPJVn28jb+GtJY16iiKWyvmYJRXVT4UamsAEGQfPohgr2q4Tq0sQbQlxTfi1g==}
     engines: {node: '>=12.20'}
     dev: false
-
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
