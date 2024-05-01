@@ -1,0 +1,8 @@
+{
+  "name": "test001",
+  "version": "0.1.0",
+  "private": true,
+  "devDependencies": {
+    "babel-plugin-test-ljq": "^1.0.0"
+  }
+}
