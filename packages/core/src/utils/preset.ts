@@ -1,5 +1,3 @@
-import { mapForPreset } from "./configMap";
-
 interface Preset {
   template: string;
   buildTool: string;
@@ -51,34 +49,4 @@ const defaultPreset: Preset = {
   // todo: 更多配置随构建需要添加
 };
 
-const { template, buildTool, plugins } = mapForPreset;
-
-/**
- * @description 根据配置映射生成预设相关的文件
- * @param preset 用户预设
- */
-const getFilesForProject = (preset: Preset) => {
-  let fileList = [...template[preset.template].files, ...buildTool[preset.buildTool].files];
-  // 独立处理 plugins
-  Object.keys(preset.plugins).forEach((item) => {
-    fileList = [...fileList, ...plugins[item].files];
-  });
-  return fileList;
-};
-
-/**
- * @description 根据配置映射生成预设相关的依赖
- * @param preset 用户预设
- */
-const getNpmForPackage = (preset: Preset) => {
-  let npmList = [...template[preset.template].npm, ...buildTool[preset.buildTool].npm];
-
-  // 独立处理 plugins
-  Object.keys(preset.plugins).forEach((item) => {
-    npmList = [...npmList, ...plugins[item].npm];
-  });
-
-  return npmList;
-};
-
-export { Preset, getPreset, defaultPreset, getFilesForProject, getNpmForPackage };
+export { Preset, getPreset, defaultPreset };
