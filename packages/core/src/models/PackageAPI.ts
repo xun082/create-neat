@@ -1,6 +1,6 @@
 import fs from "fs";
 
-import { createFiles } from "./createFiles";
+import { createFiles } from "../utils/createFiles";
 
 class PackageAPI {
   private filePath: string;
