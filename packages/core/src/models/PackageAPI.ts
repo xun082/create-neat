@@ -12,6 +12,7 @@ class PackageAPI {
   // 创建 package.json 文件
   async createPackageJson(content: object) {
     // todo: content 的类型后面约束
+
     await createFiles(this.filePath, {
       "package.json": JSON.stringify(content, null, 2),
     });

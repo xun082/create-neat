@@ -9,7 +9,7 @@ import path from "path";
 import Generator from "../models/Generator";
 import PackageAPI from "../models/PackageAPI";
 
-import { removeDirectory } from "./fileController";
+import { removeDirectory, createTemplateFile } from "./fileController";
 import { projectSelect } from "./select";
 import gitCheck from "./gitCheck";
 import { createFiles } from "./createFiles";
@@ -68,6 +68,7 @@ export default async function createAppTest(projectName: string, options: Record
 
   // 获取用户选择预设
   const preset: Preset = await projectSelect();
+
   const { template, packageManager, plugins, buildTool } = preset;
 
   /* ----------从下面的代码开始，创建package.json---------- */
@@ -81,24 +82,27 @@ export default async function createAppTest(projectName: string, options: Record
   };
 
   // 2. 初始化构建工具配置文件
-  const buildToolConfigTemplate = fs.readFileSync(
-    resolveApp(`./template/${buildTool}.config.js`),
-    "utf-8",
-  );
+
+  const buildToolConfigTemplate = createTemplateFile(`${buildTool}.config.js`);
 
   const buildToolConfigAst = parse(buildToolConfigTemplate, {
     sourceType: "module",
   });
 
-  await fs.writeFileSync(
-    path.resolve(rootDirectory, `${buildTool}.config.js`),
-    buildToolConfigTemplate,
-  );
+  const filePath = path.resolve(rootDirectory, `${buildTool}.config.js`);
+  const directory = path.dirname(filePath);
+
+  if (!fs.existsSync(directory)) {
+    fs.mkdirSync(directory, { recursive: true });
+  }
+
+  fs.writeFileSync(filePath, buildToolConfigTemplate);
 
   // 3. 遍历 plugins，插入依赖
   Object.keys(plugins).forEach((dep) => {
     // TODO: 更多的处理依据 plugins[dep] 后续的变化而插入
     let { version } = plugins[dep];
+
     if (!version) version = "latest"; // 默认版本号为 latest
     packageContent.devDependencies[dep] = version; // 插件都是以 devDependencies 安装
     // TODO: 现在只有 babel-plugin-test-ljq 这一个包，先试一下，后续发包
@@ -108,6 +112,7 @@ export default async function createAppTest(projectName: string, options: Record
       delete packageContent.devDependencies["babel"];
     }
   });
+
   const packageJson = new PackageAPI(rootDirectory);
   await packageJson.createPackageJson(packageContent);
 
@@ -133,10 +138,12 @@ export default async function createAppTest(projectName: string, options: Record
 
   // 其他剩余操作，如创建 md 文档，或其他首位操作
   console.log(chalk.blue(`📄  Generating README.md...`));
+
   await createFiles(rootDirectory, {
     "README.md": createReadmeString(packageManager, template, "README.md"),
     "README-EN.md": createReadmeString(packageManager, template, "README-EN.md"),
   });
+
   createSuccessInfo(projectName, "npm");
 
   // gitignore
