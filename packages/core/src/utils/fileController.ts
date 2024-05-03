@@ -39,7 +39,5 @@ export async function removeDirectory(
 }
 
 export function createTemplateFile(file: string) {
-  console.log(join(__dirname, "../../template/", file));
-
   return readFileSync(join(__dirname, "../../template/", file)).toString();
 }

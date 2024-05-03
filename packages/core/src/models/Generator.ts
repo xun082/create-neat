@@ -198,7 +198,6 @@ class Generator {
     console.log("Files have been generated and written to disk.\n");
 
     /* ----------拉取对应模板，并进行ejs渲染---------- */
-    // const templatePath = join(__dirname, "../../template/", this.templateName);
     const templatePath = join(__dirname, "../../template/", "template-test");
 
     // TODO: 此处的 ejs 渲染配置是测试用数据，实际应用中需要根据使用不同的模板进行具体的配置，具体如何实现 options 的集中管理有待商榷
