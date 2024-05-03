@@ -6,16 +6,17 @@ import chalk from "chalk";
 import { parse } from "@babel/parser";
 import path from "path";
 
-import PackageAPI from "../models/PackageAPI";
 import Generator from "../models/Generator";
+import PackageAPI from "../models/PackageAPI";
 
 import { removeDirectory } from "./fileController";
 import { projectSelect } from "./select";
 import gitCheck from "./gitCheck";
-import { createFiles, createReadmeString } from "./createFiles";
+import { createFiles } from "./createFiles";
 import { type Preset } from "./preset";
 import createSuccessInfo from "./createSuccessInfo";
 import dependenciesInstall from "./dependenciesInstall";
+import { createReadmeString } from "./createFiles";
 
 // 设置输入模式为原始模式
 process.stdin.setRawMode(true);
@@ -51,7 +52,7 @@ async function createFolder(rootDirectory: string, options: Record<string, any>)
     }
   }
 
-  // 创建目录，如果之前已经删除或目录不存在
+  // 如果之前已经删除或目录不存在，创建目录
   fs.mkdirSync(rootDirectory, { recursive: true });
 }
 
@@ -69,6 +70,7 @@ export default async function createAppTest(projectName: string, options: Record
   const preset: Preset = await projectSelect();
   const { template, packageManager, plugins, buildTool } = preset;
 
+  /* ----------从下面的代码开始，创建package.json---------- */
   console.log(chalk.blue(`\n📄  Generating package.json...`));
   // 1. 配置文件基本内容，包含不仅仅是package.json的字段
   const packageContent = {
@@ -80,35 +82,34 @@ export default async function createAppTest(projectName: string, options: Record
 
   // 2. 初始化构建工具配置文件
   const buildToolConfigTemplate = fs.readFileSync(
-    path.resolve(fs.realpathSync(process.cwd()), `./template/${buildTool}.config.js`),
+    resolveApp(`./template/${buildTool}.config.js`),
     "utf-8",
   );
 
   const buildToolConfigAst = parse(buildToolConfigTemplate, {
     sourceType: "module",
   });
-  fs.writeFileSync(path.resolve(rootDirectory, `${buildTool}.config.js`), buildToolConfigTemplate);
+
+  await fs.writeFileSync(
+    path.resolve(rootDirectory, `${buildTool}.config.js`),
+    buildToolConfigTemplate,
+  );
 
   // 3. 遍历 plugins，插入依赖
   Object.keys(plugins).forEach((dep) => {
-    console.log("dep:", dep);
     // TODO: 更多的处理依据 plugins[dep] 后续的变化而插入
     let { version } = plugins[dep];
     if (!version) version = "latest"; // 默认版本号为 latest
     packageContent.devDependencies[dep] = version; // 插件都是以 devDependencies 安装
     // TODO: 现在只有 babel-plugin-test-ljq 这一个包，先试一下，后续发包
-    if (dep === "Babel") {
-      const pluginName = `${dep.toLowerCase()}-plugin-test-ljq`;
+    if (dep === "babel") {
+      const pluginName = `${dep}-plugin-test-ljq`;
       packageContent.devDependencies[pluginName] = "latest";
-      delete packageContent.devDependencies["Babel"];
+      delete packageContent.devDependencies["babel"];
     }
   });
   const packageJson = new PackageAPI(rootDirectory);
   await packageJson.createPackageJson(packageContent);
-  // 拉取模板
-  // TODO: 新模板未开发，先模拟过程
-  console.log("Creating a project...");
-  //   execSync(`mkdir ${rootDirectory}/src`);
 
   // 初始化 Git 仓库
   if (gitCheck(rootDirectory)) exec("git init", { cwd: rootDirectory });
@@ -117,9 +118,10 @@ export default async function createAppTest(projectName: string, options: Record
   if (process.env.NODE_ENV === "PROD") {
     await dependenciesInstall(rootDirectory, packageManager);
   }
+
   // 运行生成器创建项目所需文件和结构
   console.log(chalk.blue(`🚀  Invoking generators...`));
-  // 传入根目录路径、插件列表、package.json内容创建生成器实例
+  // 传入根目录路径、插件列表、package.json 内容创建生成器实例
   const generators = new Generator(rootDirectory, plugins, packageContent, template, {
     ast: buildToolConfigAst,
     buildTool,
