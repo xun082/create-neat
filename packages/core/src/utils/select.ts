@@ -58,10 +58,10 @@ async function projectSelect() {
       "<i>",
     )} invert selection,${chalk.greenBright("<enter>")} next step)`,
     options: [
-      { value: "Babel", label: "Babel" },
-      { value: "TypeScript", label: "TypeScript" },
-      { value: "Eslint", label: "Eslint" },
-      { value: "Prettier", label: "Prettier" },
+      { value: "babel", label: "babel" },
+      { value: "typescript", label: "typescript" },
+      { value: "eslint", label: "eslint" },
+      { value: "prettier", label: "prettier" },
     ],
     required: false,
   })) as string[];
