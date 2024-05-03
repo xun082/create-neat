@@ -1,6 +1,6 @@
 {
   "extends": "../../tsconfig.json",
-  "include": ["src"],
+  "include": ["src", "template/webpack.config.js", "template/vite.config.js"],
   "compilerOptions": {
     "outDir": "dist",
     "rootDir": "src",
