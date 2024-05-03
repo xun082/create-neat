@@ -1,3 +1,4 @@
+import { resolveApp } from "@laconic/utils";
 import fs from "fs-extra";
 import path from "path";
 
@@ -25,9 +26,7 @@ async function createFiles(dir, files) {
 
 function createReadmeString(packageManager: string, template: string, fileName: string) {
   try {
-    const readmeInfo = fs
-      .readFileSync(path.join(__dirname, "../../template/", fileName))
-      .toString();
+    const readmeInfo = fs.readFileSync(resolveApp(`./template/${fileName}`)).toString();
     // 框架首字母大写 Vue React
     const newTemplate = template.charAt(0).toUpperCase() + template.slice(1);
     if (!readmeInfo) throw new Error("README info is undefined.");
