@@ -24,7 +24,7 @@ const installParams = {
  * @param isDev 是否为开发依赖
  */
 const installDependencies = (
-  dependencies: any,
+  dependencies: Record<string, string>,
   packageJsonFile: string,
   packageManager: string,
   isDev = true,
@@ -32,7 +32,11 @@ const installDependencies = (
   return new Promise((resolve, reject) => {
     const dependenciesName = isDev ? "devDependencies" : "dependencies";
     try {
-      if (dependencies) {
+      if (
+        dependencies &&
+        typeof dependencies === "object" &&
+        Object.keys(dependencies).length > 0
+      ) {
         console.log(`Installing ${dependenciesName}...`);
         // 将dependencies对象转换为数组，然后拼接成安装命令的字符串
         const devDepsArray = Object.entries(dependencies).map(
