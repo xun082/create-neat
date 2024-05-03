@@ -38,6 +38,11 @@ export async function removeDirectory(
   }
 }
 
+/**
+ * 从模板目录中读取并返回文件内容的函数
+ * @param file 指定要读取的文件名
+ * @returns 返回文件内容的字符串
+ */
 export function createTemplateFile(file: string) {
   return readFileSync(join(__dirname, "../../template/", file)).toString();
 }
