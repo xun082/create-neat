@@ -1,6 +1,7 @@
-import { resolveApp } from "@laconic/utils";
 import fs from "fs-extra";
 import path from "path";
+
+import { createTemplateFile } from "./fileController";
 
 /**
  * 生成一系列指定的文件
@@ -9,12 +10,36 @@ import path from "path";
  * @example await createFiles(dir, {'.tsconfig': tsConfig })
  */
 
-async function createFiles(dir, files) {
-  Object.keys(files).forEach((name) => {
-    const filePath = path.join(dir, name);
-    fs.ensureDirSync(path.dirname(filePath));
-    fs.writeFileSync(filePath, files[name]);
-  });
+async function createFiles(dir: string, files: Record<string, string>): Promise<void> {
+  try {
+    const directories = new Set<string>();
+
+    // 先收集所有需要创建的目录
+    for (const name of Object.keys(files)) {
+      const filePath = path.join(dir, name);
+      directories.add(path.dirname(filePath));
+    }
+
+    // 异步创建所有目录，确保目录存在
+    await Promise.all(
+      Array.from(directories).map(async (directory) => {
+        await fs.mkdir(directory, { recursive: true });
+      }),
+    );
+
+    // 使用Promise.all并行写入所有文件
+    await Promise.all(
+      Object.entries(files).map(async ([name, content]) => {
+        const filePath = path.join(dir, name);
+        fs.writeFileSync(filePath, content);
+      }),
+    );
+
+    console.log("All files created successfully!");
+  } catch (error) {
+    console.error("Failed to create files:", error);
+    throw error; // 重新抛出错误以允许调用者处理
+  }
 }
 
 /**
@@ -26,13 +51,15 @@ async function createFiles(dir, files) {
 
 function createReadmeString(packageManager: string, template: string, fileName: string) {
   try {
-    const readmeInfo = fs.readFileSync(resolveApp(`./template/${fileName}`)).toString();
+    const readmeInfo = createTemplateFile(fileName);
+
     // 框架首字母大写 Vue React
     const newTemplate = template.charAt(0).toUpperCase() + template.slice(1);
     if (!readmeInfo) throw new Error("README info is undefined.");
     const newReadmeInfo = readmeInfo
       .replace(/\${packageManager}/g, packageManager)
       .replace(/\${template}/g, newTemplate);
+
     return newReadmeInfo;
   } catch (error) {
     console.error(`Error creating readme.md :`, error);
