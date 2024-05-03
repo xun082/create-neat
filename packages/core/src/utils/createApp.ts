@@ -17,10 +17,14 @@ import { type Preset } from "./preset";
 import createSuccessInfo from "./createSuccessInfo";
 import dependenciesInstall from "./dependenciesInstall";
 
-// 设置输入模式为原始模式
+/**
+ * 将输入模式设置为原始模式。
+ */
 process.stdin.setRawMode(true);
 
-// 监听键盘输入，避免选择阶段需要多次 Ctrl+C 退出
+/**
+ * 监听键盘输入，当检测到 Ctrl+C 时，退出程序。
+ */
 process.stdin.on("data", (key) => {
   // 检测到 Ctrl+C
   if (key[0] === 3) {
@@ -29,7 +33,13 @@ process.stdin.on("data", (key) => {
   }
 });
 
-// 创建项目文件夹
+/**
+ * 创建项目文件夹。
+ * @async
+ * @function createFolder
+ * @param {string} rootDirectory - 根目录路径。
+ * @param {Record<string, any>} options - 选项对象。
+ */
 async function createFolder(rootDirectory: string, options: Record<string, any>) {
   // 检查目录是否存在
   if (fs.existsSync(rootDirectory)) {
@@ -55,7 +65,13 @@ async function createFolder(rootDirectory: string, options: Record<string, any>)
   fs.mkdirSync(rootDirectory, { recursive: true });
 }
 
-// 模板创建主函数
+/**
+ * 创建应用测试主函数。
+ * @async
+ * @function createAppTest
+ * @param {string} projectName - 项目名称。
+ * @param {Record<string, any>} options - 选项对象。
+ */
 export default async function createAppTest(projectName: string, options: Record<string, any>) {
   // 记录开发环境并设置环境变量
   process.env.NODE_ENV = options.dev ? "DEV" : "PROD";

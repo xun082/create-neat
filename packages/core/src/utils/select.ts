@@ -6,6 +6,15 @@ import { getPreset } from "./preset";
 import { getNpmSource } from "./getnpmSource";
 const registryInfo = execSync("npm config get registry").toString().trim();
 const npmSource: any = getNpmSource();
+/**
+ * 表示用户对项目预设的回应。
+ * @interface Responses
+ * @property {string} template - 选择的模板名称。
+ * @property {string} buildTool - 选择的构建工具名称。
+ * @property {string[]} plugins - 选择的插件列表。
+ * @property {string} packageManager - 选择的包管理器名称。
+ * @property {string} npmSource - 选择的 npm 源名称。
+ */
 interface Responses {
   template: string;
   buildTool: string;

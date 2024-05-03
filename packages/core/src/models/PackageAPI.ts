@@ -1,15 +1,28 @@
 import fs from "fs";
 
 import { createFiles } from "../utils/createFiles";
-
+/**
+ * 封装对 package.json 文件的操作。
+ * @class
+ */
 class PackageAPI {
   private filePath: string;
-
+  /**
+   * 创建一个 PackageAPI 实例。
+   * @constructor
+   * @param {string} filePath - 文件路径。
+   */
   constructor(filePath: string) {
     this.filePath = filePath;
   }
 
-  // 创建 package.json 文件
+  /**
+   * 创建 package.json 文件。
+   * @async
+   * @method
+   * @param {object} content - package.json 文件的内容。
+   * @returns {Promise<void>} Promise 对象，在创建完成后解析。
+   */
   async createPackageJson(content: object) {
     // todo: content 的类型后面约束
     await createFiles(this.filePath, {
@@ -17,7 +30,12 @@ class PackageAPI {
     });
   }
 
-  // 读取 package.json 文件内容
+  /**
+   * 读取 package.json 文件内容。
+   * @async
+   * @method
+   * @returns {Promise<object>} Promise 对象，在读取完成后解析为文件内容。
+   */
   async readPackageJson(): Promise<object> {
     return new Promise((resolve, reject) => {
       fs.readFile(this.filePath, "utf8", (err, data) => {
@@ -30,7 +48,13 @@ class PackageAPI {
     });
   }
 
-  // 更新 package.json 文件内容
+  /**
+   * 更新 package.json 文件内容。
+   * @async
+   * @method
+   * @param {object} content - 新的 package.json 文件内容。
+   * @returns {Promise<string>} Promise 对象，在更新完成后解析为成功消息。
+   */
   async updatePackageJson(content: object): Promise<string> {
     return new Promise((resolve, reject) => {
       this.readPackageJson()
@@ -47,7 +71,12 @@ class PackageAPI {
     });
   }
 
-  // 删除 package.json 文件
+  /**
+   * 删除 package.json 文件。
+   * @async
+   * @method
+   * @returns {Promise<string>} Promise 对象，在删除成功后解析为成功消息。
+   */
   async deletePackageJson(): Promise<string> {
     return new Promise((resolve, reject) => {
       fs.unlink(this.filePath, (err) => {
