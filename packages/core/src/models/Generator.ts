@@ -1,14 +1,13 @@
-// Generator.ts
-import path from "path";
+import path, { resolve, join } from "path";
 import generator from "@babel/generator";
 import fs from "fs-extra";
+import ejs from "ejs";
 
 import { relativePathToRoot } from "../utils/constants";
 import { createFiles } from "../utils/createFiles";
 import { mergeWebpackConfigAst } from "../utils/ast";
 
 import GeneratorAPI from "./GeneratorAPI";
-import TemplateAPI from "./TemplateAPI";
 import ConfigTransform from "./ConfigTransform";
 
 interface ConfigFileData {
@@ -152,13 +151,13 @@ class Generator {
     // 根据环境变量加载插件
     // TODO: 改用每个 plugin 的 API 来加载
     if (process.env.NODE_ENV === "DEV") {
-      const pluginPathInDev = `packages/@plugin/plugin-${pluginName.toLowerCase()}/generator/index.cjs`;
+      const pluginPathInDev = `packages/@plugin/plugin-${pluginName}/generator/index.cjs`;
       pluginGenerator = await loadModule(
         pluginPathInDev,
         path.resolve(__dirname, relativePathToRoot),
       );
     } else if (process.env.NODE_ENV === "PROD") {
-      const pluginPathInProd = `node_modules/${pluginName.toLowerCase()}-plugin-test-ljq`;
+      const pluginPathInProd = `node_modules/${pluginName}-plugin-test-ljq`;
       pluginGenerator = await loadModule(pluginPathInProd, this.rootDirectory);
     } else {
       throw new Error("NODE_ENV is not set");
@@ -167,36 +166,39 @@ class Generator {
     if (pluginGenerator && typeof pluginGenerator === "function") {
       await pluginGenerator(generatorAPI);
     }
-    // 执行plugin的入口文件，把config写进来
+
+    // ejs 渲染插件的 template 文件
+    const templatePath = resolve(`../@plugin/plugin-${pluginName}/generator/template`);
+    if (fs.existsSync(templatePath)) this.renderTemplates(templatePath, this.rootDirectory, {});
+
+    // 执行 plugin 的入口文件，把 config 写进来
     const pluginEntry = await loadModule(
-      `packages/@plugin/plugin-${pluginName.toLowerCase()}/index.cjs`,
+      `packages/@plugin/plugin-${pluginName}/index.cjs`,
       path.resolve(__dirname, relativePathToRoot),
     );
-    // 处理webpack config
+
+    // 处理构建工具配置
     if (this.buildToolConfig.buildTool === "webpack") {
       const { rules, plugins } = pluginEntry(this.buildToolConfig.buildTool);
-      mergeWebpackConfigAst(rules, plugins, this.buildToolConfig.ast);
-      // 把ast转换成代码，写入文件
+      if (plugins) mergeWebpackConfigAst(rules, plugins, this.buildToolConfig.ast);
+      // 把 ast 转换成代码，写入文件
       const result = generator(this.buildToolConfig.ast).code;
       fs.writeFileSync(
         path.resolve(this.rootDirectory, `${this.buildToolConfig.buildTool}.config.js`),
         result,
       );
     } else if (this.buildToolConfig.buildTool === "vite") {
-      // 处理vite config
+      /* empty */
     }
   }
+
   // 创建所有插件的相关文件
   async generate() {
-    // 优先处理ts插件
+    // 判断并设置 ts 环境变量
     if (Object.keys(this.plugins).includes("typescript")) {
-      //设置环境变量
       process.env.isTs = "true";
-      this.pluginGenerate("typescript");
-      //删除typescript对应处理，防止重新处理
-      const index = Object.keys(this.plugins).indexOf("typescript");
-      this.plugins.splice(index, 1);
     }
+
     // 为每个 plugin 创建 GeneratorAPI 实例，调用插件中的 generate
     for (const pluginName of Object.keys(this.plugins)) {
       this.pluginGenerate(pluginName);
@@ -209,11 +211,10 @@ class Generator {
 
     // 安装文件
     await createFiles(this.rootDirectory, this.files);
-    console.log("Files have been generated and written to disk.");
+    console.log("Files have been generated and written to disk.\n");
 
     /* ----------拉取对应模板，并进行ejs渲染---------- */
-    const templatePath = path.resolve(__dirname, "../../../../", `apps/${this.templateName}`);
-    const templateAPI = new TemplateAPI(this);
+    const templatePath = join(__dirname, "../../template/", "template-test");
 
     // TODO: 此处的 ejs 渲染配置是测试用数据，实际应用中需要根据使用不同的模板进行具体的配置，具体如何实现 options 的集中管理有待商榷
     const options = {
@@ -226,7 +227,32 @@ class Generator {
         data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
       },
     };
-    templateAPI.renderTemplates(templatePath, this.rootDirectory, options);
+
+    this.renderTemplates(templatePath, this.rootDirectory, options);
+  }
+
+  // 递归渲染ejs模板
+  async renderTemplates(src: string, dest: string, options: any) {
+    // 确保目标目录存在
+    await fs.ensureDir(dest);
+
+    // 读取源目录中的所有文件和文件夹
+    const entries = await fs.readdir(src, { withFileTypes: true });
+
+    for (const entry of entries) {
+      const srcPath = path.join(src, entry.name);
+      const destPath = path.join(dest, entry.name);
+
+      if (entry.isDirectory()) {
+        // 递归处理文件夹
+        await this.renderTemplates(srcPath, destPath, options);
+      } else {
+        // 读取和渲染 EJS 模板
+        const content = await fs.readFile(srcPath, "utf-8");
+        const rendered = ejs.render(content, options, {});
+        await fs.writeFile(destPath, rendered);
+      }
+    }
   }
 
   /**

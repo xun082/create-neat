@@ -1,7 +1,3 @@
-import fs from "fs-extra";
-import path from "path";
-import ejs from "ejs";
-
 import Generator from "./Generator";
 import GeneratorAPI from "./GeneratorAPI";
 
@@ -26,24 +22,9 @@ class TemplateAPI {
    * @type {Record<string, ConfigFileData>}
    */
   private configFilesData: Record<string, ConfigFileData> = {};
-  /**
-   * Generator 实例。
-   * @private
-   * @type {Generator}
-   */
   private generator: Generator;
-  /**
-   * GeneratorAPI 实例。
-   * @private
-   * @type {GeneratorAPI}
-   */
   private generatorAPI: GeneratorAPI;
 
-  /**
-   * 传入 TemplateAPI 的实例。
-   * @constructor
-   * @param {Generator} generator - Generator 实例。
-   */
   constructor(generator: Generator) {
     this.generator = generator;
     this.generatorAPI = new GeneratorAPI(generator);
@@ -123,37 +104,6 @@ class TemplateAPI {
       packageData: this.packageData,
       configFilesData: this.configFilesData,
     };
-  }
-
-  /**
-   * 递归渲染 EJS 模板。
-   * @async
-   * @method
-   * @param {string} src - 源目录路径。
-   * @param {string} dest - 目标目录路径。
-   * @param {object} options - 渲染选项。
-   */
-  async renderTemplates(src: string, dest: string, options: any) {
-    // 确保目标目录存在
-    await fs.ensureDir(dest);
-
-    // 读取源目录中的所有文件和文件夹
-    const entries = await fs.readdir(src, { withFileTypes: true });
-
-    for (const entry of entries) {
-      const srcPath = path.join(src, entry.name);
-      const destPath = path.join(dest, entry.name);
-
-      if (entry.isDirectory()) {
-        // 递归处理文件夹
-        await this.renderTemplates(srcPath, destPath, options);
-      } else {
-        // 读取和渲染 EJS 模板
-        const content = await fs.readFile(srcPath, "utf-8");
-        const rendered = ejs.render(content, options, {});
-        await fs.writeFile(destPath, rendered);
-      }
-    }
   }
 }
 
