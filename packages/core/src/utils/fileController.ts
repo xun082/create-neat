@@ -14,7 +14,10 @@ export async function removeDirectory(
   verbose: boolean = true,
 ) {
   const fullPath = resolveApp(directoryPath);
-
+  /**
+   * 删除文件夹。
+   * @returns {Promise<boolean>} 删除结果，true 表示成功，false 表示失败。
+   */
   async function deleteDirectory() {
     try {
       await fs.remove(fullPath);
