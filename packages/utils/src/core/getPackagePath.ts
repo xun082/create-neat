@@ -3,12 +3,11 @@ import path from "node:path";
 import { PackageJsonType } from "../types";
 
 import { getJsonFileInfo } from "./getJsonFileInfo";
-
 /**
- * @description 获取包路径列表。
- * @param packageNames 要收集的包名称列表。
- * @param dirName 指定目录名称。
- * @returns 包路径列表。
+ * 获取指定包名称的所有依赖包路径。
+ * @param {string[]} packageNames 要收集依赖的包名称数组。
+ * @param {string} dirName 项目根目录的路径。
+ * @returns {string[]} 所有依赖包的路径数组。
  */
 const getPackagePath = (packageNames: string[], dirName: string): string[] => {
   // 收集所有的依赖的包路径

@@ -1,13 +1,15 @@
 import { createHash } from "node:crypto";
-
+/**
+ * 表示环境配置的对象。
+ * @typedef {Object.<string, string | number>} envConfig
+ */
 interface envConfig {
   [props: string]: string | number;
 }
-
 /**
- * @description 创建基于环境配置的哈希值。
- * @param env 环境配置对象。
- * @returns 表示环境配置哈希的十六进制字符串。
+ * 根据提供的环境配置创建哈希值。
+ * @param {envConfig} env 环境配置对象。
+ * @returns {string} 环境配置的 MD5 哈希值。
  */
 function createEnvironmentHash(env: envConfig) {
   const hash = createHash("md5");
