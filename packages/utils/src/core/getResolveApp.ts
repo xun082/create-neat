@@ -1,6 +1,9 @@
 import fs from "node:fs";
 import path from "node:path";
-
+/**
+ * 当前应用程序的根目录路径。
+ * @type {string}
+ */
 const appDirectory: string = fs.realpathSync(process.cwd());
 
 /**
