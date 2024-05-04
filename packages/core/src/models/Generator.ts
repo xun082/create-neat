@@ -71,7 +71,12 @@ const defaultConfigTransforms = {
   }),
 };
 
-// vue项目对应的配置文件
+/**
+ * Vue项目的配置对象。
+ * @typedef {Object} VueConfigTransform
+ * @property {Object} file - 文件配置。
+ * @property {string[]} file.js - JavaScript配置文件的文件名数组。
+ */
 const reservedConfigTransforms = {
   vue: new ConfigTransform({
     file: {
@@ -80,8 +85,19 @@ const reservedConfigTransforms = {
   }),
 };
 
-// 根据传入的路径，加载模块并返回
+/**
+ * 根据传入的路径加载模块并返回。
+ * @async
+ * @function loadModule
+ * @param {string} modulePath - 要加载的模块路径。
+ * @param {string} rootDirectory - 根目录路径。
+ * @returns {Promise<any>} 返回一个 Promise 对象，该对象在成功时解析为加载的模块，失败时解析为 null。
+ */
 async function loadModule(modulePath: string, rootDirectory: string) {
+  /**
+   * 解析后的路径。
+   * @type {string}
+   */
   const resolvedPath = path.resolve(rootDirectory, modulePath);
   try {
     const module = await require(resolvedPath);

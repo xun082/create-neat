@@ -1,3 +1,12 @@
+/**
+ * 表示用户的预设配置。
+ * @interface Preset
+ * @property {string} template - 模板名称。
+ * @property {string} buildTool - 构建工具名称。
+ * @property {Record<string, any>} plugins - 插件列表，键为插件名称，值为插件配置。
+ * @property {string} packageManager - 包管理器名称。
+ * @property {string} npmSource - npm 源名称。
+ */
 interface Preset {
   template: string;
   buildTool: string;
@@ -37,7 +46,11 @@ const getPreset = (
 
   return preset;
 };
-
+/**
+ * 默认预设配置。
+ * @constant {Preset} defaultPreset
+ * @description 默认预设配置对象，包含常见配置的默认值。
+ */
 const defaultPreset: Preset = {
   template: "common-lib",
   buildTool: "webpack",
