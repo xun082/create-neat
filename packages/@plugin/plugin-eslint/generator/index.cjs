@@ -1,4 +1,3 @@
-
 module.exports = (generatorAPI) => {
   generatorAPI.extendPackage({
     env: {
@@ -15,6 +14,6 @@ module.exports = (generatorAPI) => {
       sourceType: "module",
       requireConfigFile: false,
     },
-    plugins: ['import', 'jsx-a11y'],
-  })
-}
+    plugins: ["import", "jsx-a11y"],
+  });
+};
