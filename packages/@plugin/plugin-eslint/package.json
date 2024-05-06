@@ -6,6 +6,5 @@
   "main": "index.ts",
   "engines": {
     "node": ">=16.0.0"
- }
+  }
 }
-  
