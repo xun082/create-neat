@@ -153,7 +153,7 @@ export default async function createAppTest(projectName: string, options: Record
   await dependenciesInstall(rootDirectory, packageManager);
 
   // 其他剩余操作，如创建 md 文档，或其他首位操作
-  console.log(chalk.blue(`📄  Generating README.md...`));
+  console.log(chalk.blue(`\n📄  Generating README.md...`));
 
   await createFiles(rootDirectory, {
     "README.md": createReadmeString(packageManager, template, "README.md"),
