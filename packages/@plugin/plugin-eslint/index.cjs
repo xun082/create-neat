@@ -3,17 +3,24 @@ const buildToolConfigs = {
     if (config.resolve.alias) {
       config.resolve.alias.set("a", "b");
     } else {
-      config.resolve.alias = { a: "b" };
+      config.resolve.alias = {
+        a: "b"
+      };
     }
   },
   vite: (options) => {
-    options.alias = [{ find: "a", replacement: "b" }];
+    options.alias = [{
+      find: "a",
+      replacement: "b"
+    }];
   },
   // 添加其他构建工具的配置...
 };
 
 const pluginEslint = (api, options) => {
-  const { buildTool } = options.preset;
+  const {
+    buildTool
+  } = options.preset;
   const configHandler = buildToolConfigs[buildTool];
 
   if (configHandler) {
@@ -26,4 +33,6 @@ const pluginEslint = (api, options) => {
   // ……
 };
 
-export { pluginEslint };
+module.exports = {
+  pluginEslint
+};
