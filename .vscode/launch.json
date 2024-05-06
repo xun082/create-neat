@@ -9,7 +9,7 @@
       "name": "create project",
       "request": "launch",
       "runtimeExecutable": "create-neat",
-      "runtimeArgs": ["myapp","--dev"], // 命令行参数
+      "runtimeArgs": ["myapp", "--dev"], // 命令行参数
       "skipFiles": ["<node_internals>/**"],
       "console": "integratedTerminal", // 使用集成终端
       "type": "node"
