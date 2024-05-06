@@ -2,6 +2,7 @@ import path, { resolve, join } from "path";
 import generator from "@babel/generator";
 import fs from "fs-extra";
 import ejs from "ejs";
+import chalk from "chalk";
 
 import { relativePathToRoot } from "../utils/constants";
 import { createFiles } from "../utils/createFiles";
@@ -168,7 +169,12 @@ class Generator {
     }
 
     // ejs 渲染插件的 template 文件
-    const templatePath = resolve(`../@plugin/plugin-${pluginName}/generator/template`);
+    const templatePath = resolve(
+      __dirname,
+      relativePathToRoot,
+      `packages/@plugin/plugin-${pluginName}/generator/template`,
+    );
+
     if (fs.existsSync(templatePath)) this.renderTemplates(templatePath, this.rootDirectory, {});
 
     // 执行 plugin 的入口文件，把 config 写进来
@@ -178,7 +184,7 @@ class Generator {
     );
 
     // 处理构建工具配置
-    if (this.buildToolConfig.buildTool === "webpack") {
+    if (this.buildToolConfig.buildTool === "webpack" && typeof pluginEntry === "function") {
       const { rules, plugins } = pluginEntry(this.buildToolConfig.buildTool);
       if (plugins) mergeWebpackConfigAst(rules, plugins, this.buildToolConfig.ast);
       // 把 ast 转换成代码，写入文件
@@ -211,7 +217,7 @@ class Generator {
 
     // 安装文件
     await createFiles(this.rootDirectory, this.files);
-    console.log("Files have been generated and written to disk.\n");
+    console.log(chalk.green("💘 Files have been generated and written to disk."));
 
     /* ----------拉取对应模板，并进行ejs渲染---------- */
     const templatePath = join(__dirname, "../../template/", "template-test");
