@@ -6,7 +6,7 @@ import chalk from "chalk";
 
 import { relativePathToRoot } from "../utils/constants";
 import { createFiles } from "../utils/createFiles";
-import { mergeWebpackConfigAst } from "../utils/ast";
+import { mergeWebpackConfigAst, mergeViteConfigAst } from "../utils/ast";
 
 import GeneratorAPI from "./GeneratorAPI";
 import ConfigTransform from "./ConfigTransform";
@@ -193,8 +193,15 @@ class Generator {
         path.resolve(this.rootDirectory, `${this.buildToolConfig.buildTool}.config.js`),
         result,
       );
-    } else if (this.buildToolConfig.buildTool === "vite") {
-      /* empty */
+    } else if (this.buildToolConfig.buildTool === "vite" && typeof pluginEntry === "function") {
+      const { plugins } = pluginEntry(this.buildToolConfig.buildTool);
+      if (plugins) mergeViteConfigAst(plugins, this.buildToolConfig.ast);
+      // 把 ast 转换成代码，写入文件
+      const result = generator(this.buildToolConfig.ast).code;
+      fs.writeFileSync(
+        path.resolve(this.rootDirectory, `${this.buildToolConfig.buildTool}.config.js`),
+        result,
+      );
     }
   }
 

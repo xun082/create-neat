@@ -7,6 +7,8 @@ import {
   objectProperty,
   regExpLiteral,
   stringLiteral,
+  arrayExpression,
+  callExpression,
 } from "@babel/types";
 import traverse from "@babel/traverse";
 
@@ -28,6 +30,21 @@ export const createNewExpression = (
   parameters: Parameters<typeof newExpression>[1],
 ) =>
   newExpression(
+    identifier(name), // 对象标识符
+    parameters, // 构造函数参数
+  );
+
+/**
+ * @example legacy({ target: ["> 1%"] })------{ target: ["> 1%"] }
+ * 创建回调函数内对象ast
+ * @param name 函数名
+ * @param parameters 函数参数
+ */
+export const createCallExpression = (
+  name: string,
+  parameters: Parameters<typeof newExpression>[1],
+) =>
+  callExpression(
     identifier(name), // 对象标识符
     parameters, // 构造函数参数
   );
@@ -88,6 +105,51 @@ export const mergeWebpackConfigAst = (rules, plugins, ast) => {
           rulesAsts.forEach((ast) => prevRulesAst.value.elements.push(ast));
         }
       });
+    },
+  });
+  return ast;
+};
+
+/**
+ * 合并vite config ast
+ * 目前支持plugins中的第三方插件。例如：legacy
+ * 其余基础配置可配置到基础模版
+ * @param plugins 本次合并的插件
+ * @param ast 初始ast
+ */
+export const mergeViteConfigAst = (plugins, ast) => {
+  traverse(ast, {
+    ImportDeclaration: (path) => {
+      plugins.forEach((plugin) => {
+        // 处理导入
+        path.container.unshift(createImportDeclaration(plugin.import.name, plugin.import.from));
+      });
+    },
+    enter(path) {
+      // 处理配置
+      if (path.isIdentifier({ name: "plugins" })) {
+        // 收集plugins配置函数ast
+        const pluginAsts = [];
+        // 收集配置中的参数项
+        plugins.forEach((plugin) => {
+          const pluginFunArgsAsts = [];
+          Object.keys(plugin.params).forEach((key) => {
+            const propertyList = [];
+            // 收集参数项中的值
+            const stringLiteralList = []; //元素值
+            // 判断值是字符串还是数组
+            if (Array.isArray(plugin.params[key])) {
+              plugin.params[key].map((value) => stringLiteralList.push(stringLiteral(value)));
+            } else {
+              stringLiteralList.push(stringLiteral(plugin.params[key]));
+            }
+            propertyList.push(createObjectProperty(key, arrayExpression(stringLiteralList)));
+            pluginFunArgsAsts.push(objectExpression(propertyList));
+          });
+          pluginAsts.push(createCallExpression(plugin.name, pluginFunArgsAsts));
+        });
+        pluginAsts.forEach((ast) => path.parent.value.elements.push(ast));
+      }
     },
   });
   return ast;
