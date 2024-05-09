@@ -141,7 +141,7 @@ class FileTree {
         `${subFile.describe.fileName!}${subFile.type === "file" ? "." + subFile.describe.fileExtension : ""}`,
       );
       if (subFile.type === "dir" && subFile.describe) {
-        await this.renderTemplates(destPath, subFile, {});
+        await this.renderTemplates(destPath, subFile, options);
       } else {
         await this.fileRender(destPath, subFile, options);
       }
