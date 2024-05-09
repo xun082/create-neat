@@ -32,17 +32,17 @@ interface FileData {
  */
 class FileTree {
   private rootDirectory: string; //文件树的根目录路径
-  private FileData: FileData; //文件树对象
+  private fileData: FileData; //文件树对象
   constructor(rootDirectory: string) {
     (this.rootDirectory = rootDirectory),
-      (this.FileData = {
+      (this.fileData = {
         path: rootDirectory,
         type: "dir",
         children: [],
         describe: { fileName: path.basename(rootDirectory) },
       });
     //初始化文件树对象
-    this.FileData = FileTree.buildFileData(this.rootDirectory);
+    this.fileData = FileTree.buildFileData(this.rootDirectory);
     //根据process.env.isTs更改后缀
     process.env.isTs && this.changeFileExtensionToTs();
   }
@@ -110,7 +110,7 @@ class FileTree {
         }
       }
     }
-    this.traverseTree(this.FileData, handleExt);
+    this.traverseTree(this.fileData, handleExt);
   }
 
   /**
@@ -132,20 +132,20 @@ class FileTree {
    * @param options ejs对应的Options参数
    * @description 将文件树渲染到指定目录下形成文件
    */
-  async renderTemplates(dest: string, file: FileData = this.FileData, options: any = {}) {
-    // 确保目标目录存在
+  async renderTemplates(dest: string, file: FileData = this.fileData, options: any = {}) {
     await fs.ensureDir(dest);
-    for (const subFile of file.children) {
+    const promises = file.children.map(async (subFile) => {
       const destPath = path.join(
         dest,
         `${subFile.describe.fileName!}${subFile.type === "file" ? "." + subFile.describe.fileExtension : ""}`,
       );
       if (subFile.type === "dir" && subFile.describe) {
-        await this.renderTemplates(destPath, subFile, options);
+        return this.renderTemplates(destPath, subFile, options);
       } else {
-        await this.fileRender(destPath, subFile, options);
+        return this.fileRender(destPath, subFile, options);
       }
-    }
+    });
+    await Promise.all(promises);
   }
   /**
    *
@@ -153,7 +153,7 @@ class FileTree {
    * @description 根据路径向文件树中添加节点，注意只在对应的根目录下添加
    */
   addToTreeByPath(path: string) {
-    this.FileData.children.push(FileTree.buildFileData(path));
+    this.fileData.children.push(FileTree.buildFileData(path));
     //根据process.env.isTs更改后缀
     process.env.isTs && this.changeFileExtensionToTs();
   }
@@ -165,7 +165,7 @@ class FileTree {
    * @description 添加的文件最后渲染也是在根目录
    */
   addToTreeByFile(fileName: string, fileContent: string, path: string = "") {
-    this.FileData.children.push({
+    this.fileData.children.push({
       path,
       children: [],
       type: "file",
