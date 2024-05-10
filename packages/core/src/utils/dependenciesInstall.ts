@@ -106,7 +106,11 @@ const dependenciesInstall = async (
   const devPromise = installDependencies(devDependenciesObj, packageJsonFile, packageManager, true);
   const promise = installDependencies(dependenciesObj, packageJsonFile, packageManager, false);
 
-  return await Promise.all([devPromise, promise]);
+  try {
+    return await Promise.all([devPromise, promise]);
+  } catch (err) {
+    console.error(chalk.red("\n❌  安装依赖失败", err));
+  }
 };
 
 export default dependenciesInstall;

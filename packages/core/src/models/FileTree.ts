@@ -1,11 +1,13 @@
 import path from "path";
 import fs from "fs-extra";
 import ejs from "ejs";
+import chalk from "chalk";
+
 /**
- *
- * @param path 路径
- * @returns 返回路径是否为文件夹
- * @description 判断是否为文件夹
+ * 判断是否为文件夹
+ * @param {string} path - 路径
+ * @returns {boolean} - 返回路径是否为文件夹
+ * @description 判断给定路径是否为文件夹
  */
 function isDirectoryOrFile(path: string) {
   try {
@@ -16,40 +18,67 @@ function isDirectoryOrFile(path: string) {
     return false;
   }
 }
+
+/**
+ * 文件描述接口
+ * @interface
+ * @property {string} fileName - 文件名
+ * @property {string} fileExtension - 文件扩展名
+ * @property {*} fileContent - 文件内容
+ */
 interface FileDescribe {
   fileName: string;
   fileExtension: string;
   fileContent: any;
 }
+
+/**
+ * 文件数据接口
+ * @interface
+ * @property {string} path - 路径
+ * @property {"dir" | "file"} [type] - 类型
+ * @property {FileData[]} children - 子节点
+ * @property {Partial<FileDescribe>} describe - 文件描述
+ */
 interface FileData {
   path: string;
   type?: "dir" | "file";
   children: FileData[];
   describe: Partial<FileDescribe>;
 }
+
 /**
+ * 文件树类
+ * @class
  * @description 文件树类，可以根据路径生成文件树对象，根据文件树对象创建template文件，修改文件对象后缀属性
  */
 class FileTree {
   private rootDirectory: string; //文件树的根目录路径
   private fileData: FileData; //文件树对象
+
+  /**
+   * @constructor
+   * @param {string} rootDirectory - 文件树的根目录路径
+   */
   constructor(rootDirectory: string) {
-    (this.rootDirectory = rootDirectory),
-      (this.fileData = {
-        path: rootDirectory,
-        type: "dir",
-        children: [],
-        describe: { fileName: path.basename(rootDirectory) },
-      });
+    this.rootDirectory = rootDirectory;
+    this.fileData = {
+      path: rootDirectory,
+      type: "dir",
+      children: [],
+      describe: { fileName: path.basename(rootDirectory) },
+    };
     //初始化文件树对象
     this.fileData = FileTree.buildFileData(this.rootDirectory);
-    //根据process.env.isTs更改后缀
+    //如果有 ts 插件则更改相关文件后缀
     process.env.isTs && this.changeFileExtensionToTs();
   }
+
   /**
-   *
-   * @param src 文件树根路径
-   * @returns 文件树对象
+   * 根据目录构造文件数对象
+   * @static
+   * @param {string} src - 文件树根路径
+   * @returns {FileData} - 文件树对象
    * @description 根据目录构造文件数对象
    */
   static buildFileData(src: string) {
@@ -58,6 +87,7 @@ class FileTree {
       children: [],
       describe: { fileName: path.basename(src) },
     };
+    //对目录和文件处理不同，是目录则要遍历处理children
     if (isDirectoryOrFile(src)) {
       file.type = "dir";
       const entries = fs.readdirSync(src, {
@@ -80,10 +110,10 @@ class FileTree {
   }
 
   /**
-   *
-   * @param file 文件数对象
-   * @param handleFn 处理文件树对象的函数
-   * @description  遍历树的一个方法，对每个fileData对象做一次handleFn处理
+   * 遍历树的一个方法，对每个fileData对象做一次handleFn处理
+   * @param {FileData} file - 文件数对象
+   * @param {(file: FileData) => any} handleFn - 处理文件树对象的函数
+   * @description 遍历树的一个方法，对每个fileData对象做一次handleFn处理
    */
   traverseTree(file: FileData, handleFn: (file: FileData) => any) {
     handleFn(file);
@@ -91,7 +121,9 @@ class FileTree {
       file.children.forEach((subFile) => this.traverseTree(subFile, handleFn));
     }
   }
+
   /**
+   * 根据process.env.isTs来更改文件数对象的后缀属性
    * @description 根据process.env.isTs来更改文件数对象的后缀属性
    */
   changeFileExtensionToTs() {
@@ -114,10 +146,11 @@ class FileTree {
   }
 
   /**
-   *
-   * @param src 目标文件路径
-   * @param file 文件树对象
-   * @param options ejs对应的options参数
+   * 将单个文件树（type==='file'）通过ejs渲染成文件，只渲染文件
+   * @async
+   * @param {string} src - 目标文件路径
+   * @param {FileData} file - 文件树对象
+   * @param {*} options - ejs对应的options参数
    * @description 将单个文件树（type==='file'）通过ejs渲染成文件，只渲染文件
    */
   async fileRender(src: string, file: FileData, options: any) {
@@ -126,10 +159,11 @@ class FileTree {
   }
 
   /**
-   *
-   * @param dest 目标目录路径
-   * @param file 文件树对象
-   * @param options ejs对应的Options参数
+   * 将文件树渲染到指定目录下形成文件
+   * @async
+   * @param {string} dest - 目标目录路径
+   * @param {FileData} [file=this.fileData] - 文件树对象
+   * @param {*} [options={}] - ejs对应的Options参数
    * @description 将文件树渲染到指定目录下形成文件
    */
   async renderTemplates(dest: string, file: FileData = this.fileData, options: any = {}) {
@@ -145,11 +179,16 @@ class FileTree {
         return this.fileRender(destPath, subFile, options);
       }
     });
-    await Promise.all(promises);
+    try {
+      await Promise.all(promises);
+    } catch (err) {
+      console.error(chalk.red(`渲染文件失败 ${err}`));
+    }
   }
+
   /**
-   *
-   * @param path 添加文件的路径
+   * 根据路径向文件树中添加节点，注意只在对应的根目录下添加
+   * @param {string} path - 添加文件的路径
    * @description 根据路径向文件树中添加节点，注意只在对应的根目录下添加
    */
   addToTreeByPath(path: string) {
@@ -157,11 +196,12 @@ class FileTree {
     //根据process.env.isTs更改后缀
     process.env.isTs && this.changeFileExtensionToTs();
   }
+
   /**
-   *
-   * @param fileName 添加的文件名
-   * @param fileContent 添加的文件内容
-   * @param path 添加的文件的路径
+   * 添加的文件最后渲染也是在根目录
+   * @param {string} fileName - 添加的文件名
+   * @param {string} fileContent - 添加的文件内容
+   * @param {string} [path=""] - 添加的文件的路径
    * @description 添加的文件最后渲染也是在根目录
    */
   addToTreeByFile(fileName: string, fileContent: string, path: string = "") {
