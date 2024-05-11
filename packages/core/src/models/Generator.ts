@@ -1,7 +1,6 @@
 import path, { resolve, join } from "path";
 import generator from "@babel/generator";
 import fs from "fs-extra";
-import ejs from "ejs";
 import chalk from "chalk";
 
 import { relativePathToRoot } from "../utils/constants";
@@ -10,6 +9,7 @@ import { mergeWebpackConfigAst } from "../utils/ast";
 
 import GeneratorAPI from "./GeneratorAPI";
 import ConfigTransform from "./ConfigTransform";
+import FileTree from "./FileTree";
 
 interface ConfigFileData {
   file: Record<string, string[]>;
@@ -115,7 +115,7 @@ async function loadModule(modulePath: string, rootDirectory: string) {
 class Generator {
   private rootDirectory: string;
   private plugins: Record<string, any>;
-  private files: Record<string, string> = {}; // 键：文件名，值：文件内容
+  private files: FileTree; // 键：文件名，值：文件内容
   private rootOptions: Record<string, any> = {};
   private configTransforms: Record<string, ConfigTransform> = {};
   private defaultConfigTransforms: Record<string, ConfigTransform>;
@@ -140,6 +140,7 @@ class Generator {
     this.pkg = Object.assign({}, pkg);
     this.templateName = templateName;
     this.buildToolConfig = buildToolConfig;
+    this.files = new FileTree(this.rootDirectory);
   }
 
   // 单独处理一个插件相关文件
@@ -175,7 +176,10 @@ class Generator {
       `packages/@plugin/plugin-${pluginName}/generator/template`,
     );
 
-    if (fs.existsSync(templatePath)) this.renderTemplates(templatePath, this.rootDirectory, {});
+    if (fs.existsSync(templatePath)) {
+      new FileTree(templatePath).renderTemplates(this.rootDirectory);
+      this.files.addToTreeByPath(this.rootDirectory);
+    }
 
     // 执行 plugin 的入口文件，把 config 写进来
     const pluginEntry = await loadModule(
@@ -213,10 +217,10 @@ class Generator {
     // 从package.json中生成额外的的文件
     await this.extractConfigFiles();
     // 重写pakcage.json文件，消除generatorAPI中拓展package.json带来得副作用
-    this.files["package.json"] = JSON.stringify(this.pkg, null, 2);
+    this.files.addToTreeByFile("package.json", JSON.stringify(this.pkg, null, 2));
 
     // 安装文件
-    await createFiles(this.rootDirectory, this.files);
+    await createFiles(this.rootDirectory, { "package.json": JSON.stringify(this.pkg, null, 2) });
     console.log(chalk.green("💘 Files have been generated and written to disk."));
 
     /* ----------拉取对应模板，并进行ejs渲染---------- */
@@ -233,32 +237,7 @@ class Generator {
         data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
       },
     };
-
-    this.renderTemplates(templatePath, this.rootDirectory, options);
-  }
-
-  // 递归渲染ejs模板
-  async renderTemplates(src: string, dest: string, options: any) {
-    // 确保目标目录存在
-    await fs.ensureDir(dest);
-
-    // 读取源目录中的所有文件和文件夹
-    const entries = await fs.readdir(src, { withFileTypes: true });
-
-    for (const entry of entries) {
-      const srcPath = path.join(src, entry.name);
-      const destPath = path.join(dest, entry.name);
-
-      if (entry.isDirectory()) {
-        // 递归处理文件夹
-        await this.renderTemplates(srcPath, destPath, options);
-      } else {
-        // 读取和渲染 EJS 模板
-        const content = await fs.readFile(srcPath, "utf-8");
-        const rendered = ejs.render(content, options, {});
-        await fs.writeFile(destPath, rendered);
-      }
-    }
+    new FileTree(templatePath).renderTemplates(this.rootDirectory, undefined, options);
   }
 
   /**
@@ -315,14 +294,6 @@ class Generator {
    */
   addFile(path: string, content: string) {
     this.files[path] = content;
-  }
-
-  /**
-   * 获取当前所有文件
-   * @returns 当前所有文件
-   */
-  getFiles(): Record<string, string> {
-    return this.files;
   }
 
   /**
