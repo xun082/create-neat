@@ -7,7 +7,6 @@ import chalk from "chalk";
  * 判断是否为文件夹
  * @param {string} path - 路径
  * @returns {boolean} - 返回路径是否为文件夹
- * @description 判断给定路径是否为文件夹
  */
 function isDirectoryOrFile(path: string) {
   try {
@@ -50,7 +49,6 @@ interface FileData {
 /**
  * 文件树类
  * @class
- * @description 文件树类，可以根据路径生成文件树对象，根据文件树对象创建template文件，修改文件对象后缀属性
  */
 class FileTree {
   private rootDirectory: string; //文件树的根目录路径
@@ -79,7 +77,6 @@ class FileTree {
    * @static
    * @param {string} src - 文件树根路径
    * @returns {FileData} - 文件树对象
-   * @description 根据目录构造文件数对象
    */
   static buildFileData(src: string) {
     const file: FileData = {
@@ -113,7 +110,6 @@ class FileTree {
    * 遍历树的一个方法，对每个fileData对象做一次handleFn处理
    * @param {FileData} file - 文件数对象
    * @param {(file: FileData) => any} handleFn - 处理文件树对象的函数
-   * @description 遍历树的一个方法，对每个fileData对象做一次handleFn处理
    */
   traverseTree(file: FileData, handleFn: (file: FileData) => any) {
     handleFn(file);
@@ -124,7 +120,6 @@ class FileTree {
 
   /**
    * 根据process.env.isTs来更改文件数对象的后缀属性
-   * @description 根据process.env.isTs来更改文件数对象的后缀属性
    */
   changeFileExtensionToTs() {
     //更改后缀的处理函数
@@ -151,7 +146,6 @@ class FileTree {
    * @param {string} src - 目标文件路径
    * @param {FileData} file - 文件树对象
    * @param {*} options - ejs对应的options参数
-   * @description 将单个文件树（type==='file'）通过ejs渲染成文件，只渲染文件
    */
   async fileRender(src: string, file: FileData, options: any) {
     const rendered = ejs.render(file.describe?.fileContent, options, {});
@@ -164,7 +158,6 @@ class FileTree {
    * @param {string} dest - 目标目录路径
    * @param {FileData} [file=this.fileData] - 文件树对象
    * @param {*} [options={}] - ejs对应的Options参数
-   * @description 将文件树渲染到指定目录下形成文件
    */
   async renderTemplates(dest: string, file: FileData = this.fileData, options: any = {}) {
     await fs.ensureDir(dest);
@@ -189,7 +182,6 @@ class FileTree {
   /**
    * 根据路径向文件树中添加节点，注意只在对应的根目录下添加
    * @param {string} path - 添加文件的路径
-   * @description 根据路径向文件树中添加节点，注意只在对应的根目录下添加
    */
   addToTreeByPath(path: string) {
     this.fileData.children.push(FileTree.buildFileData(path));
@@ -202,7 +194,6 @@ class FileTree {
    * @param {string} fileName - 添加的文件名
    * @param {string} fileContent - 添加的文件内容
    * @param {string} [path=""] - 添加的文件的路径
-   * @description 添加的文件最后渲染也是在根目录
    */
   addToTreeByFile(fileName: string, fileContent: string, path: string = "") {
     this.fileData.children.push({
