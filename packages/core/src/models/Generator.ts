@@ -41,7 +41,7 @@ const defaultConfigTransforms = {
       yaml: [".postcssrc.yaml", ".postcssrc.yml"],
     },
   }),
-  eslintConfig: new ConfigTransform({
+  eslint: new ConfigTransform({
     file: {
       js: [".eslintrc.js"],
       json: [".eslintrc", ".eslintrc.json"],
@@ -63,11 +63,6 @@ const defaultConfigTransforms = {
   prettier: new ConfigTransform({
     file: {
       json: [".prettierrc"],
-    },
-  }),
-  typescript: new ConfigTransform({
-    file: {
-      json: ["tsconfig.json"],
     },
   }),
 };
@@ -124,6 +119,7 @@ class Generator {
   public originalPkg: object; // 原始package.json
   public templateName: string; // 需要拉取的模板名称
   public buildToolConfig;
+  private generatorAPI: GeneratorAPI;
 
   constructor(
     rootDirectory: string,
@@ -141,12 +137,11 @@ class Generator {
     this.templateName = templateName;
     this.buildToolConfig = buildToolConfig;
     this.files = new FileTree(this.rootDirectory);
+    this.generatorAPI = new GeneratorAPI(this);
   }
 
   // 单独处理一个插件相关文件
   async pluginGenerate(pluginName: string) {
-    const generatorAPI = new GeneratorAPI(this);
-
     // pluginGenerator 是一个函数，接受一个 GeneratorAPI 实例作为参数
     let pluginGenerator: (generatorAPI: GeneratorAPI) => Promise<void>;
 
@@ -166,7 +161,7 @@ class Generator {
     }
 
     if (pluginGenerator && typeof pluginGenerator === "function") {
-      await pluginGenerator(generatorAPI);
+      await pluginGenerator(this.generatorAPI);
     }
 
     // ejs 渲染插件的 template 文件
@@ -178,7 +173,7 @@ class Generator {
 
     if (fs.existsSync(templatePath)) {
       new FileTree(templatePath).renderTemplates(this.rootDirectory);
-      this.files.addToTreeByPath(this.rootDirectory);
+      // this.files.addToTreeByPath(this.rootDirectory);
     }
 
     // 执行 plugin 的入口文件，把 config 写进来
@@ -211,16 +206,23 @@ class Generator {
 
     // 为每个 plugin 创建 GeneratorAPI 实例，调用插件中的 generate
     for (const pluginName of Object.keys(this.plugins)) {
-      this.pluginGenerate(pluginName);
+      await this.pluginGenerate(pluginName);
     }
 
     // 从package.json中生成额外的的文件
     await this.extractConfigFiles();
-    // 重写pakcage.json文件，消除generatorAPI中拓展package.json带来得副作用
-    this.files.addToTreeByFile("package.json", JSON.stringify(this.pkg, null, 2));
+    // 重写pakcage.json文件，并向根文件树中添加该文件，消除generatorAPI中拓展package.json带来得副作用
+    this.files.addToTreeByFile(
+      "package.json",
+      JSON.stringify(this.pkg, null, 2),
+      path.resolve(this.rootDirectory, "package.json"),
+    );
 
-    // 安装文件
-    await createFiles(this.rootDirectory, { "package.json": JSON.stringify(this.pkg, null, 2) });
+    // 安装package.json文件
+    await createFiles(this.rootDirectory, {
+      "package.json": JSON.stringify(this.pkg, null, 2),
+    });
+
     console.log(chalk.green("💘 Files have been generated and written to disk."));
 
     /* ----------拉取对应模板，并进行ejs渲染---------- */
@@ -251,8 +253,7 @@ class Generator {
       this.reservedConfigTransforms,
     );
 
-    // extra方法执行后会在this.files中添加一个属性，key为配置文件名称，值为对应的内容
-    const extra = (key: string) => {
+    const extra = async (key: string) => {
       if (
         ConfigTransforms[key] !== undefined &&
         this.pkg[key] !== undefined &&
@@ -266,12 +267,25 @@ class Generator {
         // 转换生成文件内容
         const res = configTransform.transform(value, this.files, this.rootDirectory);
         const { content, filename } = res;
-        this.files[filename] = ensureEOL(content); // 向文件对象中添加文件内容
+        this.files.addToTreeByFile(
+          filename,
+          ensureEOL(content),
+          path.resolve(this.rootDirectory, filename),
+        );
+        // 生成插件配置文件
+        // await createFiles(this.rootDirectory, {
+        //   [filename]: JSON.stringify(ensureEOL(content), null, 2),
+        // });
+        await createFiles(this.rootDirectory, {
+          [filename]: ensureEOL(content),
+        });
+        // fs.writeFileSync(path.resolve(this.rootDirectory, filename), content);
+        // this.files[filename] = ensureEOL(content); // 向文件对象中添加文件内容
         delete this.pkg[key];
       }
     };
-    for (const i of Object.keys(this.plugins)) {
-      extra(i.toLowerCase());
+    for (const pluginName of Object.keys(this.plugins)) {
+      extra(pluginName.toLowerCase());
     }
   }
 
