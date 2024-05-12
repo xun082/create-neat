@@ -1,61 +1,63 @@
+import traverse from "@babel/traverse";
 import {
   identifier,
-  importDeclaration,
-  importDefaultSpecifier,
-  newExpression,
   objectExpression,
-  objectProperty,
   regExpLiteral,
   stringLiteral,
+  objectProperty,
   arrayExpression,
-  callExpression,
 } from "@babel/types";
-import traverse from "@babel/traverse";
+
+import {
+  createImportDeclaration,
+  createNewExpression,
+  createCallExpression,
+  createObjectProperty,
+} from "./commonAst";
+
+enum BuildToolType {
+  VITE = "vite",
+  WEBPACK = "webpack",
+}
+type BuildTool = `${BuildToolType}`;
+
+interface Import {
+  /** 导出内容 */
+  name: string;
+  /** 导出的包 */
+  from: string;
+}
+
+interface Plugin {
+  /** 导出内容 */
+  name: string;
+  /** 配置参数 */
+  params: object;
+  /** 导出配置 */
+  import: Import;
+}
+
+interface Options {
+  /** rules配置项 */
+  rules: any;
+  /** 插件配置 */
+  plugins: Plugin[];
+}
 
 /**
- * 创建default import ast
- * @param name default导出的名
- * @param import from 来源
+ * 将传入配置转换成ast
+ * @param buildTool 构建工具选择
+ * @param options 配置
+ * @param ast 初始化ast
  */
-export const createImportDeclaration = (name: string, from: string) =>
-  importDeclaration([importDefaultSpecifier(identifier(name))], stringLiteral(from));
-
-/**
- * 创建新建对象语法ast
- * @param name 构造函数名
- * @param parameters 构造函数参数
- */
-export const createNewExpression = (
-  name: string,
-  parameters: Parameters<typeof newExpression>[1],
-) =>
-  newExpression(
-    identifier(name), // 对象标识符
-    parameters, // 构造函数参数
-  );
-
-/**
- * @example legacy({ target: ["> 1%"] })------{ target: ["> 1%"] }
- * 创建回调函数内对象ast
- * @param name 函数名
- * @param parameters 函数参数
- */
-export const createCallExpression = (
-  name: string,
-  parameters: Parameters<typeof newExpression>[1],
-) =>
-  callExpression(
-    identifier(name), // 对象标识符
-    parameters, // 构造函数参数
-  );
-
-/**
- * 创建对象属性ast
- * @param name 对象属性名
- * @param value 对象属性值
- */
-export const createObjectProperty = (name: string, value: Parameters<typeof objectProperty>[1]) =>
-  objectProperty(identifier(name), value);
+export const createConfigByParseAst = (buildTool: BuildTool, options: Options, ast) => {
+  if (buildTool === BuildToolType.VITE) {
+    mergeViteConfigAst(options, ast);
+  }
+  if (buildTool === BuildToolType.WEBPACK) {
+    mergeWebpackConfigAst(options, ast);
+  }
+};
 
 /**
  * 合并webpack config ast
@@ -64,7 +66,9 @@ export const createObjectProperty = (name: string, value: Parameters<typeof obje
  * @param plugins 本次合并的插件
  * @param ast 初始ast
  */
-export const mergeWebpackConfigAst = (rules, plugins, ast) => {
+function mergeWebpackConfigAst(options: Options, ast) {
+  const { rules, plugins } = options;
+  if (!plugins) return;
   traverse(ast, {
     ExpressionStatement(path) {
       plugins.forEach((plugin) => {
@@ -108,7 +112,7 @@ export const mergeWebpackConfigAst = (rules, plugins, ast) => {
     },
   });
   return ast;
-};
+}
 
 /**
  * 合并vite config ast
@@ -117,7 +121,9 @@ export const mergeWebpackConfigAst = (rules, plugins, ast) => {
  * @param plugins 本次合并的插件
  * @param ast 初始ast
  */
-export const mergeViteConfigAst = (plugins, ast) => {
+function mergeViteConfigAst(options: Options, ast) {
+  const { plugins } = options;
+  if (!plugins) return;
   traverse(ast, {
     ImportDeclaration: (path) => {
       plugins.forEach((plugin) => {
@@ -128,29 +134,45 @@ export const mergeViteConfigAst = (plugins, ast) => {
     enter(path) {
       // 处理配置
       if (path.isIdentifier({ name: "plugins" })) {
-        // 收集plugins配置函数ast
-        const pluginAsts = [];
-        // 收集配置中的参数项
-        plugins.forEach((plugin) => {
-          const pluginFunArgsAsts = [];
-          Object.keys(plugin.params).forEach((key) => {
-            const propertyList = [];
-            // 收集参数项中的值
-            const stringLiteralList = []; //元素值
-            // 判断值是字符串还是数组
-            if (Array.isArray(plugin.params[key])) {
-              plugin.params[key].map((value) => stringLiteralList.push(stringLiteral(value)));
-            } else {
-              stringLiteralList.push(stringLiteral(plugin.params[key]));
-            }
-            propertyList.push(createObjectProperty(key, arrayExpression(stringLiteralList)));
-            pluginFunArgsAsts.push(objectExpression(propertyList));
-          });
-          pluginAsts.push(createCallExpression(plugin.name, pluginFunArgsAsts));
-        });
+        const pluginAsts = createPluginAst(plugins);
         pluginAsts.forEach((ast) => path.parent.value.elements.push(ast));
       }
     },
   });
   return ast;
-};
+}
+
+/**
+ * 解析配置项转换为ast语法树
+ * @param plugins 配置
+ */
+function createPluginAst(plugins: Plugin[]) {
+  // 收集plugins配置函数ast
+  const pluginAsts = plugins.map((plugin: Plugin) => {
+    // 收集配置中的参数项，并创建参数对象
+    const pluginParams = Object.keys(plugin.params).reduce(
+      (acc, key) => {
+        const value = plugin.params[key];
+        const stringLiteralList = Array.isArray(value)
+          ? value.map(stringLiteral)
+          : [stringLiteral(value)];
+        acc[key] = arrayExpression(stringLiteralList);
+        return acc;
+      },
+      {} as Record<string, any>,
+    ); // 初始化一个空对象作为累加器
+
+    // 创建一个对象表达式来表示参数
+    const pluginFunArgs = [
+      objectExpression(
+        Object.entries(pluginParams).map(([key, value]) => createObjectProperty(key, value)),
+      ),
+    ];
+
+    // 创建一个调用表达式来表示插件函数调用
+    return createCallExpression(plugin.name, pluginFunArgs);
+  });
+
+  // 返回一个新的AST节点数组
+  return pluginAsts;
+}
