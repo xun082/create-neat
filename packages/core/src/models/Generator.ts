@@ -173,7 +173,6 @@ class Generator {
 
     if (fs.existsSync(templatePath)) {
       new FileTree(templatePath).renderTemplates(this.rootDirectory);
-      // this.files.addToTreeByPath(this.rootDirectory);
     }
 
     // 执行 plugin 的入口文件，把 config 写进来
@@ -198,7 +197,7 @@ class Generator {
   }
 
   // 创建所有插件的相关文件
-  async generate() {
+  async generate({ extraConfigFiles }) {
     // 判断并设置 ts 环境变量
     if (Object.keys(this.plugins).includes("typescript")) {
       process.env.isTs = "true";
@@ -210,7 +209,7 @@ class Generator {
     }
 
     // 从package.json中生成额外的的文件
-    await this.extractConfigFiles();
+    await this.extractConfigFiles(extraConfigFiles);
     // 重写pakcage.json文件，并向根文件树中添加该文件，消除generatorAPI中拓展package.json带来得副作用
     this.files.addToTreeByFile(
       "package.json",
@@ -245,7 +244,7 @@ class Generator {
   /**
    * @description 提取配置文件到files文件对象中
    */
-  async extractConfigFiles() {
+  async extractConfigFiles(extraConfigFiles) {
     // 将所有的配置项合并到ConfigTransforms中
     const ConfigTransforms = Object.assign(
       this.configTransforms,
@@ -272,20 +271,22 @@ class Generator {
           ensureEOL(content),
           path.resolve(this.rootDirectory, filename),
         );
+        delete this.pkg[key];
         // 生成插件配置文件
-        // await createFiles(this.rootDirectory, {
-        //   [filename]: JSON.stringify(ensureEOL(content), null, 2),
-        // });
         await createFiles(this.rootDirectory, {
           [filename]: ensureEOL(content),
         });
-        // fs.writeFileSync(path.resolve(this.rootDirectory, filename), content);
-        // this.files[filename] = ensureEOL(content); // 向文件对象中添加文件内容
-        delete this.pkg[key];
       }
     };
-    for (const pluginName of Object.keys(this.plugins)) {
-      extra(pluginName.toLowerCase());
+    if (extraConfigFiles) {
+      // 用户选择In dedicated config files(true)时，为插件生成单独的配置文件
+      for (const pluginName of Object.keys(this.plugins)) {
+        extra(pluginName.toLowerCase());
+      }
+    } else {
+      // 用户选择In package.json(false)时，插件配置生成在package.json中
+      // always extract babel.config.js as this is the only way to apply
+      extra("babel");
     }
   }
 

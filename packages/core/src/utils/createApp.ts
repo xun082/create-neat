@@ -85,7 +85,7 @@ export default async function createAppTest(projectName: string, options: Record
   // 获取用户选择预设
   const preset: Preset = await projectSelect();
 
-  const { template, packageManager, plugins, buildTool } = preset;
+  const { template, packageManager, plugins, buildTool, extraConfigFiles } = preset;
 
   /* ----------从下面的代码开始，创建package.json---------- */
   console.log(chalk.blue(`\n📄  Generating package.json...`));
@@ -148,7 +148,9 @@ export default async function createAppTest(projectName: string, options: Record
     ast: buildToolConfigAst,
     buildTool,
   });
-  await generators.generate();
+  await generators.generate({
+    extraConfigFiles,
+  });
 
   // 安装附加依赖
   await dependenciesInstall(rootDirectory, packageManager);
