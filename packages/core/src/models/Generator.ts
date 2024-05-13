@@ -5,7 +5,7 @@ import chalk from "chalk";
 
 import { relativePathToRoot } from "../utils/constants";
 import { createFiles } from "../utils/createFiles";
-import { mergeWebpackConfigAst } from "../utils/ast";
+import { createConfigByParseAst } from "../utils/ast/parseAst";
 
 import GeneratorAPI from "./GeneratorAPI";
 import ConfigTransform from "./ConfigTransform";
@@ -188,17 +188,18 @@ class Generator {
     );
 
     // 处理构建工具配置
-    if (this.buildToolConfig.buildTool === "webpack" && typeof pluginEntry === "function") {
-      const { rules, plugins } = pluginEntry(this.buildToolConfig.buildTool);
-      if (plugins) mergeWebpackConfigAst(rules, plugins, this.buildToolConfig.ast);
-      // 把 ast 转换成代码，写入文件
-      const result = generator(this.buildToolConfig.ast).code;
+    if (typeof pluginEntry === "function") {
+      // 解析配置项成ast语法树,并且和原始配置的ast合并
+      createConfigByParseAst(
+        this.buildToolConfig.buildTool,
+        pluginEntry(this.buildToolConfig.buildTool),
+        this.buildToolConfig.ast,
+      );
+      const code = generator(this.buildToolConfig.ast).code;
       fs.writeFileSync(
         path.resolve(this.rootDirectory, `${this.buildToolConfig.buildTool}.config.js`),
-        result,
+        code,
       );
-    } else if (this.buildToolConfig.buildTool === "vite") {
-      /* empty */
     }
   }
 
