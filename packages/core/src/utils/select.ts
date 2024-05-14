@@ -98,7 +98,7 @@ async function projectSelect() {
   // 选择插件配置文件生成位置
   responses.extraConfigFiles = (await select({
     message:
-      "Where do you want to place the configurations, such as for Babel, ESLint, and other plugins?",
+      "Where do you want to place the configurations, such as Babel, ESLint, and other plugins?",
     options: [
       { value: true, label: "In dedicated config files" },
       { value: false, label: "In package.json" },
