@@ -14,6 +14,7 @@ const npmSource: any = getNpmSource();
  * @property {string[]} plugins - 选择的插件列表。
  * @property {string} packageManager - 选择的包管理器名称。
  * @property {string} npmSource - 选择的 npm 源名称。
+ * @property {boolean} extraConfigFiles - 选择文件生成位置 'In dedicated config files' --> true 'In packagejson' --> false。
  */
 interface Responses {
   template: string;
@@ -21,6 +22,7 @@ interface Responses {
   plugins: string[];
   packageManager: string;
   npmSource: string;
+  extraConfigFiles: boolean;
 }
 
 /**
@@ -34,6 +36,7 @@ async function projectSelect() {
     plugins: [],
     packageManager: "",
     npmSource: "",
+    extraConfigFiles: true,
   };
 
   intro(chalk.green(" create-you-app "));
@@ -92,12 +95,23 @@ async function projectSelect() {
     options: npmSource,
   })) as string;
 
+  // 选择插件配置文件生成位置
+  responses.extraConfigFiles = (await select({
+    message:
+      "Where do you want to place the configurations, such as Babel, ESLint, and other plugins?",
+    options: [
+      { value: true, label: "In dedicated config files" },
+      { value: false, label: "In package.json" },
+    ],
+  })) as boolean;
+
   return getPreset(
     responses.template,
     responses.buildTool,
     responses.plugins,
     responses.packageManager,
     responses.npmSource,
+    responses.extraConfigFiles,
   );
 }
 

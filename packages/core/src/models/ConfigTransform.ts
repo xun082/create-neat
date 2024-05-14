@@ -71,7 +71,6 @@ export default class ConfigTransform {
   transform(value, files, context) {
     const file = this.getDefaultFile();
     const { type, filename } = file;
-    console.log("file", file);
     const transform = transforms[type];
     const content = transform.write(filename, context, value);
     return { filename, content };
