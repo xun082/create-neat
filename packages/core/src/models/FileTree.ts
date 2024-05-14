@@ -204,7 +204,6 @@ class FileTree {
       path,
       children: [],
       type: "file",
-      // describe: { fileName, fileContent, fileExtension: fileName.split(".")[1] || "" },
       describe: { fileName, fileContent, fileExtension },
     });
   }
