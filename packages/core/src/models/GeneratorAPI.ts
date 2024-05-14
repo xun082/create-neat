@@ -69,7 +69,6 @@ class GeneratorAPI {
     }
     // 写入package.json
     try {
-      console.log("explosion", pkg);
       fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2));
     } catch (err) {
       console.error(`Failed to write package.json: ${err}`);
