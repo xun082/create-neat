@@ -68,6 +68,7 @@ class FileTree {
     };
     //初始化文件树对象
     this.fileData = FileTree.buildFileData(this.rootDirectory);
+
     //如果有 ts 插件则更改相关文件后缀
     process.env.isTs && this.changeFileExtensionToTs();
   }
@@ -196,11 +197,14 @@ class FileTree {
    * @param {string} [path=""] - 添加的文件的路径
    */
   addToTreeByFile(fileName: string, fileContent: string, path: string = "") {
+    const fileNameSplit = fileName.split(".");
+    // 文件名.分割的最后一位作为拓展名(babel.config.js、.browserslistrc、.eslintrc.js等等)
+    const fileExtension = fileNameSplit[fileNameSplit.length - 1] || "";
     this.fileData.children.push({
       path,
       children: [],
       type: "file",
-      describe: { fileName, fileContent, fileExtension: fileName.split(".")[1] || "" },
+      describe: { fileName, fileContent, fileExtension },
     });
   }
 }

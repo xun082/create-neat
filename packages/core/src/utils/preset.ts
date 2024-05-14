@@ -6,6 +6,7 @@
  * @property {Record<string, any>} plugins - 插件列表，键为插件名称，值为插件配置。
  * @property {string} packageManager - 包管理器名称。
  * @property {string} npmSource - npm 源名称。
+ * @property {boolean} extraConfigFiles - 选择文件生成位置 'In dedicated config files' --> true 'In packagejson' --> false。
  */
 interface Preset {
   template: string;
@@ -13,6 +14,7 @@ interface Preset {
   plugins: Record<string, any>;
   packageManager: string;
   npmSource: string;
+  extraConfigFiles: boolean;
 }
 
 /**
@@ -21,6 +23,7 @@ interface Preset {
  * @param buildTool 构建工具
  * @param plugins 插件列表
  * @param npmSource npm源
+ * @param extraConfigFiles 选择文件生成位置
  * @return 用户预设
  */
 // todo: 目前没有使用到 defaultPreset，后续考虑加入默认配置
@@ -30,6 +33,7 @@ const getPreset = (
   plugins: string[],
   packageManager: string,
   npmSource: string,
+  extraConfigFiles: boolean,
 ): Preset => {
   const preset: Preset = {
     template,
@@ -37,6 +41,7 @@ const getPreset = (
     plugins: {},
     packageManager,
     npmSource,
+    extraConfigFiles,
   };
 
   // todo: 插件配置目前设置为空，且没有使用情况，后续优化
@@ -60,6 +65,7 @@ const defaultPreset: Preset = {
   packageManager: "npm",
   npmSource: "",
   // todo: 更多配置随构建需要添加
+  extraConfigFiles: true,
 };
 
 export { Preset, getPreset, defaultPreset };
