@@ -9,6 +9,7 @@ import { mergeWebpackConfigAst } from "../utils/ast";
 
 import GeneratorAPI from "./GeneratorAPI";
 import ConfigTransform from "./ConfigTransform";
+import TemplateAPI from "./TemplateAPI";
 
 interface ConfigFileData {
   file: Record<string, string[]>;
@@ -192,6 +193,58 @@ class Generator {
     }
   }
 
+  // 单独处理一个框架相关文件
+  async templateGenerate() {
+    // TODO: 以下配置过程暂时与插件类同，后续可添加额外配置
+    const templateAPI = new TemplateAPI(this);
+
+    // templateGenerator 是一个函数，接受一个 TemplateAPI 实例作为参数
+    let templateGenerator: (templateAPI: TemplateAPI) => Promise<void>;
+
+     // 根据环境变量加载插件
+    // TODO: 改用每个 template 的 API 来加载
+    if (process.env.NODE_ENV === "DEV") {
+      // TODO: 路径暂定，后续可更改为可变路径
+      const templatePathInDev = `packages/core/template/template-test/generator/index.cjs`;
+      templateGenerator = await loadModule(
+        templatePathInDev,
+        path.resolve(__dirname, relativePathToRoot),
+      );
+    } else if (process.env.NODE_ENV === "PROD") {
+      // TODO: 生产环境后续可配置对应的包
+    } else {
+      throw new Error("NODE_ENV is not set");
+    }
+
+    if (templateGenerator && typeof templateGenerator === "function") {
+      // 获取生成文件的结果
+      let res = await templateGenerator(templateAPI);
+      // 如果结果不为未定义的值，则加载模块
+      if (res != undefined) {
+        // 执行 template 的入口文件，把 config 写进来
+        const templateEntry = await loadModule(
+          // TODO: 路径暂定，后续可更改为可变路径
+          `packages/core/template/template-test/index.cjs`,
+          path.resolve(__dirname, relativePathToRoot),
+        );
+
+        // 处理构建工具配置
+        if (this.buildToolConfig.buildTool === "webpack") {
+          const { rules, templates } = templateEntry(this.buildToolConfig.buildTool);
+          if (templates) mergeWebpackConfigAst(rules, templates, this.buildToolConfig.ast);
+          // 把 ast 转换成代码，写入文件
+          const result = generator(this.buildToolConfig.ast).code;
+          fs.writeFileSync(
+            path.resolve(this.rootDirectory, `${this.buildToolConfig.buildTool}.config.js`),
+            result,
+          );
+        } else if (this.buildToolConfig.buildTool === "vite") {
+          /* empty */
+        }
+      }
+    }
+  }
+
   // 创建所有插件的相关文件
   async generate() {
     // 判断并设置 ts 环境变量
@@ -202,6 +255,11 @@ class Generator {
     // 为每个 plugin 创建 GeneratorAPI 实例，调用插件中的 generate
     for (const pluginName of Object.keys(this.plugins)) {
       this.pluginGenerate(pluginName);
+    }
+
+    // TODO: 暂定为 template-test 包
+    if (this.templateName === "template-test") {
+      await this.templateGenerate();
     }
 
     // 从package.json中生成额外的的文件
