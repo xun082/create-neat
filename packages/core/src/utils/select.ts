@@ -4,7 +4,7 @@ import { execSync } from "child_process";
 
 import { buildToolType } from "../types";
 
-import { getPreset } from "./preset";
+import { getPreset, defaultPresetLib, defaultPresetVue, defaultPresetReact } from "./preset";
 import { getNpmSource } from "./getnpmSource";
 
 const registryInfo = execSync("npm config get registry").toString().trim();
@@ -29,6 +29,19 @@ interface Responses {
 }
 
 /**
+ *
+ * @param plugins 预设的插件对象
+ * @returns 返回默认预设的插件组合
+ */
+function getPluginsName(plugins: Record<string, any>) {
+  const pluginsKey = Object.keys(plugins);
+  const pluginsName = pluginsKey.reduce((pre, name, idx) => {
+    return pre + name + (idx === pluginsKey.length - 1 ? "" : ", ");
+  }, "");
+  return pluginsName;
+}
+
+/**
  * @description 终端交互，获取用户的项目预设
  * @returns 返回用户的项目预设 Responses
  */
@@ -42,6 +55,39 @@ async function projectSelect() {
   };
 
   intro(chalk.green(" create-you-app "));
+  // 选择是否使用默认模板或者手动选择预设
+  const libPluginsName = getPluginsName(defaultPresetLib.plugins);
+  const vuePluginsName = getPluginsName(defaultPresetLib.plugins);
+  const reactPluginsName = getPluginsName(defaultPresetLib.plugins);
+  const isUseDefaultPreset = (await select({
+    message: "Please pick a preset:",
+    options: [
+      {
+        value: "lib",
+        label: `Default-lib(${chalk.yellow("[" + defaultPresetLib.template + "] ")}${chalk.yellow(libPluginsName)}, ${chalk.yellow(defaultPresetLib.buildTool)})`,
+      },
+      {
+        value: "vue",
+        label: `Default-vue(${chalk.yellow("[" + defaultPresetVue.template + "] ")}${chalk.yellow(vuePluginsName)}, ${chalk.yellow(defaultPresetVue.buildTool)})`,
+      },
+      {
+        value: "react",
+        label: `Default-react(${chalk.yellow("[" + defaultPresetReact.template + "] ")}${chalk.yellow(reactPluginsName)}, ${chalk.yellow(defaultPresetReact.buildTool)})`,
+      },
+      { value: "false", label: "Manually select preset" },
+    ],
+  })) as string;
+
+  if (isUseDefaultPreset === "lib") {
+    defaultPresetLib.npmSource = registryInfo;
+    return defaultPresetLib;
+  } else if (isUseDefaultPreset === "vue") {
+    defaultPresetVue.npmSource = registryInfo;
+    return defaultPresetVue;
+  } else if (isUseDefaultPreset === "react") {
+    defaultPresetReact.npmSource = registryInfo;
+    return defaultPresetReact;
+  }
 
   // 选择模板预设
   responses.template = (await select({
