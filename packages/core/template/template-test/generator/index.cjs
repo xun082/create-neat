@@ -1,11 +1,6 @@
 module.exports = (templateAPI) => {
-    templateAPI.extendPackage({
-      dependencies: {
-        
-      },
-      devDependencies: {
-        
-      }
-    });
-  };
-  
+  templateAPI.extendPackage({
+    dependencies: {},
+    devDependencies: {},
+  });
+};

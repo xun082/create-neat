@@ -1,15 +1,17 @@
 import path, { resolve, join } from "path";
 import generator from "@babel/generator";
 import fs from "fs-extra";
-import ejs from "ejs";
+import chalk from "chalk";
 
 import { relativePathToRoot } from "../utils/constants";
 import { createFiles } from "../utils/createFiles";
-import { mergeWebpackConfigAst } from "../utils/ast";
+import { createConfigByParseAst } from "../utils/ast/parseAst";
 
 import GeneratorAPI from "./GeneratorAPI";
 import ConfigTransform from "./ConfigTransform";
 import TemplateAPI from "./TemplateAPI";
+import FileTree from "./FileTree";
+import BaseAPI from "./BaseAPI";
 
 interface ConfigFileData {
   file: Record<string, string[]>;
@@ -41,7 +43,7 @@ const defaultConfigTransforms = {
       yaml: [".postcssrc.yaml", ".postcssrc.yml"],
     },
   }),
-  eslintConfig: new ConfigTransform({
+  eslint: new ConfigTransform({
     file: {
       js: [".eslintrc.js"],
       json: [".eslintrc", ".eslintrc.json"],
@@ -63,11 +65,6 @@ const defaultConfigTransforms = {
   prettier: new ConfigTransform({
     file: {
       json: [".prettierrc"],
-    },
-  }),
-  typescript: new ConfigTransform({
-    file: {
-      json: ["tsconfig.json"],
     },
   }),
 };
@@ -115,7 +112,7 @@ async function loadModule(modulePath: string, rootDirectory: string) {
 class Generator {
   private rootDirectory: string;
   private plugins: Record<string, any>;
-  private files: Record<string, string> = {}; // 键：文件名，值：文件内容
+  private files: FileTree; // 键：文件名，值：文件内容
   private rootOptions: Record<string, any> = {};
   private configTransforms: Record<string, ConfigTransform> = {};
   private defaultConfigTransforms: Record<string, ConfigTransform>;
@@ -124,6 +121,8 @@ class Generator {
   public originalPkg: object; // 原始package.json
   public templateName: string; // 需要拉取的模板名称
   public buildToolConfig;
+  private generatorAPI: GeneratorAPI;
+  private templateAPI: TemplateAPI;
 
   constructor(
     rootDirectory: string,
@@ -140,113 +139,100 @@ class Generator {
     this.pkg = Object.assign({}, pkg);
     this.templateName = templateName;
     this.buildToolConfig = buildToolConfig;
+    this.files = new FileTree(this.rootDirectory);
+    this.generatorAPI = new GeneratorAPI(this);
+    this.templateAPI = new TemplateAPI(this);
+  }
+
+  // 根据环境变量加载 plugin/template
+  async loadBase(pkgPath: string, modulePath: string): Promise<(api: BaseAPI) => Promise<any>> {
+    let baseGenerator: (api: BaseAPI) => Promise<any>;
+    if (process.env.NODE_ENV === "DEV") {
+      const basePathInDev = pkgPath;
+      baseGenerator = await loadModule(basePathInDev, path.resolve(__dirname, relativePathToRoot));
+    } else if (process.env.NODE_ENV === "PROD") {
+      if (modulePath !== "") {
+        const basePathInProd = modulePath;
+        baseGenerator = await loadModule(basePathInProd, this.rootDirectory);
+      }
+    } else {
+      throw new Error("NODE_ENV is not set");
+    }
+    return baseGenerator;
+  }
+
+  // 生成构建工具配置文件
+  async buildToolGenerate(entryPath: string) {
+    // 执行 plugin/template 的入口文件，把 config 写进来
+    const baseEntry = await loadModule(entryPath, path.resolve(__dirname, relativePathToRoot));
+
+    // 处理构建工具配置
+    if (typeof baseEntry === "function") {
+      // 解析配置项成 ast 语法树,并且和原始配置的 ast 合并
+      createConfigByParseAst(
+        this.buildToolConfig.buildTool,
+        baseEntry(this.buildToolConfig.buildTool),
+        this.buildToolConfig.ast,
+      );
+      const code = generator(this.buildToolConfig.ast).code;
+      fs.writeFileSync(
+        path.resolve(this.rootDirectory, `${this.buildToolConfig.buildTool}.config.js`),
+        code,
+      );
+    }
   }
 
   // 单独处理一个插件相关文件
   async pluginGenerate(pluginName: string) {
-    const generatorAPI = new GeneratorAPI(this);
-
-    // pluginGenerator 是一个函数，接受一个 GeneratorAPI 实例作为参数
-    let pluginGenerator: (generatorAPI: GeneratorAPI) => Promise<void>;
-
     // 根据环境变量加载插件
     // TODO: 改用每个 plugin 的 API 来加载
-    if (process.env.NODE_ENV === "DEV") {
-      const pluginPathInDev = `packages/@plugin/plugin-${pluginName}/generator/index.cjs`;
-      pluginGenerator = await loadModule(
-        pluginPathInDev,
-        path.resolve(__dirname, relativePathToRoot),
-      );
-    } else if (process.env.NODE_ENV === "PROD") {
-      const pluginPathInProd = `node_modules/${pluginName}-plugin-test-ljq`;
-      pluginGenerator = await loadModule(pluginPathInProd, this.rootDirectory);
-    } else {
-      throw new Error("NODE_ENV is not set");
-    }
+    // pluginGenerator 是一个函数，接受一个 GeneratorAPI 实例作为参数
+    const pluginGenerator = await this.loadBase(
+      `packages/@plugin/plugin-${pluginName}/generator/index.cjs`,
+      `node_modules/${pluginName}-plugin-test-ljq`,
+    );
 
     if (pluginGenerator && typeof pluginGenerator === "function") {
-      await pluginGenerator(generatorAPI);
+      await pluginGenerator(this.generatorAPI);
     }
 
     // ejs 渲染插件的 template 文件
-    const templatePath = resolve(`../@plugin/plugin-${pluginName}/generator/template`);
-    if (fs.existsSync(templatePath)) this.renderTemplates(templatePath, this.rootDirectory, {});
-
-    // 执行 plugin 的入口文件，把 config 写进来
-    const pluginEntry = await loadModule(
-      `packages/@plugin/plugin-${pluginName}/index.cjs`,
-      path.resolve(__dirname, relativePathToRoot),
+    const templatePath = resolve(
+      __dirname,
+      relativePathToRoot,
+      `packages/@plugin/plugin-${pluginName}/generator/template`,
     );
 
-    // 处理构建工具配置
-    if (this.buildToolConfig.buildTool === "webpack") {
-      const { rules, plugins } = pluginEntry(this.buildToolConfig.buildTool);
-      if (plugins) mergeWebpackConfigAst(rules, plugins, this.buildToolConfig.ast);
-      // 把 ast 转换成代码，写入文件
-      const result = generator(this.buildToolConfig.ast).code;
-      fs.writeFileSync(
-        path.resolve(this.rootDirectory, `${this.buildToolConfig.buildTool}.config.js`),
-        result,
-      );
-    } else if (this.buildToolConfig.buildTool === "vite") {
-      /* empty */
+    if (fs.existsSync(templatePath)) {
+      new FileTree(templatePath).renderTemplates(this.rootDirectory);
     }
+
+    await this.buildToolGenerate(`packages/@plugin/plugin-${pluginName}/index.cjs`);
   }
 
   // 单独处理一个框架相关文件
   async templateGenerate() {
     // TODO: 以下配置过程暂时与插件类同，后续可添加额外配置
-    const templateAPI = new TemplateAPI(this);
-
-    // templateGenerator 是一个函数，接受一个 TemplateAPI 实例作为参数
-    let templateGenerator: (templateAPI: TemplateAPI) => Promise<void>;
-
-     // 根据环境变量加载插件
+    // 根据环境变量加载插件
     // TODO: 改用每个 template 的 API 来加载
-    if (process.env.NODE_ENV === "DEV") {
-      // TODO: 路径暂定，后续可更改为可变路径
-      const templatePathInDev = `packages/core/template/template-test/generator/index.cjs`;
-      templateGenerator = await loadModule(
-        templatePathInDev,
-        path.resolve(__dirname, relativePathToRoot),
-      );
-    } else if (process.env.NODE_ENV === "PROD") {
-      // TODO: 生产环境后续可配置对应的包
-    } else {
-      throw new Error("NODE_ENV is not set");
-    }
+    // templateGenerator 是一个函数，接受一个 TemplateAPI 实例作为参数
+    const templateGenerator = await this.loadBase(
+      `packages/core/template/${this.templateName}/generator/index.cjs`,
+      "",
+    );
 
     if (templateGenerator && typeof templateGenerator === "function") {
       // 获取生成文件的结果
-      let res = await templateGenerator(templateAPI);
+      const res = await templateGenerator(this.templateAPI);
       // 如果结果不为未定义的值，则加载模块
-      if (res != undefined) {
-        // 执行 template 的入口文件，把 config 写进来
-        const templateEntry = await loadModule(
-          // TODO: 路径暂定，后续可更改为可变路径
-          `packages/core/template/template-test/index.cjs`,
-          path.resolve(__dirname, relativePathToRoot),
-        );
-
-        // 处理构建工具配置
-        if (this.buildToolConfig.buildTool === "webpack") {
-          const { rules, templates } = templateEntry(this.buildToolConfig.buildTool);
-          if (templates) mergeWebpackConfigAst(rules, templates, this.buildToolConfig.ast);
-          // 把 ast 转换成代码，写入文件
-          const result = generator(this.buildToolConfig.ast).code;
-          fs.writeFileSync(
-            path.resolve(this.rootDirectory, `${this.buildToolConfig.buildTool}.config.js`),
-            result,
-          );
-        } else if (this.buildToolConfig.buildTool === "vite") {
-          /* empty */
-        }
+      if (res !== undefined) {
+        await this.buildToolGenerate(`packages/core/template/${this.templateName}/index.cjs`);
       }
     }
   }
 
-  // 创建所有插件的相关文件
-  async generate() {
+  // 创建所有 plugin 和 template 的相关文件
+  async generate({ extraConfigFiles }) {
     // 判断并设置 ts 环境变量
     if (Object.keys(this.plugins).includes("typescript")) {
       process.env.isTs = "true";
@@ -254,7 +240,7 @@ class Generator {
 
     // 为每个 plugin 创建 GeneratorAPI 实例，调用插件中的 generate
     for (const pluginName of Object.keys(this.plugins)) {
-      this.pluginGenerate(pluginName);
+      await this.pluginGenerate(pluginName);
     }
 
     // TODO: 暂定为 template-test 包
@@ -263,16 +249,23 @@ class Generator {
     }
 
     // 从package.json中生成额外的的文件
-    await this.extractConfigFiles();
-    // 重写pakcage.json文件，消除generatorAPI中拓展package.json带来得副作用
-    this.files["package.json"] = JSON.stringify(this.pkg, null, 2);
+    await this.extractConfigFiles(extraConfigFiles);
+    // 重写pakcage.json文件，并向根文件树中添加该文件，消除generatorAPI中拓展package.json带来得副作用
+    this.files.addToTreeByFile(
+      "package.json",
+      JSON.stringify(this.pkg, null, 2),
+      path.resolve(this.rootDirectory, "package.json"),
+    );
 
-    // 安装文件
-    await createFiles(this.rootDirectory, this.files);
-    console.log("Files have been generated and written to disk.\n");
+    // 安装package.json文件
+    await createFiles(this.rootDirectory, {
+      "package.json": JSON.stringify(this.pkg, null, 2),
+    });
+
+    console.log(chalk.green("💘 Files have been generated and written to disk."));
 
     /* ----------拉取对应模板，并进行ejs渲染---------- */
-    const templatePath = join(__dirname, "../../template/", "template-test");
+    const templatePath = join(__dirname, "../../template/", "template-test/generator/template");
 
     // TODO: 此处的 ejs 渲染配置是测试用数据，实际应用中需要根据使用不同的模板进行具体的配置，具体如何实现 options 的集中管理有待商榷
     const options = {
@@ -285,38 +278,13 @@ class Generator {
         data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
       },
     };
-
-    this.renderTemplates(templatePath, this.rootDirectory, options);
-  }
-
-  // 递归渲染ejs模板
-  async renderTemplates(src: string, dest: string, options: any) {
-    // 确保目标目录存在
-    await fs.ensureDir(dest);
-
-    // 读取源目录中的所有文件和文件夹
-    const entries = await fs.readdir(src, { withFileTypes: true });
-
-    for (const entry of entries) {
-      const srcPath = path.join(src, entry.name);
-      const destPath = path.join(dest, entry.name);
-
-      if (entry.isDirectory()) {
-        // 递归处理文件夹
-        await this.renderTemplates(srcPath, destPath, options);
-      } else {
-        // 读取和渲染 EJS 模板
-        const content = await fs.readFile(srcPath, "utf-8");
-        const rendered = ejs.render(content, options, {});
-        await fs.writeFile(destPath, rendered);
-      }
-    }
+    new FileTree(templatePath).renderTemplates(this.rootDirectory, undefined, options);
   }
 
   /**
    * @description 提取配置文件到files文件对象中
    */
-  async extractConfigFiles() {
+  async extractConfigFiles(extraConfigFiles) {
     // 将所有的配置项合并到ConfigTransforms中
     const ConfigTransforms = Object.assign(
       this.configTransforms,
@@ -324,8 +292,7 @@ class Generator {
       this.reservedConfigTransforms,
     );
 
-    // extra方法执行后会在this.files中添加一个属性，key为配置文件名称，值为对应的内容
-    const extra = (key: string) => {
+    const extra = async (key: string) => {
       if (
         ConfigTransforms[key] !== undefined &&
         this.pkg[key] !== undefined &&
@@ -339,12 +306,27 @@ class Generator {
         // 转换生成文件内容
         const res = configTransform.transform(value, this.files, this.rootDirectory);
         const { content, filename } = res;
-        this.files[filename] = ensureEOL(content); // 向文件对象中添加文件内容
+        this.files.addToTreeByFile(
+          filename,
+          ensureEOL(content),
+          path.resolve(this.rootDirectory, filename),
+        );
         delete this.pkg[key];
+        // 生成插件配置文件
+        await createFiles(this.rootDirectory, {
+          [filename]: ensureEOL(content),
+        });
       }
     };
-    for (const i of Object.keys(this.plugins)) {
-      extra(i.toLowerCase());
+    if (extraConfigFiles) {
+      // 用户选择In dedicated config files(true)时，为插件生成单独的配置文件
+      for (const pluginName of Object.keys(this.plugins)) {
+        extra(pluginName.toLowerCase());
+      }
+    } else {
+      // 用户选择In package.json(false)时，插件配置生成在package.json中
+      // always extract babel.config.js as this is the only way to apply
+      extra("babel");
     }
   }
 
@@ -367,14 +349,6 @@ class Generator {
    */
   addFile(path: string, content: string) {
     this.files[path] = content;
-  }
-
-  /**
-   * 获取当前所有文件
-   * @returns 当前所有文件
-   */
-  getFiles(): Record<string, string> {
-    return this.files;
   }
 
   /**
