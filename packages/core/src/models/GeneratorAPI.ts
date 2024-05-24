@@ -9,7 +9,7 @@ import BaseAPI from "./BaseAPI";
  * @param rootOptions 根目录执行选项
  */
 
-class GeneratorAPI extends BaseAPI{
+class GeneratorAPI extends BaseAPI {
   constructor(generator: Generator) {
     super(generator);
   }

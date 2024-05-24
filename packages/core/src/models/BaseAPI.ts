@@ -1,6 +1,7 @@
-import Generator from "./Generator";
 import fs from "fs";
 import path from "path";
+
+import Generator from "./Generator";
 
 interface ConfigFileData {
   file: Record<string, string[]>;
@@ -30,7 +31,7 @@ class BaseAPI {
    * @param {string} [version="latest"] - 依赖版本。
    */
   addDependency(optionsType: string, name: string, version: string = "latest") {
-    if (this.dependenciesKeys.indexOf(optionsType) != -1) {
+    if (this.dependenciesKeys.indexOf(optionsType) !== -1) {
       this.packageData[optionsType][name] = version;
     }
   }
@@ -41,7 +42,7 @@ class BaseAPI {
    * @param {string} name - 依赖名称。
    */
   removeDependency(optionsType: string, name: string) {
-    if (this.dependenciesKeys.indexOf(optionsType) != -1) {
+    if (this.dependenciesKeys.indexOf(optionsType) !== -1) {
       delete this.packageData[optionsType][name];
     }
   }
