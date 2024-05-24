@@ -6,9 +6,9 @@ import Generator from "./Generator";
  * @param generator Generator实例
  */
 
-class TemplateAPI extends BaseAPI{
+class TemplateAPI extends BaseAPI {
   constructor(generator: Generator) {
-    super(generator)
+    super(generator);
   }
 }
 
