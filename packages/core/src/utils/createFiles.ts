@@ -1,5 +1,6 @@
 import fs from "fs-extra";
 import path from "path";
+import chalk from "chalk";
 
 import { createTemplateFile } from "./fileController";
 
@@ -34,10 +35,9 @@ async function createFiles(dir: string, files: Record<string, string>): Promise<
         fs.writeFileSync(filePath, content);
       }),
     );
-
-    console.log("All files created successfully!");
+    console.log(chalk.green(`\n✅  All files created successfully!`));
   } catch (error) {
-    console.error("Failed to create files:", error);
+    console.error(chalk.red("❌  Failed to create files:", error));
     throw error; // 重新抛出错误以允许调用者处理
   }
 }

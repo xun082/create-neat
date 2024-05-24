@@ -85,7 +85,7 @@ export default async function createAppTest(projectName: string, options: Record
   // 获取用户选择预设
   const preset: Preset = await projectSelect();
 
-  const { template, packageManager, plugins, buildTool } = preset;
+  const { template, packageManager, plugins, buildTool, extraConfigFiles } = preset;
 
   /* ----------从下面的代码开始，创建package.json---------- */
   console.log(chalk.blue(`\n📄  Generating package.json...`));
@@ -142,18 +142,21 @@ export default async function createAppTest(projectName: string, options: Record
 
   // 运行生成器创建项目所需文件和结构
   console.log(chalk.blue(`🚀  Invoking generators...`));
+
   // 传入根目录路径、插件列表、package.json 内容创建生成器实例
   const generators = new Generator(rootDirectory, plugins, packageContent, template, {
     ast: buildToolConfigAst,
     buildTool,
   });
-  await generators.generate();
+  await generators.generate({
+    extraConfigFiles,
+  });
 
   // 安装附加依赖
   await dependenciesInstall(rootDirectory, packageManager);
 
   // 其他剩余操作，如创建 md 文档，或其他首位操作
-  console.log(chalk.blue(`📄  Generating README.md...`));
+  console.log(chalk.blue(`\n📄  Generating README.md...`));
 
   await createFiles(rootDirectory, {
     "README.md": createReadmeString(packageManager, template, "README.md"),
