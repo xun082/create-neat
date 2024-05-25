@@ -9,7 +9,9 @@ import { createConfigByParseAst } from "../utils/ast/parseAst";
 
 import GeneratorAPI from "./GeneratorAPI";
 import ConfigTransform from "./ConfigTransform";
+import TemplateAPI from "./TemplateAPI";
 import FileTree from "./FileTree";
+import BaseAPI from "./BaseAPI";
 
 interface ConfigFileData {
   file: Record<string, string[]>;
@@ -120,6 +122,7 @@ class Generator {
   public templateName: string; // 需要拉取的模板名称
   public buildToolConfig;
   private generatorAPI: GeneratorAPI;
+  private templateAPI: TemplateAPI;
 
   constructor(
     rootDirectory: string,
@@ -138,27 +141,56 @@ class Generator {
     this.buildToolConfig = buildToolConfig;
     this.files = new FileTree(this.rootDirectory);
     this.generatorAPI = new GeneratorAPI(this);
+    this.templateAPI = new TemplateAPI(this);
+  }
+
+  // 根据环境变量加载 plugin/template
+  async loadBase(pkgPath: string, modulePath: string): Promise<(api: BaseAPI) => Promise<any>> {
+    let baseGenerator: (api: BaseAPI) => Promise<any>;
+    if (process.env.NODE_ENV === "DEV") {
+      const basePathInDev = pkgPath;
+      baseGenerator = await loadModule(basePathInDev, path.resolve(__dirname, relativePathToRoot));
+    } else if (process.env.NODE_ENV === "PROD") {
+      if (modulePath !== "") {
+        const basePathInProd = modulePath;
+        baseGenerator = await loadModule(basePathInProd, this.rootDirectory);
+      }
+    } else {
+      throw new Error("NODE_ENV is not set");
+    }
+    return baseGenerator;
+  }
+
+  // 生成构建工具配置文件
+  async buildToolGenerate(entryPath: string) {
+    // 执行 plugin/template 的入口文件，把 config 写进来
+    const baseEntry = await loadModule(entryPath, path.resolve(__dirname, relativePathToRoot));
+
+    // 处理构建工具配置
+    if (typeof baseEntry === "function") {
+      // 解析配置项成 ast 语法树,并且和原始配置的 ast 合并
+      createConfigByParseAst(
+        this.buildToolConfig.buildTool,
+        baseEntry(this.buildToolConfig.buildTool),
+        this.buildToolConfig.ast,
+      );
+      const code = generator(this.buildToolConfig.ast).code;
+      fs.writeFileSync(
+        path.resolve(this.rootDirectory, `${this.buildToolConfig.buildTool}.config.js`),
+        code,
+      );
+    }
   }
 
   // 单独处理一个插件相关文件
   async pluginGenerate(pluginName: string) {
-    // pluginGenerator 是一个函数，接受一个 GeneratorAPI 实例作为参数
-    let pluginGenerator: (generatorAPI: GeneratorAPI) => Promise<void>;
-
     // 根据环境变量加载插件
     // TODO: 改用每个 plugin 的 API 来加载
-    if (process.env.NODE_ENV === "DEV") {
-      const pluginPathInDev = `packages/@plugin/plugin-${pluginName}/generator/index.cjs`;
-      pluginGenerator = await loadModule(
-        pluginPathInDev,
-        path.resolve(__dirname, relativePathToRoot),
-      );
-    } else if (process.env.NODE_ENV === "PROD") {
-      const pluginPathInProd = `node_modules/${pluginName}-plugin-test-ljq`;
-      pluginGenerator = await loadModule(pluginPathInProd, this.rootDirectory);
-    } else {
-      throw new Error("NODE_ENV is not set");
-    }
+    // pluginGenerator 是一个函数，接受一个 GeneratorAPI 实例作为参数
+    const pluginGenerator = await this.loadBase(
+      `packages/@plugin/plugin-${pluginName}/generator/index.cjs`,
+      `node_modules/${pluginName}-plugin-test-ljq`,
+    );
 
     if (pluginGenerator && typeof pluginGenerator === "function") {
       await pluginGenerator(this.generatorAPI);
@@ -175,29 +207,31 @@ class Generator {
       new FileTree(templatePath).renderTemplates(this.rootDirectory);
     }
 
-    // 执行 plugin 的入口文件，把 config 写进来
-    const pluginEntry = await loadModule(
-      `packages/@plugin/plugin-${pluginName}/index.cjs`,
-      path.resolve(__dirname, relativePathToRoot),
+    await this.buildToolGenerate(`packages/@plugin/plugin-${pluginName}/index.cjs`);
+  }
+
+  // 单独处理一个框架相关文件
+  async templateGenerate() {
+    // TODO: 以下配置过程暂时与插件类同，后续可添加额外配置
+    // 根据环境变量加载插件
+    // TODO: 改用每个 template 的 API 来加载
+    // templateGenerator 是一个函数，接受一个 TemplateAPI 实例作为参数
+    const templateGenerator = await this.loadBase(
+      `packages/core/template/${this.templateName}/generator/index.cjs`,
+      "",
     );
 
-    // 处理构建工具配置
-    if (typeof pluginEntry === "function") {
-      // 解析配置项成ast语法树,并且和原始配置的ast合并
-      createConfigByParseAst(
-        this.buildToolConfig.buildTool,
-        pluginEntry(this.buildToolConfig.buildTool),
-        this.buildToolConfig.ast,
-      );
-      const code = generator(this.buildToolConfig.ast).code;
-      fs.writeFileSync(
-        path.resolve(this.rootDirectory, `${this.buildToolConfig.buildTool}.config.js`),
-        code,
-      );
+    if (templateGenerator && typeof templateGenerator === "function") {
+      // 获取生成文件的结果
+      const res = await templateGenerator(this.templateAPI);
+      // 如果结果不为未定义的值，则加载模块
+      if (res !== undefined) {
+        await this.buildToolGenerate(`packages/core/template/${this.templateName}/index.cjs`);
+      }
     }
   }
 
-  // 创建所有插件的相关文件
+  // 创建所有 plugin 和 template 的相关文件
   async generate({ extraConfigFiles }) {
     // 判断并设置 ts 环境变量
     if (Object.keys(this.plugins).includes("typescript")) {
@@ -207,6 +241,11 @@ class Generator {
     // 为每个 plugin 创建 GeneratorAPI 实例，调用插件中的 generate
     for (const pluginName of Object.keys(this.plugins)) {
       await this.pluginGenerate(pluginName);
+    }
+
+    // TODO: 暂定为 template-test 包
+    if (this.templateName === "template-test") {
+      await this.templateGenerate();
     }
 
     // 从package.json中生成额外的的文件
@@ -226,7 +265,7 @@ class Generator {
     console.log(chalk.green("💘 Files have been generated and written to disk."));
 
     /* ----------拉取对应模板，并进行ejs渲染---------- */
-    const templatePath = join(__dirname, "../../template/", "template-test");
+    const templatePath = join(__dirname, "../../template/", "template-test/generator/template");
 
     // TODO: 此处的 ejs 渲染配置是测试用数据，实际应用中需要根据使用不同的模板进行具体的配置，具体如何实现 options 的集中管理有待商榷
     const options = {
