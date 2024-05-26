@@ -17,7 +17,7 @@ import { type Preset } from "./preset";
 import createSuccessInfo from "./createSuccessInfo";
 import dependenciesInstall from "./dependenciesInstall";
 import { createReadmeString } from "./createFiles";
-import { buildToolConfigDevDependencies } from "./constants";
+import { buildToolConfigDevDependencies, buildToolScripts } from "./constants";
 
 /**
  * 将输入模式设置为原始模式。
@@ -96,6 +96,7 @@ export default async function createAppTest(projectName: string, options: Record
     version: "0.1.0",
     private: true,
     devDependencies: {},
+    scripts: {},
   };
 
   // 2. 初始化构建工具配置文件
@@ -105,6 +106,12 @@ export default async function createAppTest(projectName: string, options: Record
   const buildToolConfigAst = parse(buildToolConfigTemplate, {
     sourceType: "module",
   });
+
+  // 根据构建工具类型为 package.json 新增不同的 scripts 脚本
+  packageContent.scripts = {
+    ...buildToolScripts[buildTool],
+    ...packageContent.scripts,
+  };
 
   // 根据构建工具类型为 package.json 新增不同的依赖
   packageContent.devDependencies = {

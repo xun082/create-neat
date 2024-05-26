@@ -50,3 +50,18 @@ export const buildToolConfigDevDependencies = {
     rollup: "^4.18.0",
   },
 };
+
+export const buildToolScripts = {
+  webpack: {
+    dev: "dev",
+    build: "build",
+  },
+  rollup: {
+    dev: "dev",
+    build: "build",
+  },
+  vite: {
+    dev: "dev",
+    build: "build",
+  },
+};
