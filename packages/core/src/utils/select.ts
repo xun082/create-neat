@@ -2,8 +2,11 @@ import { multiselect, select, intro } from "@clack/prompts";
 import chalk from "chalk";
 import { execSync } from "child_process";
 
+import { buildToolType } from "../types";
+
 import { getPreset } from "./preset";
 import { getNpmSource } from "./getnpmSource";
+
 const registryInfo = execSync("npm config get registry").toString().trim();
 const npmSource: any = getNpmSource();
 /**
@@ -18,7 +21,7 @@ const npmSource: any = getNpmSource();
  */
 interface Responses {
   template: string;
-  buildTool: string;
+  buildTool?: buildToolType;
   plugins: string[];
   packageManager: string;
   npmSource: string;
@@ -32,7 +35,6 @@ interface Responses {
 async function projectSelect() {
   const responses: Responses = {
     template: "",
-    buildTool: "",
     plugins: [],
     packageManager: "",
     npmSource: "",
@@ -60,7 +62,7 @@ async function projectSelect() {
       { value: "vite", label: "vite" },
       { value: "rollup", label: "rollup" },
     ],
-  })) as string;
+  })) as buildToolType;
 
   // 选择插件
   responses.plugins = (await multiselect({

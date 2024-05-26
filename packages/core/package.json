@@ -45,6 +45,7 @@
     "chalk": "^4.0.0",
     "commander": "^12.0.0",
     "cross-spawn": "^7.0.3",
+    "ejs": "^3.1.9",
     "fs-extra": "^11.2.0",
     "minimist": "^1.2.8",
     "ora": "^5.4.1",
