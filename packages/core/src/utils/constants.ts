@@ -38,3 +38,7 @@ export const projectLink: Map<string, string> = getProjectLink(template);
  * @constant {string}
  */
 export const relativePathToRoot = "../../../../";
+
+export const webpackConfigDevDependencies = {
+  webpack: "^5.91.0",
+};
