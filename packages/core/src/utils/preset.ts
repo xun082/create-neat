@@ -1,4 +1,4 @@
-import type { buildToolType } from "../types";
+import { buildToolType } from "../types";
 
 /**
  * 表示用户的预设配置。

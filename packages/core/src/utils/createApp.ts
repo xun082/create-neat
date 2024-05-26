@@ -17,7 +17,7 @@ import { type Preset } from "./preset";
 import createSuccessInfo from "./createSuccessInfo";
 import dependenciesInstall from "./dependenciesInstall";
 import { createReadmeString } from "./createFiles";
-import { webpackConfigDevDependencies } from "./constants";
+import { buildToolConfigDevDependencies } from "./constants";
 
 /**
  * 将输入模式设置为原始模式。
@@ -106,14 +106,11 @@ export default async function createAppTest(projectName: string, options: Record
     sourceType: "module",
   });
 
-  // 根据构建工具为 package.json 新增不同的依赖
-
-  if (buildTool === "webpack") {
-    packageContent.devDependencies = {
-      ...webpackConfigDevDependencies,
-      ...packageContent.devDependencies,
-    };
-  }
+  // 根据构建工具类型为 package.json 新增不同的依赖
+  packageContent.devDependencies = {
+    ...buildToolConfigDevDependencies[buildTool],
+    ...packageContent.devDependencies,
+  };
 
   const filePath = path.resolve(rootDirectory, `${buildTool}.config.js`);
   const directory = path.dirname(filePath);

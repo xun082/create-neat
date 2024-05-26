@@ -39,6 +39,14 @@ export const projectLink: Map<string, string> = getProjectLink(template);
  */
 export const relativePathToRoot = "../../../../";
 
-export const webpackConfigDevDependencies = {
-  webpack: "^5.91.0",
+export const buildToolConfigDevDependencies = {
+  webpack: {
+    webpack: "^5.91.0",
+  },
+  vite: {
+    vite: "^5.2.11",
+  },
+  rollup: {
+    rollup: "^4.18.0",
+  },
 };
