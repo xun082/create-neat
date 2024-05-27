@@ -58,11 +58,12 @@ const getPreset = (
  * @constant {Preset} defaultPreset
  * @description 默认预设配置对象，包含常见配置的默认值。
  */
-const defaultPreset: Preset = {
+const defaultPresetLib: Preset = {
   template: "common-lib",
   buildTool: "webpack",
   plugins: {
     eslint: {},
+    babel: {},
   },
   packageManager: "npm",
   npmSource: "",
@@ -70,4 +71,30 @@ const defaultPreset: Preset = {
   extraConfigFiles: true,
 };
 
-export { Preset, getPreset, defaultPreset };
+const defaultPresetVue: Preset = {
+  template: "vue",
+  buildTool: "webpack",
+  plugins: {
+    eslint: {},
+    babel: {},
+  },
+  packageManager: "npm",
+  npmSource: "",
+  // todo: 更多配置随构建需要添加
+  extraConfigFiles: true,
+};
+
+const defaultPresetReact: Preset = {
+  template: "react",
+  buildTool: "webpack",
+  plugins: {
+    eslint: {},
+    babel: {},
+  },
+  packageManager: "npm",
+  npmSource: "",
+  // todo: 更多配置随构建需要添加
+  extraConfigFiles: true,
+};
+
+export { Preset, getPreset, defaultPresetLib, defaultPresetVue, defaultPresetReact };
