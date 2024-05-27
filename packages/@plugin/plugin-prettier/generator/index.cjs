@@ -1,18 +1,17 @@
 module.exports = (generatorAPI) => {
   generatorAPI.extendPackage({
     prettier: {
-      singleQuote: false,
-      tabWidth: 2,
-      arrowParens: "always",
-      bracketSpacing: true,
-      proseWrap: "preserve",
-      trailingComma: "all",
-      jsxSingleQuote: false,
-      printWidth: 100,
+        tabWidth: 2,                // 每个缩进级别的空格数
+        printWidth: 80,             // 每行代码的最大长度
+        useTabs: false,             // 使用空格代替制表符进行缩进
+        semi: true,                 // 在语句末尾添加分号
+        singleQuote: true,          // 使用单引号代替双引号  
     },
     devDependencies: {
-      "@types/prettier": "^3.0.0",
-      prettier: "^3.1.0",
+      "prettier": "^3.1.0",
     },
+    scripts:{
+      "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
+    }
   });
 };
