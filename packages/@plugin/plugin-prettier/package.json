@@ -1,5 +1,5 @@
 {
-  "name": "@plugin/plugin-prettier",
+  "name": "@laconic/plugin-prettier",
   "version": "1.0.0",
   "dependencies": {}
 }
