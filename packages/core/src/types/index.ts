@@ -31,3 +31,11 @@ export interface PackageJsonType {
 }
 
 export type buildToolType = "webpack" | "vite" | "rollup";
+
+export type languageType = "javascript" | "typescript";
+
+export type transpilersType = "swc" | "babel";
+
+export type pluginsType = "prettier" | "eslint" | "husky";
+
+export type packageManagerType = "npm" | "pnpm" | "yarn";

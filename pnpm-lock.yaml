@@ -104,6 +104,8 @@ importers:
 
   packages/@plugin/plugin-prettier: {}
 
+  packages/@plugin/plugin-swc: {}
+
   packages/@plugin/plugin-typescript: {}
 
   packages/core:

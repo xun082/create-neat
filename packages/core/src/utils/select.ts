@@ -1,8 +1,14 @@
-import { multiselect, select, intro, text } from "@clack/prompts";
+import { multiselect, select, intro, confirm, text } from "@clack/prompts";
 import chalk from "chalk";
 import { execSync } from "child_process";
 
-import { buildToolType } from "../types";
+import type {
+  buildToolType,
+  languageType,
+  transpilersType,
+  pluginsType,
+  packageManagerType,
+} from "../types";
 
 import { getPreset, defaultPreset } from "./preset";
 import { getNpmSource } from "./getnpmSource";
@@ -24,10 +30,12 @@ const rcPath = getRcPath(".neatrc");
 interface Responses {
   template: string;
   buildTool?: buildToolType;
-  plugins: string[];
-  packageManager: string;
+  plugins: pluginsType[];
+  packageManager: packageManagerType;
   npmSource: string;
   extraConfigFiles: boolean;
+  language: languageType;
+  transpilers: transpilersType;
 }
 
 /**
@@ -51,9 +59,11 @@ async function projectSelect() {
   const responses: Responses = {
     template: "",
     plugins: [],
-    packageManager: "",
-    npmSource: "",
+    packageManager: "npm",
+    npmSource: "https://registry.npmjs.org/",
     extraConfigFiles: true,
+    language: "javascript",
+    transpilers: "babel",
   };
 
   intro(chalk.green(" create-you-app "));
@@ -105,6 +115,15 @@ async function projectSelect() {
     ],
   })) as string;
 
+  // 选择模板预设
+  responses.language = (await select({
+    message: "Please select a language.",
+    options: [
+      { value: "javascript", label: "javascript" },
+      { value: "typescript", label: "typescript" },
+    ],
+  })) as languageType;
+
   // 选择构建工具
   responses.buildTool = (await select({
     message: "Pick a build tools for your project",
@@ -115,6 +134,14 @@ async function projectSelect() {
     ],
   })) as buildToolType;
 
+  responses.transpilers = (await select({
+    message: "Please select a JavaScript/TypeScript compiler for your project:",
+    options: [
+      { value: "babel", label: "babel" },
+      { value: "swc", label: "swc" },
+    ],
+  })) as transpilersType;
+
   // 选择插件
   responses.plugins = (await multiselect({
     message: `Pick plugins for your project.(${chalk.greenBright(
@@ -123,13 +150,12 @@ async function projectSelect() {
       "<i>",
     )} invert selection,${chalk.greenBright("<enter>")} next step)`,
     options: [
-      { value: "babel", label: "babel" },
-      { value: "typescript", label: "typescript" },
       { value: "eslint", label: "eslint" },
       { value: "prettier", label: "prettier" },
+      { value: "husky", label: "husky" },
     ],
     required: false,
-  })) as string[];
+  })) as pluginsType[];
 
   // 选择包管理器
   responses.packageManager = (await select({
@@ -139,14 +165,21 @@ async function projectSelect() {
       { value: "yarn", label: "yarn" },
       { value: "npm", label: "npm" },
     ],
-  })) as string;
+  })) as packageManagerType;
 
-  // 选择npm源
-  responses.npmSource = (await select({
-    message: "Pick a npm source for your project",
-    initialValue: registryInfo,
-    options: npmSource,
-  })) as string;
+  const changeNpmSource = (await confirm({
+    message: "Would you like to switch the npm registry?",
+    initialValue: false, // 默认选项
+  })) as boolean;
+
+  if (changeNpmSource === true) {
+    // 选择npm源
+    responses.npmSource = (await select({
+      message: "Pick a npm source for your project",
+      initialValue: registryInfo,
+      options: npmSource,
+    })) as string;
+  }
 
   // 选择插件配置文件生成位置
   responses.extraConfigFiles = (await select({
@@ -158,10 +191,17 @@ async function projectSelect() {
     ],
   })) as boolean;
 
+  // 语言插件、编译器插件、插件统一合并到allPlugins
+  let allPlugins: string[];
+  if (responses.language === "typescript") {
+    allPlugins = [...responses.plugins, responses.language, responses.transpilers];
+  } else {
+    allPlugins = [...responses.plugins, responses.transpilers];
+  }
   const preset = getPreset(
     responses.template,
     responses.buildTool,
-    responses.plugins,
+    allPlugins,
     responses.packageManager,
     responses.npmSource,
     responses.extraConfigFiles,

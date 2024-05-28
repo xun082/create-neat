@@ -36,6 +36,11 @@ const defaultConfigTransforms = {
       js: ["babel.config.js"],
     },
   }),
+  swc: new ConfigTransform({
+    file: {
+      js: ["swc.config.js"],
+    },
+  }),
   postcss: new ConfigTransform({
     file: {
       js: ["postcss.config.js"],
@@ -324,9 +329,9 @@ class Generator {
         extra(pluginName.toLowerCase());
       }
     } else {
-      // 用户选择In package.json(false)时，插件配置生成在package.json中
-      // always extract babel.config.js as this is the only way to apply
+      // always extract babel.config.js or swc.config.js as this is the only way to apply
       extra("babel");
+      extra("swc");
     }
   }
 
