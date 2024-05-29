@@ -1,13 +1,31 @@
 import { resolveApp } from "./getResolveApp";
 import getHttpsConfig from "./getHttpsConfig";
-
+/**
+ * 主机地址，可以从环境变量中获取，默认为 "0.0.0.0"。
+ * @type {string}
+ */
 const host = process.env.HOST || "0.0.0.0";
+/**
+ * WebSocket 主机地址，从环境变量中获取。
+ * @type {string|undefined}
+ */
 const sockHost = process.env.WDS_SOCKET_HOST;
+/**
+ * WebSocket 路径，从环境变量中获取，默认为 '/ws'。
+ * @type {string|undefined}
+ */
 const sockPath = process.env.WDS_SOCKET_PATH; // default: '/ws'
+/**
+ * WebSocket 端口，从环境变量中获取。
+ * @type {string|undefined}
+ */
 const sockPort = process.env.WDS_SOCKET_PORT;
 // todo: 最好移除啦
 console.log(getHttpsConfig());
-
+/**
+ * 开发服务器配置对象。
+ * @type {object}
+ */
 export const devServerConfig = {
   host, // webpack.config.js 文件中的 host 配置优先级最高
   hot: true,

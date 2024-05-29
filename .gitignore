@@ -42,3 +42,7 @@ yarn-error.log*
 
 # dev tgz
 apps/*.tgz
+
+# VSCode
+.vscode/*
+!.vscode/launch.json

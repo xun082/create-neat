@@ -14,29 +14,39 @@ import { CLIENT_OS, packageVersion } from "./constants";
  * @param directoryPath 删除文件的路径，默认 node_modules
  * @param verbose 如果为true，则显示删除信息
  */
-export async function removeDirectory(directoryPath = "node_modules", verbose = true) {
+export async function removeDirectory(
+  directoryPath: string = "node_modules",
+  verbose: boolean = true,
+) {
   const fullPath = resolveApp(directoryPath);
-
-  const _removeDir = async (path) => {
-    // mac 系统下 fs.remove 无法正确删除文件, win 未测试, 建议使用原生 rm
-    if (CLIENT_OS === "mac") {
-      ofs.rmSync(path, { recursive: true, force: true });
-    } else {
-      await fs.remove(path);
+  /**
+   * 删除文件夹。
+   * @returns {Promise<boolean>} 删除结果，true 表示成功，false 表示失败。
+   */
+  async function deleteDirectory() {
+    try {
+      if (CLIENT_OS === "mac") {
+        ofs.rmSync(fullPath, { recursive: true, force: true });
+      } else {
+        await fs.remove(fullPath);
+      }
+      return true; // 成功删除
+    } catch (error) {
+      console.error(chalk.bold.red("Deletion failed"), error);
+      return false; // 删除失败
     }
-  };
+  }
 
   if (verbose) {
     const spinner = ora(chalk.bold.cyan("File being deleted...")).start();
-    try {
-      await _removeDir(fullPath);
+    const success = await deleteDirectory();
+    if (success) {
       spinner.succeed(chalk.bold.green("Deleted successfully"));
-    } catch (error) {
+    } else {
       spinner.fail(chalk.bold.red("Deletion failed"));
-      console.error(error);
     }
   } else {
-    await _removeDir(fullPath);
+    await deleteDirectory();
   }
 }
 
@@ -145,4 +155,8 @@ export async function getPackageFromLocal(currentDir: string, targetFile: string
     console.error("Error:", error);
     process.exit(1);
   }
+}
+
+export function createTemplateFile(file: string) {
+  return fs.readFileSync(join(__dirname, "../../template/", file)).toString();
 }
