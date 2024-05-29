@@ -20,7 +20,6 @@ const sockPath = process.env.WDS_SOCKET_PATH; // default: '/ws'
  * @type {string|undefined}
  */
 const sockPort = process.env.WDS_SOCKET_PORT;
-// todo: 最好移除啦
 console.log(getHttpsConfig());
 /**
  * 开发服务器配置对象。

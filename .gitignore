@@ -40,9 +40,6 @@ yarn-error.log*
 # Webstorm
 .idea/
 
-# dev tgz
-apps/*.tgz
-
 # VSCode
 .vscode/*
 !.vscode/launch.json
