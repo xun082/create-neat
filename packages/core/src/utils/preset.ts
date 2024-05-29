@@ -97,4 +97,10 @@ const defaultPresetReact: Preset = {
   extraConfigFiles: true,
 };
 
-export { Preset, getPreset, defaultPresetLib, defaultPresetVue, defaultPresetReact };
+const defaultPreset = {
+  lib: defaultPresetLib,
+  vue: defaultPresetVue,
+  react: defaultPresetReact,
+};
+
+export { Preset, getPreset, defaultPreset };
