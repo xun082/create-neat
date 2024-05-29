@@ -1,5 +1,5 @@
 {
-  "name": "@plugin/plugin-babel",
+  "name": "@laconic/plugin-babel",
   "version": "1.0.0",
   "description": "babel plugin for create-neat",
   "type": "module",

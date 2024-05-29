@@ -1,5 +1,5 @@
 {
-  "name": "@plugin/plugin-eslint",
+  "name": "@laconic/plugin-eslint",
   "version": "1.0.0",
   "description": "eslint plugin for crate-neat",
   "type": "module",
