@@ -2,20 +2,26 @@ module.exports = (generatorAPI) => {
   generatorAPI.extendPackage({
     eslint: {
       env: {
-        browser: true,
-        commonjs: true,
-        es6: true,
-        node: true,
+        "browser": true,
+        "es2021": true,
+        "node": true
       },
-      extends: ["eslint:recommended"],
+      extends: "eslint:recommended",
       parserOptions: {
-        root: true,
-        parser: "@babel/eslint-parser",
-        ecmaVersion: 2021,
-        sourceType: "module",
-        requireConfigFile: false,
+        "ecmaVersion": 12,
+        "sourceType": "module"
       },
-      plugins: ["import", "jsx-a11y"],
+      rules: {
+        "indent": ["error", 2],
+        "linebreak-style": ["error", "unix"],
+        "quotes": ["error", "single"],
+        "semi": ["error", "always"],
+        "no-console": "warn",
+        "no-unused-vars": "warn"
+      }
     },
+    scripts:{
+      "lint": "lint .",
+    }
   });
 };
