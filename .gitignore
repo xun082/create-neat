@@ -39,3 +39,6 @@ yarn-error.log*
 
 # Webstorm
 .idea/
+
+# dev tgz
+apps/*.tgz

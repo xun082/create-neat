@@ -2,16 +2,13 @@ import { resolveApp } from "@laconic/utils";
 import chalk from "chalk";
 import ora from "ora";
 import fs from "fs-extra";
+import ofs from "node:fs";
 import tar from "tar";
 import axios from "axios";
 import { join, resolve } from "node:path";
 
-import { packageVersion } from "./constants";
+import { CLIENT_OS, packageVersion } from "./constants";
 
-/**
- * @param directoryPath 删除文件的路径，默认 node_modules
- * @param verbose 如果为true，则显示删除信息
- */
 /**
  * @author moment
  * @param directoryPath 删除文件的路径，默认 node_modules
@@ -19,17 +16,27 @@ import { packageVersion } from "./constants";
  */
 export async function removeDirectory(directoryPath = "node_modules", verbose = true) {
   const fullPath = resolveApp(directoryPath);
+
+  const _removeDir = async (path) => {
+    // mac 系统下 fs.remove 无法正确删除文件, win 未测试, 建议使用原生 rm
+    if (CLIENT_OS === "mac") {
+      ofs.rmSync(path, { recursive: true, force: true });
+    } else {
+      await fs.remove(path);
+    }
+  };
+
   if (verbose) {
     const spinner = ora(chalk.bold.cyan("File being deleted...")).start();
     try {
-      await fs.remove(fullPath);
+      await _removeDir(fullPath);
       spinner.succeed(chalk.bold.green("Deleted successfully"));
     } catch (error) {
       spinner.fail(chalk.bold.red("Deletion failed"));
       console.error(error);
     }
   } else {
-    await fs.remove(fullPath);
+    await _removeDir(fullPath);
   }
 }
 
@@ -46,43 +53,79 @@ async function copyFolderRecursive(sourceDir: string, destinationDir: string) {
   }
 }
 
+async function getLocalPackage(packageName: string, currentDir: string) {
+  const root = resolve(__dirname, "../../../../apps/");
+  // 通过dist/index.js，找到模板文件的路径
+  const templateName = `template-${packageName}`;
+  const templateDir = resolve(root, templateName);
+  const templateTgzPath = resolve(root, `${templateName}.tgz`);
+
+  if (!fs.existsSync(templateDir)) {
+    console.error(chalk.red(`\n 😡😡😡 ${templateName} template not found`));
+    process.exit(1);
+  }
+
+  const hasLocalTemplate = fs.existsSync(templateTgzPath);
+  if (!hasLocalTemplate) {
+    // 将 root 下的 templateName 打包到 templateTgzPath
+    await tar.create(
+      {
+        gzip: true,
+        cwd: root,
+        file: templateTgzPath,
+      },
+      [templateName],
+    );
+  }
+
+  await getPackageFromLocal(currentDir, templateTgzPath);
+}
+
+async function extractToPath(currentDir: string, tgzPath: string, forceOutDir?: string) {
+  await tar.extract({
+    file: tgzPath,
+    cwd: currentDir,
+  });
+
+  const extractDir = forceOutDir ?? /.*[/\\](.*)(?=\.).*/.exec(tgzPath)?.[1];
+
+  if (!extractDir) {
+    console.error(chalk.red(`\n 😡😡😡 ${tgzPath} template not found`));
+    process.exit(1);
+  }
+
+  await fs.unlink(tgzPath);
+  // todo: 尽量让解压后的目录名可控
+  await copyFolderRecursive(join(currentDir, `${extractDir}/template`), currentDir);
+  await removeDirectory(join(currentDir, extractDir), false);
+}
+
 export async function getNpmPackage(
   packageURL: string,
   packageName: string,
   projectName: string,
   isDev?: boolean | undefined,
 ): Promise<void> {
+  const currentDir = resolveApp(projectName);
+  // 如果是dev mode，检查并使用本地模板
+  if (isDev) {
+    await getLocalPackage(packageName, currentDir);
+    return;
+  }
+  // todo: commit lint 的时候会创建一个新的 spinner, 导致出现两次 'Creating a project...' 体验不是很好
+  // 前置的话在 dev 模式下这个 spinner 永远无法正确的被关闭
   const spinner = ora(chalk.bold.cyan("Creating a project...")).start();
+  // dev 模式下没可能会出现错误, 下载错误也会被 getPackageFromLocal 内部的 try 捕获
   try {
-    const currentDir = resolveApp(projectName);
-    // 如果是dev mode，检查并使用本地模板
-    if (isDev) {
-      const root = resolve(__dirname, "../../../../apps/");
-      // 通过dist/index.js，找到模板文件的路径
-      const templateDir = resolve(
-        root,
-        "template-react-web-ts/laconic-template-react-web-ts-1.0.1.tgz",
-      );
-      const hasLocalTemplate = fs.existsSync(templateDir);
-      if (hasLocalTemplate) {
-        await getPackageFromLocal(currentDir, templateDir);
-        return;
-      }
-    }
     const response = await axios.get(packageURL, {
       responseType: "arraybuffer",
     });
     const tgzPath = join(currentDir, `${packageName}-${packageVersion}.tgz`);
     fs.writeFileSync(tgzPath, response.data);
 
-    await tar.extract({
-      file: tgzPath,
-      cwd: currentDir,
-    });
+    // 解压到当前目录
+    await extractToPath(currentDir, tgzPath, "package");
 
-    await fs.unlink(tgzPath);
-    await copyFolderRecursive(join(projectName, "package/template"), projectName);
-    await removeDirectory(join(projectName, "package"), false);
     spinner.succeed(chalk.bold.green("Project creation successful"));
   } catch (error) {
     spinner.fail(chalk.bold.red("Project creation failed"));
@@ -94,10 +137,8 @@ export async function getNpmPackage(
 export async function getPackageFromLocal(currentDir: string, targetFile: string) {
   const spinner = ora(chalk.bold.cyan("Creating a project...")).start();
   try {
-    await tar.extract({
-      file: targetFile,
-      cwd: currentDir,
-    });
+    await extractToPath(currentDir, targetFile);
+
     spinner.succeed(chalk.bold.green("Project creation successful"));
   } catch (error) {
     spinner.fail(chalk.bold.red("Project creation failed"));
