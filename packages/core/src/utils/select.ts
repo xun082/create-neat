@@ -1,14 +1,16 @@
-import { multiselect, select, intro } from "@clack/prompts";
+import { multiselect, select, intro, text } from "@clack/prompts";
 import chalk from "chalk";
 import { execSync } from "child_process";
 
 import { buildToolType } from "../types";
 
-import { getPreset, defaultPresetLib, defaultPresetVue, defaultPresetReact } from "./preset";
+import { getPreset, defaultPreset } from "./preset";
 import { getNpmSource } from "./getnpmSource";
+import { savePresetToRcPath, getRcPath, loadRcOptions } from "./options";
 
 const registryInfo = execSync("npm config get registry").toString().trim();
 const npmSource: any = getNpmSource();
+const rcPath = getRcPath(".neatrc");
 /**
  * 表示用户对项目预设的回应。
  * @interface Responses
@@ -55,38 +57,41 @@ async function projectSelect() {
   };
 
   intro(chalk.green(" create-you-app "));
-  // 选择是否使用默认模板或者手动选择预设
-  const libPluginsName = getPluginsName(defaultPresetLib.plugins);
-  const vuePluginsName = getPluginsName(defaultPresetLib.plugins);
-  const reactPluginsName = getPluginsName(defaultPresetLib.plugins);
-  const isUseDefaultPreset = (await select({
+
+  // 从用户系统文件夹中获取用户保存的配置
+  const rcOptions = loadRcOptions();
+  // 将自定义预设与默认预设进行合并
+  const allPresets = Object.assign({}, rcOptions.presets, defaultPreset);
+
+  // 根据所有预设获取预设选项列表
+  function getPresetListOptions() {
+    return Object.keys(allPresets).map((key) => {
+      const tem = allPresets[key].template;
+      const pluginName = getPluginsName(allPresets[key].plugins);
+      const buildTool = allPresets[key].buildTool;
+      let label;
+      if (key in defaultPreset) {
+        label = `Default-${key}(${chalk.yellow("[" + tem + "] ")}${chalk.yellow(pluginName)}, ${chalk.yellow(buildTool)})`;
+      } else {
+        label = `${key}(${chalk.yellow("[" + tem + "] ")}${chalk.yellow(pluginName)}, ${chalk.yellow(buildTool)})`;
+      }
+      return {
+        value: key,
+        label,
+      };
+    });
+  }
+
+  const presetName = (await select({
     message: "Please pick a preset:",
-    options: [
-      {
-        value: "lib",
-        label: `Default-lib(${chalk.yellow("[" + defaultPresetLib.template + "] ")}${chalk.yellow(libPluginsName)}, ${chalk.yellow(defaultPresetLib.buildTool)})`,
-      },
-      {
-        value: "vue",
-        label: `Default-vue(${chalk.yellow("[" + defaultPresetVue.template + "] ")}${chalk.yellow(vuePluginsName)}, ${chalk.yellow(defaultPresetVue.buildTool)})`,
-      },
-      {
-        value: "react",
-        label: `Default-react(${chalk.yellow("[" + defaultPresetReact.template + "] ")}${chalk.yellow(reactPluginsName)}, ${chalk.yellow(defaultPresetReact.buildTool)})`,
-      },
-      { value: "false", label: "Manually select preset" },
-    ],
+    options: [...getPresetListOptions(), { value: "", label: "Manually select preset" }],
   })) as string;
 
-  if (isUseDefaultPreset === "lib") {
-    defaultPresetLib.npmSource = registryInfo;
-    return defaultPresetLib;
-  } else if (isUseDefaultPreset === "vue") {
-    defaultPresetVue.npmSource = registryInfo;
-    return defaultPresetVue;
-  } else if (isUseDefaultPreset === "react") {
-    defaultPresetReact.npmSource = registryInfo;
-    return defaultPresetReact;
+  if (presetName) {
+    if (!allPresets[presetName].npmSource) {
+      allPresets[presetName].npmSource = registryInfo;
+    }
+    return allPresets[presetName];
   }
 
   // 选择模板预设
@@ -153,7 +158,7 @@ async function projectSelect() {
     ],
   })) as boolean;
 
-  return getPreset(
+  const preset = getPreset(
     responses.template,
     responses.buildTool,
     responses.plugins,
@@ -161,6 +166,27 @@ async function projectSelect() {
     responses.npmSource,
     responses.extraConfigFiles,
   );
+
+  // 选择是否将此次预设保存到系统文件中
+  const isSavePreset = await select({
+    message: "Save this as a preset for future projects?",
+    options: [
+      { value: true, label: "Yes" },
+      { value: false, label: "No" },
+    ],
+  });
+
+  if (isSavePreset) {
+    const saveName = (await text({
+      message: "Save preset as:",
+      placeholder: "Please input presets name:",
+    })) as string;
+    if (saveName && savePresetToRcPath(preset, saveName)) {
+      console.log(`🎉  Preset ${chalk.yellow(saveName)} saved in ${chalk.yellow(rcPath)}`);
+    }
+  }
+
+  return preset;
 }
 
 export { projectSelect };
