@@ -3,6 +3,9 @@ import chalk from "chalk";
 import ora from "ora";
 import fs, { readFileSync } from "fs-extra";
 import { join } from "node:path";
+import { rmSync } from "node:fs";
+
+import { CLIENT_OS } from "./constants";
 
 /**
  * @author moment
@@ -20,7 +23,11 @@ export async function removeDirectory(
    */
   async function deleteDirectory() {
     try {
-      await fs.remove(fullPath);
+      if (CLIENT_OS === "mac") {
+        rmSync(fullPath, { recursive: true, force: true });
+      } else {
+        await fs.remove(fullPath);
+      }
       return true; // 成功删除
     } catch (error) {
       console.error(chalk.bold.red("Deletion failed"), error);
