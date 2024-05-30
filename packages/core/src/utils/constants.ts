@@ -65,3 +65,17 @@ export const buildToolScripts = {
     build: "build",
   },
 };
+
+function detectOS() {
+  const platform = process.platform;
+  if (platform === "win32") {
+    return "windows";
+  } else if (platform === "darwin") {
+    return "mac";
+  } else if (platform === "linux") {
+    return "linux";
+  }
+  return platform;
+}
+
+export const CLIENT_OS = detectOS();
