@@ -170,7 +170,7 @@ export default async function createAppTest(projectName: string, options: Record
   console.log(chalk.blue(`\n📄  Generating gitignore...`));
 
   const buildToolGitignore = createTemplateFile("gitignore");
-  const gitignoreFilePath = path.resolve(rootDirectory, ".gitignore");
+  const gitignoreFilePath = resolveApp(`${rootDirectory}/.gitignore`);
 
   fs.writeFileSync(gitignoreFilePath, buildToolGitignore);
 
