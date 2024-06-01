@@ -2,6 +2,8 @@ import { multiselect, select, intro, confirm, text } from "@clack/prompts";
 import chalk from "chalk";
 import { execSync } from "child_process";
 
+import { buildToolType } from "../types";
+
 import { getPreset, defaultPreset } from "./preset";
 import { getNpmSource } from "./getnpmSource";
 import { savePresetToRcPath, getRcPath, loadRcOptions } from "./options";
@@ -21,7 +23,7 @@ const rcPath = getRcPath(".neatrc");
  */
 interface Responses {
   template: string;
-  buildTool?: string;
+  buildTool?: buildToolType;
   plugins: string[];
   packageManager: string;
   npmSource: string;
@@ -124,7 +126,7 @@ async function projectSelect() {
       { value: "vite", label: "vite" },
       { value: "rollup", label: "rollup" },
     ],
-  })) as string;
+  })) as buildToolType;
 
   responses.transpilers = (await select({
     message: "Please select a JavaScript/TypeScript compiler for your project:",
