@@ -1,4 +1,4 @@
-import { multiselect, select, intro, text } from "@clack/prompts";
+import { multiselect, select, intro, confirm, text } from "@clack/prompts";
 import chalk from "chalk";
 import { execSync } from "child_process";
 
@@ -28,6 +28,8 @@ interface Responses {
   packageManager: string;
   npmSource: string;
   extraConfigFiles: boolean;
+  language: string;
+  transpilers: string;
 }
 
 /**
@@ -51,9 +53,11 @@ async function projectSelect() {
   const responses: Responses = {
     template: "",
     plugins: [],
-    packageManager: "",
-    npmSource: "",
+    packageManager: "npm",
+    npmSource: "https://registry.npmjs.org/",
     extraConfigFiles: true,
+    language: "javascript",
+    transpilers: "babel",
   };
 
   intro(chalk.green(" create-you-app "));
@@ -105,6 +109,15 @@ async function projectSelect() {
     ],
   })) as string;
 
+  // 选择模板预设
+  responses.language = (await select({
+    message: "Please select a language.",
+    options: [
+      { value: "javascript", label: "javascript" },
+      { value: "typescript", label: "typescript" },
+    ],
+  })) as string;
+
   // 选择构建工具
   responses.buildTool = (await select({
     message: "Pick a build tools for your project",
@@ -115,6 +128,14 @@ async function projectSelect() {
     ],
   })) as buildToolType;
 
+  responses.transpilers = (await select({
+    message: "Please select a JavaScript/TypeScript compiler for your project:",
+    options: [
+      { value: "babel", label: "babel" },
+      { value: "swc", label: "swc" },
+    ],
+  })) as string;
+
   // 选择插件
   responses.plugins = (await multiselect({
     message: `Pick plugins for your project.(${chalk.greenBright(
@@ -123,10 +144,9 @@ async function projectSelect() {
       "<i>",
     )} invert selection,${chalk.greenBright("<enter>")} next step)`,
     options: [
-      { value: "babel", label: "babel" },
-      { value: "typescript", label: "typescript" },
       { value: "eslint", label: "eslint" },
       { value: "prettier", label: "prettier" },
+      { value: "husky", label: "husky" },
     ],
     required: false,
   })) as string[];
@@ -141,12 +161,19 @@ async function projectSelect() {
     ],
   })) as string;
 
-  // 选择npm源
-  responses.npmSource = (await select({
-    message: "Pick a npm source for your project",
-    initialValue: registryInfo,
-    options: npmSource,
-  })) as string;
+  const changeNpmSource = (await confirm({
+    message: "Would you like to switch the npm registry?",
+    initialValue: false, // 默认选项
+  })) as boolean;
+
+  if (changeNpmSource === true) {
+    // 选择npm源
+    responses.npmSource = (await select({
+      message: "Pick a npm source for your project",
+      initialValue: registryInfo,
+      options: npmSource,
+    })) as string;
+  }
 
   // 选择插件配置文件生成位置
   responses.extraConfigFiles = (await select({
@@ -158,10 +185,17 @@ async function projectSelect() {
     ],
   })) as boolean;
 
+  // 语言插件、编译器插件、插件统一合并到allPlugins
+  let allPlugin: string[];
+  if (responses.language && responses.language === "typescript") {
+    allPlugin = [...responses.plugins, responses.language, responses.transpilers];
+  } else {
+    allPlugin = [...responses.plugins, responses.transpilers];
+  }
   const preset = getPreset(
     responses.template,
     responses.buildTool,
-    responses.plugins,
+    allPlugin,
     responses.packageManager,
     responses.npmSource,
     responses.extraConfigFiles,
