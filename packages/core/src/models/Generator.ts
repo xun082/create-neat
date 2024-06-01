@@ -38,7 +38,7 @@ const defaultConfigTransforms = {
   }),
   swc: new ConfigTransform({
     file: {
-      js: ["swc.config.js"],
+      json: [".swcrc"],
     },
   }),
   postcss: new ConfigTransform({
