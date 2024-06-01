@@ -2,14 +2,6 @@ import { multiselect, select, intro, confirm, text } from "@clack/prompts";
 import chalk from "chalk";
 import { execSync } from "child_process";
 
-import type {
-  buildToolType,
-  languageType,
-  transpilersType,
-  pluginsType,
-  packageManagerType,
-} from "../types";
-
 import { getPreset, defaultPreset } from "./preset";
 import { getNpmSource } from "./getnpmSource";
 import { savePresetToRcPath, getRcPath, loadRcOptions } from "./options";
@@ -29,13 +21,13 @@ const rcPath = getRcPath(".neatrc");
  */
 interface Responses {
   template: string;
-  buildTool?: buildToolType;
-  plugins: pluginsType[];
-  packageManager: packageManagerType;
+  buildTool?: string;
+  plugins: string[];
+  packageManager: string;
   npmSource: string;
   extraConfigFiles: boolean;
-  language: languageType;
-  transpilers: transpilersType;
+  language: string;
+  transpilers: string;
 }
 
 /**
@@ -122,7 +114,7 @@ async function projectSelect() {
       { value: "javascript", label: "javascript" },
       { value: "typescript", label: "typescript" },
     ],
-  })) as languageType;
+  })) as string;
 
   // 选择构建工具
   responses.buildTool = (await select({
@@ -132,7 +124,7 @@ async function projectSelect() {
       { value: "vite", label: "vite" },
       { value: "rollup", label: "rollup" },
     ],
-  })) as buildToolType;
+  })) as string;
 
   responses.transpilers = (await select({
     message: "Please select a JavaScript/TypeScript compiler for your project:",
@@ -140,7 +132,7 @@ async function projectSelect() {
       { value: "babel", label: "babel" },
       { value: "swc", label: "swc" },
     ],
-  })) as transpilersType;
+  })) as string;
 
   // 选择插件
   responses.plugins = (await multiselect({
@@ -155,7 +147,7 @@ async function projectSelect() {
       { value: "husky", label: "husky" },
     ],
     required: false,
-  })) as pluginsType[];
+  })) as string[];
 
   // 选择包管理器
   responses.packageManager = (await select({
@@ -165,7 +157,7 @@ async function projectSelect() {
       { value: "yarn", label: "yarn" },
       { value: "npm", label: "npm" },
     ],
-  })) as packageManagerType;
+  })) as string;
 
   const changeNpmSource = (await confirm({
     message: "Would you like to switch the npm registry?",
@@ -192,16 +184,16 @@ async function projectSelect() {
   })) as boolean;
 
   // 语言插件、编译器插件、插件统一合并到allPlugins
-  let allPlugins: string[];
-  if (responses.language === "typescript") {
-    allPlugins = [...responses.plugins, responses.language, responses.transpilers];
+  let allPlugin: string[];
+  if (responses.language && responses.language === "typescript") {
+    allPlugin = [...responses.plugins, responses.language, responses.transpilers];
   } else {
-    allPlugins = [...responses.plugins, responses.transpilers];
+    allPlugin = [...responses.plugins, responses.transpilers];
   }
   const preset = getPreset(
     responses.template,
     responses.buildTool,
-    allPlugins,
+    allPlugin,
     responses.packageManager,
     responses.npmSource,
     responses.extraConfigFiles,

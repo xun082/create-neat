@@ -31,14 +31,14 @@ const ensureEOL = (str: string) => {
 
 // 提前预置的插件对应的配置文件清单
 const defaultConfigTransforms = {
-  babel: new ConfigTransform({
-    file: {
-      js: ["babel.config.js"],
-    },
-  }),
   swc: new ConfigTransform({
     file: {
       json: [".swcrc"],
+    },
+  }),
+  babel: new ConfigTransform({
+    file: {
+      js: ["babel.config.js"],
     },
   }),
   postcss: new ConfigTransform({
