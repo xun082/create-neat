@@ -70,21 +70,7 @@ class FileTree {
     this.fileData = FileTree.buildFileData(this.rootDirectory);
 
     //如果有 ts 插件则更改相关文件后缀
-    function handleExt(file: FileData) {
-      if (file.type === "file") {
-        switch (file.describe?.fileExtension) {
-          case "js":
-            file.describe.fileExtension = "ts";
-            break;
-          case "jsx":
-            file.describe.fileExtension = "tsx";
-            break;
-          default:
-            break;
-        }
-      }
-    }
-    process.env.isTs && this.changeFileMiddleware(handleExt, true);
+    process.env.isTs && this.changeFileExtensionToTs();
   }
 
   /**
@@ -165,21 +151,22 @@ class FileTree {
   }
 
   /**
-   * 根据alteration对象，例如{'js':'ts','jsx':'tsx'}，将文件后缀从js,jsx更改为ts,tsx
-   * @param alteration - 指定文件后缀从什么更改为什么
+   * 使用中间件将文件后缀从js,jsx更改为ts,tsx
    */
-  changeFileExtension(alteration: Record<string, string>) {
+  changeFileExtensionToTs() {
+    const alteration = { js: "ts", jsx: "tsx" };
     const keys = Object.keys(alteration);
     function handleExt(file: FileData) {
       if (file.type === "file") {
         const key = file.describe.fileExtension;
-        if (keys.includes(file.describe.fileExtension)) {
+        if (keys.includes(key)) {
           file.describe.fileExtension = alteration[key];
         }
       }
     }
-    this.traverseTree(this.fileData, handleExt);
+    this.changeFileMiddleware(handleExt, true);
   }
+
   /**
    * 将单个文件树（type==='file'）通过ejs渲染成文件，只渲染文件
    * @async
@@ -226,21 +213,7 @@ class FileTree {
   addToTreeByPath(path: string) {
     this.fileData.children.push(FileTree.buildFileData(path));
     //如果有 ts 插件则更改相关文件后缀
-    function handleExt(file: FileData) {
-      if (file.type === "file") {
-        switch (file.describe?.fileExtension) {
-          case "js":
-            file.describe.fileExtension = "ts";
-            break;
-          case "jsx":
-            file.describe.fileExtension = "tsx";
-            break;
-          default:
-            break;
-        }
-      }
-    }
-    process.env.isTs && this.changeFileMiddleware(handleExt, true);
+    process.env.isTs && this.changeFileExtensionToTs();
   }
 
   /**
