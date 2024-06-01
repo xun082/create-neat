@@ -31,6 +31,11 @@ const ensureEOL = (str: string) => {
 
 // 提前预置的插件对应的配置文件清单
 const defaultConfigTransforms = {
+  swc: new ConfigTransform({
+    file: {
+      json: [".swcrc"],
+    },
+  }),
   babel: new ConfigTransform({
     file: {
       js: ["babel.config.js"],
@@ -324,9 +329,9 @@ class Generator {
         extra(pluginName.toLowerCase());
       }
     } else {
-      // 用户选择In package.json(false)时，插件配置生成在package.json中
-      // always extract babel.config.js as this is the only way to apply
+      // always extract babel.config.js or swc.config.js as this is the only way to apply
       extra("babel");
+      extra("swc");
     }
   }
 
