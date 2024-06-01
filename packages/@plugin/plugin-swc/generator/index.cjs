@@ -1,6 +1,6 @@
 module.exports = (generatorAPI) => {
   generatorAPI.extendPackage({
-    // babel 的文件内容↓
+    // swc 的文件内容↓
     swc: {
       jsc: {
         parser: {
