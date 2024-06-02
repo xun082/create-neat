@@ -95,6 +95,7 @@ export default async function createAppTest(projectName: string, options: Record
     version: "0.1.0",
     private: true,
     devDependencies: {},
+    scripts: {},
   };
 
   // 2. 初始化构建工具配置文件
@@ -128,6 +129,9 @@ export default async function createAppTest(projectName: string, options: Record
       delete packageContent.devDependencies["babel"];
     }
   });
+
+  packageContent.scripts["dev"] = `${buildTool}  --mode=development`;
+  packageContent.scripts["build"] = `${buildTool}  --mode=production`;
 
   const packageJson = new PackageAPI(rootDirectory);
   await packageJson.createPackageJson(packageContent);
