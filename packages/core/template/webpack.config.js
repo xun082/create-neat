@@ -9,7 +9,18 @@ module.exports = {
   },
   plugins: [],
   module: {
-    rules: [],
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ["@babel/preset-env"],
+          },
+        },
+      },
+    ],
   },
   devServer: {
     contentBase: path.join(__dirname, "dist"), // 开发服务器访问的路径
