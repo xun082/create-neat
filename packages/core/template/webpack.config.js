@@ -7,6 +7,9 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
     filename: "[name]-[hash:5].js",
   },
+  resolve: {
+    extensions: [".js", ".jsx"],
+  },
   plugins: [],
   module: {
     rules: [
