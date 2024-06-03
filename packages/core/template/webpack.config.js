@@ -5,7 +5,7 @@ module.exports = {
   mode: "development",
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "[name].js",
+    filename: "[name]-[hash:5].js",
   },
   plugins: [],
   module: {
