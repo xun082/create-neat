@@ -17,6 +17,7 @@ import { type Preset } from "./preset";
 import createSuccessInfo from "./createSuccessInfo";
 import dependenciesInstall from "./dependenciesInstall";
 import { createReadmeString } from "./createFiles";
+import { buildToolConfigDevDependencies, buildToolScripts } from "./constants";
 
 /**
  * 将输入模式设置为原始模式。
@@ -87,6 +88,9 @@ export default async function createAppTest(projectName: string, options: Record
 
   const { template, packageManager, plugins, buildTool, extraConfigFiles } = preset;
 
+  // 记录开始时间
+  const startTime = new Date().getTime();
+
   /* ----------从下面的代码开始，创建package.json---------- */
   console.log(chalk.blue(`\n📄  Generating package.json...`));
   // 1. 配置文件基本内容，包含不仅仅是package.json的字段
@@ -105,6 +109,18 @@ export default async function createAppTest(projectName: string, options: Record
   const buildToolConfigAst = parse(buildToolConfigTemplate, {
     sourceType: "module",
   });
+
+  // 根据构建工具类型为 package.json 新增不同的 scripts 脚本
+  packageContent.scripts = {
+    ...buildToolScripts[buildTool],
+    ...packageContent.scripts,
+  };
+
+  // 根据构建工具类型为 package.json 新增不同的依赖
+  packageContent.devDependencies = {
+    ...buildToolConfigDevDependencies[buildTool],
+    ...packageContent.devDependencies,
+  };
 
   const filePath = path.resolve(rootDirectory, `${buildTool}.config.js`);
   const directory = path.dirname(filePath);
@@ -167,7 +183,19 @@ export default async function createAppTest(projectName: string, options: Record
     "README-EN.md": createReadmeString(packageManager, template, "README-EN.md"),
   });
 
-  createSuccessInfo(projectName, "npm");
+  // 添加.gitignore
+  console.log(chalk.blue(`\n📄  Generating gitignore...`));
 
-  // gitignore
+  const buildToolGitignore = createTemplateFile("gitignore");
+  const gitignoreFilePath = resolveApp(`${rootDirectory}/.gitignore`);
+
+  fs.writeFileSync(gitignoreFilePath, buildToolGitignore);
+
+  // 记录结束时间
+  const endTime = new Date().getTime();
+
+  const diffTime = (endTime - startTime) / 1000;
+  console.log("✅ ", chalk.green("Add packages in", diffTime + "s"));
+
+  createSuccessInfo(projectName, "npm");
 }

@@ -1,11 +1,9 @@
-
 const PluginConfig = require("./generator/index.cjs");
 
-const pluginPrettier = (buildTool) => {
+const pluginSwc = (buildTool) => {
   return PluginConfig[buildTool] ?? console.warn(`Unsupported build tool: ${buildTool}`);
 };
 
 module.exports = {
-  pluginPrettier,
+  pluginSwc,
 };
-

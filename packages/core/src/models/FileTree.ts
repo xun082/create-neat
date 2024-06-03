@@ -112,7 +112,7 @@ class FileTree {
    * @param {FileData} file - 文件数对象
    * @param {(file: FileData) => any} handleFn - 处理文件树对象的函数
    */
-  traverseTree(file: FileData, handleFn: (file: FileData) => any) {
+  traverseTree(file: FileData, handleFn: (file: FileData, getFileByName?: any) => any) {
     handleFn(file);
     if (file.children.length) {
       file.children.forEach((subFile) => this.traverseTree(subFile, handleFn));
@@ -120,25 +120,51 @@ class FileTree {
   }
 
   /**
-   * 根据process.env.isTs来更改文件数对象的后缀属性
+   * 根据文件名返回fileData数组
+   * @param name 文件名
+   * @returns 匹配文件名的fileData数组
+   */
+  getFileByName(name: string) {
+    let result: FileData[];
+    this.traverseTree(this.fileData, (file) => {
+      if (file.describe.fileName === name) {
+        result.push(file);
+      }
+    });
+    return result;
+  }
+
+  /**
+   * 传递中间件数组，对文件树对象内容进行逐步修改
+   * @param middleware - 中间件函数，提供参数 根file对象,pkg：package.json，getFileByName:根据文件名获取文件
+   * @param isTraverse - 是否对每个file对象都使用middleware函数
+   */
+  changeFileMiddleware(
+    middleware: (file: FileData, getFileByName?: (name: string) => any) => any,
+    isTraverse: boolean = false,
+  ) {
+    if (isTraverse) {
+      this.traverseTree(this.fileData, middleware);
+    } else {
+      middleware(this.fileData, this.getFileByName);
+    }
+  }
+
+  /**
+   * 使用中间件将文件后缀从js,jsx更改为ts,tsx
    */
   changeFileExtensionToTs() {
-    //更改后缀的处理函数
+    const alteration = { js: "ts", jsx: "tsx" };
+    const keys = Object.keys(alteration);
     function handleExt(file: FileData) {
       if (file.type === "file") {
-        switch (file.describe?.fileExtension) {
-          case "js":
-            file.describe.fileExtension = "ts";
-            break;
-          case "jsx":
-            file.describe.fileExtension = "tsx";
-            break;
-          default:
-            break;
+        const key = file.describe.fileExtension;
+        if (keys.includes(key)) {
+          file.describe.fileExtension = alteration[key];
         }
       }
     }
-    this.traverseTree(this.fileData, handleExt);
+    this.changeFileMiddleware(handleExt, true);
   }
 
   /**
@@ -186,7 +212,7 @@ class FileTree {
    */
   addToTreeByPath(path: string) {
     this.fileData.children.push(FileTree.buildFileData(path));
-    //根据process.env.isTs更改后缀
+    //如果有 ts 插件则更改相关文件后缀
     process.env.isTs && this.changeFileExtensionToTs();
   }
 

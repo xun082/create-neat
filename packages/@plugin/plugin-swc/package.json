@@ -1,0 +1,12 @@
+{
+  "name": "@laconic/plugin-swc",
+  "version": "1.0.0",
+  "description": "swc plugin for create-neat",
+  "type": "commonjs",
+  "main": "index.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

@@ -1,3 +1,5 @@
+import type { buildToolType } from "../types";
+
 /**
  * 表示用户的预设配置。
  * @interface Preset
@@ -10,7 +12,7 @@
  */
 interface Preset {
   template: string;
-  buildTool: string;
+  buildTool: buildToolType;
   plugins: Record<string, any>;
   packageManager: string;
   npmSource: string;
@@ -29,7 +31,7 @@ interface Preset {
 // todo: 目前没有使用到 defaultPreset，后续考虑加入默认配置
 const getPreset = (
   template: string,
-  buildTool: string,
+  buildTool: buildToolType,
   plugins: string[],
   packageManager: string,
   npmSource: string,
@@ -56,16 +58,49 @@ const getPreset = (
  * @constant {Preset} defaultPreset
  * @description 默认预设配置对象，包含常见配置的默认值。
  */
-const defaultPreset: Preset = {
+const defaultPresetLib: Preset = {
   template: "common-lib",
   buildTool: "webpack",
   plugins: {
     eslint: {},
+    babel: {},
   },
   packageManager: "npm",
   npmSource: "",
   // todo: 更多配置随构建需要添加
   extraConfigFiles: true,
+};
+
+const defaultPresetVue: Preset = {
+  template: "vue",
+  buildTool: "webpack",
+  plugins: {
+    eslint: {},
+    babel: {},
+  },
+  packageManager: "npm",
+  npmSource: "",
+  // todo: 更多配置随构建需要添加
+  extraConfigFiles: true,
+};
+
+const defaultPresetReact: Preset = {
+  template: "react",
+  buildTool: "webpack",
+  plugins: {
+    eslint: {},
+    babel: {},
+  },
+  packageManager: "npm",
+  npmSource: "",
+  // todo: 更多配置随构建需要添加
+  extraConfigFiles: true,
+};
+
+const defaultPreset = {
+  lib: defaultPresetLib,
+  vue: defaultPresetVue,
+  react: defaultPresetReact,
 };
 
 export { Preset, getPreset, defaultPreset };

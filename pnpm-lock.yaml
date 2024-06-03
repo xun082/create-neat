@@ -7,13 +7,6 @@ settings:
 importers:
 
   .:
-    dependencies:
-      '@types/node':
-        specifier: ^20.11.22
-        version: 20.12.8
-      ejs:
-        specifier: ^3.1.9
-        version: 3.1.10
     devDependencies:
       '@commitlint/cli':
         specifier: ^18.4.3
@@ -33,6 +26,9 @@ importers:
       '@rollup/plugin-typescript':
         specifier: ^11.1.5
         version: 11.1.6(rollup@4.17.2)(tslib@2.6.2)(typescript@5.4.5)
+      '@types/node':
+        specifier: ^20.11.22
+        version: 20.12.8
       '@types/prettier':
         specifier: ^3.0.0
         version: 3.0.0
@@ -108,6 +104,8 @@ importers:
 
   packages/@plugin/plugin-prettier: {}
 
+  packages/@plugin/plugin-swc: {}
+
   packages/@plugin/plugin-typescript: {}
 
   packages/core:
@@ -145,6 +143,9 @@ importers:
       cross-spawn:
         specifier: ^7.0.3
         version: 7.0.3
+      ejs:
+        specifier: ^3.1.9
+        version: 3.1.10
       fs-extra:
         specifier: ^11.2.0
         version: 11.2.0
