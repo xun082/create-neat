@@ -1,4 +1,3 @@
-
 const PluginConfig = require("./generator/index.cjs");
 
 const pluginPrettier = (buildTool) => {
@@ -8,4 +7,3 @@ const pluginPrettier = (buildTool) => {
 module.exports = {
   pluginPrettier,
 };
-
