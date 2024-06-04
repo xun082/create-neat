@@ -168,7 +168,7 @@ class Generator {
 
   // 生成构建工具配置文件
   async buildToolGenerate(entryPath: string) {
-    // 执行 plugin/template 的入口文件，把 config 写进来
+    // 执行 plugin的入口文件，把 config 合并到构建工具原始配置中
     const baseEntry = await loadModule(entryPath, path.resolve(__dirname, relativePathToRoot));
 
     // 处理构建工具配置
