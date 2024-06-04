@@ -38,3 +38,44 @@ export const projectLink: Map<string, string> = getProjectLink(template);
  * @constant {string}
  */
 export const relativePathToRoot = "../../../../";
+
+export const buildToolConfigDevDependencies = {
+  webpack: {
+    webpack: "^5.91.0",
+  },
+  vite: {
+    vite: "^5.2.11",
+  },
+  rollup: {
+    rollup: "^4.18.0",
+  },
+};
+
+export const buildToolScripts = {
+  webpack: {
+    dev: "dev",
+    build: "build",
+  },
+  rollup: {
+    dev: "dev",
+    build: "build",
+  },
+  vite: {
+    dev: "dev",
+    build: "build",
+  },
+};
+
+function detectOS() {
+  const platform = process.platform;
+  if (platform === "win32") {
+    return "windows";
+  } else if (platform === "darwin") {
+    return "mac";
+  } else if (platform === "linux") {
+    return "linux";
+  }
+  return platform;
+}
+
+export const CLIENT_OS = detectOS();
