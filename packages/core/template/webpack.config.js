@@ -5,7 +5,7 @@ module.exports = {
   mode: "development",
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "[name]-[hash:5].js",
+    filename: "[name].js",
   },
   resolve: {
     extensions: [".js", ".jsx"],
