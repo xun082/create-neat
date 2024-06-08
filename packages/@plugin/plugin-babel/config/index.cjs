@@ -1,7 +1,11 @@
 const vite = require("./vite.cjs");
-const webpack = require("./webpack.cjs");
+const react = require("./webpack.react.cjs");
+const vue = require("./webpack.vue.cjs");
 
 module.exports = {
   vite,
-  webpack,
+  webpack: {
+    react,
+    vue,
+  },
 };
