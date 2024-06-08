@@ -1,0 +1,206 @@
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { DefinePlugin } = require('webpack');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const HtmlMinimizerPlugin = require('html-minimizer-webpack-plugin');
+const CompressionWebpackPlugin = require('compression-webpack-plugin');
+const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
+
+<% if (framework === 'react') { %>
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+<% } %>
+
+<% if (framework === 'vue') { %>
+const { VueLoaderPlugin } = require('vue-loader');
+<% } %>
+
+const isDevelopment = process.env.NODE_ENV === 'development';
+const isProduction = process.env.NODE_ENV === 'production';
+
+const developmentPlugins = isDevelopment ? [
+  <% if (framework === 'react') { %>
+  new ReactRefreshWebpackPlugin(),
+  new ForkTsCheckerWebpackPlugin({ async: false }),
+  <% } %>
+  <% if (framework === 'vue') { %>
+  new VueLoaderPlugin(),
+  <% } %>
+] : [];
+
+const productionPlugins = isProduction ? [
+  new MiniCssExtractPlugin({
+    filename: 'static/css/[name].[contenthash].css',
+    chunkFilename: 'static/css/[name].[contenthash].css',
+    ignoreOrder: true,
+  }),
+  new CompressionWebpackPlugin({
+    filename: '[path][base].gz',
+    algorithm: 'gzip',
+    test: /\.js$|\.json$|\.css/,
+    threshold: 10240,
+    minRatio: 0.8,
+  }),
+] : [];
+
+module.exports = {
+  stats: 'errors-warnings',
+  entry: '<% if (framework === "react") { %><% if (language === "typescript" || (bundler === "swc" && language === "typescript")) { %>./src/index.tsx<% } else if (language === "javascript" || (bundler === "swc" && language === "javascript")) { %>./src/index.jsx<% } %><% } else if (framework === "vue") { %><% if (language === "typescript" || (bundler === "swc" && language === "typescript")) { %>./src/main.tsx<% } else if (language === "javascript" || (bundler === "swc" && language === "javascript")) { %>./src/main.jsx<% } else { %>./src/main.ts<% } %><% } %>',
+  mode: isDevelopment ? 'development' : 'production',
+  devtool: isDevelopment ? 'eval-source-map' : 'none',
+  output: {
+    path: isDevelopment ? undefined : path.resolve(__dirname, './dist'),
+    assetModuleFilename: 'assets/[hash][ext][query]',
+    filename: isDevelopment
+      ? 'static/js/[name].bundle.js'
+      : 'static/js/[name].[contenthash:8].bundle.js',
+    chunkFilename: isDevelopment
+      ? 'static/js/[name].chunk.js'
+      : 'static/js/[name].[contenthash:8].chunk.js',
+    clean: true,
+    pathinfo: false,
+  },
+  module: {
+    rules: [
+    {
+        test: /\.css$/i,
+        include: [path.resolve(__dirname, './src')],
+        exclude: /node_modules/,
+        use: [
+          isDevelopment ? 
+          <% if (framework === 'vue') { %>
+          'vue-style-loader' 
+          <% } else { %>
+          'style-loader' 
+          <% } %>
+          : MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: isDevelopment, // 在开发环境下开启
+              modules: {
+                mode: 'local',
+                auto: true,
+                exportGlobals: true,
+                localIdentName: isDevelopment
+                  ? '[path][name]__[local]--[hash:base64:5]'
+                  : '[local]--[hash:base64:5]',
+                localIdentContext: path.resolve(__dirname, './src'),
+                exportLocalsConvention: 'camelCase',
+              },
+              importLoaders: 2,
+            },
+          },
+          'postcss-loader',
+        ].filter(Boolean),
+      },
+      {
+        test: /\.(jpe?g|png|gif|webp|svg|mp4)$/,
+        type: 'asset',
+        generator: {
+          filename: './images/[hash:8][ext][query]',
+        },
+        parser: {
+          dataUrlCondition: {
+            maxSize: 10 * 1024,
+          },
+        },
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/i,
+        type: 'asset/resource',
+        generator: {
+          filename: './assets/fonts/[hash][ext][query]',
+        },
+      },
+    ].filter(Boolean),
+  },
+  resolve: {
+    extensions: [<% if (framework === 'vue') { %>'.vue', <% } %>'.js', '.jsx', '.ts', '.tsx'],
+    alias: {
+      '@pages': './src/pages',
+      '@': './src',
+    },
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './public/index.html',
+      filename: 'index.html',
+      title: 'moment',
+      inject: true,
+      hash: true,
+      minify: isDevelopment
+        ? false
+        : {
+            removeComments: true,
+            collapseWhitespace: true,
+            minifyCSS: true,
+            minifyJS: true,
+            caseSensitive: true,
+            removeRedundantAttributes: true,
+            removeEmptyAttributes: true,
+            removeStyleLinkTypeAttributes: true,
+            removeScriptTypeAttributes: true,
+            useShortDoctype: true,
+          },
+    }),
+    new DefinePlugin({
+      BASE_URL: '"./"',
+      'process.env': JSON.stringify(process.env),
+    }),
+    ...developmentPlugins,
+    ...productionPlugins,
+  ].filter(Boolean),
+  performance: isProduction
+    ? {
+        hints: false,
+        maxEntrypointSize: 512000,
+        maxAssetSize: 512000,
+      }
+    : undefined,
+  optimization: isProduction
+    ? {
+        chunkIds: 'named',
+        moduleIds: 'deterministic',
+        minimize: true,
+        usedExports: true,
+        minimizer: [
+          new TerserPlugin({
+            test: /\.(tsx?|jsx?)$/,
+            include: [path.resolve(__dirname, './src')],
+            exclude: /node_modules/,
+            parallel: true,
+            terserOptions: {
+              toplevel: true,
+              ie8: true,
+              safari10: true,
+              compress: {
+                arguments: false,
+                dead_code: true,
+                pure_funcs: ['console.log'],
+              },
+            },
+          }),
+          new CssMinimizerPlugin(),
+          new HtmlMinimizerPlugin(),
+        ],
+        splitChunks: {
+          chunks: 'all',
+          cacheGroups: {
+            vendor: {
+              name: 'vendors',
+              enforce: true,
+              test: /[\\/]node_modules[\\/]/,
+              filename: 'static/js/[id]_vendors.js',
+              priority: 10,
+            },
+          },
+        },
+        runtimeChunk: {
+          name: 'runtime',
+        },
+      }
+    : undefined,
+};
