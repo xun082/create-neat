@@ -10,7 +10,7 @@ module.exports = {
         cacheDirectory: true,
         cacheCompression: false,
         presets: [],
-        // plugins: [require.resolve("react-refresh/babel")].filter(Boolean),
+        plugins: ["react-refresh/babel"],
       },
       exclude: [/node_modules/, /public/, /(.|_)min\.js$/],
     },
