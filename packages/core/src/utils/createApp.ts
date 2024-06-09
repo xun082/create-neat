@@ -9,7 +9,7 @@ import path from "path";
 import Generator from "../models/Generator";
 import PackageAPI from "../models/PackageAPI";
 
-import { removeDirectory, createTemplateFile } from "./fileController";
+import { removeDirectory, readTemplateFileContent } from "./fileController";
 import { projectSelect } from "./select";
 import gitCheck from "./gitCheck";
 import { createFiles } from "./createFiles";
@@ -18,6 +18,7 @@ import createSuccessInfo from "./createSuccessInfo";
 import dependenciesInstall from "./dependenciesInstall";
 import { createReadmeString } from "./createFiles";
 import { buildToolConfigDevDependencies, buildToolScripts } from "./constants";
+import generateWebpackConfigFromEJS from "./generateWebpackConfigFromEJS";
 
 /**
  * 将输入模式设置为原始模式。
@@ -34,6 +35,21 @@ process.stdin.on("data", (key) => {
     process.exit(1);
   }
 });
+
+/**
+ * 创建目录并写入文件。
+ * @param {string} filePath - 文件路径。
+ * @param {string} content - 文件内容。
+ */
+function createDirAndWriteFile(filePath: string, content: string) {
+  const directory = path.dirname(filePath);
+
+  if (!fs.existsSync(directory)) {
+    fs.mkdirSync(directory, { recursive: true });
+  }
+
+  fs.writeFileSync(filePath, content);
+}
 
 /**
  * 创建项目文件夹。
@@ -88,6 +104,8 @@ export default async function createAppTest(projectName: string, options: Record
 
   const { template, packageManager, plugins, buildTool, extraConfigFiles } = preset;
 
+  console.log(preset);
+
   // 记录开始时间
   const startTime = new Date().getTime();
 
@@ -103,12 +121,20 @@ export default async function createAppTest(projectName: string, options: Record
   };
 
   // 2. 初始化构建工具配置文件
-
-  const buildToolConfigTemplate = createTemplateFile(`${buildTool}.config.js`);
-
-  const buildToolConfigAst = parse(buildToolConfigTemplate, {
+  const buildToolConfigTemplate = readTemplateFileContent(`${buildTool}.config.ejs`);
+  const ejsResolver = generateWebpackConfigFromEJS(
+    template,
+    buildTool,
+    "typescript" in plugins ? "typescript" : "javascript",
+    buildToolConfigTemplate,
+  );
+  const buildToolConfigAst = parse(ejsResolver, {
     sourceType: "module",
+    ranges: true,
+    tokens: true,
   });
+
+  console.log(buildToolConfigAst);
 
   // 根据构建工具类型为 package.json 新增不同的 scripts 脚本
   packageContent.scripts = {
@@ -122,14 +148,10 @@ export default async function createAppTest(projectName: string, options: Record
     ...packageContent.devDependencies,
   };
 
-  const filePath = path.resolve(rootDirectory, `${buildTool}.config.js`);
-  const directory = path.dirname(filePath);
-
-  if (!fs.existsSync(directory)) {
-    fs.mkdirSync(directory, { recursive: true });
-  }
-
-  fs.writeFileSync(filePath, buildToolConfigTemplate);
+  createDirAndWriteFile(
+    path.resolve(rootDirectory, `${buildTool}.config.js`),
+    buildToolConfigTemplate,
+  );
 
   // 3. 遍历 plugins，插入依赖
   Object.keys(plugins).forEach((dep) => {
@@ -165,6 +187,7 @@ export default async function createAppTest(projectName: string, options: Record
     ast: buildToolConfigAst,
     buildTool,
   });
+
   await generators.generate({
     extraConfigFiles,
   });
@@ -183,10 +206,10 @@ export default async function createAppTest(projectName: string, options: Record
   // 添加.gitignore
   console.log(chalk.blue(`\n📄  Generating gitignore...`));
 
-  const buildToolGitignore = createTemplateFile("gitignore");
+  const buildToolGitignore = readTemplateFileContent("gitignore");
   const gitignoreFilePath = resolveApp(`${rootDirectory}/.gitignore`);
 
-  fs.writeFileSync(gitignoreFilePath, buildToolGitignore);
+  createDirAndWriteFile(gitignoreFilePath, buildToolGitignore);
 
   // 记录结束时间
   const endTime = new Date().getTime();

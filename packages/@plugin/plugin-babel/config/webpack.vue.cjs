@@ -3,20 +3,6 @@ const path = require("path");
 module.exports = {
   rules: [
     {
-      test: /\.vue$/,
-      use: [
-        {
-          loader: "vue-loader",
-          options: {
-            compilerOptions: {
-              preserveWhitespace: false,
-            },
-            hotReload: isDevelopment,
-          },
-        },
-      ],
-    },
-    {
       test: /\.(tsx?|jsx?)$/,
       include: [path.resolve(__dirname, "./src")],
       exclude: [/node_modules/, /public/, /(.|_)min\.js$/],
@@ -29,7 +15,7 @@ module.exports = {
             cacheCompression: false,
           },
         },
-        // require.resolve("@ant-design-vue/vue-jsx-hot-loader"),
+        "@ant-design-vue/vue-jsx-hot-loader",
       ],
     },
   ],
