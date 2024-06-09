@@ -41,18 +41,19 @@ const vueBabelConfig = {
   plugins: ["@vue/babel-plugin-jsx", ...commonBabelPlugins],
 };
 
-module.exports = (generatorAPI) => {
-  // 扩展package.json配置
-  generatorAPI.extendPackage({
-    react: {
+module.exports = (generatorAPI, template) => {
+  let config;
+  if (template === "react") {
+    config = {
       babel: reactBabelConfig,
       dependencies: commonDependencies,
       devDependencies: {
         ...commonDevDependencies,
         "@babel/preset-react": "^7.24.7",
       },
-    },
-    vue: {
+    };
+  } else if (template === "vue") {
+    config = {
       babel: vueBabelConfig,
       dependencies: commonDependencies,
       devDependencies: {
@@ -61,6 +62,10 @@ module.exports = (generatorAPI) => {
         "@vue/babel-plugin-jsx": "1.2.2",
         "@ant-design-vue/vue-jsx-hot-loader": "^0.1.4",
       },
-    },
+    };
+  }
+  // 扩展package.json配置
+  generatorAPI.extendPackage({
+    ...config,
   });
 };
