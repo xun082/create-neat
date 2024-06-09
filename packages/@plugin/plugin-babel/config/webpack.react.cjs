@@ -1,3 +1,4 @@
+const path = require("path");
 module.exports = {
   rules: [
     {
@@ -9,7 +10,7 @@ module.exports = {
         cacheDirectory: true,
         cacheCompression: false,
         presets: [],
-        plugins: [require.resolve("react-refresh/babel")].filter(Boolean),
+        // plugins: [require.resolve("react-refresh/babel")].filter(Boolean),
       },
       exclude: [/node_modules/, /public/, /(.|_)min\.js$/],
     },
