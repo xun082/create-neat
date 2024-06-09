@@ -1,3 +1,5 @@
+const path = require("path");
+
 module.exports = {
   rules: [
     {
@@ -27,7 +29,7 @@ module.exports = {
             cacheCompression: false,
           },
         },
-        require.resolve("@ant-design-vue/vue-jsx-hot-loader"),
+        // require.resolve("@ant-design-vue/vue-jsx-hot-loader"),
       ],
     },
   ],
