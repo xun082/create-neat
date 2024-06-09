@@ -150,8 +150,11 @@ class Generator {
   }
 
   // 根据环境变量加载 plugin/template
-  async loadBase(pkgPath: string, modulePath: string): Promise<(api: BaseAPI) => Promise<any>> {
-    let baseGenerator: (api: BaseAPI) => Promise<any>;
+  async loadBase(
+    pkgPath: string,
+    modulePath: string,
+  ): Promise<(api: BaseAPI, template?: string) => Promise<any>> {
+    let baseGenerator: (api: BaseAPI, template?: string) => Promise<any>;
     if (process.env.NODE_ENV === "DEV") {
       const basePathInDev = pkgPath;
       baseGenerator = await loadModule(basePathInDev, path.resolve(__dirname, relativePathToRoot));
@@ -176,7 +179,7 @@ class Generator {
       // 解析配置项成 ast 语法树,并且和原始配置的 ast 合并
       createConfigByParseAst(
         this.buildToolConfig.buildTool,
-        baseEntry(this.buildToolConfig.buildTool),
+        baseEntry(this.buildToolConfig.buildTool, this.templateName),
         this.buildToolConfig.ast,
       );
       const code = generator(this.buildToolConfig.ast).code;
@@ -198,7 +201,7 @@ class Generator {
     );
 
     if (pluginGenerator && typeof pluginGenerator === "function") {
-      await pluginGenerator(this.generatorAPI);
+      await pluginGenerator(this.generatorAPI, this.templateName);
     }
 
     // ejs 渲染插件的 template 文件
