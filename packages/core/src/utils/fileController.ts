@@ -53,6 +53,6 @@ export async function removeDirectory(
  * @param file 指定要读取的文件名
  * @returns 返回文件内容的字符串
  */
-export function createTemplateFile(file: string) {
+export function readTemplateFileContent(file: string) {
   return readFileSync(join(__dirname, "../../template/", file)).toString();
 }
