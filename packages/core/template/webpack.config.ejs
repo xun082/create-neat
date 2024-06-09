@@ -43,6 +43,24 @@ const productionPlugins = isProduction ? [
     threshold: 10240,
     minRatio: 0.8,
   }),
+  // 生成目录文件
+  new WebpackManifestPlugin({
+    fileName: "asset-manifest.json",
+    generate: (seed, files, entryPoints) => {
+      const manifestFiles = files.reduce((manifest, file) => {
+        if (manifest) manifest[file.name] = file.path;
+        return manifest;
+      }, seed);
+      const entrypointFiles = entryPoints.index.filter(
+        (fileName) => !fileName.endsWith(".map")
+      );
+
+      return {
+        files: manifestFiles,
+        entryPoints: entrypointFiles,
+      };
+    },
+  }),
 ] : [];
 
 module.exports = {
@@ -115,6 +133,22 @@ module.exports = {
           filename: './assets/fonts/[hash][ext][query]',
         },
       },
+      <% if (framework === 'vue') { %>
+      {
+        test: /\.vue$/,
+        use: [
+          {
+            loader: "vue-loader",
+            options: {
+              compilerOptions: {
+                preserveWhitespace: false,
+              },
+              hotReload: isDevelopment,
+            },
+          },
+        ],
+      },
+      <% } %>
     ].filter(Boolean),
   },
   resolve: {

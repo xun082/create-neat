@@ -2,7 +2,7 @@ import fs from "fs-extra";
 import path from "path";
 import chalk from "chalk";
 
-import { createTemplateFile } from "./fileController";
+import { readTemplateFileContent } from "./fileController";
 
 /**
  * 生成一系列指定的文件
@@ -51,7 +51,7 @@ async function createFiles(dir: string, files: Record<string, string>): Promise<
 
 function createReadmeString(packageManager: string, template: string, fileName: string) {
   try {
-    const readmeInfo = createTemplateFile(fileName);
+    const readmeInfo = readTemplateFileContent(fileName);
 
     // 框架首字母大写 Vue React
     const newTemplate = template.charAt(0).toUpperCase() + template.slice(1);

@@ -2,26 +2,19 @@ const vite = require("./vite.cjs");
 const reactWebpackConfig = require("./webpack.react.cjs");
 const vueWebpackConfig = require("./webpack.vue.cjs");
 
-function getconfig(template) {
-  if (template === "vue") {
-    return {
-      vite,
-      webpack: vueWebpackConfig,
-    };
-  } else if (template === "react") {
-    return {
-      vite,
-      webpack: reactWebpackConfig,
-    };
-  }
+const templateConfigs = {
+  vue: {
+    vite,
+    webpack: vueWebpackConfig,
+  },
+  react: {
+    vite,
+    webpack: reactWebpackConfig,
+  },
+};
+
+function getConfig(template) {
+  return templateConfigs[template] || null;
 }
 
-// module.exports = {
-//   vite,
-//   webpack: {
-//     react,
-//     vue,
-//   },
-// };
-
-module.exports = getconfig;
+module.exports = getConfig;
