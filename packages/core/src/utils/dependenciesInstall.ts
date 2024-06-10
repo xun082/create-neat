@@ -50,8 +50,8 @@ const installDependencies = (
         // 执行具体命令
         try {
           const pm = spawn(
-            packageManager,
-            [installCommand[packageManager], params, ...devDepsArray],
+            packageManager + (process.platform === "win32" ? ".cmd" : ""),
+            [installCommand[packageManager], installParams[packageManager], ...devDepsArray],
             {
               stdio: "ignore",
               cwd: packageJsonFile,
