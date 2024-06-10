@@ -1,30 +1,53 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalDependencies": ["**/.env.*local"],
-  "pipeline": {
+  "globalDependencies": [
+    "**/.env.*local"
+  ],
+  "ui": "stream",
+  "tasks": {
     "build": {
-      "dependsOn": ["^build"],
-      "outputs": ["dist/**"]
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "dist/**"
+      ]
     },
     "lint": {
-      "dependsOn": ["^lint"]
+      "dependsOn": [
+        "^lint"
+      ]
     },
     "dev": {
-      "dependsOn": ["^build"],
-      "outputs": [""],
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        ""
+      ],
       "cache": false,
       "persistent": true
     },
     "@laconic/utils": {
-      "outputs": [""]
+      "outputs": [
+        ""
+      ]
     },
     "create-neat": {
-      "dependsOn": ["@laconic/utils"],
-      "outputs": [""]
+      "dependsOn": [
+        "@laconic/utils"
+      ],
+      "outputs": [
+        ""
+      ]
     },
     "@laconic/rollup-script": {
-      "dependsOn": ["@laconic/utils"],
-      "outputs": [""]
+      "dependsOn": [
+        "@laconic/utils"
+      ],
+      "outputs": [
+        ""
+      ]
     }
   }
 }
