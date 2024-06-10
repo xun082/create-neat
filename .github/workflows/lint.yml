@@ -43,4 +43,4 @@ jobs:
         run: pnpm run lint:ci
 
       - name: Check
-        run: pnpm run check
+        run: pnpm run check:turbo
