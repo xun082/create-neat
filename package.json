@@ -22,7 +22,8 @@
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [
       "pnpm format:ci",
-      "pnpm lint:ci"
+      "pnpm lint:ci",
+      "pnpm check:turbo"
     ]
   },
   "repository": {
