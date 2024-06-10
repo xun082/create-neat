@@ -109,6 +109,7 @@ importers:
   packages/@plugin/plugin-typescript: {}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   docs:
     dependencies:
       '@giscus/vue':
@@ -206,6 +207,8 @@ importers:
 >>>>>>> c481920 (refactor: 重构整体架构，优化项目文件生成逻辑 (#206))
 =======
 >>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
+=======
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
   packages/core:
     dependencies:
       '@babel/generator':
@@ -250,9 +253,6 @@ importers:
       minimist:
         specifier: ^1.2.8
         version: 1.2.8
-      minimist:
-        specifier: ^1.2.8
-        version: 1.2.8
       ora:
         specifier: ^5.4.1
         version: 5.4.1
@@ -282,6 +282,7 @@ importers:
         specifier: ^6.1.11
         version: 6.1.13
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -714,12 +715,15 @@ importers:
 >>>>>>> c481920 (refactor: 重构整体架构，优化项目文件生成逻辑 (#206))
 =======
 >>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
+=======
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
   packages/utils:
     devDependencies:
       '@types/node':
         specifier: ^20.11.22
         version: 20.12.8
 
+<<<<<<< HEAD
 <<<<<<< HEAD
   packages/vue-webpack-config:
     dependencies:
@@ -877,166 +881,10 @@ importers:
 
 =======
 >>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
+=======
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
 packages:
 
-<<<<<<< HEAD
-  /@aashutoshrathi/word-wrap@1.2.6:
-    resolution: {integrity: sha512-1Yjs2SvM8TflER/OD3cOjhWWOZb58A2t7wpE2S9XfBYTiIl+XFhQG2bjy4Pu1I+EAlCNUzRDYDdFwFYUKvXcIA==}
-    engines: {node: '>=0.10.0'}
-    dev: true
-
-  /@algolia/autocomplete-core@1.9.3(@algolia/client-search@4.23.3)(algoliasearch@4.23.3)(search-insights@2.13.0):
-    resolution: {integrity: sha512-009HdfugtGCdC4JdXUbVJClA0q0zh24yyePn+KUGk3rP7j8FEe/m5Yo/z65gn6nP/cM39PxpzqKrL7A6fP6PPw==}
-    dependencies:
-      '@algolia/autocomplete-plugin-algolia-insights': 1.9.3(@algolia/client-search@4.23.3)(algoliasearch@4.23.3)(search-insights@2.13.0)
-      '@algolia/autocomplete-shared': 1.9.3(@algolia/client-search@4.23.3)(algoliasearch@4.23.3)
-    transitivePeerDependencies:
-      - '@algolia/client-search'
-      - algoliasearch
-      - search-insights
-    dev: true
-
-  /@algolia/autocomplete-plugin-algolia-insights@1.9.3(@algolia/client-search@4.23.3)(algoliasearch@4.23.3)(search-insights@2.13.0):
-    resolution: {integrity: sha512-a/yTUkcO/Vyy+JffmAnTWbr4/90cLzw+CC3bRbhnULr/EM0fGNvM13oQQ14f2moLMcVDyAx/leczLlAOovhSZg==}
-    peerDependencies:
-      search-insights: '>= 1 < 3'
-    dependencies:
-      '@algolia/autocomplete-shared': 1.9.3(@algolia/client-search@4.23.3)(algoliasearch@4.23.3)
-      search-insights: 2.13.0
-    transitivePeerDependencies:
-      - '@algolia/client-search'
-      - algoliasearch
-    dev: true
-
-  /@algolia/autocomplete-preset-algolia@1.9.3(@algolia/client-search@4.23.3)(algoliasearch@4.23.3):
-    resolution: {integrity: sha512-d4qlt6YmrLMYy95n5TB52wtNDr6EgAIPH81dvvvW8UmuWRgxEtY0NJiPwl/h95JtG2vmRM804M0DSwMCNZlzRA==}
-    peerDependencies:
-      '@algolia/client-search': '>= 4.9.1 < 6'
-      algoliasearch: '>= 4.9.1 < 6'
-    dependencies:
-      '@algolia/autocomplete-shared': 1.9.3(@algolia/client-search@4.23.3)(algoliasearch@4.23.3)
-      '@algolia/client-search': 4.23.3
-      algoliasearch: 4.23.3
-    dev: true
-
-  /@algolia/autocomplete-shared@1.9.3(@algolia/client-search@4.23.3)(algoliasearch@4.23.3):
-    resolution: {integrity: sha512-Wnm9E4Ye6Rl6sTTqjoymD+l8DjSTHsHboVRYrKgEt8Q7UHm9nYbqhN/i0fhUYA3OAEH7WA8x3jfpnmJm3rKvaQ==}
-    peerDependencies:
-      '@algolia/client-search': '>= 4.9.1 < 6'
-      algoliasearch: '>= 4.9.1 < 6'
-    dependencies:
-      '@algolia/client-search': 4.23.3
-      algoliasearch: 4.23.3
-    dev: true
-
-  /@algolia/cache-browser-local-storage@4.23.3:
-    resolution: {integrity: sha512-vRHXYCpPlTDE7i6UOy2xE03zHF2C8MEFjPN2v7fRbqVpcOvAUQK81x3Kc21xyb5aSIpYCjWCZbYZuz8Glyzyyg==}
-    dependencies:
-      '@algolia/cache-common': 4.23.3
-    dev: true
-
-  /@algolia/cache-common@4.23.3:
-    resolution: {integrity: sha512-h9XcNI6lxYStaw32pHpB1TMm0RuxphF+Ik4o7tcQiodEdpKK+wKufY6QXtba7t3k8eseirEMVB83uFFF3Nu54A==}
-    dev: true
-
-  /@algolia/cache-in-memory@4.23.3:
-    resolution: {integrity: sha512-yvpbuUXg/+0rbcagxNT7un0eo3czx2Uf0y4eiR4z4SD7SiptwYTpbuS0IHxcLHG3lq22ukx1T6Kjtk/rT+mqNg==}
-    dependencies:
-      '@algolia/cache-common': 4.23.3
-    dev: true
-
-  /@algolia/client-account@4.23.3:
-    resolution: {integrity: sha512-hpa6S5d7iQmretHHF40QGq6hz0anWEHGlULcTIT9tbUssWUriN9AUXIFQ8Ei4w9azD0hc1rUok9/DeQQobhQMA==}
-    dependencies:
-      '@algolia/client-common': 4.23.3
-      '@algolia/client-search': 4.23.3
-      '@algolia/transporter': 4.23.3
-    dev: true
-
-  /@algolia/client-analytics@4.23.3:
-    resolution: {integrity: sha512-LBsEARGS9cj8VkTAVEZphjxTjMVCci+zIIiRhpFun9jGDUlS1XmhCW7CTrnaWeIuCQS/2iPyRqSy1nXPjcBLRA==}
-    dependencies:
-      '@algolia/client-common': 4.23.3
-      '@algolia/client-search': 4.23.3
-      '@algolia/requester-common': 4.23.3
-      '@algolia/transporter': 4.23.3
-    dev: true
-
-  /@algolia/client-common@4.23.3:
-    resolution: {integrity: sha512-l6EiPxdAlg8CYhroqS5ybfIczsGUIAC47slLPOMDeKSVXYG1n0qGiz4RjAHLw2aD0xzh2EXZ7aRguPfz7UKDKw==}
-    dependencies:
-      '@algolia/requester-common': 4.23.3
-      '@algolia/transporter': 4.23.3
-    dev: true
-
-  /@algolia/client-personalization@4.23.3:
-    resolution: {integrity: sha512-3E3yF3Ocr1tB/xOZiuC3doHQBQ2zu2MPTYZ0d4lpfWads2WTKG7ZzmGnsHmm63RflvDeLK/UVx7j2b3QuwKQ2g==}
-    dependencies:
-      '@algolia/client-common': 4.23.3
-      '@algolia/requester-common': 4.23.3
-      '@algolia/transporter': 4.23.3
-    dev: true
-
-  /@algolia/client-search@4.23.3:
-    resolution: {integrity: sha512-P4VAKFHqU0wx9O+q29Q8YVuaowaZ5EM77rxfmGnkHUJggh28useXQdopokgwMeYw2XUht49WX5RcTQ40rZIabw==}
-    dependencies:
-      '@algolia/client-common': 4.23.3
-      '@algolia/requester-common': 4.23.3
-      '@algolia/transporter': 4.23.3
-    dev: true
-
-  /@algolia/logger-common@4.23.3:
-    resolution: {integrity: sha512-y9kBtmJwiZ9ZZ+1Ek66P0M68mHQzKRxkW5kAAXYN/rdzgDN0d2COsViEFufxJ0pb45K4FRcfC7+33YB4BLrZ+g==}
-    dev: true
-
-  /@algolia/logger-console@4.23.3:
-    resolution: {integrity: sha512-8xoiseoWDKuCVnWP8jHthgaeobDLolh00KJAdMe9XPrWPuf1by732jSpgy2BlsLTaT9m32pHI8CRfrOqQzHv3A==}
-    dependencies:
-      '@algolia/logger-common': 4.23.3
-    dev: true
-
-  /@algolia/recommend@4.23.3:
-    resolution: {integrity: sha512-9fK4nXZF0bFkdcLBRDexsnGzVmu4TSYZqxdpgBW2tEyfuSSY54D4qSRkLmNkrrz4YFvdh2GM1gA8vSsnZPR73w==}
-    dependencies:
-      '@algolia/cache-browser-local-storage': 4.23.3
-      '@algolia/cache-common': 4.23.3
-      '@algolia/cache-in-memory': 4.23.3
-      '@algolia/client-common': 4.23.3
-      '@algolia/client-search': 4.23.3
-      '@algolia/logger-common': 4.23.3
-      '@algolia/logger-console': 4.23.3
-      '@algolia/requester-browser-xhr': 4.23.3
-      '@algolia/requester-common': 4.23.3
-      '@algolia/requester-node-http': 4.23.3
-      '@algolia/transporter': 4.23.3
-    dev: true
-
-  /@algolia/requester-browser-xhr@4.23.3:
-    resolution: {integrity: sha512-jDWGIQ96BhXbmONAQsasIpTYWslyjkiGu0Quydjlowe+ciqySpiDUrJHERIRfELE5+wFc7hc1Q5hqjGoV7yghw==}
-    dependencies:
-      '@algolia/requester-common': 4.23.3
-    dev: true
-
-  /@algolia/requester-common@4.23.3:
-    resolution: {integrity: sha512-xloIdr/bedtYEGcXCiF2muajyvRhwop4cMZo+K2qzNht0CMzlRkm8YsDdj5IaBhshqfgmBb3rTg4sL4/PpvLYw==}
-    dev: true
-
-  /@algolia/requester-node-http@4.23.3:
-    resolution: {integrity: sha512-zgu++8Uj03IWDEJM3fuNl34s746JnZOWn1Uz5taV1dFyJhVM/kTNw9Ik7YJWiUNHJQXcaD8IXD1eCb0nq/aByA==}
-    dependencies:
-      '@algolia/requester-common': 4.23.3
-    dev: true
-
-  /@algolia/transporter@4.23.3:
-    resolution: {integrity: sha512-Wjl5gttqnf/gQKJA+dafnD0Y6Yw97yvfY8R9h0dQltX1GXTgNs1zWgvtWW0tHl1EgMdhAyw189uWiZMnL3QebQ==}
-    dependencies:
-      '@algolia/cache-common': 4.23.3
-      '@algolia/logger-common': 4.23.3
-      '@algolia/requester-common': 4.23.3
-    dev: true
-
-=======
->>>>>>> 621f9fe (refactor: ♻️ refactor: 在packages下的core和utils增加了jsDoc (#147))
   /@ampproject/remapping@2.3.0:
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
     engines: {node: '>=6.0.0'}
@@ -1050,6 +898,14 @@ packages:
     dependencies:
       '@babel/highlight': 7.24.5
       picocolors: 1.0.0
+
+  /@babel/code-frame@7.24.7:
+    resolution: {integrity: sha512-BcYH1CVJBO9tvyIZ2jVeXgSIMvGZ2FDRvDdOIVQyuklNKSsx+eppDEBq/g47Ayw+RqNFE+URvOShmf+f/qwAlA==}
+    engines: {node: '>=6.9.0'}
+    dependencies:
+      '@babel/highlight': 7.24.7
+      picocolors: 1.0.0
+    dev: true
 
   /@babel/compat-data@7.24.4:
     resolution: {integrity: sha512-vg8Gih2MLK+kOkHJp4gBEIkyaIi00jgWot2D9QOmmfLC8jINSOzmCLta6Bvz/JSBCqnegV0L80jhxkol5GWNfQ==}
@@ -1261,6 +1117,12 @@ packages:
     resolution: {integrity: sha512-3q93SSKX2TWCG30M2G2kwaKeTYgEUp5Snjuj8qm729SObL6nbtUldAi37qbxkD5gg3xnBio+f9nqpSepGZMvxA==}
     engines: {node: '>=6.9.0'}
 
+  /@babel/helper-validator-identifier@7.24.7:
+    resolution: {integrity: sha512-rR+PBcQ1SMQDDyF6X0wxtG8QyLCgUB0eRAGguqRLfkCA87l7yAP7ehq8SNj96OOGTO8OBV70KhuFYcIkHXOg0w==}
+    engines: {node: '>=6.9.0'}
+    requiresBuild: true
+    dev: true
+
   /@babel/helper-validator-option@7.23.5:
     resolution: {integrity: sha512-85ttAOMLsr53VgXkTbkx8oA6YTfT4q7/HzXSLEYmjcSTJPMPQtvq1BD79Byep5xMUYbGRzEpDsjUf3dyp54IKw==}
     engines: {node: '>=6.9.0'}
@@ -1299,11 +1161,23 @@ packages:
       picocolors: 1.0.0
 >>>>>>> c481920 (refactor: 重构整体架构，优化项目文件生成逻辑 (#206))
 
+  /@babel/highlight@7.24.7:
+    resolution: {integrity: sha512-EStJpq4OuY8xYfhGVXngigBJRWxftKX9ksiGDnmlY3o7B/V7KIAc9X4oiK87uPJSc/vs5L869bem5fhZa8caZw==}
+    engines: {node: '>=6.9.0'}
+    requiresBuild: true
+    dependencies:
+      '@babel/helper-validator-identifier': 7.24.7
+      chalk: 2.4.2
+      js-tokens: 4.0.0
+      picocolors: 1.0.0
+    dev: true
+
   /@babel/parser@7.24.5:
     resolution: {integrity: sha512-EOv5IK8arwh3LI47dz1b0tKUb/1uhHAnHJOrjgtQMIpu1uXd9mlFrJg9IUgGUgZ41Ch0K8REPTYpO7B76b4vJg==}
     engines: {node: '>=6.0.0'}
     hasBin: true
     dependencies:
+<<<<<<< HEAD
 <<<<<<< HEAD
       '@babel/types': 7.24.0
     dev: false
@@ -1330,8 +1204,9 @@ packages:
 =======
       '@babel/types': 7.24.0
 =======
+=======
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
       '@babel/types': 7.24.5
->>>>>>> 621f9fe (refactor: ♻️ refactor: 在packages下的core和utils增加了jsDoc (#147))
 
   /@babel/plugin-bugfix-firefox-class-in-computed-class-key@7.24.5(@babel/core@7.24.5):
     resolution: {integrity: sha512-LdXRi1wEMTrHVR4Zc9F8OewC3vdm5h4QB6L71zy6StmYeqGi1b3ttIO8UC+BfZKcH9jdr4aI249rBkm+3+YvHw==}
@@ -1387,6 +1262,7 @@ packages:
     dependencies:
       '@babel/core': 7.24.5
       '@babel/helper-environment-visitor': 7.22.20
+<<<<<<< HEAD
 <<<<<<< HEAD
       '@babel/helper-plugin-utils': 7.24.0
 <<<<<<< HEAD
@@ -1513,12 +1389,13 @@ packages:
   /@babel/plugin-proposal-private-property-in-object@7.21.0-placeholder-for-preset-env.2(@babel/core@7.24.4):
 >>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 =======
+=======
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
       '@babel/helper-plugin-utils': 7.24.5
     dev: true
 
 >>>>>>> c481920 (refactor: 重构整体架构，优化项目文件生成逻辑 (#206))
   /@babel/plugin-proposal-private-property-in-object@7.21.0-placeholder-for-preset-env.2(@babel/core@7.24.5):
->>>>>>> 621f9fe (refactor: ♻️ refactor: 在packages下的core和utils增加了jsDoc (#147))
     resolution: {integrity: sha512-SOSkfJDddaM7mak6cPEpswyTRnuRltl429hMraQEglW+OkovnCzsiszTmsrlY//qLFjCpQDFRvjdm2wA5pPm9w==}
     engines: {node: '>=6.9.0'}
     peerDependencies:
@@ -2170,62 +2047,9 @@ packages:
     peerDependencies:
       '@babel/core': ^7.0.0-0
     dependencies:
-<<<<<<< HEAD
-      '@babel/core': 7.24.4
-      '@babel/helper-plugin-utils': 7.24.0
-<<<<<<< HEAD
-
-  /@babel/plugin-transform-react-display-name@7.23.3(@babel/core@7.24.0):
-    resolution: {integrity: sha512-GnvhtVfA2OAtzdX58FJxU19rhoGeQzyVndw3GgtdECQvQFXPEZIOVULHVZGAYmOgmqjXpVpfocAbSjh99V/Fqw==}
-    engines: {node: '>=6.9.0'}
-    peerDependencies:
-      '@babel/core': ^7.0.0-0
-    dependencies:
-      '@babel/core': 7.24.4
-      '@babel/helper-plugin-utils': 7.24.0
-    dev: false
-
-  /@babel/plugin-transform-react-jsx-development@7.22.5(@babel/core@7.24.4):
-    resolution: {integrity: sha512-bDhuzwWMuInwCYeDeMzyi7TaBgRQei6DqxhbyniL7/VG4RSS7HtSL2QbY4eESy1KJqlWt8g3xeEBGPuo+XqC8A==}
-    engines: {node: '>=6.9.0'}
-    peerDependencies:
-      '@babel/core': ^7.0.0-0
-    dependencies:
-      '@babel/core': 7.24.4
-      '@babel/plugin-transform-react-jsx': 7.23.4(@babel/core@7.24.4)
-    dev: false
-
-  /@babel/plugin-transform-react-jsx@7.23.4(@babel/core@7.24.4):
-    resolution: {integrity: sha512-5xOpoPguCZCRbo/JeHlloSkTA8Bld1J/E1/kLfD1nsuiW1m8tduTA1ERCgIZokDflX/IBzKcqR3l7VlRgiIfHA==}
-    engines: {node: '>=6.9.0'}
-    peerDependencies:
-      '@babel/core': ^7.0.0-0
-    dependencies:
-      '@babel/core': 7.24.4
-      '@babel/helper-annotate-as-pure': 7.22.5
-      '@babel/helper-module-imports': 7.24.3
-      '@babel/helper-plugin-utils': 7.24.0
-      '@babel/plugin-syntax-jsx': 7.24.1(@babel/core@7.24.4)
-      '@babel/types': 7.24.0
-    dev: false
-
-  /@babel/plugin-transform-react-pure-annotations@7.24.1(@babel/core@7.24.4):
-    resolution: {integrity: sha512-+pWEAaDJvSm9aFvJNpLiM2+ktl2Sn2U5DdyiWdZBxmLc6+xGt88dvFqsHiAiDS+8WqUwbDfkKz9jRxK3M0k+kA==}
-    engines: {node: '>=6.9.0'}
-    peerDependencies:
-      '@babel/core': ^7.0.0-0
-    dependencies:
-      '@babel/core': 7.24.4
-      '@babel/helper-annotate-as-pure': 7.22.5
-      '@babel/helper-plugin-utils': 7.24.0
-    dev: false
-=======
-=======
       '@babel/core': 7.24.5
       '@babel/helper-plugin-utils': 7.24.5
->>>>>>> 621f9fe (refactor: ♻️ refactor: 在packages下的core和utils增加了jsDoc (#147))
     dev: true
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 
   /@babel/plugin-transform-regenerator@7.24.1(@babel/core@7.24.5):
     resolution: {integrity: sha512-sJwZBCzIBE4t+5Q4IGLaaun5ExVMRY0lYwos/jNecjMrVCygCdph3IKv0tkP5Fc87e/1+bebAmEAGBfnRD+cnw==}
@@ -2338,6 +2162,7 @@ packages:
       '@babel/core': ^7.0.0
     dependencies:
 <<<<<<< HEAD
+<<<<<<< HEAD
       '@babel/core': 7.24.4
       '@babel/helper-create-regexp-features-plugin': 7.22.15(@babel/core@7.24.4)
       '@babel/helper-plugin-utils': 7.24.0
@@ -2378,6 +2203,8 @@ packages:
     resolution: {integrity: sha512-7Kl6cSmYkak0FK/FXjSEnLJ1N9T/WA2RkMhu17gZ/dsxKJUuTYNIylahPTzqpLyJN4WhDif8X0XK1R8Wsguo/A==}
 >>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 =======
+=======
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
       '@babel/core': 7.24.5
       '@babel/helper-create-regexp-features-plugin': 7.22.15(@babel/core@7.24.5)
       '@babel/helper-plugin-utils': 7.24.5
@@ -2386,7 +2213,6 @@ packages:
 >>>>>>> c481920 (refactor: 重构整体架构，优化项目文件生成逻辑 (#206))
   /@babel/preset-env@7.24.5(@babel/core@7.24.5):
     resolution: {integrity: sha512-UGK2ifKtcC8i5AI4cH+sbLLuLc2ktYSFJgBAXorKAsHUZmrQ1q6aQ6i3BvU24wWs2AAKqQB6kq3N9V9Gw1HiMQ==}
->>>>>>> 621f9fe (refactor: ♻️ refactor: 在packages下的core和utils增加了jsDoc (#147))
     engines: {node: '>=6.9.0'}
 >>>>>>> c191f0d (chore: 🔨 remove unused files to clean up the project)
     peerDependencies:
@@ -2778,6 +2604,7 @@ packages:
     optional: true
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   /@csstools/selector-specificity@2.2.0(postcss-selector-parser@6.0.16):
     resolution: {integrity: sha512-+OJ9konv95ClSTOJCmMZqpd5+YGsB2S+x6w3E1oaM8UuR5j8nTNHYSz8c9BEPGDOCMQYIEEGlVPj/VY64iTbGw==}
     engines: {node: ^14 || ^16 || >=18}
@@ -2793,8 +2620,9 @@ packages:
 
   /@eslint-community/eslint-utils@4.4.0(eslint@8.55.0):
 =======
+=======
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
   /@eslint-community/eslint-utils@4.4.0(eslint@8.57.0):
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
     resolution: {integrity: sha512-1/sA4dwrzBAyeUoQ6oxahHKmrZvsnLCg4RfxW3ZFGGmQkSNQPFNLV9CUEFQP1x9EYXHTo5p6xdhZM1Ne9p/AfA==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     peerDependencies:
@@ -2829,29 +2657,7 @@ packages:
   /@eslint/js@8.57.0:
     resolution: {integrity: sha512-Ys+3g2TaW7gADOJzPt83SJtCDhMjndcDMFVQ/Tj9iA1BfJzFKD9mAUXT3OenpuPHbI6P/myECxRJrofUsDx/5g==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
-<<<<<<< HEAD
-
-  /@giscus/vue@3.0.0(vue@3.4.24):
-    resolution: {integrity: sha512-ZoSUmlc3ee2a+kdumCaXFDZaB4h9b1BYWzsmmRP7zoGEQKYopdAnzGvJK7RdvrYGAzNqZtGUxI0NnBl8/UA6bQ==}
-    peerDependencies:
-      vue: '>=3.2.0'
-    dependencies:
-      giscus: 1.5.0
-      vue: 3.4.24(typescript@5.3.2)
-    dev: false
-
-  /@hapi/hoek@9.3.0:
-    resolution: {integrity: sha512-/c6rf4UJlmHlC9b5BaNvzAcFv7HZ2QHaV0D4/HNlBdvFnvQq8RI4kYdhyPCl7Xj+oWvTWQ8ujhqS53LIgAe6KQ==}
-    dev: false
-
-  /@hapi/topo@5.1.0:
-    resolution: {integrity: sha512-foQZKJig7Ob0BMAYBfcJk8d77QtOe7Wo4ox7ff1lQYoNNAb6jwcY1ncdoy2e9wQZzvNy7ODZCYJkK8kzmcAnAg==}
-    dependencies:
-      '@hapi/hoek': 9.3.0
-    dev: false
-=======
     dev: true
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 
   /@humanwhocodes/config-array@0.11.14:
     resolution: {integrity: sha512-3T8LkOmg45BV5FICb15QQMsyUSWrQ8AygVfC7ZG32zOalnqrilm018ZVCw0eapXux8FtA33q8PSRSstjee3jSg==}
@@ -2920,6 +2726,7 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.15
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   /@leichtgewicht/ip-codec@2.0.5:
     resolution: {integrity: sha512-Vo+PSpZG2/fmgmiNzYK9qWRh8h/CHrwD0mo1h1DzL4yzHNSfWYujGTYsWGreD000gcgmZ7K4Ys6Tx9TxtsKdDw==}
 
@@ -2950,6 +2757,8 @@ packages:
 
 =======
 >>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
+=======
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
   /@nodelib/fs.scandir@2.1.5:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
     engines: {node: '>= 8'}
@@ -2978,6 +2787,7 @@ packages:
     dev: true
     optional: true
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
   /@pmmmwh/react-refresh-webpack-plugin@0.5.11(react-refresh@0.14.0)(webpack-dev-server@5.0.4)(webpack@5.91.0):
@@ -3051,8 +2861,9 @@ packages:
   /@rollup/plugin-commonjs@25.0.7(rollup@4.14.1):
 >>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 =======
+=======
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
   /@rollup/plugin-commonjs@25.0.7(rollup@4.17.2):
->>>>>>> 621f9fe (refactor: ♻️ refactor: 在packages下的core和utils增加了jsDoc (#147))
     resolution: {integrity: sha512-nEvcR+LRjEjsaSsc4x3XZfCCvZIaSMenZu/OiwOKGN2UhQpAYI7ru7czFvyWbErlpoGjnSX3D5Ch5FcMA3kRWQ==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
@@ -3068,6 +2879,7 @@ packages:
       is-reference: 1.2.1
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       magic-string: 0.30.7
       rollup: 4.6.1
 <<<<<<< HEAD
@@ -3080,9 +2892,10 @@ packages:
       rollup: 4.14.1
 >>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 =======
+=======
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
       magic-string: 0.30.10
       rollup: 4.17.2
->>>>>>> 621f9fe (refactor: ♻️ refactor: 在packages下的core和utils增加了jsDoc (#147))
     dev: true
 
   /@rollup/plugin-json@6.1.0(rollup@4.17.2):
@@ -3132,15 +2945,17 @@ packages:
     dependencies:
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       '@rollup/pluginutils': 5.1.0(rollup@4.6.1)
       rollup: 4.6.1
 =======
       '@rollup/pluginutils': 5.1.0(rollup@4.14.1)
       rollup: 4.14.1
 =======
+=======
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
       '@rollup/pluginutils': 5.1.0(rollup@4.17.2)
       rollup: 4.17.2
->>>>>>> 621f9fe (refactor: ♻️ refactor: 在packages下的core和utils增加了jsDoc (#147))
     dev: true
 >>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 
@@ -3161,6 +2976,7 @@ packages:
       is-builtin-module: 3.2.1
       is-module: 1.0.0
       resolve: 1.22.8
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       rollup: 4.6.1
@@ -3192,8 +3008,9 @@ packages:
       rollup: 4.14.1
 >>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 =======
+=======
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
       rollup: 4.17.2
->>>>>>> 621f9fe (refactor: ♻️ refactor: 在packages下的core和utils增加了jsDoc (#147))
     dev: true
 
 >>>>>>> c481920 (refactor: 重构整体架构，优化项目文件生成逻辑 (#206))
@@ -3217,6 +3034,7 @@ packages:
       typescript: 5.4.5
     dev: true
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3246,8 +3064,9 @@ packages:
   /@rollup/pluginutils@5.1.0(rollup@4.14.1):
 >>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 =======
+=======
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
   /@rollup/pluginutils@5.1.0(rollup@4.17.2):
->>>>>>> 621f9fe (refactor: ♻️ refactor: 在packages下的core和utils增加了jsDoc (#147))
     resolution: {integrity: sha512-XTIWOPPcpvyKI6L1NHo0lFlCyznUEyPmPY1mc3KpPVDYulHSTvyeLNVW00QTLIAFNhR3kYnJTQHeGqU4M3n09g==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
@@ -3259,6 +3078,7 @@ packages:
       '@types/estree': 1.0.5
       estree-walker: 2.0.2
       picomatch: 2.3.1
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       rollup: 4.6.1
@@ -3290,10 +3110,10 @@ packages:
 =======
       rollup: 4.14.1
 =======
+=======
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
       rollup: 4.17.2
->>>>>>> 621f9fe (refactor: ♻️ refactor: 在packages下的core和utils增加了jsDoc (#147))
     dev: true
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 
 <<<<<<< HEAD
   /@rollup/rollup-android-arm-eabi@4.6.1:
@@ -3307,17 +3127,6 @@ packages:
     os: [android]
     requiresBuild: true
     dev: true
-<<<<<<< HEAD
-    optional: true
-
-  /@rollup/rollup-android-arm64@4.16.2:
-    resolution: {integrity: sha512-5/W1xyIdc7jw6c/f1KEtg1vYDBWnWCsLiipK41NiaWGLG93eH2edgE6EgQJ3AGiPERhiOLUqlDSfjRK08C9xFg==}
-    cpu: [arm64]
-    os: [android]
-    requiresBuild: true
-    dev: true
-=======
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
     optional: true
 
   /@rollup/rollup-android-arm64@4.17.2:
@@ -3326,17 +3135,6 @@ packages:
     os: [android]
     requiresBuild: true
     dev: true
-<<<<<<< HEAD
-    optional: true
-
-  /@rollup/rollup-darwin-arm64@4.16.2:
-    resolution: {integrity: sha512-vOAKMqZSTbPfyPVu1jBiy+YniIQd3MG7LUnqV0dA6Q5tyhdqYtxacTHP1+S/ksKl6qCtMG1qQ0grcIgk/19JEA==}
-    cpu: [arm64]
-    os: [darwin]
-    requiresBuild: true
-    dev: true
-=======
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
     optional: true
 
   /@rollup/rollup-darwin-arm64@4.17.2:
@@ -3345,17 +3143,6 @@ packages:
     os: [darwin]
     requiresBuild: true
     dev: true
-<<<<<<< HEAD
-    optional: true
-
-  /@rollup/rollup-darwin-x64@4.16.2:
-    resolution: {integrity: sha512-aIJVRUS3Dnj6MqocBMrcXlatKm64O3ITeQAdAxVSE9swyhNyV1dwnRgw7IGKIkDQofatd8UqMSyUxuFEa42EcA==}
-    cpu: [x64]
-    os: [darwin]
-    requiresBuild: true
-    dev: true
-=======
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
     optional: true
 
   /@rollup/rollup-darwin-x64@4.17.2:
@@ -3364,18 +3151,6 @@ packages:
     os: [darwin]
     requiresBuild: true
     dev: true
-<<<<<<< HEAD
-    optional: true
-
-  /@rollup/rollup-linux-arm-gnueabihf@4.16.2:
-    resolution: {integrity: sha512-/bjfUiXwy3P5vYr6/ezv//Yle2Y0ak3a+Av/BKoi76nFryjWCkki8AuVoPR7ZU/ckcvAWFo77OnFK14B9B5JsA==}
-    cpu: [arm]
-    os: [linux]
-    libc: [glibc]
-    requiresBuild: true
-    dev: true
-=======
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
     optional: true
 
   /@rollup/rollup-linux-arm-gnueabihf@4.17.2:
@@ -3385,14 +3160,8 @@ packages:
     libc: [glibc]
     requiresBuild: true
     dev: true
-<<<<<<< HEAD
     optional: true
 
-<<<<<<< HEAD
-  /@rollup/rollup-linux-arm-musleabihf@4.16.2:
-    resolution: {integrity: sha512-S24b+tJHwpq2TNRz9T+r71FjMvyBBApY8EkYxz8Cwi/rhH6h+lu/iDUxyc9PuHf9UvyeBFYkWWcrDahai/NCGw==}
-    cpu: [arm]
-=======
   /@rollup/rollup-linux-arm-musleabihf@4.17.2:
     resolution: {integrity: sha512-uSqpsp91mheRgw96xtyAGP9FW5ChctTFEoXP0r5FAzj/3ZRv3Uxjtc7taRQSaQM/q85KEKjKsZuiZM3GyUivRg==}
     cpu: [arm]
@@ -3421,14 +3190,18 @@ packages:
   /@rollup/rollup-linux-arm64-musl@4.17.2:
     resolution: {integrity: sha512-NMPylUUZ1i0z/xJUIx6VUhISZDRT+uTWpBcjdv0/zkp7b/bQDF+NfnfdzuTiB1G6HTodgoFa93hp0O1xl+/UbA==}
     cpu: [arm64]
+<<<<<<< HEAD
 >>>>>>> 621f9fe (refactor: ♻️ refactor: 在packages下的core和utils增加了jsDoc (#147))
 >>>>>>> c481920 (refactor: 重构整体架构，优化项目文件生成逻辑 (#206))
+=======
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
     os: [linux]
     libc: [musl]
     requiresBuild: true
     dev: true
     optional: true
 
+<<<<<<< HEAD
 <<<<<<< HEAD
   /@rollup/rollup-linux-arm64-gnu@4.17.2:
     resolution: {integrity: sha512-EMMPHkiCRtE8Wdk3Qhtciq6BndLtstqZIroHiiGzB3C5LDJmIZcSzVtLRbwuXuUft1Cnv+9fxuDtDxz3k3EW2A==}
@@ -3562,7 +3335,13 @@ packages:
     cpu: [ppc64]
 >>>>>>> 621f9fe (refactor: ♻️ refactor: 在packages下的core和utils增加了jsDoc (#147))
 >>>>>>> c481920 (refactor: 重构整体架构，优化项目文件生成逻辑 (#206))
+=======
+  /@rollup/rollup-linux-powerpc64le-gnu@4.17.2:
+    resolution: {integrity: sha512-T19My13y8uYXPw/L/k0JYaX1fJKFT/PWdXiHr8mTbXWxjVF1t+8Xl31DgBBvEKclw+1b00Chg0hxE2O7bTG7GQ==}
+    cpu: [ppc64]
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     dev: true
 <<<<<<< HEAD
@@ -3572,6 +3351,7 @@ packages:
     resolution: {integrity: sha512-BOaNfthf3X3fOWAB+IJ9kxTgPmMqPPH5f5k2DcCsRrBIbWnaJCgX2ll77dV1TdSy9SaXTR5iDXRL8n7AnoP5cg==}
     cpu: [riscv64]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     dev: true
     optional: true
@@ -3580,6 +3360,7 @@ packages:
     resolution: {integrity: sha512-W0UP/x7bnn3xN2eYMql2T/+wpASLE5SjObXILTMPUBDB/Fg/FxC+gX4nvCfPBCbNhz51C+HcqQp2qQ4u25ok6g==}
     cpu: [s390x]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     dev: true
     optional: true
@@ -3588,39 +3369,18 @@ packages:
     resolution: {integrity: sha512-Hy7pLwByUOuyaFC6mAr7m+oMC+V7qyifzs/nW2OJfC8H4hbCzOX07Ov0VFk/zP3kBsELWNFi7rJtgbKYsav9QQ==}
     cpu: [x64]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     dev: true
-<<<<<<< HEAD
-    optional: true
-
-  /@rollup/rollup-linux-x64-musl@4.16.2:
-    resolution: {integrity: sha512-/2VWEBG6mKbS2itm7hzPwhIPaxfZh/KLWrYg20pCRLHhNFtF+epLgcBtwy3m07bl/k86Q3PFRAf2cX+VbZbwzQ==}
-    cpu: [x64]
-    os: [linux]
-    libc: [musl]
-    requiresBuild: true
-    dev: true
-=======
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
     optional: true
 
   /@rollup/rollup-linux-x64-musl@4.17.2:
     resolution: {integrity: sha512-h1+yTWeYbRdAyJ/jMiVw0l6fOOm/0D1vNLui9iPuqgRGnXA0u21gAqOyB5iHjlM9MMfNOm9RHCQ7zLIzT0x11Q==}
     cpu: [x64]
     os: [linux]
+    libc: [musl]
     requiresBuild: true
     dev: true
-<<<<<<< HEAD
-    optional: true
-
-  /@rollup/rollup-win32-arm64-msvc@4.16.2:
-    resolution: {integrity: sha512-Wg7ANh7+hSilF0lG3e/0Oy8GtfTIfEk1327Bw8juZOMOoKmJLs3R+a4JDa/4cHJp2Gs7QfCDTepXXcyFD0ubBg==}
-    cpu: [arm64]
-    os: [win32]
-    requiresBuild: true
-    dev: true
-=======
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
     optional: true
 
   /@rollup/rollup-win32-arm64-msvc@4.17.2:
@@ -3629,17 +3389,6 @@ packages:
     os: [win32]
     requiresBuild: true
     dev: true
-<<<<<<< HEAD
-    optional: true
-
-  /@rollup/rollup-win32-ia32-msvc@4.16.2:
-    resolution: {integrity: sha512-J/jCDKVMWp0Y2ELnTjpQFYUCUWv1Jr+LdFrJVZtdqGyjDo0PHPa7pCamjHvJel6zBFM3doFFqAr7cmXYWBAbfw==}
-    cpu: [ia32]
-    os: [win32]
-    requiresBuild: true
-    dev: true
-=======
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
     optional: true
 
   /@rollup/rollup-win32-ia32-msvc@4.17.2:
@@ -3648,17 +3397,6 @@ packages:
     os: [win32]
     requiresBuild: true
     dev: true
-<<<<<<< HEAD
-    optional: true
-
-  /@rollup/rollup-win32-x64-msvc@4.16.2:
-    resolution: {integrity: sha512-3nIf+SJMs2ZzrCh+SKNqgLVV9hS/UY0UjT1YU8XQYFGLiUfmHYJ/5trOU1XSvmHjV5gTF/K3DjrWxtyzKKcAHA==}
-    cpu: [x64]
-    os: [win32]
-    requiresBuild: true
-    dev: true
-=======
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
     optional: true
 
   /@rollup/rollup-win32-x64-msvc@4.17.2:
@@ -3669,6 +3407,7 @@ packages:
     dev: true
     optional: true
 
+<<<<<<< HEAD
 <<<<<<< HEAD
   /@shikijs/core@1.3.0:
     resolution: {integrity: sha512-7fedsBfuILDTBmrYZNFI8B6ATTxhQAasUHllHmjvSZPnoq4bULWoTpHwmuQvZ8Aq03/tAa2IGo6RXqWtHdWaCA==}
@@ -3955,8 +3694,12 @@ packages:
 >>>>>>> c481920 (refactor: 重构整体架构，优化项目文件生成逻辑 (#206))
 >>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 =======
+=======
+  /@types/babel__generator@7.6.8:
+    resolution: {integrity: sha512-ASsj+tpEDsEiFr1arWrlN6V3mdfjRMZt6LtK/Vp/kreFLnr5QH5+DhvD5nINYZXzwJvXeGq+05iUXcAzVrqWtw==}
+    dependencies:
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
       '@babel/types': 7.24.5
->>>>>>> 621f9fe (refactor: ♻️ refactor: 在packages下的core和utils增加了jsDoc (#147))
     dev: true
 
   /@types/conventional-commits-parser@5.0.0:
@@ -3973,6 +3716,7 @@ packages:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       '@types/node': 20.11.22
 =======
       '@types/node': 20.12.6
@@ -3982,8 +3726,9 @@ packages:
       '@types/node': 20.11.22
 =======
 >>>>>>> c481920 (refactor: 重构整体架构，优化项目文件生成逻辑 (#206))
+=======
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
       '@types/node': 20.12.8
->>>>>>> 621f9fe (refactor: ♻️ refactor: 在packages下的core和utils增加了jsDoc (#147))
     dev: true
 
   /@types/ejs@3.1.5:
@@ -4002,17 +3747,7 @@ packages:
     dependencies:
       '@types/estree': 1.0.5
       '@types/json-schema': 7.0.15
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
     dev: false
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
-=======
->>>>>>> a5c4612 (fix: 🧩 修改 webpack 配置中模块引入类型错误以及为 package.json 添加相关的 dependent (#177))
-=======
-    dev: false
->>>>>>> 326d931 (fix: 🧩 修复构建工具缺少相关 dependentcies 依赖的问题 (#178))
 
   /@types/estree@1.0.5:
     resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}
@@ -4044,27 +3779,6 @@ packages:
       '@types/node': 20.12.8
     dev: true
 
-<<<<<<< HEAD
-  /@types/linkify-it@3.0.5:
-    resolution: {integrity: sha512-yg6E+u0/+Zjva+buc3EIb+29XEg4wltq7cSmd4Uc2EE/1nUVmxyzpX6gUXD0V8jIrG0r7YeOGVIbYRkxeooCtw==}
-    dev: true
-
-  /@types/markdown-it@14.0.1:
-    resolution: {integrity: sha512-6WfOG3jXR78DW8L5cTYCVVGAsIFZskRHCDo5tbqa+qtKVt4oDRVH7hyIWu1SpDQJlmIoEivNQZ5h+AGAOrgOtQ==}
-    dependencies:
-      '@types/linkify-it': 3.0.5
-      '@types/mdurl': 1.0.5
-    dev: true
-
-  /@types/mdurl@1.0.5:
-    resolution: {integrity: sha512-6L6VymKTzYSrEf4Nev4Xa1LCHKrlTlYCBMTlQKFuddo1CvQcE52I0mwfOJayueUC7MJuXOeHTcIU683lzd0cUA==}
-    dev: true
-
-  /@types/mime@1.3.5:
-    resolution: {integrity: sha512-/pyBZWSLD2n0dcHE3hq8s8ZvcETHtEuF+3E7XVt0Ig2nvsVQXdghHVcEkIWjy9A0wKfTn97a/PSDYohKIlnP/w==}
-
-=======
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
   /@types/minimatch@5.1.2:
     resolution: {integrity: sha512-K0VQKziLUWkVKiRVrx4a40iPaxTUefQmjtkQofBkYRcoaaL/8rhwDWww9qWbrgicNOgnpIsMxyNIUM4+n6dUIA==}
     dev: true
@@ -4098,6 +3812,7 @@ packages:
     dev: true
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   /@types/qs@6.9.12:
     resolution: {integrity: sha512-bZcOkJ6uWrL0Qb2NAWKa7TBU+mJHPzhx9jjLL1KHF+XpzEcR7EXHvjbHlGtR/IsP1vyPrehuS6XqkmaePy//mg==}
 
@@ -4117,10 +3832,13 @@ packages:
 =======
 >>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 >>>>>>> c481920 (refactor: 重构整体架构，优化项目文件生成逻辑 (#206))
+=======
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
   /@types/resolve@1.20.2:
     resolution: {integrity: sha512-60BCwRFOZCQhDncwQdxxeOEEkbc5dIMccYLwbxsS4TUNeVECQ/pBJ0j09mrHOl/JJvpRPGwO9SvE4nR2Nb/a4Q==}
     dev: true
 
+<<<<<<< HEAD
 <<<<<<< HEAD
   /@types/retry@0.12.0:
     resolution: {integrity: sha512-wWKOClTTiizcZhXnPY4wikVAwmdYHp8q6DmC+EJUzAMsycb7HB32Kh9RN4+0gExjmPmZSAQjgURXIGATPegAvA==}
@@ -4206,10 +3924,11 @@ packages:
     resolution: {integrity: sha512-60BCwRFOZCQhDncwQdxxeOEEkbc5dIMccYLwbxsS4TUNeVECQ/pBJ0j09mrHOl/JJvpRPGwO9SvE4nR2Nb/a4Q==}
     dev: true
 
+=======
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
   /@types/semver@7.5.8:
     resolution: {integrity: sha512-I8EUhyrgfLrcTkzV3TSsGyl1tSuPrEDzr0yd5m90UgNxQkyDXULk3b6MlQqTCpZpNtWe1K0hzclnZkTcLBe2UQ==}
     dev: true
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 
 =======
   /@types/semver@7.5.8:
@@ -4225,78 +3944,7 @@ packages:
       minipass: 4.2.8
     dev: true
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-  /@types/trusted-types@2.0.7:
-    resolution: {integrity: sha512-ScaPdn1dQczgbl0QFTeTOmVHFULt394XJgOQNoyVhZ6r2vLnMLJfBPd53SB52T/3G36VI1/g2MZaX0cwDuXsfw==}
-    dev: false
-
-  /@types/web-bluetooth@0.0.20:
-    resolution: {integrity: sha512-g9gZnnXVq7gM7v3tJCWV/qw7w+KeOlSHAhgF9RytFyifW6AF61hdT2ucrYhPq9hLs5JIryeupHV3qGk95dH9ow==}
-    dev: true
-
-  /@types/webpack-bundle-analyzer@4.7.0(webpack-cli@5.1.4):
-    resolution: {integrity: sha512-c5i2ThslSNSG8W891BRvOd/RoCjI2zwph8maD22b1adtSns20j+0azDDMCK06DiVrzTgnwiDl5Ntmu1YRJw8Sg==}
-    dependencies:
-      '@types/node': 20.12.6
-      tapable: 2.2.1
-      webpack: 5.91.0(webpack-cli@5.1.4)
-    transitivePeerDependencies:
-      - '@swc/core'
-      - esbuild
-      - uglify-js
-      - webpack-cli
-    dev: true
-
-  /@types/ws@8.5.10:
-    resolution: {integrity: sha512-vmQSUcfalpIq0R9q7uTo2lXs6eGIpt9wtnLdMv9LVpIjCA/+ufZRozlVoVelIYixx1ugCBKDhn89vnsEGOCx9A==}
-    dependencies:
-      '@types/node': 20.12.6
-
-  /@types/yargs-parser@21.0.3:
-    resolution: {integrity: sha512-I4q9QU9MQv4oEOz4tAHJtNz1cwuLxn2F3xcc2iV5WdqLPpUnj30aUuxt1mAxYTG+oe8CZMV/+6rU4S4gRDzqtQ==}
-    dev: false
-
-  /@types/yargs@17.0.32:
-    resolution: {integrity: sha512-xQ67Yc/laOG5uMfX/093MRlGGCIBzZMarVa+gfNKJxWAIgykYpVGkBdbqEzGDDfCrVUj6Hiff4mTZ5BA6TmAog==}
-    dependencies:
-      '@types/yargs-parser': 21.0.3
-    dev: false
-
-  /@typescript-eslint/eslint-plugin@5.62.0(@typescript-eslint/parser@5.62.0)(eslint@8.57.0)(typescript@5.4.4):
-    resolution: {integrity: sha512-TiZzBSJja/LbhNPvk6yc0JrX9XqhQ0hdh6M2svYfsHGejaKFIAGd9MQ+ERIMzLGlN/kZoYIgdxFV0PuljTKXag==}
-    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
-    peerDependencies:
-      '@typescript-eslint/parser': ^5.0.0
-      eslint: ^6.0.0 || ^7.0.0 || ^8.0.0
-      typescript: '*'
-    peerDependenciesMeta:
-      typescript:
-        optional: true
-    dependencies:
-      '@eslint-community/regexpp': 4.10.0
-      '@typescript-eslint/parser': 5.62.0(eslint@8.57.0)(typescript@5.4.4)
-      '@typescript-eslint/scope-manager': 5.62.0
-      '@typescript-eslint/type-utils': 5.62.0(eslint@8.57.0)(typescript@5.4.4)
-      '@typescript-eslint/utils': 5.62.0(eslint@8.57.0)(typescript@5.4.4)
-      debug: 4.3.4
-      eslint: 8.57.0
-      graphemer: 1.4.0
-      ignore: 5.3.1
-      natural-compare-lite: 1.4.0
-      semver: 7.6.0
-      tsutils: 3.21.0(typescript@5.4.4)
-      typescript: 5.4.4
-    transitivePeerDependencies:
-      - supports-color
-    dev: false
-
-=======
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
-  /@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@6.21.0)(eslint@8.57.0)(typescript@5.4.4):
-=======
   /@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@6.21.0)(eslint@8.57.0)(typescript@5.4.5):
->>>>>>> 621f9fe (refactor: ♻️ refactor: 在packages下的core和utils增加了jsDoc (#147))
     resolution: {integrity: sha512-oy9+hTPCUFpngkEZUSzbf9MxI65wbKFoQYsgPdILTfbUldp5ovUuphZVe4i30emU9M/kP+T64Di0mxl7dSw3MA==}
 <<<<<<< HEAD
 =======
@@ -4329,6 +3977,7 @@ packages:
       - supports-color
     dev: true
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
   /@typescript-eslint/eslint-plugin@7.1.0(@typescript-eslint/parser@7.1.0)(eslint@8.55.0)(typescript@5.3.2):
@@ -4393,8 +4042,9 @@ packages:
 >>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
   /@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.4.4):
 =======
+=======
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
   /@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.4.5):
->>>>>>> 621f9fe (refactor: ♻️ refactor: 在packages下的core和utils增加了jsDoc (#147))
     resolution: {integrity: sha512-tbsV1jPne5CkFQCgPBcDOt30ItF7aJoZL997JSF7MhGQqOeT3svWRYxiqlfA5RUdlHN6Fi+EI9bxqbdyAUZjYQ==}
 <<<<<<< HEAD
 =======
@@ -4417,6 +4067,7 @@ packages:
       typescript: 5.4.5
     transitivePeerDependencies:
       - supports-color
+<<<<<<< HEAD
 <<<<<<< HEAD
 
   /@typescript-eslint/parser@7.1.0(eslint@8.55.0)(typescript@5.3.2):
@@ -4454,8 +4105,9 @@ packages:
       '@typescript-eslint/visitor-keys': 5.62.0
     dev: false
 =======
+=======
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
     dev: true
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 
   /@typescript-eslint/scope-manager@6.21.0:
     resolution: {integrity: sha512-OwLUIWZJry80O99zvqXVEioyniJMa+d2GrqpUTqi5/v5D5rOrppJVBPa0yKCblcigC0/aYAzxxqQ1B+DS2RYsg==}
@@ -4463,6 +4115,7 @@ packages:
     dependencies:
       '@typescript-eslint/types': 6.21.0
       '@typescript-eslint/visitor-keys': 6.21.0
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 
@@ -4496,8 +4149,9 @@ packages:
       - supports-color
     dev: false
 =======
+=======
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
     dev: true
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 
   /@typescript-eslint/type-utils@6.21.0(eslint@8.57.0)(typescript@5.4.5):
     resolution: {integrity: sha512-rZQI7wHfao8qMX3Rd3xqeYSMCL3SoiSQLBATSiVKARdFGCYSRvmViieZjqc58jKgs8Y8i9YvVVhRbHSTA4VBag==}
@@ -4520,6 +4174,7 @@ packages:
       - supports-color
     dev: true
 
+<<<<<<< HEAD
 <<<<<<< HEAD
   /@typescript-eslint/type-utils@7.1.0(eslint@8.55.0)(typescript@5.3.2):
     resolution: {integrity: sha512-UZIhv8G+5b5skkcuhgvxYWHjk7FW7/JP5lPASMEUoliAPwIH/rxoUSQPia2cuOj9AmDZmwUl1usKm85t5VUMew==}
@@ -4579,11 +4234,12 @@ packages:
       - supports-color
     dev: false
 =======
+=======
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
   /@typescript-eslint/types@6.21.0:
     resolution: {integrity: sha512-1kFmZ1rOm5epu9NZEZm1kckCDGj5UJEf7P1kliH4LKu/RkwpsfqqGmY2OOcUs18lSlQBKLDYBOGxRVtrMN5lpg==}
     engines: {node: ^16.0.0 || >=18.0.0}
     dev: true
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 
   /@typescript-eslint/typescript-estree@6.21.0(typescript@5.4.5):
     resolution: {integrity: sha512-6npJTkZcO+y2/kr+z0hc4HwNfrrP4kNYh57ek7yCNlrBjWQ1Y0OS7jiZTkgumrvkX5HkEKXFZkkdFNkaW2wmUQ==}
@@ -4606,6 +4262,7 @@ packages:
 <<<<<<< HEAD
     transitivePeerDependencies:
       - supports-color
+<<<<<<< HEAD
 <<<<<<< HEAD
 
   /@typescript-eslint/typescript-estree@7.1.0(typescript@5.3.2):
@@ -4655,8 +4312,9 @@ packages:
       - typescript
     dev: false
 =======
+=======
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
     dev: true
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 
   /@typescript-eslint/utils@6.21.0(eslint@8.57.0)(typescript@5.4.5):
     resolution: {integrity: sha512-NfWVaC8HP9T8cbKQxHcsJBY5YE1O33+jpMwN45qzWWaPDZgLIbo12toGMWnmhvCpd3sIxkpDw3Wv1B3dYrbDQQ==}
@@ -4677,6 +4335,7 @@ packages:
       - typescript
     dev: true
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
   /@typescript-eslint/utils@7.1.0(eslint@8.55.0)(typescript@5.3.2):
@@ -4710,12 +4369,15 @@ packages:
 
 =======
 >>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
+=======
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
   /@typescript-eslint/visitor-keys@6.21.0:
     resolution: {integrity: sha512-JJtkDduxLi9bivAB+cYOVMtbkqdPOhZ+ZI5LC47MIRrDV4Yn2o+ZnW10Nkmr28xRpSpdJ6Sm42Hjf2+REYXm0A==}
     engines: {node: ^16.0.0 || >=18.0.0}
     dependencies:
       '@typescript-eslint/types': 6.21.0
       eslint-visitor-keys: 3.4.3
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 
@@ -5348,6 +5010,8 @@ packages:
     resolution: {integrity: sha512-Iu8Tbg3f+emIIMmI2ycSI8QcEuAUgPTgHwesDU1eKMLE4YC/c/sFbGc70QgMq31ijRftV0R7vCm9co6rldCeOA==}
     dev: false
 =======
+=======
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
     dev: true
 <<<<<<< HEAD
 =======
@@ -5361,8 +5025,8 @@ packages:
   /@ungap/structured-clone@1.2.0:
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
     dev: true
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
   /@vueuse/core@10.9.0(vue@3.4.24):
@@ -5443,6 +5107,10 @@ packages:
 >>>>>>> e27de68 (ci: 🎡 修改提交规范,允许提交 feat(xxx) 等带括号的描述 (#125))
   /@webassemblyjs/ast@1.11.6:
     resolution: {integrity: sha512-IN1xI7PwOvLPgjcf180gC1bqn3q/QaOCwYUahIOhbYUu8KA/3tw2RT/T0Gidi1l7Hhj5D/INhJxiICObqpMu4Q==}
+=======
+  /@webassemblyjs/ast@1.12.1:
+    resolution: {integrity: sha512-EKfMUOPRRUTy5UII4qJDGPpqfwjOmZ5jeGFwid9mnoqIFK+e0vqoi1qH56JpmZSzEL53jKnNzScdmftJyG5xWg==}
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
     dependencies:
       '@webassemblyjs/helper-numbers': 1.11.6
       '@webassemblyjs/helper-wasm-bytecode': 1.11.6
@@ -5617,26 +5285,6 @@ packages:
       uri-js: 4.4.1
     dev: true
 
-  /algoliasearch@4.23.3:
-    resolution: {integrity: sha512-Le/3YgNvjW9zxIQMRhUHuhiUjAlKY/zsdZpfq4dlLqg6mEm0nL6yk+7f2hDOtLpxsgE4jSzDmvHL7nXdBp5feg==}
-    dependencies:
-      '@algolia/cache-browser-local-storage': 4.23.3
-      '@algolia/cache-common': 4.23.3
-      '@algolia/cache-in-memory': 4.23.3
-      '@algolia/client-account': 4.23.3
-      '@algolia/client-analytics': 4.23.3
-      '@algolia/client-common': 4.23.3
-      '@algolia/client-personalization': 4.23.3
-      '@algolia/client-search': 4.23.3
-      '@algolia/logger-common': 4.23.3
-      '@algolia/logger-console': 4.23.3
-      '@algolia/recommend': 4.23.3
-      '@algolia/requester-browser-xhr': 4.23.3
-      '@algolia/requester-common': 4.23.3
-      '@algolia/requester-node-http': 4.23.3
-      '@algolia/transporter': 4.23.3
-    dev: true
-
   /ansi-align@3.0.1:
     resolution: {integrity: sha512-IOfwwBF5iczOjp/WeY4YxyjqAFMQoZufdQWDd19SEExbVLNXqvpzSJ/M7Za4/sCPmQ0+GRquoA7bGcINcxew6w==}
     dependencies:
@@ -5654,21 +5302,12 @@ packages:
     resolution: {integrity: sha512-4nJ3yixlEthEJ9Rk4vPcdBRkZvQZlYyu8j4/Mqz5sgIkddmEnH2Yj2ZrnP9S3tQOvSNRUIgVNF/1yPpRAGNRig==}
     engines: {node: '>=14.16'}
 <<<<<<< HEAD
+<<<<<<< HEAD
     dependencies:
       type-fest: 3.13.1
-
-  /ansi-html-community@0.0.8:
-    resolution: {integrity: sha512-1APHAyr3+PCamwNw3bXCPp4HFLONZt/yIH0sZp0/469KWNTEy+qN5jQ3GVX6DMZ1UXAi34yVwtTeaG/HpBuuzw==}
-    engines: {'0': node >= 0.8.0}
-    hasBin: true
-
-  /ansi-regex@3.0.1:
-    resolution: {integrity: sha512-+O9Jct8wf++lXxxFc4hc8LsjaSq0HFzzL7cVsw8pRDIPdjKD2mT4ytDZlLuSBZ4cLKZFXIrMGO7DbQCtMJJMKw==}
-    engines: {node: '>=4'}
-    dev: false
 =======
     dev: true
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
 
   /ansi-regex@5.0.1:
     resolution: {integrity: sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==}
@@ -5731,6 +5370,7 @@ packages:
     resolution: {integrity: sha512-HGyxoOTYUyCM6stUe6EJgnd4EoewAI7zMdfqO+kGjnlZmBDz/cR5pf8r/cR4Wq60sL/p0IkcjUEEPwS3GFrIyw==}
     engines: {node: '>=8'}
 <<<<<<< HEAD
+<<<<<<< HEAD
     dev: true
 
   /array.prototype.findlastindex@1.2.5:
@@ -5741,12 +5381,17 @@ packages:
   /array.prototype.findlast@1.2.5:
     resolution: {integrity: sha512-CVvd6FHg1Z3POpBLxO6E6zr+rSKEQ9L6rZHAaY7lLfhKsWYUBBOuMs0e9o24oopj6H+geRCX0YJ+TJLBK2eHyQ==}
 =======
+=======
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
     dev: true
 
   /array.prototype.findlastindex@1.2.5:
     resolution: {integrity: sha512-zfETvRFA8o7EiNn++N5f/kaCw221hrpGsDmcpndVupkPzEc1Wuf3VgC0qby1BbHs7f5DVYjgtEU2LLh5bqeGfQ==}
+<<<<<<< HEAD
 >>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 >>>>>>> c481920 (refactor: 重构整体架构，优化项目文件生成逻辑 (#206))
+=======
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
     engines: {node: '>= 0.4'}
     dependencies:
       call-bind: 1.0.7
@@ -5758,12 +5403,15 @@ packages:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> c481920 (refactor: 重构整体架构，优化项目文件生成逻辑 (#206))
       get-intrinsic: 1.2.2
 =======
 >>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
+=======
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
     dev: true
 <<<<<<< HEAD
 >>>>>>> c191f0d (chore: 🔨 remove unused files to clean up the project)
@@ -5824,6 +5472,7 @@ packages:
     resolution: {integrity: sha512-+q/t7Ekv1EDY2l6Gda6LLiX14rU9TV20Wa3ofeQmwPFZbOMo9DXrLbOjFaaclkXKWidIaopwAObQDqwWtGUjqg==}
     engines: {node: '>= 4.0.0'}
 <<<<<<< HEAD
+<<<<<<< HEAD
 
   /atob@2.1.2:
     resolution: {integrity: sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==}
@@ -5846,8 +5495,9 @@ packages:
       postcss-value-parser: 4.2.0
     dev: false
 =======
+=======
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
     dev: true
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 
   /available-typed-arrays@1.0.7:
     resolution: {integrity: sha512-wvUjBtSGN7+7SjNpq/9M2Tg350UZD3q62IFZLbRAR1bSMlCo1ZaeW+BJ+D090e4hIIZLBcTDWe4Mh4jvUDajzQ==}
@@ -5866,6 +5516,7 @@ packages:
       - debug
     dev: false
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -5894,8 +5545,9 @@ packages:
   /babel-loader@8.3.0(@babel/core@7.24.4)(webpack@5.91.0):
 >>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 =======
+=======
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
   /babel-loader@8.3.0(@babel/core@7.24.5)(webpack@5.91.0):
->>>>>>> 621f9fe (refactor: ♻️ refactor: 在packages下的core和utils增加了jsDoc (#147))
     resolution: {integrity: sha512-H8SvsMF+m9t15HNLMipppzkC+Y2Yq+v3SonZyU70RBL/h1gxPkH08Ot8pEE9Z4Kd+czyWJClmFS8qzIP9OZ04Q==}
     engines: {node: '>= 8.9'}
     peerDependencies:
@@ -5910,6 +5562,7 @@ packages:
       webpack: 5.91.0
     dev: false
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
   /babel-loader@9.1.3(@babel/core@7.24.4)(webpack@5.91.0):
@@ -5993,9 +5646,10 @@ packages:
 >>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 >>>>>>> c481920 (refactor: 重构整体架构，优化项目文件生成逻辑 (#206))
 =======
+=======
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
   /babel-plugin-polyfill-corejs2@0.4.11(@babel/core@7.24.5):
     resolution: {integrity: sha512-sMEJ27L0gRHShOh5G54uAAPaiCOygY/5ratXuiyb2G46FmlSpc9eFCzYVyDiPxfNbwzA7mYahmjQc5q+CZQ09Q==}
->>>>>>> 621f9fe (refactor: ♻️ refactor: 在packages下的core和utils增加了jsDoc (#147))
     peerDependencies:
       '@babel/core': ^7.4.0 || ^8.0.0-0 <8.0.0
     dependencies:
@@ -6041,6 +5695,7 @@ packages:
     transitivePeerDependencies:
       - supports-color
 <<<<<<< HEAD
+<<<<<<< HEAD
     dev: true
 
 <<<<<<< HEAD
@@ -6055,6 +5710,9 @@ packages:
     dev: true
 >>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 >>>>>>> c481920 (refactor: 重构整体架构，优化项目文件生成逻辑 (#206))
+=======
+    dev: true
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
 
 =======
 >>>>>>> c191f0d (chore: 🔨 remove unused files to clean up the project)
@@ -6087,42 +5745,6 @@ packages:
       inherits: 2.0.4
       readable-stream: 3.6.2
 
-<<<<<<< HEAD
-  /bluebird@3.7.2:
-    resolution: {integrity: sha512-XpNj6GDQzdfW+r2Wnn7xiSAd7TM3jzkxGXBGTtWKuSXv1xUV+azxAm8jdWZN06QTQk+2N2XB9jRDkvbmQmcRtg==}
-    dev: false
-
-  /body-parser@1.20.2:
-    resolution: {integrity: sha512-ml9pReCu3M61kGlqoTm2umSXTlRTuGTx0bfYj+uIUKKYycG5NtSbeetV3faSU6R7ajOPw0g/J1PvK4qNy7s5bA==}
-    engines: {node: '>= 0.8', npm: 1.2.8000 || >= 1.4.16}
-    dependencies:
-      bytes: 3.1.2
-      content-type: 1.0.5
-      debug: 2.6.9
-      depd: 2.0.0
-      destroy: 1.2.0
-      http-errors: 2.0.0
-      iconv-lite: 0.4.24
-      on-finished: 2.4.1
-      qs: 6.11.0
-      raw-body: 2.5.2
-      type-is: 1.6.18
-      unpipe: 1.0.0
-    transitivePeerDependencies:
-      - supports-color
-
-  /bonjour-service@1.2.1:
-    resolution: {integrity: sha512-oSzCS2zV14bh2kji6vNe7vrpJYCHGvcZnlffFQ1MEoX/WOeQ/teD8SYWKR942OI3INjq8OMNJlbPK5LLLUxFDw==}
-    dependencies:
-      fast-deep-equal: 3.1.3
-      multicast-dns: 7.2.5
-
-  /boolbase@1.0.0:
-    resolution: {integrity: sha512-JZOSA7Mo9sNGB8+UjSgzdLtokWAky1zbztM3WRLCbZ70/3cTANmQmOdR7y2g+J0e2WXywy1yS468tY+IruqEww==}
-    dev: false
-
-=======
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
   /boxen@5.1.2:
     resolution: {integrity: sha512-9gYgQKXx+1nP8mP7CzFyaUARhg7D3n1dF/FnErWmu9l6JvGpNUN278h0aSb+QjoiKSWG+iZ3uHrcqk0qrY9RQQ==}
     engines: {node: '>=10'}
@@ -6178,23 +5800,6 @@ packages:
     resolution: {integrity: sha512-zhaCDicdLuWN5UbN5IMnFqNMhNfo919sH85y2/ea+5Yg9TsTkeZxpL+JLbp6cgYFS4sRLp3YV4S6yDuqVWHYOw==}
     engines: {node: '>=6'}
     dev: true
-<<<<<<< HEAD
-
-  /bundle-name@4.1.0:
-    resolution: {integrity: sha512-tjwM5exMg6BGRI+kNmTntNsvdZS1X8BFYS6tnJ2hdH0kVxM6/eVZ2xy+FqStSWvYmtfFMDLIxurorHwDKfDz5Q==}
-    engines: {node: '>=18'}
-    dependencies:
-      run-applescript: 7.0.0
-
-  /bytes@3.0.0:
-    resolution: {integrity: sha512-pMhOfFDPiv9t5jjIXkHosWmkSyQbvsgEVNkz0ERHbuLh2T/7j4Mqqpz523Fe8MVY89KC6Sh/QfS2sM+SjgFDcw==}
-    engines: {node: '>= 0.8'}
-
-  /bytes@3.1.2:
-    resolution: {integrity: sha512-/Nf7TyzTx6S3yRJObOAV7956r8cr2+Oj8AC5dt8wSP3BQAoeX58NoHyCU8P8zGkNXStjTSi6fzO6F0pBdcYbEg==}
-    engines: {node: '>= 0.8'}
-=======
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 
   /cachedir@2.3.0:
     resolution: {integrity: sha512-A+Fezp4zxnit6FanDmv9EqXNAi3vt9DWp51/71UEhXukb7QUuvtv9344h91dyAxuTLoSYJFU299qzR3tzwPAhw==}
@@ -6236,25 +5841,8 @@ packages:
     engines: {node: '>=10'}
     dev: false
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-  /caniuse-api@3.0.0:
-    resolution: {integrity: sha512-bsTwuIg/BZZK/vreVTYYbSWoe2F+71P7K5QGEX+pT250DZbfU1MQ5prOKpPR+LL6uWKK3KMwMCAS74QB3Um1uw==}
-    dependencies:
-      browserslist: 4.23.0
-      caniuse-lite: 1.0.30001608
-      lodash.memoize: 4.1.2
-      lodash.uniq: 4.5.0
-    dev: false
-
-=======
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
-  /caniuse-lite@1.0.30001608:
-    resolution: {integrity: sha512-cjUJTQkk9fQlJR2s4HMuPMvTiRggl0rAVMtthQuyOlDWuqHXqN8azLq+pi8B2TjwKJ32diHjUqRIKeFX4z1FoA==}
-=======
   /caniuse-lite@1.0.30001615:
     resolution: {integrity: sha512-1IpazM5G3r38meiae0bHRnPhz+CBQ3ZLqbQMtrg+AsTPKAXgW38JNsXkyZ+v8waCsDmPq87lmfun5Q2AGysNEQ==}
->>>>>>> 621f9fe (refactor: ♻️ refactor: 在packages下的core和utils增加了jsDoc (#147))
 
   /chalk@2.4.2:
     resolution: {integrity: sha512-Mti+f9lpJNcwF4tWV8/OrTTtF1gZi+f8FqlyAdouralcFWFQWF2+NgCHShjkCb+IFBLq9buZwE1xckQU4peSuQ==}
@@ -6313,22 +5901,6 @@ packages:
       restore-cursor: 4.0.0
     dev: true
 
-<<<<<<< HEAD
-  /cli-highlight@2.1.11:
-    resolution: {integrity: sha512-9KDcoEVwyUXrjcJNvHD0NFc/hiwe/WPVYIleQh2O1N2Zro5gWJZ/K+3DGn8w8P/F6FxOgzyC5bxDyHIgCSPhGg==}
-    engines: {node: '>=8.0.0', npm: '>=5.0.0'}
-    hasBin: true
-    dependencies:
-      chalk: 4.0.0
-      highlight.js: 10.7.3
-      mz: 2.7.0
-      parse5: 5.1.1
-      parse5-htmlparser2-tree-adapter: 6.0.1
-      yargs: 16.2.0
-    dev: false
-
-=======
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
   /cli-spinners@2.9.2:
     resolution: {integrity: sha512-ywqV+5MmyL4E7ybXgKys4DugZbX0FC6LnwrhjuykIjnK9k8OQacQ7axGKnjDXWNhns0xot3bZI5h55H8yo9cJg==}
     engines: {node: '>=6'}
@@ -6376,13 +5948,6 @@ packages:
   /color-name@1.1.4:
     resolution: {integrity: sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==}
 
-<<<<<<< HEAD
-  /colord@2.9.3:
-    resolution: {integrity: sha512-jeC1axXpnb0/2nn/Y1LPuLdgXBLH7aDcHu4KEKfqw3CUhX7ZpfBSlPKyqXE6btIgEzfWtrX3/tyBCaCvXvMkOw==}
-    dev: false
-
-=======
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
   /colorette@2.0.20:
     resolution: {integrity: sha512-IfEDxwoWIjkeXL1eXcDiow4UbKjhLdq6/EuSVR9GMN7KVH3r9gQ83e73hsz1Nd1T3ijd5xv1wcWRYO+D6kCI2w==}
     dev: true
@@ -6444,193 +6009,6 @@ packages:
   /concat-map@0.0.1:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
 
-<<<<<<< HEAD
-  /connect-history-api-fallback@2.0.0:
-    resolution: {integrity: sha512-U73+6lQFmfiNPrYbXqr6kZ1i1wiRqXnp2nhMsINseWXO8lDau0LGEffJ8kQi4EjLZympVgRdvqjAgiZ1tgzDDA==}
-    engines: {node: '>=0.8'}
-
-  /consolidate@0.15.1(ejs@3.1.9):
-    resolution: {integrity: sha512-DW46nrsMJgy9kqAbPt5rKaCr7uFtpo4mSUvLHIUbJEjm0vo+aY5QLwBUq3FK4tRnJr/X0Psc0C4jf/h+HtXSMw==}
-    engines: {node: '>= 0.10.0'}
-    deprecated: Please upgrade to consolidate v1.0.0+ as it has been modernized with several long-awaited fixes implemented. Maintenance is supported by Forward Email at https://forwardemail.net ; follow/watch https://github.com/ladjs/consolidate for updates and release changelog
-    peerDependencies:
-      arc-templates: ^0.5.3
-      atpl: '>=0.7.6'
-      babel-core: ^6.26.3
-      bracket-template: ^1.1.5
-      coffee-script: ^1.12.7
-      dot: ^1.1.3
-      dust: ^0.3.0
-      dustjs-helpers: ^1.7.4
-      dustjs-linkedin: ^2.7.5
-      eco: ^1.1.0-rc-3
-      ect: ^0.5.9
-      ejs: ^3.1.5
-      haml-coffee: ^1.14.1
-      hamlet: ^0.3.3
-      hamljs: ^0.6.2
-      handlebars: ^4.7.6
-      hogan.js: ^3.0.2
-      htmling: ^0.0.8
-      jade: ^1.11.0
-      jazz: ^0.0.18
-      jqtpl: ~1.1.0
-      just: ^0.1.8
-      liquid-node: ^3.0.1
-      liquor: ^0.0.5
-      lodash: ^4.17.20
-      marko: ^3.14.4
-      mote: ^0.2.0
-      mustache: ^3.0.0
-      nunjucks: ^3.2.2
-      plates: ~0.4.11
-      pug: ^3.0.0
-      qejs: ^3.0.5
-      ractive: ^1.3.12
-      razor-tmpl: ^1.3.1
-      react: ^16.13.1
-      react-dom: ^16.13.1
-      slm: ^2.0.0
-      squirrelly: ^5.1.0
-      swig: ^1.4.2
-      swig-templates: ^2.0.3
-      teacup: ^2.0.0
-      templayed: '>=0.2.3'
-      then-jade: '*'
-      then-pug: '*'
-      tinyliquid: ^0.2.34
-      toffee: ^0.3.6
-      twig: ^1.15.2
-      twing: ^5.0.2
-      underscore: ^1.11.0
-      vash: ^0.13.0
-      velocityjs: ^2.0.1
-      walrus: ^0.10.1
-      whiskers: ^0.4.0
-    peerDependenciesMeta:
-      arc-templates:
-        optional: true
-      atpl:
-        optional: true
-      babel-core:
-        optional: true
-      bracket-template:
-        optional: true
-      coffee-script:
-        optional: true
-      dot:
-        optional: true
-      dust:
-        optional: true
-      dustjs-helpers:
-        optional: true
-      dustjs-linkedin:
-        optional: true
-      eco:
-        optional: true
-      ect:
-        optional: true
-      ejs:
-        optional: true
-      haml-coffee:
-        optional: true
-      hamlet:
-        optional: true
-      hamljs:
-        optional: true
-      handlebars:
-        optional: true
-      hogan.js:
-        optional: true
-      htmling:
-        optional: true
-      jade:
-        optional: true
-      jazz:
-        optional: true
-      jqtpl:
-        optional: true
-      just:
-        optional: true
-      liquid-node:
-        optional: true
-      liquor:
-        optional: true
-      lodash:
-        optional: true
-      marko:
-        optional: true
-      mote:
-        optional: true
-      mustache:
-        optional: true
-      nunjucks:
-        optional: true
-      plates:
-        optional: true
-      pug:
-        optional: true
-      qejs:
-        optional: true
-      ractive:
-        optional: true
-      razor-tmpl:
-        optional: true
-      react:
-        optional: true
-      react-dom:
-        optional: true
-      slm:
-        optional: true
-      squirrelly:
-        optional: true
-      swig:
-        optional: true
-      swig-templates:
-        optional: true
-      teacup:
-        optional: true
-      templayed:
-        optional: true
-      then-jade:
-        optional: true
-      then-pug:
-        optional: true
-      tinyliquid:
-        optional: true
-      toffee:
-        optional: true
-      twig:
-        optional: true
-      twing:
-        optional: true
-      underscore:
-        optional: true
-      vash:
-        optional: true
-      velocityjs:
-        optional: true
-      walrus:
-        optional: true
-      whiskers:
-        optional: true
-    dependencies:
-      bluebird: 3.7.2
-      ejs: 3.1.9
-    dev: false
-
-  /content-disposition@0.5.4:
-    resolution: {integrity: sha512-FveZTNuGw04cxlAiWbzi6zTAL/lhehaWbTtgluJh4/E95DqMwTmha3KZN1aAWA8cFIhHzMZUvLevkw5Rqk+tSQ==}
-    engines: {node: '>= 0.6'}
-    dependencies:
-      safe-buffer: 5.2.1
-
-  /content-type@1.0.5:
-    resolution: {integrity: sha512-nTjqfcBFEipKdXCv4YDQWCfmcLZKm81ldF0pAopTvyrFGVbcR6P/VAAd5G7N+0tTr8QqiU0tFadD6FK4NtJwOA==}
-    engines: {node: '>= 0.6'}
-
-=======
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
   /conventional-changelog-angular@7.0.0:
     resolution: {integrity: sha512-ROjNchA9LgfNMTTFSIWPzebCwOGFdgkEq45EnvvrmSLvCtAw0HSmrCs7/ty+wAeYUZyNay0YMUNYFTRL72PkBQ==}
     engines: {node: '>=16'}
@@ -6668,6 +6046,7 @@ packages:
     dependencies:
       browserslist: 4.23.0
 <<<<<<< HEAD
+<<<<<<< HEAD
 
   /core-js-pure@3.36.1:
     resolution: {integrity: sha512-NXCvHvSVYSrewP0L5OhltzXeWFJLo2AL2TYnj6iLV3Bw8mM62wAQMNgUCRI6EBu6hVVpbCxmOPlxh1Ikw2PfUA==}
@@ -6695,8 +6074,9 @@ packages:
   /core-util-is@1.0.3:
     resolution: {integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==}
 =======
+=======
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
     dev: true
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 
   /cosmiconfig-typescript-loader@5.0.0(@types/node@20.12.8)(cosmiconfig@8.3.6)(typescript@5.4.5):
     resolution: {integrity: sha512-+8cK7jRAReYkMwMiG+bxhcNKiHJDM6bR9FD/nGBXOWdMLuYawjF5cGrtLilJ+LGd3ZjCXnJjR5DkfWPoIVlqJA==}
@@ -6769,6 +6149,7 @@ packages:
       shebang-command: 2.0.0
       which: 2.0.2
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -7181,8 +6562,9 @@ packages:
 >>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
   /cz-conventional-changelog@3.3.0(@types/node@20.12.6)(typescript@5.4.4):
 =======
+=======
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
   /cz-conventional-changelog@3.3.0(@types/node@20.12.8)(typescript@5.4.5):
->>>>>>> 621f9fe (refactor: ♻️ refactor: 在packages下的core和utils增加了jsDoc (#147))
     resolution: {integrity: sha512-U466fIzU5U22eES5lTNiNbZ+d8dfcHcssH4o7QsdWaCcRs/feIPCxKYSWkYBNs5mny7MvEfwpTLWjvbm94hecw==}
     engines: {node: '>= 10'}
     dependencies:
@@ -7269,10 +6651,7 @@ packages:
   /decamelize@1.2.0:
     resolution: {integrity: sha512-z2S+W9X73hAUUki+N+9Za2lBlun89zigOyGrsax+KUQ6wKW4ZoWpEYBkGhQjwAjjDCkWxhY0VKEhk8wzY7F5cA==}
     engines: {node: '>=0.10.0'}
-<<<<<<< HEAD
-=======
     dev: true
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 
   /dedent@0.7.0:
     resolution: {integrity: sha512-Q6fKUPqnAHAyhiUgFU7BUzLiv0kd8saH9al7tnu5Q/okj6dnupxyTgFIBjVzJATdfIAm9NAsvXNzjaKa+bxVyA==}
@@ -7358,73 +6737,7 @@ packages:
     engines: {node: '>=6.0.0'}
     dependencies:
       esutils: 2.0.3
-<<<<<<< HEAD
-
-  /dom-converter@0.2.0:
-    resolution: {integrity: sha512-gd3ypIPfOMr9h5jIKq8E3sHOTCjeirnl0WK5ZdS1AW0Odt0b1PaWaHdJ4Qk4klv+YB9aJBS7mESXjFoDQPu6DA==}
-    dependencies:
-      utila: 0.4.0
-    dev: false
-
-  /dom-serializer@1.4.1:
-    resolution: {integrity: sha512-VHwB3KfrcOOkelEG2ZOfxqLZdfkil8PtJi4P8N2MMXucZq2yLp75ClViUlOVwyoHEDjYU433Aq+5zWP61+RGag==}
-    dependencies:
-      domelementtype: 2.3.0
-      domhandler: 4.3.1
-      entities: 2.2.0
-    dev: false
-
-  /dom-serializer@2.0.0:
-    resolution: {integrity: sha512-wIkAryiqt/nV5EQKqQpo3SToSOV9J0DnbJqwK7Wv/Trc92zIAYZ4FlMu+JPFW1DfGFt81ZTCGgDEabffXeLyJg==}
-    dependencies:
-      domelementtype: 2.3.0
-      domhandler: 5.0.3
-      entities: 4.5.0
-    dev: false
-
-  /domelementtype@2.3.0:
-    resolution: {integrity: sha512-OLETBj6w0OsagBwdXnPdN0cnMfF9opN69co+7ZrbfPGrdpPVNBUj02spi6B1N7wChLQiPn4CSH/zJvXw56gmHw==}
-    dev: false
-
-  /domhandler@4.3.1:
-    resolution: {integrity: sha512-GrwoxYN+uWlzO8uhUXRl0P+kHE4GtVPfYzVLcUxPL7KNdHKj66vvlhiweIHqYYXWlw+T8iLMp42Lm67ghw4WMQ==}
-    engines: {node: '>= 4'}
-    dependencies:
-      domelementtype: 2.3.0
-    dev: false
-
-  /domhandler@5.0.3:
-    resolution: {integrity: sha512-cgwlv/1iFQiFnU96XXgROh8xTeetsnJiDsTc7TYCLFd9+/WNkIqPTxiM/8pSd8VIrhXGTf1Ny1q1hquVqDJB5w==}
-    engines: {node: '>= 4'}
-    dependencies:
-      domelementtype: 2.3.0
-    dev: false
-
-  /domutils@2.8.0:
-    resolution: {integrity: sha512-w96Cjofp72M5IIhpjgobBimYEfoPjx1Vx0BSX9P30WBdZW2WIKU0T1Bd0kz2eNZ9ikjKgHbEyKx8BB6H1L3h3A==}
-    dependencies:
-      dom-serializer: 1.4.1
-      domelementtype: 2.3.0
-      domhandler: 4.3.1
-    dev: false
-
-  /domutils@3.1.0:
-    resolution: {integrity: sha512-H78uMmQtI2AhgDJjWeQmHwJJ2bLPD3GMmO7Zja/ZZh84wkm+4ut+IUnUdRa8uCGX88DiVx1j6FRe1XfxEgjEZA==}
-    dependencies:
-      dom-serializer: 2.0.0
-      domelementtype: 2.3.0
-      domhandler: 5.0.3
-    dev: false
-
-  /dot-case@3.0.4:
-    resolution: {integrity: sha512-Kv5nKlh6yRrdrGvxeJ2e5y2eRUpkUosIW4A2AS38zwSz27zu7ufDwQPi5Jhs3XAlGNetl3bmnGhQsMtkKJnj3w==}
-    dependencies:
-      no-case: 3.0.4
-      tslib: 2.6.2
-    dev: false
-=======
     dev: true
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 
   /dot-prop@5.3.0:
     resolution: {integrity: sha512-QM8q3zDe58hqUqjraQOmzZ1LIH9SWQJTlEKCH4kJ2oQvLZk7RbQXvtDM2XEq3fwkV9CCvvH4LA0AV+ogFsBM2Q==}
@@ -7470,25 +6783,7 @@ packages:
     dependencies:
       graceful-fs: 4.2.11
       tapable: 2.2.1
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-  /entities@2.2.0:
-    resolution: {integrity: sha512-p92if5Nz619I0w+akJrLZH0MX0Pb5DX39XOwQTtXSdQQOaYH03S1uIQp4mhOZtAXrxq4ViO67YTiLBo2638o9A==}
     dev: false
-=======
->>>>>>> a5c4612 (fix: 🧩 修改 webpack 配置中模块引入类型错误以及为 package.json 添加相关的 dependent (#177))
-
-  /entities@4.5.0:
-    resolution: {integrity: sha512-V0hjH4dGPh9Ao5p0MoRY6BVqtwCjhz6vI5LT8AJ55H+4g9/4vbHx1I54fS0XuclLhDHArPQCiMjDxjaL8fPxhw==}
-    engines: {node: '>=0.12'}
-=======
-    dev: false
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
-=======
-    dev: false
->>>>>>> 326d931 (fix: 🧩 修复构建工具缺少相关 dependentcies 依赖的问题 (#178))
 
   /env-paths@2.2.1:
     resolution: {integrity: sha512-+h1lkLKhZMTYjog1VEpJNG7NZJWcuc2DDk/qsqSTRRCOXiLjeQ1d1/udrUGhqMxUgAlwKNZ0cf2uqan5GLuS2A==}
@@ -7604,6 +6899,7 @@ packages:
 =======
     dev: true
 
+<<<<<<< HEAD
   /esbuild@0.20.2:
     resolution: {integrity: sha512-WdOOppmUNU+IbZ0PaDiTst80zjnrOkyJNHoKupIcVyU8Lvla3Ugx94VzkQ32Ijqd7UhHJy75gNWDMUekcrSJ6g==}
     engines: {node: '>=12'}
@@ -7638,6 +6934,10 @@ packages:
 
   /escalade@3.1.1:
     resolution: {integrity: sha512-k0er2gUkLf8O0zKJiAhmkTnJlTvINGv7ygDNPbeIsX/TJjGJZHuh9B2UxbsaEkmlEo9MfhrSzmhIlhRlI2GXnw==}
+=======
+  /escalade@3.1.2:
+    resolution: {integrity: sha512-ErCHMCae19vR8vQGe50xIsVomy19rg6gFu3+r3jkEO46suLMWBksvVyoGgQV+jOfl84ZSOSlmv6Gxa89PmTGmA==}
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
     engines: {node: '>=6'}
 
   /escape-string-regexp@1.0.5:
@@ -7647,6 +6947,7 @@ packages:
   /escape-string-regexp@4.0.0:
     resolution: {integrity: sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==}
     engines: {node: '>=10'}
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -7680,8 +6981,9 @@ packages:
       supports-hyperlinks: 3.0.0
     dev: false
 =======
+=======
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
     dev: true
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 
 =======
 >>>>>>> c191f0d (chore: 🔨 remove unused files to clean up the project)
@@ -7780,6 +7082,7 @@ packages:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   /eslint-plugin-import@2.29.1(@typescript-eslint/parser@5.62.0)(eslint@8.57.0):
     resolution: {integrity: sha512-BbPC0cuExzhiMo4Ff1BTVwHpjjv28C5R+btTOGaCRC7UEz801up0JadwkeSk5Ued6TG34uaczuVuH6qyy5YUxw==}
 =======
@@ -7842,6 +7145,10 @@ packages:
   /eslint-plugin-import@2.29.0(@typescript-eslint/parser@6.13.1)(eslint@8.55.0):
     resolution: {integrity: sha512-QPOO5NO6Odv5lpoTkddtutccQjysJuFxoPS7fAHO+9m9udNHvTCPSAMW9zGAYj8lAIdr40I8yPCdUYrncXtrwg==}
 >>>>>>> c191f0d (chore: 🔨 remove unused files to clean up the project)
+=======
+  /eslint-plugin-import@2.29.1(@typescript-eslint/parser@6.21.0)(eslint@8.57.0):
+    resolution: {integrity: sha512-BbPC0cuExzhiMo4Ff1BTVwHpjjv28C5R+btTOGaCRC7UEz801up0JadwkeSk5Ued6TG34uaczuVuH6qyy5YUxw==}
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
     engines: {node: '>=4'}
     peerDependencies:
       '@typescript-eslint/parser': '*'
@@ -7877,6 +7184,7 @@ packages:
       - supports-color
     dev: true
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -7954,6 +7262,8 @@ packages:
 
 =======
 >>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
+=======
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
   /eslint-scope@5.1.1:
     resolution: {integrity: sha512-2NxwbF/hZ0KpepYN0cNbo+FN6XoK7GaHlQhgx/hIZl6Va0bF45RQOOwhLIy8lQDbuCiadSLCBnH2CFYquit5bw==}
     engines: {node: '>=8.0.0'}
@@ -7968,10 +7278,7 @@ packages:
     dependencies:
       esrecurse: 4.3.0
       estraverse: 5.3.0
-<<<<<<< HEAD
-=======
     dev: true
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 
   /eslint-visitor-keys@3.4.3:
     resolution: {integrity: sha512-wpc+LXeiyiisxPlEkUzU6svyS1frIO3Mgxj1fdy7Pm8Ygzguax2N3Fa/D/ag1WqbOprdI+uY6wMUl8/a2G+iag==}
@@ -8172,24 +7479,7 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       to-regex-range: 5.0.1
-<<<<<<< HEAD
-
-  /finalhandler@1.2.0:
-    resolution: {integrity: sha512-5uXcUVftlQMFnWC9qu/svkWv3GTd2PfUhK/3PLkYNAe7FbqJMt3515HaxE6eRL74GdsriiwujiawdaB1BpEISg==}
-    engines: {node: '>= 0.8'}
-    dependencies:
-      debug: 2.6.9
-      encodeurl: 1.0.2
-      escape-html: 1.0.3
-      on-finished: 2.4.1
-      parseurl: 1.3.3
-      statuses: 2.0.1
-      unpipe: 1.0.0
-    transitivePeerDependencies:
-      - supports-color
-=======
     dev: true
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 
   /find-cache-dir@3.3.2:
     resolution: {integrity: sha512-wXZV5emFEjrridIgED11OoUKLxiYjAcqot/NJdAkOhlJ+vGzwhOAfcG5OX1jP+S0PcjEn8bdMJv+g2jwQ3Onig==}
@@ -8257,6 +7547,7 @@ packages:
     resolution: {integrity: sha512-X8cqMLLie7KsNUDSdzeN8FYK9rEt4Dt67OsG/DNGnYTSDBG4uFAJFBnUeiV+zCVAvwFy56IjM9sH51jVaEhNxw==}
     dev: true
 
+<<<<<<< HEAD
   /focus-trap@7.5.4:
     resolution: {integrity: sha512-N7kHdlgsO/v+iD/dMoJKtsSqs5Dz/dXZVebRgJw23LDk+jMi/974zyiOYDziY2JPp8xivq9BmUGwIJMiuSBi7w==}
     dependencies:
@@ -8282,17 +7573,18 @@ packages:
   /follow-redirects@1.15.6(debug@4.3.4):
     resolution: {integrity: sha512-wWN62YITEaOpSK584EZXJafH1AGpO8RVgElfkuXbTOrPX4fIfOyEpW/CsiNd8JdYrAoOvafRTOEnvsO++qCqFA==}
 >>>>>>> 09c638c (feat: 调整 template 结构，给插件提供 ejs 渲染能力，修复部分细节问题 (#145))
+=======
+  /follow-redirects@1.15.6:
+    resolution: {integrity: sha512-wWN62YITEaOpSK584EZXJafH1AGpO8RVgElfkuXbTOrPX4fIfOyEpW/CsiNd8JdYrAoOvafRTOEnvsO++qCqFA==}
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
     engines: {node: '>=4.0'}
     peerDependencies:
       debug: '*'
     peerDependenciesMeta:
       debug:
         optional: true
-    dependencies:
-      debug: 4.3.4
+    dev: false
 
-=======
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
   /for-each@0.3.3:
     resolution: {integrity: sha512-jqYfLp7mo9vIyQf8ykW2v7A+2N4QjeCeI5+Dz9XraiO1ign81wjiH7Fb9vSOWvQfNtmSa4H2RoQTrrXivdUZmw==}
     dependencies:
@@ -8370,10 +7662,7 @@ packages:
 
   /functions-have-names@1.2.3:
     resolution: {integrity: sha512-xckBUXyTIqT97tq2x2AMb+g163b5JFysYk0x4qxNFwbfQkmNZoiRHb6sPzI9/QV33WeuvVYBUIiD4NzNIyqaRQ==}
-<<<<<<< HEAD
-=======
     dev: true
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 
   /gensync@1.0.0-beta.2:
     resolution: {integrity: sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg==}
@@ -8419,12 +7708,6 @@ packages:
       get-intrinsic: 1.2.4
     dev: true
 
-  /giscus@1.5.0:
-    resolution: {integrity: sha512-t3LL0qbSO3JXq3uyQeKpF5CegstGfKX/0gI6eDe1cmnI7D56R7j52yLdzw4pdKrg3VnufwCgCM3FDz7G1Qr6lg==}
-    dependencies:
-      lit: 3.1.3
-    dev: false
-
   /git-raw-commits@2.0.11:
     resolution: {integrity: sha512-VnctFhw+xfj8Va1xtfEqCUD2XDrbAPSJx+hSrE5K7fGdjZruW7XV+QOrN7LF/RJyvspRiD2I0asWsxFp0ya26A==}
     engines: {node: '>=10'}
@@ -8469,6 +7752,7 @@ packages:
 
   /glob@7.2.3:
     resolution: {integrity: sha512-nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q==}
+    deprecated: Glob versions prior to v9 are no longer supported
     dependencies:
       fs.realpath: 1.0.0
       inflight: 1.0.6
@@ -8541,14 +7825,8 @@ packages:
     engines: {node: '>= 0.4'}
     dependencies:
       define-properties: 1.2.1
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
       gopd: 1.0.1
->>>>>>> 621f9fe (refactor: ♻️ refactor: 在packages下的core和utils增加了jsDoc (#147))
     dev: true
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 
   /globby@10.0.2:
     resolution: {integrity: sha512-7dUi7RvCoT/xast/o/dLN53oqND4yk0nsHkhRgn9w65C4PofCLOoJ39iSOg+qVDdWQPIEj+eszMHQ+aLVwwQSg==}
@@ -8574,37 +7852,7 @@ packages:
       ignore: 5.3.1
       merge2: 1.4.1
       slash: 3.0.0
-<<<<<<< HEAD
-
-  /globby@13.2.2:
-    resolution: {integrity: sha512-Y1zNGV+pzQdh7H39l9zgB4PJqjRNqydvdYCDG4HFXM4XuvSaQQlEc91IU1yALL8gUTDomgBAfz3XJdmUS+oo0w==}
-    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
-    dependencies:
-      dir-glob: 3.0.1
-      fast-glob: 3.3.2
-      ignore: 5.3.1
-      merge2: 1.4.1
-      slash: 4.0.0
-    dev: false
-
-  /globby@14.0.1:
-    resolution: {integrity: sha512-jOMLD2Z7MAhyG8aJpNOpmziMOP4rPLcc95oQPKXBazW82z+CEgPFBQvEpRUa1KeIMUJo4Wsm+q6uzO/Q/4BksQ==}
-    engines: {node: '>=18'}
-    dependencies:
-      '@sindresorhus/merge-streams': 2.3.0
-      fast-glob: 3.3.2
-      ignore: 5.3.1
-      path-type: 5.0.0
-      slash: 5.1.0
-      unicorn-magic: 0.1.0
-    dev: false
-
-  /globjoin@0.1.4:
-    resolution: {integrity: sha512-xYfnw62CKG8nLkZBfWbhWwDw02CHty86jfPcc2cr3ZfeuK9ysoVPPEUxf21bAD/rWAgk52SuBrLJlefNy8mvFg==}
-    dev: false
-=======
     dev: true
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 
   /gopd@1.0.1:
     resolution: {integrity: sha512-d65bNlIadxvpb/A2abVdlqKqV563juRnZ1Wtk6s1sIR8uNsXR70xqIzVqxVf1eTqDunwT2MkczEeaezCKTZhwA==}
@@ -8673,10 +7921,6 @@ packages:
       parse-passwd: 1.0.0
     dev: true
 
-  /hookable@5.5.3:
-    resolution: {integrity: sha512-Yc+BQe8SvoXH1643Qez1zqLRmbA5rCL+sSmk6TVos0LWVfNIB7PGncdlId77WzLGSIB5KaWgTaNTs2lNVEI6VQ==}
-    dev: true
-
   /hosted-git-info@2.8.9:
     resolution: {integrity: sha512-mxIDAb9Lsm6DoOJ7xH+5+X4y1LU/4Hi50L9C5sIswK3JzULS4bwk1FvjdBgvYR4bzT4tuUQiC15FE2f5HbLvYw==}
     dev: true
@@ -8717,6 +7961,7 @@ packages:
     dependencies:
       safer-buffer: 2.1.2
 <<<<<<< HEAD
+<<<<<<< HEAD
 
   /iconv-lite@0.6.3:
     resolution: {integrity: sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw==}
@@ -8742,8 +7987,9 @@ packages:
     dev: false
 >>>>>>> c481920 (refactor: 重构整体架构，优化项目文件生成逻辑 (#206))
 =======
+=======
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
     dev: true
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 
   /ieee754@1.2.1:
     resolution: {integrity: sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==}
@@ -8751,18 +7997,7 @@ packages:
   /ignore@5.3.1:
     resolution: {integrity: sha512-5Fytz/IraMjqpwfd34ke28PTVMjZjJG2MPn5t7OE4eUCUNf8BAa7b5WUS9/Qvr6mwOQS7Mk6vdsMno5he+T8Xw==}
     engines: {node: '>= 4'}
-<<<<<<< HEAD
-
-  /image-size@0.5.5:
-    resolution: {integrity: sha512-6TDAlDPZxUFCv+fuOkIoXT/V/f3Qbq8e37p+YOiYrUv3v9cc3/6x78VdfPgFVaB9dZYeLUfKgHRebpkm/oP2VQ==}
-    engines: {node: '>=0.10.0'}
-    hasBin: true
-    requiresBuild: true
-    dev: false
-    optional: true
-=======
     dev: true
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 
   /import-fresh@3.3.0:
     resolution: {integrity: sha512-veYYhQa+D1QBKznvhUHxb8faxlrwUnxseDAbAp457E0wLNio2bOSKnjYDhMj+YiAq61xrMGhQk9iXVk5FzgQMw==}
@@ -8770,23 +8005,7 @@ packages:
     dependencies:
       parent-module: 1.0.1
       resolve-from: 4.0.0
-<<<<<<< HEAD
-
-  /import-lazy@4.0.0:
-    resolution: {integrity: sha512-rKtvo6a868b5Hu3heneU+L4yEQ4jYKLtjpnPeUdK7h0yzXGmyBTypknlkCvHFBqfX9YlorEiMM6Dnq/5atfHkw==}
-    engines: {node: '>=8'}
-    dev: false
-
-  /import-local@3.1.0:
-    resolution: {integrity: sha512-ASB07uLtnDs1o6EHjKpX34BKYDSqnFerfTOJL2HvMqF70LnxpjkzDB8J44oT9pu4AMPkQwf8jl6szgvNd2tRIg==}
-    engines: {node: '>=8'}
-    hasBin: true
-    dependencies:
-      pkg-dir: 4.2.0
-      resolve-cwd: 3.0.0
-=======
     dev: true
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 
   /import-meta-resolve@4.1.0:
     resolution: {integrity: sha512-I6fiaX09Xivtk+THaMfAwnA3MVA5Big1WHF1Dfx9hFuvNIWpXnorlkzhcQf6ehrqQiiZECRt1poOAkPmer3ruw==}
@@ -8806,6 +8025,7 @@ packages:
 
   /inflight@1.0.6:
     resolution: {integrity: sha512-k92I/b08q4wvFscXCLvqfsHCrjrF7yiXsQuIVvVE7N82W3+aqpzuUdBbfhWcy/FZR3/4IgflMgKLOsvPDrGCJA==}
+    deprecated: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
     dependencies:
       once: 1.4.0
       wrappy: 1.0.2
@@ -8854,6 +8074,7 @@ packages:
       hasown: 2.0.2
       side-channel: 1.0.6
 <<<<<<< HEAD
+<<<<<<< HEAD
     dev: true
 =======
 <<<<<<< HEAD
@@ -8878,8 +8099,9 @@ packages:
       get-intrinsic: 1.2.2
       is-typed-array: 1.1.12
 =======
+=======
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
     dev: true
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 
   /is-array-buffer@3.0.4:
     resolution: {integrity: sha512-wcjaerHw0ydZwfhiKbXJWLDY8A7yV7KhjQOpb83hGgGfId/aQa4TOvwyzn2PuswW2gPCYEL/nEAiSVpdOj1lXw==}
@@ -8973,6 +8195,7 @@ packages:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   /is-interactive@2.0.0:
     resolution: {integrity: sha512-qP1vozQRI+BMOPcjFzrjXuQvdak2pHNUMZoeG2eRbiSqyvbEf/wQtEOTOX1guk6E3t36RkaqiSt8A/6YElNxLQ==}
     engines: {node: '>=12'}
@@ -8986,6 +8209,8 @@ packages:
 
 =======
 >>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
+=======
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
   /is-module@1.0.0:
     resolution: {integrity: sha512-51ypPSPCoTEIN9dy5Oy+h4pShgJmPCygKfyRCISBI+JoWT/2oJvK8QPxmwv7b/p239jXrm9M1mlQbyKJ5A152g==}
     dev: true
@@ -9153,25 +8378,7 @@ packages:
   /jiti@1.21.0:
     resolution: {integrity: sha512-gFqAIbuKyyso/3G2qhiO2OM6shY6EPP/R0+mkDbyspxKazh8BXDC5FiFsUjlczgdNz/vfra0da2y+aHrusLG/Q==}
     hasBin: true
-<<<<<<< HEAD
-
-  /joi@17.12.3:
-    resolution: {integrity: sha512-2RRziagf555owrm9IRVtdKynOBeITiDpuZqIpgwqXShPncPKNiRQoiGsl/T8SQdq+8ugRzH2LqY67irr2y/d+g==}
-    dependencies:
-      '@hapi/hoek': 9.3.0
-      '@hapi/topo': 5.1.0
-      '@sideway/address': 4.1.5
-      '@sideway/formula': 3.0.1
-      '@sideway/pinpoint': 2.0.0
-    dev: false
-
-  /js-message@1.0.7:
-    resolution: {integrity: sha512-efJLHhLjIyKRewNS9EGZ4UpI8NguuL6fKkhRxVuMmrGV2xN/0APGdQYwLFky5w9naebSZ0OwAGp0G6/2Cg90rA==}
-    engines: {node: '>=0.6.0'}
-    dev: false
-=======
     dev: true
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 
   /js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
@@ -9252,15 +8459,7 @@ packages:
     dependencies:
       prelude-ls: 1.2.1
       type-check: 0.4.0
-<<<<<<< HEAD
-
-  /lilconfig@2.1.0:
-    resolution: {integrity: sha512-utWOt/GHzuUxnLKxB6dk81RoOeoNeHgbrXiuGk4yyF5qlRz+iIVWu56E2fqGHFrXz0QNUhLB/8nKqvRH66JKGQ==}
-    engines: {node: '>=10'}
-    dev: false
-=======
     dev: true
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 
   /lilconfig@3.0.0:
     resolution: {integrity: sha512-K2U4W2Ff5ibV7j7ydLr+zLAkIg5JJ4lPn1Ltsdt+Tz/IjQ8buJ55pZAxoP34lqIiwtF9iAvtLv3JGv7CAyAg+g==}
@@ -9301,28 +8500,6 @@ packages:
       rfdc: 1.3.1
       wrap-ansi: 9.0.0
     dev: true
-
-  /lit-element@4.0.5:
-    resolution: {integrity: sha512-iTWskWZEtn9SyEf4aBG6rKT8GABZMrTWop1+jopsEOgEcugcXJGKuX5bEbkq9qfzY+XB4MAgCaSPwnNpdsNQ3Q==}
-    dependencies:
-      '@lit-labs/ssr-dom-shim': 1.2.0
-      '@lit/reactive-element': 2.0.4
-      lit-html: 3.1.3
-    dev: false
-
-  /lit-html@3.1.3:
-    resolution: {integrity: sha512-FwIbqDD8O/8lM4vUZ4KvQZjPPNx7V1VhT7vmRB8RBAO0AU6wuTVdoXiu2CivVjEGdugvcbPNBLtPE1y0ifplHA==}
-    dependencies:
-      '@types/trusted-types': 2.0.7
-    dev: false
-
-  /lit@3.1.3:
-    resolution: {integrity: sha512-l4slfspEsnCcHVRTvaP7YnkTZEZggNFywLEIhQaGhYDczG+tu/vlgm/KaWIEjIp+ZyV20r2JnZctMb8LeLCG7Q==}
-    dependencies:
-      '@lit/reactive-element': 2.0.4
-      lit-element: 4.0.5
-      lit-html: 3.1.3
-    dev: false
 
   /loader-runner@4.3.0:
     resolution: {integrity: sha512-3R/1M+yS3j5ou80Me59j7F9IMs4PXs3VqRrm0TU3AbKPxlmpoY1TNscJV/oGJXo8qCatFGTfDbY6W6ipGOYXfg==}
@@ -9375,17 +8552,6 @@ packages:
     resolution: {integrity: sha512-worNHGKLDetmcEYDvh2stPCrrQRkP20E4l0iIS7F8EvzMqBBi7ltvFN5m1HvTf1P7Jk1txKhvFcmYsCr8O2F1Q==}
     dev: true
 
-<<<<<<< HEAD
-  /lodash.mapvalues@4.6.0:
-    resolution: {integrity: sha512-JPFqXFeZQ7BfS00H58kClY7SPVeHertPE0lNuCyZ26/XlN8TvakYD7b9bGyNmXbT/D3BbtPAAmq90gPWqLkxlQ==}
-    dev: false
-
-  /lodash.memoize@4.1.2:
-    resolution: {integrity: sha512-t7j+NzmgnQzTAYXcsHYLgimltOV1MXHtlOWf6GjL9Kj8GK5FInw5JotxvbOs+IvV1/Dzo04/fCGfLVs7aXb4Ag==}
-    dev: false
-
-=======
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
   /lodash.merge@4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
     dev: true
@@ -9421,18 +8587,6 @@ packages:
       chalk: 4.1.2
       is-unicode-supported: 0.1.0
 
-<<<<<<< HEAD
-  /log-update@2.3.0:
-    resolution: {integrity: sha512-vlP11XfFGyeNQlmEn9tJ66rEW1coA/79m5z6BCkudjbAGE83uhAcGYrBFwfs3AdLiLzGRusRPAbSPK9xZteCmg==}
-    engines: {node: '>=4'}
-    dependencies:
-      ansi-escapes: 3.2.0
-      cli-cursor: 2.1.0
-      wrap-ansi: 3.0.1
-    dev: false
-
-=======
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
   /log-update@6.0.0:
     resolution: {integrity: sha512-niTvB4gqvtof056rRIrTZvjNYE4rCUzO6X/X+kYjd7WFxXeJ0NwEFnRxX6ehkvv3jTwrXnNdtAak5XYZuIyPFw==}
     engines: {node: '>=18'}
@@ -9464,15 +8618,7 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       yallist: 4.0.0
-<<<<<<< HEAD
-
-  /magic-string@0.30.10:
-    resolution: {integrity: sha512-iIRwTIf0QKV3UAnYK4PU8uiEc4SRh5jX0mwpIwETPpHdhVM4f53RSwS/vXvN1JhGX+Cs7B8qIq3d6AH49O5fAQ==}
-    dependencies:
-      '@jridgewell/sourcemap-codec': 1.4.15
-=======
     dev: true
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 
   /magic-string@0.30.10:
     resolution: {integrity: sha512-iIRwTIf0QKV3UAnYK4PU8uiEc4SRh5jX0mwpIwETPpHdhVM4f53RSwS/vXvN1JhGX+Cs7B8qIq3d6AH49O5fAQ==}
@@ -9495,47 +8641,7 @@ packages:
   /map-obj@4.3.0:
     resolution: {integrity: sha512-hdN1wVrZbb29eBGiGjJbeP8JbKjq1urkHJ/LIP/NY48MZ1QVXUsQBV1G1zvYFHn1XE06cwjBsOI2K3Ulnj1YXQ==}
     engines: {node: '>=8'}
-<<<<<<< HEAD
-
-  /mark.js@8.11.1:
-    resolution: {integrity: sha512-1I+1qpDt4idfgLQG+BNWmrqku+7/2bi5nLf4YwF8y8zXvmfiTBY3PV3ZibfrjBueCByROpuBjLLFCajqkgYoLQ==}
     dev: true
-
-  /mathml-tag-names@2.1.3:
-    resolution: {integrity: sha512-APMBEanjybaPzUrfqU0IMU5I0AswKMH7k8OTLs0vvV4KZpExkTkY87nR/zpbuTPj+gARop7aGUbl11pnDfW6xg==}
-    dev: false
-
-  /mdn-data@2.0.14:
-    resolution: {integrity: sha512-dn6wd0uw5GsdswPFfsgMp5NSB0/aDe6fK94YJV/AJDYXL6HVLWBsxeq7js7Ad+mU2K9LAlwpk6kN2D5mwCPVow==}
-    dev: false
-
-  /mdn-data@2.0.28:
-    resolution: {integrity: sha512-aylIc7Z9y4yzHYAJNuESG3hfhC+0Ibp/MAMiaOZgNv4pmEdFyfZhhhny4MNiAfWdBQ1RQ2mfDWmM1x8SvGyp8g==}
-    dev: false
-
-  /mdn-data@2.0.30:
-    resolution: {integrity: sha512-GaqWWShW4kv/G9IEucWScBx9G1/vsFZZJUO+tD26M8J8z3Kw5RDQjaoZe03YAClgeS/SWPOcb4nkFBTEi5DUEA==}
-    dev: false
-
-  /media-typer@0.3.0:
-    resolution: {integrity: sha512-dq+qelQ9akHpcOl/gUVRTxVIOkAJ1wR3QAvb4RsVjS8oVoFjDGTc679wJYmUmknUF5HwMLOgb5O+a3KxfWapPQ==}
-    engines: {node: '>= 0.6'}
-
-  /memfs@3.5.3:
-    resolution: {integrity: sha512-UERzLsxzllchadvbPs5aolHh65ISpKpM+ccLbOJ8/vvpBKmAWf+la7dXFy7Mr0ySHbdHrFv5kGFCUHHe6GFEmw==}
-    engines: {node: '>= 4.0.0'}
-    dependencies:
-      fs-monkey: 1.0.5
-    dev: false
-
-  /memfs@4.8.1:
-    resolution: {integrity: sha512-7q/AdPzf2WpwPlPL4v1kE2KsJsHl7EF4+hAeVzlyanr2+YnR21NVn9mDqo+7DEaKDRsQy8nvxPlKH4WqMtiO0w==}
-    engines: {node: '>= 4.0.0'}
-    dependencies:
-      tslib: 2.6.2
-=======
-    dev: true
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 
   /meow@12.1.1:
     resolution: {integrity: sha512-BhXM0Au22RwUneMPwSCnyhTOizdWoIEPU9sp0Aqa1PnDMR5Wv2FGXYDjuzJEIX+Eo2Rb8xuYe5jrnm5QowQFkw==}
@@ -9603,24 +8709,7 @@ packages:
   /min-indent@1.0.1:
     resolution: {integrity: sha512-I9jwMn07Sy/IwOj3zVkVik2JTvgpaykDZEigL6Rx6N9LbMywwUSMtxET+7lVoDLLd3O3IXwJwvuuns8UB/HeAg==}
     engines: {node: '>=4'}
-<<<<<<< HEAD
-
-  /mini-css-extract-plugin@2.8.1(webpack@5.91.0):
-    resolution: {integrity: sha512-/1HDlyFRxWIZPI1ZpgqlZ8jMw/1Dp/dl3P0L1jtZ+zVcHqwPhGwaJwKL00WVgfnBy6PWCde9W65or7IIETImuA==}
-    engines: {node: '>= 12.13.0'}
-    peerDependencies:
-      webpack: ^5.0.0
-    dependencies:
-      schema-utils: 4.2.0
-      tapable: 2.2.1
-      webpack: 5.91.0(webpack-cli@5.1.4)
-    dev: false
-
-  /minimalistic-assert@1.0.1:
-    resolution: {integrity: sha512-UtJcAD4yEaGtjPezWuO9wC4nwUnVH/8/Im3yEHQP4b67cXlD/Qr9hdITCU1xDbSEXg2XKNaP8jsReV7vQd00/A==}
-=======
     dev: true
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 
   /minimatch@3.1.2:
     resolution: {integrity: sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==}
@@ -9685,10 +8774,6 @@ packages:
     engines: {node: '>=16 || 14 >=14.17'}
     dev: true
 
-  /minisearch@6.3.0:
-    resolution: {integrity: sha512-ihFnidEeU8iXzcVHy74dhkxh/dn8Dc08ERl0xwoMMGqp4+LvRSCgicb+zGqWthVokQKvCSxITlh3P08OzdTYCQ==}
-    dev: true
-
   /minizlib@2.1.2:
     resolution: {integrity: sha512-bAxsR8BVfj60DWXHE3u30oHzfl4G7khkSuPW+qvpd7jFRHm7dLxOjUk1EHACJ/hxLY8phGJ0YhYHZo7jil7Qdg==}
     engines: {node: '>= 8'}
@@ -9697,40 +8782,12 @@ packages:
       yallist: 4.0.0
     dev: false
 
-<<<<<<< HEAD
-  /mitt@3.0.1:
-    resolution: {integrity: sha512-vKivATfr97l2/QBCYAkXYDbrIWPM2IIKEl7YPhjCvKlG3kE2gm+uBo6nEXK3M5/Ffh/FLpKExzOQ3JJoJGFKBw==}
-    dev: true
-
-  /mkdirp@0.5.6:
-    resolution: {integrity: sha512-FP+p8RB8OWpF3YZBCrP5gtADmtXApB5AMLn+vdyA+PyxCjrCs00mjyUozssO33cwDeT3wNGdLxJ5M//YqtHAJw==}
-    hasBin: true
-    dependencies:
-      minimist: 1.2.8
-    dev: false
-
-=======
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
   /mkdirp@1.0.4:
     resolution: {integrity: sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==}
     engines: {node: '>=10'}
     hasBin: true
     dev: false
 
-<<<<<<< HEAD
-  /module-alias@2.2.3:
-    resolution: {integrity: sha512-23g5BFj4zdQL/b6tor7Ji+QY4pEfNH784BMslY9Qb0UnJWRAt+lQGLYmRaM0KDBwIG23ffEBELhZDP2rhi9f/Q==}
-    dev: false
-
-  /mrmime@2.0.0:
-    resolution: {integrity: sha512-eu38+hdgojoyq63s+yTpN4XMBdt5l8HhMhc4VKLO9KM5caLIBvUm4thi7fFaxyTmCKeNnXZ5pAlBwCUnhA09uw==}
-    engines: {node: '>=10'}
-
-  /ms@2.0.0:
-    resolution: {integrity: sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A==}
-
-=======
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
   /ms@2.1.2:
     resolution: {integrity: sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==}
 
@@ -9750,36 +8807,6 @@ packages:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
     dev: false
 
-<<<<<<< HEAD
-  /no-case@3.0.4:
-    resolution: {integrity: sha512-fgAN3jGAh+RoxUGZHTSOLJIqUc2wmoBwGR4tbpNAKmmovFoWq0OdRkb0VkldReO2a2iBT/OEulG9XSUc10r3zg==}
-    dependencies:
-      lower-case: 2.0.2
-      tslib: 2.6.2
-    dev: false
-
-  /node-abort-controller@3.1.1:
-    resolution: {integrity: sha512-AGK2yQKIjRuqnc6VkX2Xj5d+QW8xZ87pa1UK6yA6ouUyuxfHuMP6umE5QK7UmTeOAymo+Zx1Fxiuw9rVx8taHQ==}
-    dev: false
-
-  /node-fetch@2.7.0:
-    resolution: {integrity: sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==}
-    engines: {node: 4.x || >=6.0.0}
-    peerDependencies:
-      encoding: ^0.1.0
-    peerDependenciesMeta:
-      encoding:
-        optional: true
-    dependencies:
-      whatwg-url: 5.0.0
-    dev: false
-
-  /node-forge@1.3.1:
-    resolution: {integrity: sha512-dPEtOeMvF9VMcYV/1Wb8CPoVAXtp6MKMlcbAt4ddqmGqUJ6fQZFXkNZNkNlfevtNkGtaSoXf/vNNNSvgrdXwtA==}
-    engines: {node: '>= 6.13.0'}
-
-=======
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
   /node-releases@2.0.14:
     resolution: {integrity: sha512-y10wOWt8yZpqXmOgRo77WaHEmhYQYGNA6y421PKsKYWEK8aW+cqAphborZDhqfyKrbZEN92CN1X2KbafY2s7Yw==}
 
@@ -9800,32 +8827,7 @@ packages:
       is-core-module: 2.13.1
       semver: 7.6.0
       validate-npm-package-license: 3.0.4
-<<<<<<< HEAD
-
-  /normalize-path@3.0.0:
-    resolution: {integrity: sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==}
-    engines: {node: '>=0.10.0'}
-    requiresBuild: true
-
-  /normalize-range@0.1.2:
-    resolution: {integrity: sha512-bdok/XvKII3nUpklnV6P2hxtMNrCboOjAcyBuQnWEhO665FwrSNRxU+AqpsyvO6LgGYPspN+lu5CLtw4jPRKNA==}
-    engines: {node: '>=0.10.0'}
-    dev: false
-
-  /normalize-url@6.1.0:
-    resolution: {integrity: sha512-DlL+XwOy3NxAQ8xuC0okPgK46iuVNAK01YN7RueYBqqFeGsBjV9XmCAzAdgt+667bCl5kPh9EqKKDwnaPG1I7A==}
-    engines: {node: '>=10'}
-    dev: false
-
-  /npm-run-path@2.0.2:
-    resolution: {integrity: sha512-lJxZYlT4DW/bRUtFh1MQIWqmLwQfAxnqWG4HhEdjMlkrJYnJn0Jrr2u3mgxqaWsdiBc76TYkTG/mhrnYTuzfHw==}
-    engines: {node: '>=4'}
-    dependencies:
-      path-key: 2.0.1
-    dev: false
-=======
     dev: true
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 
   /npm-run-path@4.0.1:
     resolution: {integrity: sha512-S48WzZW777zhNIrn7gxOlISNAqi9ZC/uQFnRdbeIHhZhCA6UqpkOT8T1G7BvfdgP4Er8gF4sUbaS0i7QvIfCWw==}
@@ -9841,20 +8843,6 @@ packages:
       path-key: 4.0.0
     dev: true
 
-<<<<<<< HEAD
-  /nth-check@2.1.1:
-    resolution: {integrity: sha512-lqjrjmaOoAnWfMmBPL+XNnynZh2+swxiX3WUE0s4yEHI6m+AwrK2UZOimIRl3X/4QctVqS8AiZjFqyOGrMXb/w==}
-    dependencies:
-      boolbase: 1.0.0
-    dev: false
-
-  /object-assign@4.1.1:
-    resolution: {integrity: sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg==}
-    engines: {node: '>=0.10.0'}
-    dev: false
-
-=======
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
   /object-inspect@1.13.1:
     resolution: {integrity: sha512-5qoj1RUiKOMsCCNLV1CBiPYE10sziTsnmNxkAI/rZhiD63CF7IqdFGC/XzjWjpSgLf0LxXX3bDFIh0E18f6UhQ==}
     dev: true
@@ -9892,6 +8880,7 @@ packages:
       define-properties: 1.2.1
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       es-abstract: 1.23.3
 <<<<<<< HEAD
 =======
@@ -9916,10 +8905,11 @@ packages:
 =======
 <<<<<<< HEAD
 =======
+=======
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
       es-abstract: 1.23.3
 >>>>>>> c481920 (refactor: 重构整体架构，优化项目文件生成逻辑 (#206))
     dev: true
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 
   /object.values@1.2.0:
     resolution: {integrity: sha512-yBYjY9QX2hnRmZHAjG/f13MzmBzxzYgQhFrke06TTyKY5zSTEqkOeukBzIdVA3j3ulu8Qa3MbVFShV7T2RmGtQ==}
@@ -9998,14 +8988,6 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-<<<<<<< HEAD
-  /p-finally@1.0.0:
-    resolution: {integrity: sha512-LICb2p9CB7FS+0eR1oqWnHhp0FljGLZCWBE9aix0Uye9W8LTQPwMTYVGWQWIw9RdQiDg4+epXQODwIYJtSJaow==}
-    engines: {node: '>=4'}
-    dev: false
-
-=======
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
   /p-limit@2.3.0:
     resolution: {integrity: sha512-//88mFWSJx8lxCzwdAABTJL2MyWB12+eIY7MDL2SqLmAkeKU9qxRvWuSyTjm3FUmpBEMuFfckAIqEaVGUDxb6w==}
     engines: {node: '>=6'}
@@ -10017,17 +8999,7 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       yocto-queue: 0.1.0
-<<<<<<< HEAD
-
-  /p-limit@4.0.0:
-    resolution: {integrity: sha512-5b0R4txpzjPWVw/cXXUResoD4hb6U/x9BH08L7nw+GN1sezDzPdxeRvpc9c433fZhBan/wusjbCsqwqm4EIBIQ==}
-    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
-    dependencies:
-      yocto-queue: 1.0.0
-    dev: false
-=======
     dev: true
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 
   /p-locate@4.1.0:
     resolution: {integrity: sha512-R79ZZ/0wAxKGu3oYMlz8jy/kbhsNrS7SKZ7PxEHBgJ5+F2mtFW2fK2cOtBh1cHYkQsbzFV7I+EoRKe6Yt0oK7A==}
@@ -10049,25 +9021,6 @@ packages:
       aggregate-error: 3.1.0
     dev: true
 
-<<<<<<< HEAD
-  /p-retry@4.6.2:
-    resolution: {integrity: sha512-312Id396EbJdvRONlngUx0NydfrIQ5lsYu0znKVUzVvArzEIt08V1qhtyESbGVd1FGX7UKtiFp5uwKZdM8wIuQ==}
-    engines: {node: '>=8'}
-    dependencies:
-      '@types/retry': 0.12.0
-      retry: 0.13.1
-    dev: false
-
-  /p-retry@6.2.0:
-    resolution: {integrity: sha512-JA6nkq6hKyWLLasXQXUrO4z8BUZGUt/LjlJxx8Gb2+2ntodU/SS63YZ8b0LUTbQ8ZB9iwOfhEPhg4ykKnn2KsA==}
-    engines: {node: '>=16.17'}
-    dependencies:
-      '@types/retry': 0.12.2
-      is-network-error: 1.1.0
-      retry: 0.13.1
-
-=======
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
   /p-try@2.2.0:
     resolution: {integrity: sha512-R4nPAVTAU0B9D35/Gk3uJf/7XYbQcyohSKdvAxIRSNghFl4e71hVoGnBNQz9cWaXxO2I10KTC+3jMdvvoKw6dQ==}
     engines: {node: '>=6'}
@@ -10083,7 +9036,7 @@ packages:
     resolution: {integrity: sha512-ayCKvm/phCGxOkYRSCM82iDwct8/EonSEgCSxWxD7ve6jHggsFl4fZVQBPRNgQoKiuV/odhFrGzQXZwbifC8Rg==}
     engines: {node: '>=8'}
     dependencies:
-      '@babel/code-frame': 7.24.2
+      '@babel/code-frame': 7.24.7
       error-ex: 1.3.2
       json-parse-even-better-errors: 2.3.1
       lines-and-columns: 1.2.4
@@ -10094,34 +9047,6 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-<<<<<<< HEAD
-  /parse5-htmlparser2-tree-adapter@6.0.1:
-    resolution: {integrity: sha512-qPuWvbLgvDGilKc5BoicRovlT4MtYT6JfJyBOMDsKoiT+GiuP5qyrPCnR9HcPECIJJmZh5jRndyNThnhhb/vlA==}
-    dependencies:
-      parse5: 6.0.1
-    dev: false
-
-  /parse5@5.1.1:
-    resolution: {integrity: sha512-ugq4DFI0Ptb+WWjAdOK16+u/nHfiIrcE+sh8kZMaM0WllQKLI9rOUq6c2b7cwPkXdzfQESqvoqK6ug7U/Yyzug==}
-    dev: false
-
-  /parse5@6.0.1:
-    resolution: {integrity: sha512-Ofn/CTFzRGTTxwpNEs9PP93gXShHcTq255nzRYSKe8AkVpZY7e1fpmTfOyoIvjP5HG7Z2ZM7VS9PPhQGW2pOpw==}
-    dev: false
-
-  /parseurl@1.3.3:
-    resolution: {integrity: sha512-CiyeOxFT/JZyN5m0z9PfXw4SCBJ6Sygz1Dpl0wqjlhDEGGBP1GnsUVEL0p63hoG1fcj3fHynXi9NYO4nWOL+qQ==}
-    engines: {node: '>= 0.8'}
-
-  /pascal-case@3.1.2:
-    resolution: {integrity: sha512-uWlGT3YSnK9x3BQJaOdcZwrnV6hPpd8jFH1/ucpiLRPh/2zCVJKS19E4GvYHvaCcACn3foXZ0cLB9Wrx1KGe5g==}
-    dependencies:
-      no-case: 3.0.4
-      tslib: 2.6.2
-    dev: false
-
-=======
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
   /path-exists@4.0.0:
     resolution: {integrity: sha512-ak9Qy5Q7jYb2Wwcey5Fpvg2KoAc/ZIhLSLOSBmRmygPsGwkVVt0fZa0qrtMz+m6tJTAHfZQ8FnmB4MG4LWy7/w==}
     engines: {node: '>=8'}
@@ -10155,23 +9080,7 @@ packages:
   /path-type@4.0.0:
     resolution: {integrity: sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==}
     engines: {node: '>=8'}
-<<<<<<< HEAD
-
-  /path-type@5.0.0:
-    resolution: {integrity: sha512-5HviZNaZcfqP95rwpv+1HDgUamezbqdSYTyzjTvwtJSnIH+3vnbmWsItli8OFEndS984VT55M3jduxZbX351gg==}
-    engines: {node: '>=12'}
-    dev: false
-
-  /perfect-debounce@1.0.0:
-    resolution: {integrity: sha512-xCy9V055GLEqoFaHoC1SoLIaLmWctgCUaBaWxDZ7/Zx4CTyX7cJQLJOok/orfjZAh9kEYpjJa4d0KcJmCbctZA==}
     dev: true
-
-  /picocolors@0.2.1:
-    resolution: {integrity: sha512-cMlDqaLEqfSaW8Z7N5Jw+lyIW869EzT73/F5lhtY9cLGoVxSXznfgfXMO0Z5K0o0Q2TkTXq+0KFsdnSe3jDViA==}
-    dev: false
-=======
-    dev: true
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 
   /picocolors@1.0.0:
     resolution: {integrity: sha512-1fygroTLlHu66zi26VoTDv8yRgm0Fccecssto+MhsZ0D/DGW2sm8E8AjW7NU5VVTRt5GxbeZ5qBuJr+HyLYkjQ==}
@@ -10187,44 +9096,17 @@ packages:
     hasBin: true
     dev: true
 
-<<<<<<< HEAD
-  /pify@4.0.1:
-    resolution: {integrity: sha512-uB80kBFb/tfd68bVleG9T5GGsGPjJrLAUpR5PZIrhBnIaRTQRjqdJSsIKkOP6OAIFbj7GOrcudc5pNjZ+geV2g==}
-    engines: {node: '>=6'}
-    requiresBuild: true
-
-=======
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
   /pkg-dir@4.2.0:
     resolution: {integrity: sha512-HRDzbaKjC+AOWVXxAU/x54COGeIv9eb+6CkDSQoNTt4XyWoIJvuPsXizxu/Fr23EiekbtZwmh1IcIG/l/a10GQ==}
     engines: {node: '>=8'}
     dependencies:
       find-up: 4.1.0
-<<<<<<< HEAD
-
-  /pkg-dir@7.0.0:
-    resolution: {integrity: sha512-Ie9z/WINcxxLp27BKOCHGde4ITq9UklYKDzVo1nhk5sqGEXU3FpkwP5GM2voTGJkGd9B3Otl+Q4uwSOeSUtOBA==}
-    engines: {node: '>=14.16'}
-    dependencies:
-      find-up: 6.3.0
-    dev: false
-
-  /portfinder@1.0.32:
-    resolution: {integrity: sha512-on2ZJVVDXRADWE6jnQaX0ioEylzgBpQk8r55NE4wjXW1ZxO+BgDlY6DXwj20i0V8eB4SenDQ00WEaxfiIQPcxg==}
-    engines: {node: '>= 0.12.0'}
-    dependencies:
-      async: 2.6.4
-      debug: 3.2.7
-      mkdirp: 0.5.6
-    transitivePeerDependencies:
-      - supports-color
-=======
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
     dev: false
 
   /possible-typed-array-names@1.0.0:
     resolution: {integrity: sha512-d7Uw+eZoloe0EHDIYoe+bQ5WXnGMOpmiZFTuMWCwpjzzkL2nTjcKiAk4hh8TjnGye2TwWOk3UXucZ+3rbmBa8Q==}
     engines: {node: '>= 0.4'}
+<<<<<<< HEAD
 <<<<<<< HEAD
 
   /postcss-calc@8.2.4(postcss@8.4.38):
@@ -11280,28 +10162,21 @@ packages:
   /preact@10.20.2:
     resolution: {integrity: sha512-S1d1ernz3KQ+Y2awUxKakpfOg2CEmJmwOP+6igPx6dgr6pgDvenqYviyokWso2rhHvGtTlWWnJDa7RaPbQerTg==}
 >>>>>>> c481920 (refactor: 重构整体架构，优化项目文件生成逻辑 (#206))
+=======
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
     dev: true
 >>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 
   /prelude-ls@1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
-<<<<<<< HEAD
-
-  /prettier@2.8.8:
-    resolution: {integrity: sha512-tdN8qQGvNjw4CHbY+XXk0JgCXn9QiF21a55rBe5LJAU+kDyC4WQn4+awm2Xfk2lQMk5fKup9XgzTZtGkjBdP9Q==}
-    engines: {node: '>=10.13.0'}
-    hasBin: true
-    dev: false
-    optional: true
-=======
     dev: true
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 
   /prettier@3.2.5:
     resolution: {integrity: sha512-3/GWa9aOC0YeD7LUfvOG2NiDyhOWRvt1k+rcKhOuYnMY24iiCphgneUfJDyFXd6rZCAnuLBv6UeAULtrhT/F4A==}
     engines: {node: '>=14'}
     hasBin: true
+<<<<<<< HEAD
 <<<<<<< HEAD
 
   /pretty-error@4.0.0:
@@ -11350,8 +10225,9 @@ packages:
       forwarded: 0.2.0
       ipaddr.js: 1.9.1
 =======
+=======
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
     dev: true
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 
   /proxy-from-env@1.1.0:
     resolution: {integrity: sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==}
@@ -11422,14 +10298,16 @@ packages:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     dev: false
 >>>>>>> 1c7a470 (chore: 🔨 remove unused files to clean up the project (#139))
 =======
 >>>>>>> c481920 (refactor: 重构整体架构，优化项目文件生成逻辑 (#206))
 =======
+=======
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
     dev: true
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 
   /regenerator-runtime@0.14.1:
     resolution: {integrity: sha512-dYnhHh0nJoMfnkZs6GmmhFknAGRrLznOu5nc9ML+EJxGvrx6H7teuevqVqCuPcPK//3eDrrjQhehXVx9cnkGdw==}
@@ -11478,19 +10356,7 @@ packages:
   /require-from-string@2.0.2:
     resolution: {integrity: sha512-Xf0nWe6RseziFMu+Ap9biiUbmplq6S9/p+7w7YXP/JBHhrUDDUhwa+vANyubuqfZWTveU//DYVGsDG7RKL/vEw==}
     engines: {node: '>=0.10.0'}
-<<<<<<< HEAD
-
-  /requires-port@1.0.0:
-    resolution: {integrity: sha512-KigOCHcocU3XODJxsu8i/j8T9tzT4adHiecwORRQ0ZZFcp7ahwXuRU1m+yuO90C5ZUyGeGfocHDI14M3L3yDAQ==}
-
-  /resolve-cwd@3.0.0:
-    resolution: {integrity: sha512-OrZaX2Mb+rJCpH/6CpSqt9xFVpN++x01XnN2ie9g6P5/3xelLAkXWVADpdz1IHD/KFfEXyE6V0U01OQ3UO2rEg==}
-    engines: {node: '>=8'}
-    dependencies:
-      resolve-from: 5.0.0
-=======
     dev: true
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 
   /resolve-dir@1.0.1:
     resolution: {integrity: sha512-R7uiTjECzvOsWSfdM0QKFNBVFcK27aHOUwdvK53BcW8zqnGdYp0Fbj82cy54+2A4P2tFM22J5kRfe1R+lM/1yg==}
@@ -11540,13 +10406,6 @@ packages:
       onetime: 5.1.2
       signal-exit: 3.0.7
     dev: true
-<<<<<<< HEAD
-
-  /retry@0.13.1:
-    resolution: {integrity: sha512-XQBQ3I8W1Cge0Seh+6gjj03LbmRFWuoszgK9ooCpwYIrhhoO80pfq4cUkU5DkknwfOfFteRwlZ56PYOGYyFWdg==}
-    engines: {node: '>= 4'}
-=======
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 
   /reusify@1.0.4:
     resolution: {integrity: sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==}
@@ -11557,12 +10416,9 @@ packages:
     resolution: {integrity: sha512-r5a3l5HzYlIC68TpmYKlxWjmOP6wiPJ1vWv2HeLhNsRZMrCkxeqxiHlQ21oXmQ4F3SiryXBHhAD7JZqvOJjFmg==}
     dev: true
 
-  /rfdc@1.3.1:
-    resolution: {integrity: sha512-r5a3l5HzYlIC68TpmYKlxWjmOP6wiPJ1vWv2HeLhNsRZMrCkxeqxiHlQ21oXmQ4F3SiryXBHhAD7JZqvOJjFmg==}
-    dev: true
-
   /rimraf@3.0.2:
     resolution: {integrity: sha512-JZkJMZkAGFFPP2YqXZXPbMlMBgsxzE8ILs4lMIX/2o0L9UBw9O/Y3o6wFw/i9YLapcUJWwqbi3kdxIPdC62TIA==}
+    deprecated: Rimraf versions prior to v4 are no longer supported
     hasBin: true
     dependencies:
       glob: 7.2.3
@@ -11574,6 +10430,7 @@ packages:
     hasBin: true
     dependencies:
       glob: 10.3.12
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 
@@ -11605,8 +10462,9 @@ packages:
 =======
 >>>>>>> c481920 (refactor: 重构整体架构，优化项目文件生成逻辑 (#206))
 =======
+=======
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
     dev: true
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 
   /rollup-plugin-delete@2.0.0:
     resolution: {integrity: sha512-/VpLMtDy+8wwRlDANuYmDa9ss/knGsAgrDhM+tEwB1npHwNu4DYNmDfUL55csse/GHs9Q+SMT/rw9uiaZ3pnzA==}
@@ -11626,9 +10484,10 @@ packages:
       rollup: 4.17.2
       typescript: 5.4.5
     optionalDependencies:
-      '@babel/code-frame': 7.24.2
+      '@babel/code-frame': 7.24.7
     dev: true
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -11677,8 +10536,9 @@ packages:
   /rollup-plugin-terser@7.0.2(rollup@4.14.1):
 >>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 =======
+=======
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
   /rollup-plugin-terser@7.0.2(rollup@4.17.2):
->>>>>>> 621f9fe (refactor: ♻️ refactor: 在packages下的core和utils增加了jsDoc (#147))
     resolution: {integrity: sha512-w3iIaU4OxcF52UUXiZNsNeuXIMDvFrr+ZXK6bFZ0Q60qyVfq4uLptoS4bbq3paG3x216eQllFZX7zt6TIImguQ==}
     deprecated: This package has been deprecated and is no longer maintained. Please use @rollup/plugin-terser
     peerDependencies:
@@ -11688,6 +10548,7 @@ packages:
       jest-worker: 26.6.2
       rollup: 4.17.2
       serialize-javascript: 4.0.0
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       terser: 5.25.0
@@ -11731,17 +10592,23 @@ packages:
     resolution: {integrity: sha512-sxDP0+pya/Yi5ZtptF4p3avI+uWCIf/OdrfdH2Gbv1kWddLKk0U7WE3PmQokhi5JrektxsK3sK8s4hzAmjqahw==}
 >>>>>>> e27de68 (ci: 🎡 修改提交规范,允许提交 feat(xxx) 等带括号的描述 (#125))
 =======
+=======
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
       terser: 5.31.0
     dev: true
 
   /rollup@4.17.2:
     resolution: {integrity: sha512-/9ClTJPByC0U4zNLowV1tMBe8yMEAxewtR3cUNX5BoEpGH3dQEWpJLr6CLp0fPdYRF/fzVOgvDb1zXuakwF5kQ==}
+<<<<<<< HEAD
 >>>>>>> 621f9fe (refactor: ♻️ refactor: 在packages下的core和utils增加了jsDoc (#147))
+=======
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
     engines: {node: '>=18.0.0', npm: '>=8.0.0'}
     hasBin: true
     dependencies:
       '@types/estree': 1.0.5
     optionalDependencies:
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       '@rollup/rollup-android-arm-eabi': 4.14.1
@@ -11777,6 +10644,8 @@ packages:
       '@rollup/rollup-win32-ia32-msvc': 4.16.2
       '@rollup/rollup-win32-x64-msvc': 4.16.2
 =======
+=======
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
       '@rollup/rollup-android-arm-eabi': 4.17.2
       '@rollup/rollup-android-arm64': 4.17.2
       '@rollup/rollup-darwin-arm64': 4.17.2
@@ -11845,13 +10714,6 @@ packages:
 >>>>>>> c481920 (refactor: 重构整体架构，优化项目文件生成逻辑 (#206))
       fsevents: 2.3.3
     dev: true
-<<<<<<< HEAD
-
-  /run-applescript@7.0.0:
-    resolution: {integrity: sha512-9by4Ij99JUr/MCFBUkDKLWK3G9HVXmabKz9U5MlIAIuvuzkiOicRYs8XJLxX+xahD+mLiiCYDqF9dKAgtzKP1A==}
-    engines: {node: '>=18'}
-=======
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 
   /run-async@2.4.1:
     resolution: {integrity: sha512-tvVnVv01b8c1RrA6Ep7JkStj85Guv/YrMcwqYQnwjsAS2cTmmPGBBjAjpCW7RrSodNSoE2/qg9O4bceNvUuDgQ==}
@@ -11870,6 +10732,7 @@ packages:
       tslib: 2.6.2
     dev: true
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
   /sade@1.8.1:
@@ -11892,9 +10755,10 @@ packages:
   /safe-array-concat@1.1.0:
     resolution: {integrity: sha512-ZdQ0Jeb9Ofti4hbt5lX3T2JcAamT9hfzYU1MNB+z/jaEbB6wfFfPIR/zEORmZqobkCCJhSjodobH6WHNmJ97dg==}
 =======
+=======
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
   /safe-array-concat@1.1.2:
     resolution: {integrity: sha512-vj6RsCsWBCf19jIeHEfkRMw8DPiBb+DMXklQ/1SGDHOMlHdPUkZXFQ2YdplS23zESTijAcurb1aSgJA3AgMu1Q==}
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
     engines: {node: '>=0.4'}
     dependencies:
       call-bind: 1.0.7
@@ -11906,6 +10770,7 @@ packages:
   /safe-buffer@5.2.1:
     resolution: {integrity: sha512-rp3So07KcdmmKbGvgaNxQSJr7bGVSVk5S9Eq1F+ppbRo70+YeaDxkw5Dd8NPN+GD6bjnYm2VuPuCXmpuYvmCXQ==}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
   /safe-identifier@0.4.2:
@@ -11922,6 +10787,8 @@ packages:
 
 =======
 >>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
+=======
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
   /safe-regex-test@1.0.3:
     resolution: {integrity: sha512-CdASjNJPvRa7roO6Ra/gLYBTzYzzPyyBXxIMdGW3USQLyjWEls2RgW5UBTXaQVp+OrpeCK3bLem8smtmheoRuw==}
     engines: {node: '>= 0.4'}
@@ -11951,40 +10818,7 @@ packages:
       '@types/json-schema': 7.0.15
       ajv: 6.12.6
       ajv-keywords: 3.5.2(ajv@6.12.6)
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-  /schema-utils@4.2.0:
-    resolution: {integrity: sha512-L0jRsrPpjdckP3oPug3/VxNKt2trR8TcabrM6FOAAlvC/9Phcmm+cuAgTlxBqdBR1WJx7Naj9WHw+aOmheSVbw==}
-    engines: {node: '>= 12.13.0'}
-    dependencies:
-      '@types/json-schema': 7.0.15
-      ajv: 8.12.0
-      ajv-formats: 2.1.1(ajv@8.12.0)
-      ajv-keywords: 5.1.0(ajv@8.12.0)
-
-  /search-insights@2.13.0:
-    resolution: {integrity: sha512-Orrsjf9trHHxFRuo9/rzm0KIWmgzE8RMlZMzuhZOJ01Rnz3D0YBAe+V6473t6/H6c7irs6Lt48brULAiRWb3Vw==}
-    dev: true
-
-  /select-hose@2.0.0:
-    resolution: {integrity: sha512-mEugaLK+YfkijB4fx0e6kImuJdCIt2LxCRcbEYPqRGCs4F2ogyfZU5IAZRdjCP8JPq2AtdNoC/Dux63d9Kiryg==}
-
-  /selfsigned@2.4.1:
-    resolution: {integrity: sha512-th5B4L2U+eGLq1TVh7zNRGBapioSORUeymIydxgFpwww9d2qyKvtuPU2jJuHvYAwwqi2Y596QBL3eEqcPEYL8Q==}
-    engines: {node: '>=10'}
-    dependencies:
-      '@types/node-forge': 1.3.11
-      node-forge: 1.3.1
-=======
     dev: false
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
-=======
->>>>>>> a5c4612 (fix: 🧩 修改 webpack 配置中模块引入类型错误以及为 package.json 添加相关的 dependent (#177))
-=======
-    dev: false
->>>>>>> 326d931 (fix: 🧩 修复构建工具缺少相关 dependentcies 依赖的问题 (#178))
 
   /semver@5.7.2:
     resolution: {integrity: sha512-cBznnQ9KjJqU67B52RMC65CMarK2600WFnbkcaiwWq3xy/5haFJlshgnpjovMVJ+Hff49d8GEn0b87C5pDQ10g==}
@@ -12048,16 +10882,18 @@ packages:
     engines: {node: '>=8'}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   /shell-quote@1.8.1:
     resolution: {integrity: sha512-6j1W9l1iAs/4xYBI1SYOVZyFcCis9b4KCLQ8fgAGG07QvzaRLVVRQvAy85yNmmZSjYjg4MWh4gNvlPujU/5LpA==}
 
   /side-channel@1.0.4:
     resolution: {integrity: sha512-q5XPytqFEIKHkGdiMIrY10mvLRvnQh42/+GoBlFW3b2LXLE2xxJpZFdm94we0BaoV3RwJyGqg5wS7epxTv0Zvw==}
 =======
+=======
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
   /side-channel@1.0.6:
     resolution: {integrity: sha512-fDW/EZ6Q9RiO8eFG8Hj+7u/oW+XrPTIChwCOM2+th2A6OblDtYYIpve9m+KvI9Z4C9qSEXlaGR6bTEYHReuglA==}
     engines: {node: '>= 0.4'}
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
     dependencies:
       call-bind: 1.0.7
       es-errors: 1.3.0
@@ -12098,29 +10934,6 @@ packages:
       is-fullwidth-code-point: 5.0.0
     dev: true
 
-<<<<<<< HEAD
-  /sockjs@0.3.24:
-    resolution: {integrity: sha512-GJgLTZ7vYb/JtPSSZ10hsOYIvEYsjbNU+zPdIHcUaWVNUEPivzxku31865sSSud0Da0W4lEeOPlmw93zLQchuQ==}
-    dependencies:
-      faye-websocket: 0.11.4
-      uuid: 8.3.2
-      websocket-driver: 0.7.4
-
-  /source-list-map@2.0.1:
-    resolution: {integrity: sha512-qnQ7gVMxGNxsiL4lEuJwe/To8UnK7fAnmbGEEH8RpLouuKbeEm0lhbQVFIrNSuB+G7tVrAlVsZgETT5nljf+Iw==}
-    dev: false
-
-  /source-map-js@1.2.0:
-    resolution: {integrity: sha512-itJW8lvSA0TXEphiRoawsCksnlf8SyvmFzIhltqAHluXd88pkCd+cXJVHTDwdCr0IzwptSm035IHQktUu1QUMg==}
-    engines: {node: '>=0.10.0'}
-    dev: false
-
-  /source-map-js@1.2.0:
-    resolution: {integrity: sha512-itJW8lvSA0TXEphiRoawsCksnlf8SyvmFzIhltqAHluXd88pkCd+cXJVHTDwdCr0IzwptSm035IHQktUu1QUMg==}
-    engines: {node: '>=0.10.0'}
-
-=======
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
   /source-map-support@0.5.21:
     resolution: {integrity: sha512-uBHU3L3czsIyYXKX88fdrGovxdSCoTGDRZ6SYXtSRxLZUzHg5P/66Ht6uoUlHu9EZod+inXhKo3qQgwXUT/y1w==}
     dependencies:
@@ -12131,14 +10944,6 @@ packages:
     resolution: {integrity: sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==}
     engines: {node: '>=0.10.0'}
 
-<<<<<<< HEAD
-  /source-map@0.7.4:
-    resolution: {integrity: sha512-l3BikUxvPOcn5E74dZiq5BGsTb5yEwhaTSzccU6t4sDOH8NWJCstKO5QT2CvtFoK6F0saL7p9xHAqHOlCPJygA==}
-    engines: {node: '>= 8'}
-    dev: false
-
-=======
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
   /spdx-correct@3.2.0:
     resolution: {integrity: sha512-kN9dJbvnySHULIluDHy32WHRUu3Og7B9sbY7tsFLctQkIqnMh3hErYgdMjTYuqmcXX+lK5T1lnUt3G7zNswmZA==}
     dependencies:
@@ -12161,11 +10966,6 @@ packages:
     resolution: {integrity: sha512-sh8PWc/ftMqAAdFiBu6Fy6JUOYjqDJBJvIhpfDMyHrr0Rbp5liZqd4TjtQ/RgfLjKFZb+LMx5hpml5qOWy0qvg==}
     dev: true
 
-  /speakingurl@14.0.1:
-    resolution: {integrity: sha512-1POYv7uv2gXoyGFpBCmpDVSNV74IfsWlDW216UPjbWufNf+bSU6GdbDsxdcxtfwb4xlI3yxzOTKClUosxARYrQ==}
-    engines: {node: '>=0.10.0'}
-    dev: true
-
   /split2@3.2.2:
     resolution: {integrity: sha512-9NThjpgZnifTkJpzTZ7Eue85S49QwpNhZTq6GRJwObb6jnLFNGB7Qm73V5HewTROPyxD0C29xqmaI68bQtV+hg==}
     dependencies:
@@ -12177,49 +10977,11 @@ packages:
     engines: {node: '>= 10.x'}
     dev: true
 
-<<<<<<< HEAD
-  /ssri@8.0.1:
-    resolution: {integrity: sha512-97qShzy1AiyxvPNIkLWoGua7xoQzzPjQ0HAH4B0rWKo7SZ6USuPcrUiAFrws0UH8RrbWmgq3LMTObhPIHbbBeQ==}
-    engines: {node: '>= 8'}
-    dependencies:
-      minipass: 3.3.6
-    dev: false
-
-  /stable@0.1.8:
-    resolution: {integrity: sha512-ji9qxRnOVfcuLDySj9qzhGSEFVobyt1kIOSkj1qZzYLzq7Tos/oUUWvotUPQLlrsidqsK6tBH89Bc9kL5zHA6w==}
-    deprecated: 'Modern JS already guarantees Array#sort() is a stable sort, so this library is deprecated. See the compatibility table on MDN: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#browser_compatibility'
-    dev: false
-
-  /stackframe@1.3.4:
-    resolution: {integrity: sha512-oeVtt7eWQS+Na6F//S4kJ2K2VbRlS9D43mAlMyVpVWovy9o+jfgH8O9agzANzaiLjclA0oYzUXEM4PurhSUChw==}
-    dev: false
-
-  /statuses@1.5.0:
-    resolution: {integrity: sha512-OpZ3zP+jT1PI7I8nemJX4AKmAX070ZkYPVWV/AaKTJl+tXCTGyVdC1a4SL8RUQYEwk/f34ZX8UTykN68FwrqAA==}
-    engines: {node: '>= 0.6'}
-
-  /statuses@2.0.1:
-    resolution: {integrity: sha512-RwNA9Z/7PrK06rYLIzFMlaF+l73iwpzsqRIFgbMLbTcLD6cOao82TaWefPXQvB2fOC4AjuYSEndS7N/mTCbkdQ==}
-    engines: {node: '>= 0.8'}
-
-=======
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
   /string-argv@0.3.2:
     resolution: {integrity: sha512-aqD2Q0144Z+/RqG52NeHEkZauTAUWJO8c6yTftGJKO3Tja5tUgIfmIl6kExvhtxSDP7fXB6DvzkfMpCd/F3G+Q==}
     engines: {node: '>=0.6.19'}
     dev: true
 
-<<<<<<< HEAD
-  /string-width@2.1.1:
-    resolution: {integrity: sha512-nOqH59deCq9SRHlxq1Aw85Jnt4w6KvLKqWVik6oA9ZklXLNIOlqg4F2yrT1MVaTjAqvVwdfeZ7w7aCvJD7ugkw==}
-    engines: {node: '>=4'}
-    dependencies:
-      is-fullwidth-code-point: 2.0.0
-      strip-ansi: 4.0.0
-    dev: false
-
-=======
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
   /string-width@4.2.3:
     resolution: {integrity: sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==}
     engines: {node: '>=8'}
@@ -12245,27 +11007,6 @@ packages:
       get-east-asian-width: 1.2.0
       strip-ansi: 7.1.0
     dev: true
-<<<<<<< HEAD
-
-  /string.prototype.matchall@4.0.11:
-    resolution: {integrity: sha512-NUdh0aDavY2og7IbBPenWqR9exH+E26Sv8e0/eTe1tltDGZL+GtBkDAnnyBtmekfK6/Dq3MkcGtzXFEd1LQrtg==}
-    engines: {node: '>= 0.4'}
-    dependencies:
-      call-bind: 1.0.7
-      define-properties: 1.2.1
-      es-abstract: 1.23.3
-      es-errors: 1.3.0
-      es-object-atoms: 1.0.0
-      get-intrinsic: 1.2.4
-      gopd: 1.0.1
-      has-symbols: 1.0.3
-      internal-slot: 1.0.7
-      regexp.prototype.flags: 1.5.2
-      set-function-name: 2.0.2
-      side-channel: 1.0.6
-    dev: false
-=======
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 
   /string.prototype.trim@1.2.9:
     resolution: {integrity: sha512-klHuCNxiMZ8MlsOihJhJEBJAiMVqU3Z2nEXWfWnIqjN0gEFS9J9+IxKozWWtQGcgoa1WUZzLjKPTr4ZHNFTFxw==}
@@ -12342,6 +11083,7 @@ packages:
   /strip-json-comments@3.1.1:
     resolution: {integrity: sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==}
     engines: {node: '>=8'}
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 
@@ -12464,8 +11206,9 @@ packages:
       - supports-color
     dev: false
 =======
+=======
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
     dev: true
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 
   /supports-color@5.5.0:
     resolution: {integrity: sha512-QjVjwdXIt408MIiAqCX4oUKsgU2EqAGzs2Ppkm4aQYbjm+ZEWEcW4SfFNTr4uMNZma0ey4f5lgLrkB0aX0QMow==}
@@ -12484,28 +11227,12 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       has-flag: 4.0.0
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-  /supports-hyperlinks@2.3.0:
-    resolution: {integrity: sha512-RpsAZlpWcDwOPQA22aCH4J0t7L8JmAvsCxfOSEwm7cQs3LshN36QaTkwd70DnBOXDWGssw2eUoc8CaRWT0XunA==}
-    engines: {node: '>=8'}
-    dependencies:
-      has-flag: 4.0.0
-      supports-color: 7.2.0
-=======
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
     dev: false
-=======
->>>>>>> a5c4612 (fix: 🧩 修改 webpack 配置中模块引入类型错误以及为 package.json 添加相关的 dependent (#177))
-=======
-    dev: false
->>>>>>> 326d931 (fix: 🧩 修复构建工具缺少相关 dependentcies 依赖的问题 (#178))
 
   /supports-preserve-symlinks-flag@1.0.0:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
+<<<<<<< HEAD
 <<<<<<< HEAD
 
   /svg-tags@1.0.0:
@@ -12553,6 +11280,9 @@ packages:
 =======
     dev: true
 >>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
+=======
+    dev: true
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
 
   /tapable@2.2.1:
     resolution: {integrity: sha512-GNzQvQTOIP6RyTfE2Qxb8ZVlNmw0n88vp1szwWRimP02mnTsx3Wtn5qRdqY9w2XduFNUgvOwhNnQsjwCp+kqaQ==}
@@ -12624,12 +11354,6 @@ packages:
     resolution: {integrity: sha512-w89qg7PI8wAdvX60bMDP+bFoD5Dvhm9oLheFp5O4a2QF0cSBGsBX4qZmadPMvVqlLJBBci+WqGGOAPvcDeNSVg==}
     dev: true
 
-<<<<<<< HEAD
-  /thunky@1.1.0:
-    resolution: {integrity: sha512-eHY7nBftgThBqOyHGVN+l8gF0BucP09fMo0oO/Lb0w1OF80dJv+lDVpXG60WMQvkcxAkNybKsrEIE3ZtKGmPrA==}
-
-=======
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
   /tmp@0.0.33:
     resolution: {integrity: sha512-jRCJlojKnZ3addtTOjdIqoRuPEKBvNXcGYqzO6zWZX8KfKEpnGY5jfggJQ3EjKuu8D4bJRr0y+cYJFmYbImXGw==}
     engines: {node: '>=0.6.0'}
@@ -12670,13 +11394,6 @@ packages:
       minimist: 1.2.8
       strip-bom: 3.0.0
     dev: true
-<<<<<<< HEAD
-
-  /tslib@1.14.1:
-    resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
-    dev: false
-=======
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
 
   /tslib@2.6.2:
     resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==}
@@ -12772,20 +11489,14 @@ packages:
     resolution: {integrity: sha512-4dbzIzqvjtgiM5rw1k5rEHtBANKmdudhGyBEajN01fEyhaAIhsoKNy6y7+IN93IfpFtwY9iqi7kD+xwKhQsNJA==}
     engines: {node: '>=8'}
 <<<<<<< HEAD
+<<<<<<< HEAD
 
   /type-fest@3.13.1:
     resolution: {integrity: sha512-tLq3bSNx+xSpwvAJnzrK0Ep5CLNWjvFTOp71URMaAEWBfRb9nnJiBoUe0tF8bI4ZFO3omgBR6NvnbzVUT3Ly4g==}
     engines: {node: '>=14.16'}
-
-  /type-is@1.6.18:
-    resolution: {integrity: sha512-TkRKr9sUTxEH8MdfuCSP7VizJyzRNMjj2J2do2Jr3Kym598JVdEksuzPQCnlFPW4ky9Q+iA+ma9BGm06XQBy8g==}
-    engines: {node: '>= 0.6'}
-    dependencies:
-      media-typer: 0.3.0
-      mime-types: 2.1.35
 =======
     dev: true
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
 
   /typed-array-buffer@1.0.2:
     resolution: {integrity: sha512-gEymJYKZtKXzzBzM4jqa9w6Q1Jjm7x2d+sh19AdsD4wqnMPDYyvwpsIc2Q/835kHuo3BEQ7CjelGhfTsoBb2MQ==}
@@ -12898,6 +11609,7 @@ packages:
     dependencies:
       spdx-correct: 3.2.0
       spdx-expression-parse: 3.0.1
+<<<<<<< HEAD
 <<<<<<< HEAD
 
   /vary@1.1.2:
@@ -13172,6 +11884,12 @@ packages:
 >>>>>>> e27de68 (ci: 🎡 修改提交规范,允许提交 feat(xxx) 等带括号的描述 (#125))
   /watchpack@2.4.0:
     resolution: {integrity: sha512-Lcvm7MGST/4fup+ifyKi2hjyIAwcdI4HRgtvTpIUxBRhB+RFtUh8XtDOxUfctVCnhVi+QQj49i91OyvzkJl6cg==}
+=======
+    dev: true
+
+  /watchpack@2.4.1:
+    resolution: {integrity: sha512-8wrBCMtVhqcXP2Sup1ctSkga6uc2Bx0IIvKyT7yTFier5AXHooSI+QyQQAtTb7+E0IUCCKyTFmXqdqgum2XWGg==}
+>>>>>>> f0655f9 (refactor: ♻️ 删除没有使用到的项目文件 (#207))
     engines: {node: '>=10.13.0'}
     dependencies:
       glob-to-regexp: 0.4.1
@@ -13316,14 +12034,6 @@ packages:
   /yallist@4.0.0:
     resolution: {integrity: sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==}
 
-<<<<<<< HEAD
-  /yaml@1.10.2:
-    resolution: {integrity: sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg==}
-    engines: {node: '>= 6'}
-    dev: false
-
-=======
->>>>>>> 3c739a0 (fix: 🧩 修复了文件创建过程中存在的一些错误 (#146))
   /yaml@2.3.4:
     resolution: {integrity: sha512-8aAvwVUSHpfEqTQ4w/KMlf3HcRdt50E5ODIQJBw1fQ5RL34xabzxtUlzTXVqc4rkZsPbvrXKWnABCD7kWSmocA==}
     engines: {node: '>= 14'}
