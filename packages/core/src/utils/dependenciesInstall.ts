@@ -47,6 +47,8 @@ const installDependencies = (
         // 判断是否为开发依赖，如果是则添加参数
         const params = isDev ? installParams[packageManager] : "";
 
+        console.log(params);
+
         // 执行具体命令
         try {
           const pm = spawn(

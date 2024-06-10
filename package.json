@@ -11,7 +11,7 @@
     "lint:ci": "eslint \"**/*.{ts,js}\"",
     "commit": "git-cz",
     "postinstall": "husky install",
-    "check": "npx tsc --noEmit"
+    "check:turbo": "turbo check"
   },
   "sideEffects": false,
   "config": {
@@ -21,8 +21,9 @@
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [
-      "pnpm format",
-      "eslint"
+      "pnpm format:ci",
+      "pnpm lint:ci",
+      "pnpm check:turbo"
     ]
   },
   "repository": {
@@ -47,9 +48,10 @@
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-typescript": "^11.1.5",
+    "@types/node": "^20.11.22",
     "@types/prettier": "^3.0.0",
-    "@typescript-eslint/eslint-plugin": "^6.13.1",
-    "@typescript-eslint/parser": "^6.13.1",
+    "@typescript-eslint/eslint-plugin": "^7.12.0",
+    "@typescript-eslint/parser": "^7.12.0",
     "commitizen": "^4.3.0",
     "cz-git": "^1.7.1",
     "eslint": "^8.55.0",
@@ -64,12 +66,10 @@
     "rollup-plugin-terser": "^7.0.2",
     "tslib": "^2.6.2",
     "turbo": "^1.12.4",
-    "typescript": "^5.3.2",
-    "@types/node": "^20.11.22"
+    "typescript": "^5.4.5"
   },
   "packageManager": "pnpm@8.9.0",
   "engines": {
     "node": ">=18"
-  },
-  "dependencies": {}
+  }
 }
