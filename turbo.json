@@ -9,6 +9,9 @@
     "lint": {
       "dependsOn": ["^lint"]
     },
+    "check": {
+      "dependsOn": ["^check"]
+    },
     "dev": {
       "dependsOn": ["^build"],
       "outputs": [""],
