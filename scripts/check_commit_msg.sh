@@ -22,10 +22,17 @@ check_commit_message() {
     fi
 }
 
-# 遍历从start_sha到end_sha的所有提交
+# workflows传入两个参数，遍历从start_sha到end_sha的所有提交
+ if [ $# -eq 2 ]; then
 for sha in $(git rev-list $start_sha..$end_sha); do
     commit_msg=$(git show --format=%B -s $sha)
     check_commit_message "$commit_msg"
 done
+# huksy触发commit-msg钩子时传入一个参数
+elif [ $# -eq 1 ]; then
+   check_commit_message "$(cat $1) "
+else
+   echo -e "${RED} error: Failed to get commit message\n"
+fi
 
 echo -e "${BLUE}Commit message check passed.${NC}\n"

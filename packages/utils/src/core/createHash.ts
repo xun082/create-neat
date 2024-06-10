@@ -1,5 +1,8 @@
 import { createHash } from "node:crypto";
-
+/**
+ * 表示环境配置的对象。
+ * @typedef {Object.<string, string | number>} envConfig
+ */
 interface envConfig {
   [props: string]: string | number;
 }
