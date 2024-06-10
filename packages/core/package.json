@@ -19,7 +19,8 @@
   },
   "scripts": {
     "build": "tsc",
-    "dev": "tsc -w -p ./tsconfig.dev.json"
+    "dev": "tsc -w -p ./tsconfig.dev.json",
+    "check": "npx tsc --noEmit"
   },
   "files": [
     "dist/**/*",
