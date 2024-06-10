@@ -1,7 +1,3 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
-
-# 检查 git 配置
 sh scripts/check-git-config.sh
 
 echo 'running pre-commit checks ...'
