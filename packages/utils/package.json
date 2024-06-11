@@ -32,7 +32,7 @@
   "scripts": {
     "build": "rollup -c --bundleConfigAsCjs",
     "dev": "rollup -c -w --bundleConfigAsCjs",
-    "check": "npx tsc"
+    "check": "npx tsc --noEmit"
   },
   "devDependencies": {
     "@types/node": "^20.11.22"

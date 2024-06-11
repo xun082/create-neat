@@ -4,6 +4,8 @@
   "description": "typescript plugin for create-neat",
   "type": "commonjs",
   "main": "index.ts",
-  "scripts": {},
+  "scripts": {
+    "build": "tsc"
+  },
   "dependencies": {}
 }
