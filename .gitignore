@@ -40,6 +40,5 @@ yarn-error.log*
 # Webstorm
 .idea/
 
-# VSCode
-.vscode/*
-!.vscode/launch.json
+# vitepress
+docs/.vitepress/cache

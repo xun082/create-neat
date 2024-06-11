@@ -20,7 +20,7 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc -w -p ./tsconfig.dev.json",
-    "check": "npx tsc"
+    "check": "npx tsc --noEmit"
   },
   "files": [
     "dist/**/*",
