@@ -5,12 +5,14 @@
     "build": "turbo build",
     "dev": "turbo dev --concurrency=15",
     "lint:turbo": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,js,jsx}\"",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,cjs,mjs,json}\"",
     "format:ci": "prettier --list-different \"**/*.{ts,tsx,js,jsx}\"",
     "lint": "eslint \"**/*.{ts,tsx,js,jsx}\" --fix",
     "lint:ci": "eslint \"**/*.{ts,js}\"",
     "commit": "git-cz",
-    "postinstall": "husky install"
+    "postinstall": "husky install",
+    "check:turbo": "turbo check",
+    "prepare": "husky"
   },
   "sideEffects": false,
   "config": {
@@ -20,8 +22,9 @@
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [
-      "prettier --check --write",
-      "eslint"
+      "pnpm format:ci",
+      "pnpm lint:ci",
+      "pnpm check:turbo"
     ]
   },
   "repository": {
@@ -46,14 +49,17 @@
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-typescript": "^11.1.5",
+    "@types/node": "^20.11.22",
     "@types/prettier": "^3.0.0",
-    "@typescript-eslint/eslint-plugin": "^6.13.1",
-    "@typescript-eslint/parser": "^6.13.1",
+    "@typescript-eslint/eslint-plugin": "^7.12.0",
+    "@typescript-eslint/parser": "^7.12.0",
     "commitizen": "^4.3.0",
     "cz-git": "^1.7.1",
     "eslint": "^8.55.0",
+    "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.29.0",
-    "husky": "^8.0.3",
+    "eslint-plugin-prettier": "^5.1.3",
+    "husky": "^9.0.11",
     "lint-staged": "^15.2.0",
     "prettier": "^3.1.0",
     "rimraf": "^5.0.5",
@@ -63,7 +69,7 @@
     "rollup-plugin-terser": "^7.0.2",
     "tslib": "^2.6.2",
     "turbo": "^1.12.4",
-    "typescript": "^5.3.2"
+    "typescript": "^5.4.5"
   },
   "packageManager": "pnpm@8.9.0",
   "engines": {
