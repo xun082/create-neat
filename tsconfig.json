@@ -29,5 +29,5 @@
     ]
   },
   "include": ["packages"],
-  "exclude": ["node_modules", "apps"]
+  "exclude": ["node_modules", ".eslintrc.js"]
 }
