@@ -29,6 +29,11 @@
       "es2017"
     ]
   },
-  "include": ["packages"],
-  "exclude": ["node_modules", "apps"]
+  "include": [
+    "packages"
+  ],
+  "exclude": [
+    "node_modules",
+    "apps"
+  ]
 }
