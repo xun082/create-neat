@@ -1,7 +1,7 @@
 /node_modules
 /dist
 **/dist
-.eslintrc.js
+.eslintrc.cjs
 rollup.config.js
 commitlint.config.js
 packages/*/dist/
