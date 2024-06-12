@@ -30,5 +30,6 @@
       "es2017"
     ]
   },
-  "include": ["packages"],
-  "exclude": ["node_modules",].eslintrc.mjs
+  "include": ["packages", "./eslintrc.cjs"],
+  "exclude": ["node_modules"]
+}
