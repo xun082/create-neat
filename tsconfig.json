@@ -31,5 +31,4 @@
     ]
   },
   "include": ["packages"],
-  "exclude": ["node_modules", ".eslintrc.js"]
-}
+  "exclude": ["node_modules",].eslintrc.mjs
