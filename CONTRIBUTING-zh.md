@@ -20,19 +20,13 @@
 
 **不要为一般支持问题打开问题，因为我们希望将GitHub 问题保留为 bug 报告和功能请求如果您想实时讨论问题，您可以在微信上加入我们的技术交流群与我们联系。**
 
- 
-
 ## <a name="issue"></a>发现 Bug?
-
- 
 
 如果你在源代码中发现一个 bug，你可以通过[提交一个问题](#submit-issue)到我们的[GitHub Repository](https://github.com/xun082/create-neat)来帮助我们。更好的是，你可以[提交一个拉取请求](#submit-pr)并进行修复。
 
-##  <a name="feature"></a>缺了一个 feature ?
+## <a name="feature"></a>缺了一个 feature ?
 
 你可以通过[提交 issue](#submit-issue)到我们的 GitHub Repository 来请求一个新特性。如果你想**实现**一个新功能，请首先提交一个带有工作建议的 issue，以确保我们可以使用它。请考虑它是什么样的更改:
-
- 
 
 - 对于一个**主要功能**，首先打开一个 issue 并概述你的提案，以便进行讨论。这也将使我们能够更好地协调我们的工作，防止重复工作，并帮助您精心设计更改，以便它成功地被接受到项目中。对于您的 issue 名称，请在您的提案前加上`[discussion]`，例如"[discussion]:您的feature idea"。
 
@@ -74,12 +68,12 @@ git checkout -b my-fix-branch master
 
 遵循我们的[编码规则](https://github.com/xun082/create-neat/blob/main/CONTRIBUTING.md#rules)。
 
-运行完整的 create-neat 测试套件  (参见[常用脚本](https://github.com/xun082/create-neat/blob/main/CONTRIBUTING.md#common-scripts)) ，并确保所有测试都通过。
+运行完整的 create-neat 测试套件 (参见[常用脚本](https://github.com/xun082/create-neat/blob/main/CONTRIBUTING.md#common-scripts)) ，并确保所有测试都通过。
 
 按照我们的[提交消息约定](https://github.com/xun082/create-neat/blob/main/CONTRIBUTING.md#commit)，使用描述性提交消息提交您的更改。遵守这些约定是必要的，因为发布说明是根据这些消息自动生成的。
 
 ```
-git commit -a 
+git commit -a
 ```
 
 注:可选的 commit `-a`命令行选项会自动 “ add ” 和 “ rm ”编辑后的文件。
@@ -87,7 +81,7 @@ git commit -a
 将你的分支推送到GitHub:
 
 ```
-git push origin my-fix-branch 
+git push origin my-fix-branch
 ```
 
 在GitHub 中，发送一个 pull 请求到 `create-neat:master`。
@@ -98,7 +92,7 @@ git push origin my-fix-branch
 
 - 重新运行 create-neat 测试套件以确保测试仍能通过。
 
-- 重新设置分支并强制推送到 GitHub 存储库(这将更新您的 Pull Request): 
+- 重新设置分支并强制推送到 GitHub 存储库(这将更新您的 Pull Request):
 
   ```
     git rebase master -i
@@ -135,7 +129,7 @@ git push origin --delete my-fix-branch
 git pull --ff upstream master
 ```
 
-##  <a name="development"></a>开发设置
+## <a name="development"></a>开发设置
 
 你需要[Node.js](https://nodejs.org/)版本>= 10.13.0 (v13 除外)。
 
@@ -147,7 +141,7 @@ $ npm ci --legacy-peer-deps # (or yarn install)
 
 ```
 
-为了准备环境，运行`prepare.sh` shell 脚本: 
+为了准备环境，运行`prepare.sh` shell 脚本:
 
 ```bash
 
@@ -158,8 +152,6 @@ $ sh scripts/prepare.sh
 这将编译新的包，然后将它们全部移动到`sample`目录。
 
 ### <a name="common-scripts"></一个>常用 NPM 脚本
-
-
 
 ```bash
 # build all packages and move to "sample" directories
@@ -211,15 +203,13 @@ $ npm run build:prod
 
 ```
 
- 
-
 **header**是强制的，而 header 的**scope**是可选的。
 
 提交信息的任何一行都不能超过 100 个字符!这使得消息更加简单可以在 GitHub 以及各种 git 工具中阅读。
 
 页脚应该包含[对某个问题的结束引用](https://help.github.com/articles/closing-issues-via-commit-messages/)(如果有的话)。
 
-样本:(更多[样本](https://github.com/xun082/create-neat/commits/main/)) 
+样本:(更多[样本](https://github.com/xun082/create-neat/commits/main/))
 
 ```
 
@@ -228,8 +218,6 @@ docs(changelog): update change log to beta.5
 fix(core): need to depend on latest rxjs and zone.js
 
 ```
-
- 
 
 ### 回复
 
@@ -264,8 +252,6 @@ fix(core): need to depend on latest rxjs and zone.js
 ### 范围
 
 作用域应该包含受影响的 npm 包的名称(由阅读由提交消息生成的更改日志的人感知)。以下是支持范围的列表:
-
-
 
 **common**:用于对`packages/common`目录所做的更改
 
@@ -310,8 +296,9 @@ fix(core): need to depend on latest rxjs and zone.js
 就像在**主语**中一样，使用祈使句，现在时:"change"而不是"changed"或"changes"。主体应包括改变的动机，并将其与之前的行为进行对比。
 
 ### 页脚
+
 页脚应该包含有关**突破性更改**的任何信息，也是到引用此提交**关闭**的GitHub 问题。
+
 **突破性更改**应该以`BREAKING CHANGE:`开头，用空格或两个换行符。提交消息的其余部分用于完成此操作。
 详细的解释可以在这个[文档](https://github.com/xun082/create-neat/issues/35#)中找到。
 [github]:https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit
-
