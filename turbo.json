@@ -15,8 +15,7 @@
     "dev": {
       "dependsOn": ["^dev"],
       "outputs": [""],
-      "cache": false,
-      "persistent": true
+      "cache": false
     },
     "@laconic/utils": {
       "outputs": [""]
