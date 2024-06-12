@@ -4,9 +4,7 @@
   "description": "swc plugin for create-neat",
   "type": "commonjs",
   "main": "index.ts",
-  "scripts": {
-    "build": "tsc"
-  },
+  "scripts": {},
   "dependencies": {},
   "devDependencies": {}
 }
