@@ -29,6 +29,6 @@
       "es2017"
     ]
   },
-  "include": ["packages"],
-  "exclude": ["node_modules", ".eslintrc.js"]
+  "include": ["packages", "./eslintrc.cjs"],
+  "exclude": ["node_modules"]
 }
