@@ -21,7 +21,7 @@ module.exports = {
     tsconfigRootDir: __dirname,
     sourceType: "module",
   },
-  plugins: ["@typescript-eslint", "import"],
+  plugins: ["@typescript-eslint", "import", "prettier"],
   rules: {
     "no-unused-vars": "off",
     "@typescript-eslint/no-var-requires": "off",
