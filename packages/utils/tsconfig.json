@@ -6,7 +6,6 @@
     "module": "es2015",
     "types": ["node"],
     "declaration": true,
-    "noEmit": false
   },
   "include": ["src"],
   "exclude": ["node_modules"]
