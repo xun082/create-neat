@@ -1,0 +1,43 @@
+const { nodeResolve } = require("@rollup/plugin-node-resolve");
+const commonjs = require("@rollup/plugin-commonjs");
+const terser = require("@rollup/plugin-terser");
+const { dts } = require("rollup-plugin-dts");
+const json = require("@rollup/plugin-json");
+const packageInfo = require("./package.json");
+
+module.exports = [
+  {
+    input: "src/index.ts",
+    output: [
+      {
+        file: packageInfo.main,
+        format: "cjs",
+        sourcemap: true,
+      },
+      {
+        file: packageInfo.module,
+        format: "esm",
+        sourcemap: true,
+      },
+      {
+        file: packageInfo.browser,
+        format: "umd",
+        name: "Moment",
+        sourcemap: true,
+        globals: {},
+      },
+    ],
+    external: [],
+    plugins: [
+      nodeResolve(),
+      commonjs(),
+      json(),
+      terser(),
+    ],
+  },
+  {
+    input: "src/index.ts",
+    output: [{ file: "dist/index.d.ts", format: "es" }],
+    plugins: [dts()],
+  },
+];
