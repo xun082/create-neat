@@ -1,0 +1,6 @@
+{
+  "name": "@laconic/plugin-husky",
+  "version": "1.0.0",
+  "description": "husky plugin for create-neat",
+  "main": "index.cjs"
+}
