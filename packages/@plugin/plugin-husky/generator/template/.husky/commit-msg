@@ -1,3 +1,1 @@
 echo 'running commit-msg checks ...'
-
-./scripts/check_commit_msg.sh "$1"

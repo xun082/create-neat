@@ -12,7 +12,7 @@ module.exports = (generatorAPI) => {
       },
     },
     "lint-staged": {
-      "*.{ts,tsx,js,jsx}": ["npm format", "npm lint"],
+      "*.{ts,tsx,js,jsx}": ["npm run format", "npm run lint"],
     },
     devDependencies: {
       husky: "^9.0.11",
