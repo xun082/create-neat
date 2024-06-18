@@ -1,25 +1,25 @@
-# sh scripts/check-git-config.sh
+sh scripts/check-git-config.sh
 
-# echo 'running pre-commit checks ...'
+echo 'running pre-commit checks ...'
 
-# # 运行 lint-staged
-# npx lint-staged -q
+# 运行 lint-staged
+npx lint-staged -q
 
-# # 检查 lint-staged 的退出状态
-# if [ $? -ne 0 ]; then
-#   echo 'lint-staged failed'
-#   exit 1
-# fi
+# 检查 lint-staged 的退出状态
+if [ $? -ne 0 ]; then
+  echo 'lint-staged failed'
+  exit 1
+fi
 
-# echo 'running pre-commit workflow ...'
+echo 'running pre-commit workflow ...'
 
-# # 运行 preCommitExec 脚本
-# node ./scripts/preCommitExec.mjs
+# 运行 preCommitExec 脚本
+node ./scripts/preCommitExec.mjs
 
-# # 检查 preCommitExec 脚本的退出状态
-# if [ $? -ne 0 ]; then
-#   echo 'pre-commit workflow failed'
-#   exit 1
-# fi
+# 检查 preCommitExec 脚本的退出状态
+if [ $? -ne 0 ]; then
+  echo 'pre-commit workflow failed'
+  exit 1
+fi
 
-# echo 'pre-commit success!'
+echo 'pre-commit success!'
