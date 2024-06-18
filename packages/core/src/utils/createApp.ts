@@ -104,8 +104,6 @@ export default async function createAppTest(projectName: string, options: Record
 
   const { template, packageManager, plugins, buildTool, extraConfigFiles } = preset;
 
-  console.log(preset);
-
   // 记录开始时间
   const startTime = new Date().getTime();
 
@@ -133,8 +131,6 @@ export default async function createAppTest(projectName: string, options: Record
     ranges: true,
     tokens: true,
   });
-
-  console.log(buildToolConfigAst);
 
   // 根据构建工具类型为 package.json 新增不同的 scripts 脚本
   packageContent.scripts = {
