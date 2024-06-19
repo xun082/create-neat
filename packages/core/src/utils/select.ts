@@ -136,8 +136,8 @@ async function projectSelect() {
     ],
   })) as string;
 
-  // 选择插件
-  responses.plugins = (await multiselect({
+  // 选择普通插件
+  const normalPlugins = (await multiselect({
     message: `Pick plugins for your project.(${chalk.greenBright(
       "<space>",
     )} select, ${chalk.greenBright("<a>")} toggle all, ${chalk.greenBright(
@@ -150,6 +150,33 @@ async function projectSelect() {
     ],
     required: false,
   })) as string[];
+
+  // 根据不同框架加载对应的插件列表
+  let specialPluginOptions = [];
+  if (responses.template === "react") {
+    specialPluginOptions = [
+      { value: "mobx", label: "mobx" },
+      { value: "react-router", label: "react-router" },
+      { value: "antd", label: "antd" },
+    ];
+  } else if (responses.template === "vue") {
+    specialPluginOptions = [
+      { value: "vuex", label: "vuex" },
+      { value: "vue-router", label: "vue-router" },
+    ];
+  }
+  // 选择特殊插件(框架专属插件)
+  const specialPlugins = (await multiselect({
+    message: `Pick special plugins for your project.(${chalk.greenBright(
+      "<space>",
+    )} select, ${chalk.greenBright("<a>")} toggle all, ${chalk.greenBright(
+      "<i>",
+    )} invert selection,${chalk.greenBright("<enter>")} next step)`,
+    options: specialPluginOptions,
+    required: false,
+  })) as string[];
+
+  responses.plugins = [...normalPlugins, ...specialPlugins];
 
   // 选择包管理器
   responses.packageManager = (await select({
