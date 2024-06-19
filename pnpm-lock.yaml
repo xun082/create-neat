@@ -108,6 +108,8 @@ importers:
 
   packages/@plugin/plugin-eslint: {}
 
+  packages/@plugin/plugin-husky: {}
+
   packages/@plugin/plugin-prettier: {}
 
   packages/@plugin/plugin-swc: {}
