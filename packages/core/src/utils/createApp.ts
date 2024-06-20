@@ -4,12 +4,12 @@ import { exec } from "child_process";
 import { confirm } from "@clack/prompts";
 import chalk from "chalk";
 import { parse } from "@babel/parser";
-import path from "path";
+import path, { join } from "path";
 
 import Generator from "../models/Generator";
 import PackageAPI from "../models/PackageAPI";
 
-import { removeDirectory, readTemplateFileContent } from "./fileController";
+import { removeDirectory, readTemplateFileContent, copyDirectory } from "./fileController";
 import { projectSelect } from "./select";
 import gitCheck from "./gitCheck";
 import { createFiles } from "./createFiles";
@@ -117,6 +117,14 @@ export default async function createAppTest(projectName: string, options: Record
     devDependencies: {},
     scripts: {},
   };
+
+  if (buildTool === "webpack") {
+    await copyDirectory("./template-webpack-script/generator/template", join(rootDirectory, "./"));
+
+    // const { default: pluginWebpackScript } = await import(
+    //   join(__dirname, "../../template/template-webpack-script/index.cjs")
+    // );
+  }
 
   // 2. 初始化构建工具配置文件
   const buildToolConfigTemplate = readTemplateFileContent(`${buildTool}.config.ejs`);

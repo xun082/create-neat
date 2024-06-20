@@ -56,3 +56,52 @@ export async function removeDirectory(
 export function readTemplateFileContent(file: string) {
   return readFileSync(join(__dirname, "../../template/", file)).toString();
 }
+
+// export async function copyDirectory(source: string, target: string) {
+//   console.log(join(__dirname, "../../template/"), 7777);
+
+//   const sourceTarget = join(__dirname, "../../template/", source);
+
+//   console.log(sourceTarget, 66666);
+
+//   try {
+//     // 确保目标目录存在，如果不存在则创建
+//     await fs.ensureDir(target);
+
+//     // 读取源目录内容
+//     const items = await fs.readdir(sourceTarget);
+
+//     // 逐个复制目录内容
+//     for (const item of items) {
+//       const sourcePath = join(sourceTarget, item);
+//       console.log(item, 8888);
+
+//       const targetPath = join(sourceTarget, item);
+
+//       const stats = await fs.stat(sourcePath);
+
+//       if (stats.isDirectory()) {
+//         // 递归复制子目录
+//         await copyDirectory(sourcePath, targetPath);
+//       } else {
+//         // 复制文件
+//         await fs.copy(sourcePath, targetPath);
+//       }
+//     }
+
+//     console.log(`目录 ${source} 复制到 ${target} 完成`);
+//   } catch (error) {
+//     console.error("复制目录内容时发生错误:", error);
+//   }
+// }
+
+export async function copyDirectory(data: string, target: string) {
+  const source = join(__dirname, "../../template/", data);
+  try {
+    // 使用 fs-extra 的 copy 方法复制整个目录
+    await fs.copy(source, target);
+    console.log(`目录 ${source} 复制到 ${target} 完成`);
+  } catch (error) {
+    console.error("复制目录内容时发生错误:", error);
+  }
+}
