@@ -4,7 +4,7 @@ import { exec } from "child_process";
 import { confirm } from "@clack/prompts";
 import chalk from "chalk";
 import { parse } from "@babel/parser";
-import path, { join } from "path";
+import path from "path";
 
 import Generator from "../models/Generator";
 import PackageAPI from "../models/PackageAPI";
@@ -119,7 +119,10 @@ export default async function createAppTest(projectName: string, options: Record
   };
 
   if (buildTool === "webpack") {
-    await copyDirectory("./template-webpack-script/generator/template", join(rootDirectory, "./"));
+    await copyDirectory(
+      "./template-webpack-script/generator/template",
+      path.join(rootDirectory, "./"),
+    );
 
     // const { default: pluginWebpackScript } = await import(
     //   join(__dirname, "../../template/template-webpack-script/index.cjs")
