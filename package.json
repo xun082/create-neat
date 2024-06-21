@@ -21,8 +21,8 @@
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [
-      "pnpm format",
-      "eslint"
+      "pnpm format:ci",
+      "pnpm lint:ci"
     ]
   },
   "repository": {
