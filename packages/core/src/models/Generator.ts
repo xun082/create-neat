@@ -225,7 +225,7 @@ class Generator {
     // TODO: 改用每个 template 的 API 来加载
     // templateGenerator 是一个函数，接受一个 TemplateAPI 实例作为参数
     const templateGenerator = await this.loadBase(
-      `packages/core/template/${this.templateName}/generator/index.cjs`,
+      `packages/core/template/template-${this.templateName}/generator/index.cjs`,
       "",
     );
 
@@ -234,7 +234,9 @@ class Generator {
       const res = await templateGenerator(this.templateAPI);
       // 如果结果不为未定义的值，则加载模块
       if (res !== undefined) {
-        await this.buildToolGenerate(`packages/core/template/${this.templateName}/index.cjs`);
+        await this.buildToolGenerate(
+          `packages/core/template/template-${this.templateName}/index.cjs`,
+        );
       }
     }
   }
@@ -251,10 +253,7 @@ class Generator {
       await this.pluginGenerate(pluginName);
     }
 
-    // TODO: 暂定为 template-test 包
-    if (this.templateName === "template-test") {
-      await this.templateGenerate();
-    }
+    await this.templateGenerate();
 
     // 从package.json中生成额外的的文件
     await this.extractConfigFiles(extraConfigFiles);
@@ -273,12 +272,16 @@ class Generator {
     console.log(chalk.green("💘 Files have been generated and written to disk."));
 
     /* ----------拉取对应模板，并进行ejs渲染---------- */
-    const templatePath = join(__dirname, "../../template/", "template-test/generator/template");
+    const templatePath = join(
+      __dirname,
+      "../../template/",
+      `template-${this.templateName}/generator/template`,
+    );
 
     // TODO: 此处的 ejs 渲染配置是测试用数据，实际应用中需要根据使用不同的模板进行具体的配置，具体如何实现 options 的集中管理有待商榷
     const options = {
       packageEjs: {
-        name: "template_test",
+        name: `template-${this.templateName}`,
         version: "0.1.0",
       },
       VueEjs: {
