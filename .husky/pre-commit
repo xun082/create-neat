@@ -2,20 +2,20 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 # git config 检查
-# sh scripts/check-git-config.sh
+sh scripts/check-git-config.sh
 
 echo 'running pre-commit checks ...'
 
-# npx lint-staged -q
+npx lint-staged -q
 
 echo 'running pre-commit workflow ...'
 
-# node ./scripts/preCommitExec.mjs
+node ./scripts/preCommitExec.mjs
 
-# # 检查 preCommitExec 脚本的退出状态
-# if [ $? -ne 0 ]; then
-#   echo 'pre-commit workflow failed'
-#   exit 1
-# fi
+# 检查 preCommitExec 脚本的退出状态
+if [ $? -ne 0 ]; then
+  echo 'pre-commit workflow failed'
+  exit 1
+fi
 
 echo 'pre-commit success!'
