@@ -20,12 +20,11 @@ function copyRootReadmeToTarget() {
       execSync(`cp ${rootReadmePath} ${targetPath}`);
       console.log(`Copied root README.md to ${targetPath}.`);
     }
-  }
+  };
 
   try {
     mapFilesToPath(targetFiles).forEach(cpFile);
-  }
-  catch (error) {
+  } catch (error) {
     console.error("Error executing git diff:", error);
     process.exit(1);
   }
