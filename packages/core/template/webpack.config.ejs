@@ -10,7 +10,9 @@ const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 
 <% if (framework === 'react') { %>
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+<% if (language === "typescript") { %>
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+<% } %>
 <% } %>
 
 <% if (framework === 'vue') { %>
@@ -23,7 +25,9 @@ const isProduction = process.env.NODE_ENV === 'production';
 const developmentPlugins = isDevelopment ? [
   <% if (framework === 'react') { %>
   new ReactRefreshWebpackPlugin(),
+  <% if (language === "typescript") { %>
   new ForkTsCheckerWebpackPlugin({ async: false }),
+  <% } %>
   <% } %>
   <% if (framework === 'vue') { %>
   new VueLoaderPlugin(),

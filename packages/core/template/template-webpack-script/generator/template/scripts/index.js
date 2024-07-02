@@ -5,13 +5,9 @@ const crossSpawn = require("cross-spawn");
 const argument = process.argv.slice(2);
 
 if (["dev", "build", "analyzer"].includes(argument[0])) {
-  const result = crossSpawn.sync(
-    process.execPath,
-    [require.resolve(`../${argument[0]}/index.js`)],
-    {
-      stdio: "inherit",
-    },
-  );
+  const result = crossSpawn.sync(process.execPath, [require.resolve(`./${argument[0]}/index.js`)], {
+    stdio: "inherit",
+  });
   if (result.signal) {
     if (result.signal === "SIGKILL") {
       console.log(

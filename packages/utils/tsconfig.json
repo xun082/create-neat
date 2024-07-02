@@ -4,10 +4,8 @@
     "outDir": "dist",
     "target": "es2015",
     "module": "es2015",
-    "types": [
-      "node"
-    ],
-    "declaration": true,
+    "types": ["node"],
+    "declaration": true
   },
   "include": [
     "src"
