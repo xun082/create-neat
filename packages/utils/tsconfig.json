@@ -5,7 +5,7 @@
     "target": "es2015",
     "module": "es2015",
     "types": ["node"],
-    "declaration": true,
+    "declaration": true
   },
   "include": ["src"],
   "exclude": ["node_modules"]
