@@ -123,20 +123,19 @@ export default async function createAppTest(projectName: string, options: Record
       "./template-webpack-script/generator/template",
       path.join(rootDirectory, "./"),
     );
-
-    // const { default: pluginWebpackScript } = await import(
-    //   join(__dirname, "../../template/template-webpack-script/index.cjs")
-    // );
   }
 
   // 2. 初始化构建工具配置文件
+  // 获取原始配置文件的ejs格式
   const buildToolConfigTemplate = readTemplateFileContent(`${buildTool}.config.ejs`);
+  // 借助ejs.render对ejs格式文件进行渲染
   const ejsResolver = generateWebpackConfigFromEJS(
     template,
     buildTool,
     "typescript" in plugins ? "typescript" : "javascript",
     buildToolConfigTemplate,
   );
+  // 对解析出来的文件生成初始ast语法树，用于后续合并配置并生成真是的构建工具配置文件
   const buildToolConfigAst = parse(ejsResolver, {
     sourceType: "module",
     ranges: true,
@@ -154,11 +153,6 @@ export default async function createAppTest(projectName: string, options: Record
     ...buildToolConfigDevDependencies[buildTool],
     ...packageContent.devDependencies,
   };
-
-  createDirAndWriteFile(
-    path.resolve(rootDirectory, `${buildTool}.config.js`),
-    buildToolConfigTemplate,
-  );
 
   // 3. 遍历 plugins，插入依赖
   Object.keys(plugins).forEach((dep) => {

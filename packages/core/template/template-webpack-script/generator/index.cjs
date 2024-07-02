@@ -33,9 +33,9 @@ const bin = {
   "next-script": "./scripts/index.js",
 };
 
-module.exports = (templateAPI) => {
-  templateAPI.extendPackage({
-    vue: {
+module.exports = (templateAPI, template) => {
+  if (template === "vue") {
+    templateAPI.extendPackage({
       bin,
       scripts,
       dependencies: {},
@@ -44,8 +44,9 @@ module.exports = (templateAPI) => {
         "vue-loader": "^17.4.2",
         "vue-style-loader": "^4.1.3",
       },
-    },
-    react: {
+    });
+  } else if (template === "react") {
+    templateAPI.extendPackage({
       bin,
       scripts,
       dependencies: {},
@@ -55,6 +56,6 @@ module.exports = (templateAPI) => {
         "react-refresh": "^0.14.2",
         "style-loader": "^4.0.0",
       },
-    },
-  });
+    });
+  }
 };
