@@ -27,12 +27,13 @@ const commonDevDependencies = {
   "babel-loader": "^9.1.3",
   "@babel/plugin-syntax-dynamic-import": "^7.8.3",
   "@babel/preset-typescript": "^7.24.7",
+  "cross-spawn": "^7.0.3",
 };
 
 // React的Babel配置
 const reactBabelConfig = {
   presets: ["@babel/preset-react", ...commonBabelPresets],
-  plugins: commonBabelPlugins,
+  plugins: ["react-refresh/babel", ...commonBabelPlugins],
 };
 
 // Vue的Babel配置

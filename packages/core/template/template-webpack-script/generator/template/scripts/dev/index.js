@@ -1,6 +1,6 @@
 process.env.NODE_ENV = "development";
 
-require("../utils/env");
+require("../env");
 
 const chalk = require("chalk");
 const WebpackDevServer = require("webpack-dev-server");
