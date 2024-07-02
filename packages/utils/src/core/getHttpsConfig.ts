@@ -3,14 +3,28 @@ import fs from "node:fs";
 import crypto from "node:crypto";
 
 import { resolveApp } from "./getResolveApp";
-
+/**
+ * 从指定路径读取文件内容。
+ * @param {string} file 要读取的文件路径。
+ * @param {string} type 文件类型描述，用于错误信息。
+ * @returns {Buffer} 文件内容的缓冲区。
+ * @throws {Error} 如果文件不存在，则抛出错误。
+ */
 function readEnvFile(file: string, type: string): Buffer {
   if (!fs.existsSync(file)) {
     throw new Error(`You specified ${type} in your env, but the file "${file}" can't be found.`);
   }
   return fs.readFileSync(file);
 }
-
+/**
+ * 验证证书和密钥是否有效。
+ * @param {Object} params 参数对象。
+ * @param {Buffer} params.cert 证书内容。
+ * @param {Buffer} params.key 密钥内容。
+ * @param {string} params.keyFile 密钥文件路径。
+ * @param {string} params.crtFile 证书文件路径。
+ * @throws {Error} 如果证书或密钥无效，则抛出错误。
+ */
 function validateKeyAndCerts({ cert, key, keyFile, crtFile }) {
   let encrypted: Buffer | undefined;
   try {
@@ -25,7 +39,10 @@ function validateKeyAndCerts({ cert, key, keyFile, crtFile }) {
     throw new Error(`The certificate key "${keyFile}" is invalid.\n${err.message}`);
   }
 }
-
+/**
+ * 获取 HTTPS 配置。
+ * @returns {Object | boolean} 如果启用了 HTTPS，则返回证书和密钥配置，否则返回 false。
+ */
 function getHttpsConfig() {
   const { SSL_CRT_FILE, SSL_KEY_FILE, HTTPS } = process.env;
   const isHttps = HTTPS === "true";

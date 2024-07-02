@@ -1,5 +1,8 @@
 import os from "node:os";
-
+/**
+ * 获取本机的 IPv4 地址。
+ * @returns {string} 本机的 IPv4 地址。
+ */
 export function getIPAddress(): string {
   const interfaces = os.networkInterfaces();
   for (const devName in interfaces) {

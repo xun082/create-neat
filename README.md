@@ -1,5 +1,10 @@
 ## Create-Neat
 
+### README.md
+- zh_CN [简体中文](README.md)
+- en [English](readme/README-EN.md)
+
+
 ### 一、背景 📖
 
 在刚开始学习 `React` 的时候，使用的脚手架就是 `create-react-app`，虽然这个脚手架提供的零配置、开箱即用很适合新手，但是要想对其进行扩展就非常麻烦。要想对其进行扩展你必须 `eject` 或者 使用 `carco` 进行配置。

@@ -1,0 +1,4 @@
+{
+  "name": "<%- packageEjs.name %>",
+  "version": "<%- packageEjs.version %>"
+}
