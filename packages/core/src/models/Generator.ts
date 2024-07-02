@@ -182,19 +182,11 @@ class Generator {
         baseEntry(this.buildToolConfig.buildTool, this.templateName),
         this.buildToolConfig.ast,
       );
-      const code = generator(this.buildToolConfig.ast).code;
-      fs.writeFileSync(
-        path.resolve(this.rootDirectory, `${this.buildToolConfig.buildTool}.config.js`),
-        code,
-      );
     }
   }
 
   // 单独处理一个插件相关文件
   async pluginGenerate(pluginName: string) {
-    // 根据环境变量加载插件
-    // TODO: 改用每个 plugin 的 API 来加载
-    // pluginGenerator 是一个函数，接受一个 GeneratorAPI 实例作为参数
     const pluginGenerator = await this.loadBase(
       `packages/@plugin/plugin-${pluginName}/generator/index.cjs`,
       `node_modules/${pluginName}-plugin-test-ljq`,
@@ -215,29 +207,37 @@ class Generator {
       new FileTree(templatePath).renderTemplates(this.rootDirectory);
     }
 
+    // 如果插件有在构建工具配置文件中插入特有配置的需求，需要调用该函数借助ast进行插入
     await this.buildToolGenerate(`packages/@plugin/plugin-${pluginName}/index.cjs`);
   }
 
   // 单独处理一个框架相关文件
   async templateGenerate() {
-    // TODO: 以下配置过程暂时与插件类同，后续可添加额外配置
-    // 根据环境变量加载插件
-    // TODO: 改用每个 template 的 API 来加载
-    // templateGenerator 是一个函数，接受一个 TemplateAPI 实例作为参数
     const templateGenerator = await this.loadBase(
       `packages/core/template/template-${this.templateName}/generator/index.cjs`,
       "",
     );
 
     if (templateGenerator && typeof templateGenerator === "function") {
-      // 获取生成文件的结果
-      const res = await templateGenerator(this.templateAPI);
-      // 如果结果不为未定义的值，则加载模块
-      if (res !== undefined) {
-        await this.buildToolGenerate(
-          `packages/core/template/template-${this.templateName}/index.cjs`,
-        );
-      }
+      // 将框架需要的依赖加入到package.json中
+      await templateGenerator(this.templateAPI);
+      // 如果框架需要对构建工具进行配置，借助于ast
+      await this.buildToolGenerate(
+        `packages/core/template/template-${this.templateName}/index.cjs`,
+      );
+    }
+  }
+
+  // 单独处理一个构建工具相关的文件，将构建工具相关的配置插入到package.json中
+  async webpackGenerator() {
+    const webpackGenerator = await this.loadBase(
+      `packages/core/template/template-${this.buildToolConfig.buildTool}-script/generator/index.cjs`,
+      "",
+    );
+
+    if (webpackGenerator && typeof webpackGenerator === "function") {
+      // 将框架需要的依赖加入到package.json中
+      await webpackGenerator(this.generatorAPI, this.templateName);
     }
   }
 
@@ -253,25 +253,12 @@ class Generator {
       await this.pluginGenerate(pluginName);
     }
 
+    // 将框架需要的依赖添加到package.json中，以及如果该框架如果需要添加构建工具配置属性，则借助ast进行添加
     await this.templateGenerate();
 
-    // 从package.json中生成额外的的文件
-    await this.extractConfigFiles(extraConfigFiles);
-    // 重写pakcage.json文件，并向根文件树中添加该文件，消除generatorAPI中拓展package.json带来得副作用
-    this.files.addToTreeByFile(
-      "package.json",
-      JSON.stringify(this.pkg, null, 2),
-      path.resolve(this.rootDirectory, "package.json"),
-    );
+    await this.webpackGenerator();
 
-    // 安装package.json文件
-    await createFiles(this.rootDirectory, {
-      "package.json": JSON.stringify(this.pkg, null, 2),
-    });
-
-    console.log(chalk.green("💘 Files have been generated and written to disk."));
-
-    /* ----------拉取对应模板，并进行ejs渲染---------- */
+    // 根据选择的框架拉取模板进行渲染
     const templatePath = join(
       __dirname,
       "../../template/",
@@ -290,6 +277,29 @@ class Generator {
       },
     };
     new FileTree(templatePath).renderTemplates(this.rootDirectory, undefined, options);
+
+    // 与构建工具有关的配置全部添加完毕，生成构建工具配置文件
+    const code = generator(this.buildToolConfig.ast).code;
+    fs.writeFileSync(
+      path.resolve(this.rootDirectory, `${this.buildToolConfig.buildTool}.config.js`),
+      code,
+    );
+
+    // 从package.json中生成额外的的文件
+    await this.extractConfigFiles(extraConfigFiles);
+    // 重写pakcage.json文件，并向根文件树中添加该文件，消除generatorAPI中拓展package.json带来得副作用
+    this.files.addToTreeByFile(
+      "package.json",
+      JSON.stringify(this.pkg, null, 2),
+      path.resolve(this.rootDirectory, "package.json"),
+    );
+
+    // 安装package.json文件
+    await createFiles(this.rootDirectory, {
+      "package.json": JSON.stringify(this.pkg, null, 2),
+    });
+
+    console.log(chalk.green("💘 Files have been generated and written to disk."));
   }
 
   /**
