@@ -5,10 +5,11 @@ import path from "node:path";
  * @type {string}
  */
 const appDirectory: string = fs.realpathSync(process.cwd());
+
 /**
- * 解析相对于应用程序根目录的路径。
- * @param {string} relativePath 相对路径。
- * @returns {string} 解析后的绝对路径。
+ * @description 解析相对路径并返回绝对路径。
+ * @param relativePath 相对路径。
+ * @returns 绝对路径。
  */
 function resolveApp(relativePath: string): string {
   return path.resolve(appDirectory, relativePath);
