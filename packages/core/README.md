@@ -1,5 +1,10 @@
 ## Create-Neat
 
+### README.md
+- zh_CN [简体中文](README.md)
+- en [English](readme/README-EN.md)
+
+
 ### 一、背景 📖
 
 在刚开始学习 `React` 的时候，使用的脚手架就是 `create-react-app`，虽然这个脚手架提供的零配置、开箱即用很适合新手，但是要想对其进行扩展就非常麻烦。要想对其进行扩展你必须 `eject` 或者 使用 `carco` 进行配置。
@@ -204,14 +209,15 @@ module.exports = {
 };
 ```
 
-### 五、捐赠 🍵
+### 五、贡献 🍵
 
 > 如果你正在使用这个项目或者对这个项目感兴趣，可以通过以下方式支持我:
 
-- **Star、Fork、Watch** 一键三连 🚀🚀
+- **Star、Fork、Watch** 一键三连 🚀🚀🚀
 
 > 我们很乐意在 `create-neat` 中得到您的帮助，看到您的贡献，如果你想获取到更多信息以及如何开始，请扫描进群:
 
 <center>
-<img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5cd5949ed05749968c36edaddb024f5d~tplv-k3u1fbpfcp-watermark.image?" width="400" height="300" alt="微信群">
+<img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/cca82f4647a54c18b7b67e8bd2dffbb6~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1079&h=811&s=263717&e=jpg&b=bca3b7" width="400" height="300" alt="微信群">
 </center>
+
