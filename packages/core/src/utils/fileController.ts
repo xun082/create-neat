@@ -1,107 +1,107 @@
 import { resolveApp } from "@laconic/utils";
 import chalk from "chalk";
 import ora from "ora";
-import fs from "fs-extra";
-import tar from "tar";
-import axios from "axios";
-import { join, resolve } from "node:path";
+import fs, { readFileSync } from "fs-extra";
+import { join } from "node:path";
+import { rmSync } from "node:fs";
 
-import { packageVersion } from "./constants";
+import { CLIENT_OS } from "./constants";
 
-/**
- * @param directoryPath 删除文件的路径，默认 node_modules
- * @param verbose 如果为true，则显示删除信息
- */
 /**
  * @author moment
  * @param directoryPath 删除文件的路径，默认 node_modules
  * @param verbose 如果为true，则显示删除信息
  */
-export async function removeDirectory(directoryPath = "node_modules", verbose = true) {
+export async function removeDirectory(
+  directoryPath: string = "node_modules",
+  verbose: boolean = true,
+) {
   const fullPath = resolveApp(directoryPath);
+  /**
+   * 删除文件夹。
+   * @returns {Promise<boolean>} 删除结果，true 表示成功，false 表示失败。
+   */
+  async function deleteDirectory() {
+    try {
+      if (CLIENT_OS === "mac") {
+        rmSync(fullPath, { recursive: true, force: true });
+      } else {
+        await fs.remove(fullPath);
+      }
+      return true; // 成功删除
+    } catch (error) {
+      console.error(chalk.bold.red("Deletion failed"), error);
+      return false; // 删除失败
+    }
+  }
+
   if (verbose) {
     const spinner = ora(chalk.bold.cyan("File being deleted...")).start();
-    try {
-      await fs.remove(fullPath);
+    const success = await deleteDirectory();
+    if (success) {
       spinner.succeed(chalk.bold.green("Deleted successfully"));
-    } catch (error) {
+    } else {
       spinner.fail(chalk.bold.red("Deletion failed"));
-      console.error(error);
     }
   } else {
-    await fs.remove(fullPath);
+    await deleteDirectory();
   }
 }
 
-async function copyFolderRecursive(sourceDir: string, destinationDir: string) {
-  try {
-    await fs.ensureDir(destinationDir);
-    await fs.copy(sourceDir, destinationDir);
-  } catch (error) {
-    console.error(
-      chalk.red("\n 😡😡😡 An error occurred during the template download, please try again"),
-      error,
-    );
-    process.exit(1);
-  }
+/**
+ * 从模板目录中读取并返回文件内容的函数
+ * @param file 指定要读取的文件名
+ * @returns 返回文件内容的字符串
+ */
+export function readTemplateFileContent(file: string) {
+  return readFileSync(join(__dirname, "../../template/", file)).toString();
 }
 
-export async function getNpmPackage(
-  packageURL: string,
-  packageName: string,
-  projectName: string,
-  isDev?: boolean | undefined,
-): Promise<void> {
-  const spinner = ora(chalk.bold.cyan("Creating a project...")).start();
+// export async function copyDirectory(source: string, target: string) {
+//   console.log(join(__dirname, "../../template/"), 7777);
+
+//   const sourceTarget = join(__dirname, "../../template/", source);
+
+//   console.log(sourceTarget, 66666);
+
+//   try {
+//     // 确保目标目录存在，如果不存在则创建
+//     await fs.ensureDir(target);
+
+//     // 读取源目录内容
+//     const items = await fs.readdir(sourceTarget);
+
+//     // 逐个复制目录内容
+//     for (const item of items) {
+//       const sourcePath = join(sourceTarget, item);
+//       console.log(item, 8888);
+
+//       const targetPath = join(sourceTarget, item);
+
+//       const stats = await fs.stat(sourcePath);
+
+//       if (stats.isDirectory()) {
+//         // 递归复制子目录
+//         await copyDirectory(sourcePath, targetPath);
+//       } else {
+//         // 复制文件
+//         await fs.copy(sourcePath, targetPath);
+//       }
+//     }
+
+//     console.log(`目录 ${source} 复制到 ${target} 完成`);
+//   } catch (error) {
+//     console.error("复制目录内容时发生错误:", error);
+//   }
+// }
+
+export async function copyDirectory(data: string, target: string) {
+  const source = join(__dirname, "../../template/", data);
   try {
-    const currentDir = resolveApp(projectName);
-    // 如果是dev mode，检查并使用本地模板
-    if (isDev) {
-      const root = resolve(__dirname, "../../../../apps/");
-      // 通过dist/index.js，找到模板文件的路径
-      const templateDir = resolve(
-        root,
-        "template-react-web-ts/laconic-template-react-web-ts-1.0.1.tgz",
-      );
-      const hasLocalTemplate = fs.existsSync(templateDir);
-      if (hasLocalTemplate) {
-        await getPackageFromLocal(currentDir, templateDir);
-        return;
-      }
-    }
-    const response = await axios.get(packageURL, {
-      responseType: "arraybuffer",
-    });
-    const tgzPath = join(currentDir, `${packageName}-${packageVersion}.tgz`);
-    fs.writeFileSync(tgzPath, response.data);
-
-    await tar.extract({
-      file: tgzPath,
-      cwd: currentDir,
-    });
-
-    await fs.unlink(tgzPath);
-    await copyFolderRecursive(join(projectName, "package/template"), projectName);
-    await removeDirectory(join(projectName, "package"), false);
-    spinner.succeed(chalk.bold.green("Project creation successful"));
+    // 使用 fs-extra 的 copy 方法复制整个目录
+    await fs.copy(source, target);
+    console.log(`目录 ${source} 复制到 ${target} 完成`);
   } catch (error) {
-    spinner.fail(chalk.bold.red("Project creation failed"));
-    console.error("Error:", error);
-    process.exit(1);
-  }
-}
-
-export async function getPackageFromLocal(currentDir: string, targetFile: string) {
-  const spinner = ora(chalk.bold.cyan("Creating a project...")).start();
-  try {
-    await tar.extract({
-      file: targetFile,
-      cwd: currentDir,
-    });
-    spinner.succeed(chalk.bold.green("Project creation successful"));
-  } catch (error) {
-    spinner.fail(chalk.bold.red("Project creation failed"));
-    console.error("Error:", error);
-    process.exit(1);
+    console.error("复制目录内容时发生错误:", error);
   }
 }

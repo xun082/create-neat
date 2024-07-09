@@ -1,0 +1,6 @@
+{
+  "name": "@laconic/plugin-mobx",
+  "version": "1.0.0",
+  "description": "mobx plugin for react",
+  "dependencies": {}
+}

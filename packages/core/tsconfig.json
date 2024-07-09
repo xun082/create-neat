@@ -2,10 +2,12 @@
   "extends": "../../tsconfig.json",
   "include": ["src"],
   "compilerOptions": {
-    "outDir": "dist",
+    "outDir": "./dist",
     "rootDir": "src",
     "types": ["node"],
     "target": "ESNext",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "allowJs": true
   }
 }

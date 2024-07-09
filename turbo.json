@@ -9,20 +9,18 @@
     "lint": {
       "dependsOn": ["^lint"]
     },
+    "check": {
+      "dependsOn": ["^check"]
+    },
     "dev": {
       "dependsOn": ["^build"],
       "outputs": [""],
-      "cache": false,
-      "persistent": true
+      "cache": false
     },
     "@laconic/utils": {
       "outputs": [""]
     },
     "create-neat": {
-      "dependsOn": ["@laconic/utils"],
-      "outputs": [""]
-    },
-    "@laconic/rollup-script": {
       "dependsOn": ["@laconic/utils"],
       "outputs": [""]
     }
