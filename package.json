@@ -70,8 +70,9 @@
     "turbo": "^1.12.4",
     "typescript": "^5.4.5"
   },
-  "packageManager": "pnpm@8.9.0",
   "engines": {
-    "node": ">=18"
-  }
+    "node": ">=18",
+    "pnpm": "9.4.0"
+  },
+  "engineStrict": true
 }
