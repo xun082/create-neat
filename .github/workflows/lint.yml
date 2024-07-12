@@ -28,9 +28,9 @@ jobs:
           persist-credentials: false
 
       - name: Install PNPM
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v4
         with:
-          version: ^8.9.0
+          version: 9.4.0
 
       - name: Install Deps
         run: pnpm i --no-frozen-lockfile
