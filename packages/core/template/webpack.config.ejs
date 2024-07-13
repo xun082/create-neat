@@ -19,6 +19,41 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const { VueLoaderPlugin } = require('vue-loader');
 <% } %>
 
+let tsxOrJsxLoader;
+<% if (framework==='vue' ) { %>
+  tsxOrJsxLoader = {
+  test: /\.(tsx?|jsx?)$/,
+  include: [path.resolve(__dirname, "./src")],
+  exclude: [/node_modules/, /public/, /(.|_)min\.js$/],
+  use: [
+  {
+  loader: "babel-loader",
+  options: {
+  babelrc: true,
+  cacheDirectory: true,
+  cacheCompression: false,
+  },
+  },
+  "@ant-design-vue/vue-jsx-hot-loader",
+  ]
+  }
+  <% } %>
+  <% if (framework==='react' ) { %>
+    tsxOrJsxLoader = {
+    test: /\.(tsx?|jsx?)$/,
+    include: [path.resolve(__dirname, "./src")],
+    loader: "babel-loader",
+    options: {
+    babelrc: true,
+    cacheDirectory: true,
+    cacheCompression: false,
+    presets: [],
+    plugins: ["react-refresh/babel"],
+    },
+    exclude: [/node_modules/, /public/, /(.|_)min\.js$/]
+    }
+    <% } %>
+
 const isDevelopment = process.env.NODE_ENV === 'development';
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -86,16 +121,17 @@ module.exports = {
   },
   module: {
     rules: [
+    tsxOrJsxLoader,
     {
         test: /\.css$/i,
         include: [path.resolve(__dirname, './src')],
         exclude: /node_modules/,
         use: [
-          isDevelopment ? 
+          isDevelopment ?
           <% if (framework === 'vue') { %>
-          'vue-style-loader' 
+          'vue-style-loader'
           <% } else { %>
-          'style-loader' 
+          'style-loader'
           <% } %>
           : MiniCssExtractPlugin.loader,
           {

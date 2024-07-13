@@ -66,12 +66,8 @@ function mergeWebpackConfigAst(options: Options, ast) {
     ExpressionStatement(path) {
       const astNode = path.node;
       // 只匹配模板中的module.exports部分
+      if (!astNode.expression.left.object) return;
       if (astNode.expression.left.object.name !== "module") return;
-
-      // plugins.forEach((plugin) => {
-      //   // 不是default也得处理
-      //   path.container.unshift(createImportDeclaration(plugin.import.name, plugin.import.from));
-      // });
       // 遍历module.exports对象中的每个属性的ast节点
       astNode.expression.right.properties.forEach((property) => {
         // 匹配到plugins属性，根据传入的options中的plugin生成ast进行插入
