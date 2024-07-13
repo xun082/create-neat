@@ -18,7 +18,7 @@ import createSuccessInfo from "./createSuccessInfo";
 import dependenciesInstall from "./dependenciesInstall";
 import { createReadmeString } from "./createFiles";
 import { buildToolConfigDevDependencies, buildToolScripts } from "./constants";
-import generateWebpackConfigFromEJS from "./generateWebpackConfigFromEJS";
+import generateBuildToolConfigFromEJS from "./generateBuildToolConfigFromEJS";
 
 /**
  * 将输入模式设置为原始模式。
@@ -129,7 +129,7 @@ export default async function createAppTest(projectName: string, options: Record
   // 获取原始配置文件的ejs格式
   const buildToolConfigTemplate = readTemplateFileContent(`${buildTool}.config.ejs`);
   // 借助ejs.render对ejs格式文件进行渲染
-  const ejsResolver = generateWebpackConfigFromEJS(
+  const ejsResolver = generateBuildToolConfigFromEJS(
     template,
     buildTool,
     "typescript" in plugins ? "typescript" : "javascript",
