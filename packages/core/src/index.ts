@@ -7,11 +7,14 @@ import fs from "fs";
 import path from "path";
 
 import createApp from "./utils/createApp";
+import { checkVersion } from "./utils/checkVersion";
 
 const packagePath = path.join(__dirname, "../package.json");
 const version = JSON.parse(fs.readFileSync(packagePath, "utf8")).version;
 
 const program = new Command();
+
+checkVersion(version);
 
 program
   .version(chalk.greenBright(version))
@@ -19,6 +22,7 @@ program
   .description("Create a directory for your project files")
   .option("-f, --force", "Overwrite target directory if it exists")
   .option("--dev", "Use development mode")
+  .showSuggestionAfterError(true)
   .action((name: string, options: Record<string, any>) => {
     createApp(name, options);
   });
