@@ -22,15 +22,18 @@ program
   .description("Create a directory for your project files")
   .option("-f, --force", "Overwrite target directory if it exists")
   .option("--dev", "Use development mode")
-  .showSuggestionAfterError(true)
   .action((name: string, options: Record<string, any>) => {
     createApp(name, options);
   });
 
-program
+// 子命令 runCommand，后续新增命令请添加到 runCommand 上。
+const runCommand = program.command("run");
+// 命令格式：create-neat run command，command 为命令名称，例如 create-neat run add。
+runCommand
   .command("add <plugin> [pluginOptions]")
   .description("Install a plugin and invoke its generator in an existing project")
   .option("--registry <url>", "Specify an npm registry URL for installing dependencies (npm only)")
+  .showSuggestionAfterError(true)
   .allowUnknownOption()
   .action((plugin) => {
     const pluginOptions = minimist(process.argv.slice(3));
