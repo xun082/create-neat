@@ -1,5 +1,4 @@
 import { resolveApp } from "./getResolveApp";
-import getHttpsConfig from "./getHttpsConfig";
 /**
  * 主机地址，可以从环境变量中获取，默认为 "0.0.0.0"。
  * @type {string}
@@ -20,7 +19,6 @@ const sockPath = process.env.WDS_SOCKET_PATH; // default: '/ws'
  * @type {string|undefined}
  */
 const sockPort = process.env.WDS_SOCKET_PORT;
-console.log(getHttpsConfig());
 /**
  * 开发服务器配置对象。
  * @type {object}
