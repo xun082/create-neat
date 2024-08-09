@@ -60,12 +60,6 @@ class FileTree {
    */
   constructor(rootDirectory: string) {
     this.rootDirectory = rootDirectory;
-    this.fileData = {
-      path: rootDirectory,
-      type: "dir",
-      children: [],
-      describe: { fileName: path.basename(rootDirectory) },
-    };
     //初始化文件树对象
     this.fileData = FileTree.buildFileData(this.rootDirectory);
 

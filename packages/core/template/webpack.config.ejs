@@ -7,6 +7,10 @@ const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const HtmlMinimizerPlugin = require('html-minimizer-webpack-plugin');
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
+const AutoImport = require('unplugin-auto-import/webpack')
+const Components = require('unplugin-vue-components/webpack')
+const { ElementPlusResolver } = require('unplugin-vue-components/resolvers')
+
 
 <% if (framework === 'react') { %>
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
@@ -53,6 +57,20 @@ let tsxOrJsxLoader;
     exclude: [/node_modules/, /public/, /(.|_)min\.js$/]
     }
     <% } %>
+
+let elementConfig = []
+
+<% if (framework==='vue' ) { %>
+  elementConfig = [
+    AutoImport({
+      resolvers: [ElementPlusResolver()],
+    }),
+    Components({
+      resolvers: [ElementPlusResolver()],
+    }),
+  ]
+  <% } %>
+
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 const isProduction = process.env.NODE_ENV === 'production';
@@ -226,6 +244,7 @@ module.exports = {
     }),
     ...developmentPlugins,
     ...productionPlugins,
+    ...elementConfig,
   ].filter(Boolean),
   performance: isProduction
     ? {
