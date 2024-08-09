@@ -161,6 +161,7 @@ async function projectSelect() {
     vue: [
       { key: "vuex", value: "vuex" },
       { key: "vue-router", value: "vue-router" },
+      { key: "element-plus", value: "element-plus" },
     ],
   };
 
