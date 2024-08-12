@@ -6,6 +6,7 @@ import chalk from "chalk";
 import { relativePathToRoot } from "../utils/constants";
 import { createFiles } from "../utils/createFiles";
 import { createConfigByParseAst } from "../utils/ast/parseAst";
+import { projectSelect } from "../utils/select";
 
 import GeneratorAPI from "./GeneratorAPI";
 import ConfigTransform from "./ConfigTransform";
@@ -265,6 +266,7 @@ class Generator {
       `template-${this.templateName}/generator/template`,
     );
 
+    const preset = await projectSelect();
     // TODO: 此处的 ejs 渲染配置是测试用数据，实际应用中需要根据使用不同的模板进行具体的配置，具体如何实现 options 的集中管理有待商榷
     const options = {
       packageEjs: {
@@ -274,6 +276,9 @@ class Generator {
       VueEjs: {
         name: "vue_test",
         data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      },
+      ReactEjs: {
+        useReactRouter: !!preset.plugins['react-router'],
       },
     };
     new FileTree(templatePath).renderTemplates(this.rootDirectory, undefined, options);
