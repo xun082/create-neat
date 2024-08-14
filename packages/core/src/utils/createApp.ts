@@ -184,10 +184,17 @@ export default async function createAppTest(projectName: string, options: Record
   console.log(chalk.blue(`🚀  Invoking generators...`));
 
   // 传入根目录路径、插件列表、package.json 内容创建生成器实例
-  const generators = new Generator(rootDirectory, plugins, packageContent, template, {
-    ast: buildToolConfigAst,
-    buildTool,
-  });
+  const generators = new Generator(
+    rootDirectory,
+    plugins,
+    packageContent,
+    template,
+    {
+      ast: buildToolConfigAst,
+      buildTool,
+    },
+    preset,
+  );
 
   await generators.generate({
     extraConfigFiles,
