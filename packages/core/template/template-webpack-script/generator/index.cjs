@@ -30,7 +30,7 @@ const scripts = {
 };
 
 const bin = {
-  "next-script": "./scripts/index.js",
+  "next-script": "./scripts/index.jsx",
 };
 
 module.exports = (templateAPI, template) => {

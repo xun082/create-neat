@@ -4,3 +4,6 @@ package-lock.json
 apps/
 
 # package.json
+
+# remixed ejs file
+packages/core/template/template-react/generator/template/src/App.jsx

@@ -191,22 +191,22 @@ class Generator {
 
   // 单独处理一个插件相关文件
   async pluginGenerate(pluginName: string) {
+    // 加载插件包下的generator模块
     const pluginGenerator = await this.loadBase(
       `packages/@plugin/plugin-${pluginName}/generator/index.cjs`,
       `node_modules/${pluginName}-plugin-test-ljq`,
     );
-
+    // 如果generator是函数类型，那么传入generatorAPI和模板名，执行generator，加入新的依赖
     if (pluginGenerator && typeof pluginGenerator === "function") {
       await pluginGenerator(this.generatorAPI, this.templateName);
     }
-
-    // ejs 渲染插件的 template 文件
+    // 解析得到插件的 template 文件路径
     const templatePath = resolve(
       __dirname,
       relativePathToRoot,
       `packages/@plugin/plugin-${pluginName}/generator/template`,
     );
-
+    // 如果模板目录存在，那么解析出模板文件树，渲染到项目目录下
     if (fs.existsSync(templatePath)) {
       new FileTree(templatePath).renderTemplates(this.rootDirectory);
     }
@@ -256,7 +256,6 @@ class Generator {
     for (const pluginName of Object.keys(this.plugins)) {
       await this.pluginGenerate(pluginName);
     }
-
     // 将框架需要的依赖添加到package.json中，以及如果该框架如果需要添加构建工具配置属性，则借助ast进行添加
     await this.templateGenerate();
 
@@ -281,8 +280,10 @@ class Generator {
       },
       ReactEjs: {
         useReactRouter: !!this.preset.plugins["react-router"],
+        useAntd: !!this.preset.plugins["antd"], // 是否使用antd
       },
     };
+    // 新建项目目录虚拟树
     new FileTree(templatePath).renderTemplates(this.rootDirectory, undefined, options);
 
     // 与构建工具有关的配置全部添加完毕，生成构建工具配置文件

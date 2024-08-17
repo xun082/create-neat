@@ -126,7 +126,7 @@ export default async function createAppTest(projectName: string, options: Record
   }
 
   // 2. 初始化构建工具配置文件
-  // 获取原始配置文件的ejs格式
+  // 获取构建工具的原始ejs配置文件
   const buildToolConfigTemplate = readTemplateFileContent(`${buildTool}.config.ejs`);
   // 借助ejs.render对ejs格式文件进行渲染
   const ejsResolver = generateBuildToolConfigFromEJS(
@@ -135,7 +135,7 @@ export default async function createAppTest(projectName: string, options: Record
     "typescript" in plugins ? "typescript" : "javascript",
     buildToolConfigTemplate,
   );
-  // 对解析出来的文件生成初始ast语法树，用于后续合并配置并生成真是的构建工具配置文件
+  // 对解析出来的配置文件生成初始ast语法树，用于后续合并配置并生成真实的构建工具配置文件
   const buildToolConfigAst = parse(ejsResolver, {
     sourceType: "module",
     ranges: true,
@@ -148,17 +148,17 @@ export default async function createAppTest(projectName: string, options: Record
     ...packageContent.scripts,
   };
 
-  // 根据构建工具类型为 package.json 新增不同的依赖
+  // 根据构建工具类型为 packageContent 新增不同的依赖
   packageContent.devDependencies = {
     ...buildToolConfigDevDependencies[buildTool],
     ...packageContent.devDependencies,
   };
 
-  // 3. 遍历 plugins，插入依赖
+  // 3. 遍历 plugins，为packageContent添加依赖配置
   Object.keys(plugins).forEach((dep) => {
+    console.log(dep);
     // TODO: 更多的处理依据 plugins[dep] 后续的变化而插入
     let { version } = plugins[dep];
-
     if (!version) version = "latest"; // 默认版本号为 latest
     packageContent.devDependencies[dep] = version; // 插件都是以 devDependencies 安装
     // TODO: 现在只有 babel-plugin-test-ljq 这一个包，先试一下，后续发包
@@ -170,6 +170,7 @@ export default async function createAppTest(projectName: string, options: Record
   });
 
   const packageJson = new PackageAPI(rootDirectory);
+  // 根据packageContent创建package.json实体文件
   await packageJson.createPackageJson(packageContent);
 
   // 初始化 Git 仓库
@@ -180,7 +181,7 @@ export default async function createAppTest(projectName: string, options: Record
     await dependenciesInstall(rootDirectory, packageManager);
   }
 
-  // 运行生成器创建项目所需文件和结构
+  // 运行生成器，创建项目所需文件和结构
   console.log(chalk.blue(`🚀  Invoking generators...`));
 
   // 传入根目录路径、插件列表、package.json 内容创建生成器实例
