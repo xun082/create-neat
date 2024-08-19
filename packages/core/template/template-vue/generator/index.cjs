@@ -4,7 +4,7 @@ module.exports = (templateAPI) => {
       vue: "^3.2.47",
     },
     devDependencies: {
-      "vue-template-compiler": "^3.2.47",
+      "vue-template-compiler": "^2.7.16",
     },
   });
 };

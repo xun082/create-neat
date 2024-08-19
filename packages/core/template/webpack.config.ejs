@@ -122,7 +122,7 @@ const productionPlugins = isProduction ? [
 
 module.exports = {
   stats: 'errors-warnings',
-  entry: '<% if (framework === "react") { %><% if (language === "typescript" || (bundler === "swc" && language === "typescript")) { %>./src/index.tsx<% } else if (language === "javascript" || (bundler === "swc" && language === "javascript")) { %>./src/index.jsx<% } %><% } else if (framework === "vue") { %><% if (language === "typescript" || (bundler === "swc" && language === "typescript")) { %>./src/main.tsx<% } else if (language === "javascript" || (bundler === "swc" && language === "javascript")) { %>./src/main.jsx<% } else { %>./src/main.ts<% } %><% } %>',
+  entry: '<% if (framework === "react") { %><% if (language === "typescript") { %>./src/index.tsx<% } else if (language === "javascript") { %>./src/index.jsx<% } %><% } else if (framework === "vue") { %><% if (language === "typescript") { %>./src/main.ts<% } else if (language === "javascript") { %>./src/main.js<% } else { %>./src/main.js<% } %><% } %>',
   mode: isDevelopment ? 'development' : 'production',
   devtool: isDevelopment ? 'eval-source-map' : 'none',
   output: {
