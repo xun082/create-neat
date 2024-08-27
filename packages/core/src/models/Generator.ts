@@ -6,6 +6,7 @@ import chalk from "chalk";
 import { relativePathToRoot } from "../utils/constants";
 import { createFiles } from "../utils/createFiles";
 import { createConfigByParseAst } from "../utils/ast/parseAst";
+import { Preset } from "../utils/preset";
 
 import GeneratorAPI from "./GeneratorAPI";
 import ConfigTransform from "./ConfigTransform";
@@ -128,6 +129,7 @@ class Generator {
   public buildToolConfig;
   private generatorAPI: GeneratorAPI;
   private templateAPI: TemplateAPI;
+  private preset: Preset;
 
   constructor(
     rootDirectory: string,
@@ -135,6 +137,7 @@ class Generator {
     pkg = {},
     templateName: string,
     buildToolConfig = {},
+    preset: Preset,
   ) {
     this.rootDirectory = rootDirectory;
     this.plugins = plugins;
@@ -147,6 +150,7 @@ class Generator {
     this.files = new FileTree(this.rootDirectory);
     this.generatorAPI = new GeneratorAPI(this);
     this.templateAPI = new TemplateAPI(this);
+    this.preset = preset;
   }
 
   // 根据环境变量加载 plugin/template
@@ -274,6 +278,9 @@ class Generator {
       VueEjs: {
         name: "vue_test",
         data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      },
+      ReactEjs: {
+        useReactRouter: !!this.preset.plugins["react-router"],
       },
     };
     new FileTree(templatePath).renderTemplates(this.rootDirectory, undefined, options);

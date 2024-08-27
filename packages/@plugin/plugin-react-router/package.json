@@ -1,0 +1,8 @@
+{
+  "name": "@laconic/plugin-react-router",
+  "description": "React Router plugin for React",
+  "version": "1.0.0",
+  "dependencies": {
+    "ejs": "^3.1.9"
+  }
+}
