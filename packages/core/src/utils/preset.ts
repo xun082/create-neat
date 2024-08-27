@@ -97,6 +97,7 @@ const defaultPresetReact: Preset = {
   extraConfigFiles: true,
 };
 
+// 默认模板
 const defaultPreset = {
   lib: defaultPresetLib,
   vue: defaultPresetVue,

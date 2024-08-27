@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import { ElButton } from 'element-plus'
 export default {
   data() {
     return {
@@ -66,6 +67,7 @@ export default {
       ],
     };
   },
+  components: { ElButton },
 };
 </script>
 
