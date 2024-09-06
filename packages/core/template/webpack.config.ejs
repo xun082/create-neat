@@ -20,6 +20,13 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const { VueLoaderPlugin } = require('vue-loader');
 <% } %>
 
+
+<%_ if (VueEjs.useElementPlus == true ) { _%>
+import ElementPlus from 'unplugin-element-plus/webpack';
+<% } %>
+
+
+
 let tsxOrJsxLoader;
 <% if (framework==='vue' ) { %>
   tsxOrJsxLoader = {
@@ -68,6 +75,9 @@ const developmentPlugins = isDevelopment ? [
   <% } %>
   <% if (framework === 'vue') { %>
   new VueLoaderPlugin(),
+  <% if (typeof(VueEjs)!= "undefined" && VueEjs.useElementPlus == true ) { %>
+  ElementPlus(),
+  <% } %>
   <% } %>
 ] : [];
 
@@ -126,8 +136,6 @@ module.exports = {
     tsxOrJsxLoader,
     {
         test: /\.css$/i,
-        include: [path.resolve(__dirname, './src')],
-        exclude: /node_modules/,
         use: [
           isDevelopment ?
           <% if (framework === 'vue') { %>

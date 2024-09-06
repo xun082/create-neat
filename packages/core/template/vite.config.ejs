@@ -1,18 +1,14 @@
 import { defineConfig } from "vite";
-<% if (framework==='vue' ) { %>
-  import ElementPlus from 'unplugin-element-plus/vite'
+<% if (framework==='vue' && VueEjs.useElementPlus === true ) { %>
+import ElementPlus from 'unplugin-element-plus/vite';
 <% } %>
-
-let elementConfig = []
-
-<% if (framework==='vue' ) { %>
-  elementConfig = [ElementPlus()]
-  <% } %>
 
 
 export default defineConfig({
   plugins: [
-    ...elementConfig
+  <% if (framework==='vue' && VueEjs.useElementPlus === true ) { %>
+   ElementPlus(),
+  <% } %>
   ],
   resolve: {
     alias: [],

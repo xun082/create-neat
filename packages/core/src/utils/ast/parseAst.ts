@@ -62,6 +62,9 @@ export const createConfigByParseAst = (buildTool: BuildTool, options: Options, a
 function mergeWebpackConfigAst(options: Options, ast) {
   const { rules, plugins } = options;
   if (!plugins) return;
+  console.log("AST");
+  console.log(options);
+  //console.log(ast);
   traverse(ast, {
     ExpressionStatement(path) {
       const astNode = path.node;
@@ -72,6 +75,7 @@ function mergeWebpackConfigAst(options: Options, ast) {
       astNode.expression.right.properties.forEach((property) => {
         // 匹配到plugins属性，根据传入的options中的plugin生成ast进行插入
         if (property.key.name === "plugins") {
+          console.log(property);
           const pluginAstNodes = [];
           plugins.forEach((plugin) => {
             pluginAstNodes.push(createNewExpression(plugin.name, []));

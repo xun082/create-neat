@@ -176,6 +176,7 @@ class Generator {
   // 生成构建工具配置文件
   async buildToolGenerate(entryPath: string) {
     // 执行 plugin的入口文件，把 config 合并到构建工具原始配置中
+
     const baseEntry = await loadModule(entryPath, path.resolve(__dirname, relativePathToRoot));
 
     // 处理构建工具配置
@@ -278,7 +279,7 @@ class Generator {
       VueEjs: {
         name: "vue_test",
         data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-        useElementPlus: this.preset.plugins["element-plus"],
+        useElementPlus: !!this.preset.plugins["element-plus"],
       },
       ReactEjs: {
         useReactRouter: !!this.preset.plugins["react-router"],
