@@ -19,10 +19,8 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 <% if (framework === 'vue') { %>
 const { VueLoaderPlugin } = require('vue-loader');
 <% } %>
-
-
-<%_ if (VueEjs.useElementPlus == true ) { _%>
-import ElementPlus from 'unplugin-element-plus/webpack';
+<%_ if (typeof(VueEjs)!= "undefined" && VueEjs.useElementPlus == true) { _%>
+const ElementPlus = require('unplugin-element-plus/webpack');
 <% } %>
 
 
@@ -75,9 +73,9 @@ const developmentPlugins = isDevelopment ? [
   <% } %>
   <% if (framework === 'vue') { %>
   new VueLoaderPlugin(),
-  <% if (typeof(VueEjs)!= "undefined" && VueEjs.useElementPlus == true ) { %>
-  ElementPlus(),
   <% } %>
+  <% if (typeof(VueEjs)!= "undefined" && VueEjs.useElementPlus == true ) { %>
+    ElementPlus(),
   <% } %>
 ] : [];
 
