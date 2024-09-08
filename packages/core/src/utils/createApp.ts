@@ -126,15 +126,21 @@ export default async function createAppTest(projectName: string, options: Record
   }
 
   // 2. 初始化构建工具配置文件
+
+  const templasteOptions = {
+    framework: template,
+    bundler: buildTool,
+    language: "typescript" in plugins ? "typescript" : "javascript",
+    VueEjs: {
+      name: "vue_test",
+      data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      useElementPlus: !!preset.plugins["element-plus"],
+    },
+  };
   // 获取原始配置文件的ejs格式
   const buildToolConfigTemplate = readTemplateFileContent(`${buildTool}.config.ejs`);
   // 借助ejs.render对ejs格式文件进行渲染
-  const ejsResolver = generateBuildToolConfigFromEJS(
-    template,
-    buildTool,
-    "typescript" in plugins ? "typescript" : "javascript",
-    buildToolConfigTemplate,
-  );
+  const ejsResolver = generateBuildToolConfigFromEJS(templasteOptions, buildToolConfigTemplate);
   // 对解析出来的文件生成初始ast语法树，用于后续合并配置并生成真是的构建工具配置文件
   const buildToolConfigAst = parse(ejsResolver, {
     sourceType: "module",

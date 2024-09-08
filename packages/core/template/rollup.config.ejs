@@ -4,6 +4,9 @@ const terser = require("@rollup/plugin-terser");
 const { dts } = require("rollup-plugin-dts");
 const json = require("@rollup/plugin-json");
 const packageInfo = require("./package.json");
+<% if ( typeof(VueEjs)!= "undefined" && VueEjs.useElementPlus === true ) { %>
+  import ElementPlus from 'unplugin-element-plus/rollup';
+<% } %>
 
 module.exports = [
   {
@@ -33,6 +36,9 @@ module.exports = [
       commonjs(),
       json(),
       terser(),
+      <% if ( typeof(VueEjs)!= "undefined" && VueEjs.useElementPlus === true ) { %>
+        ElementPlus(),
+      <% } %>
     ],
   },
   {
