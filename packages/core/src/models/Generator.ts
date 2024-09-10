@@ -286,7 +286,6 @@ class Generator {
         useReactRouter: !!this.preset.plugins["react-router"],
       },
     };
-    console.log(111);
 
     new FileTree(templatePath).renderTemplates(this.rootDirectory, undefined, options);
 
