@@ -76,7 +76,7 @@ class FileTree {
   /**
    * 根据目录构造文件数对象
    * @static
-   * @param {string} src - 文件树根路径
+   * @param {string} src - 文件根路径
    * @returns {FileData} - 文件树对象
    */
   static buildFileData(src: string) {
@@ -218,20 +218,32 @@ class FileTree {
 
   /**
    * 添加的文件最后渲染也是在根目录
-   * @param {string} fileName - 添加的文件名
+   * @param {string} fullFileName - 添加的文件名(包含文件后缀)
    * @param {string} fileContent - 添加的文件内容
    * @param {string} [path=""] - 添加的文件的路径
    */
-  addToTreeByFile(fileName: string, fileContent: string, path: string = "") {
-    const fileNameSplit = fileName.split(".");
-    // 文件名.分割的最后一位作为拓展名(babel.config.js、.browserslistrc、.eslintrc.js等等)
-    const fileExtension = fileNameSplit[fileNameSplit.length - 1] || "";
+  addToTreeByFile(fullFileName: string, fileContent: string, path: string = "") {
+    const fileNameSplit = fullFileName.split(".");
+    let fileName; // 文件名称(不包含文件后缀)
+    if (fileNameSplit.length <= 2) {
+      fileName = fileNameSplit[0];
+    } else {
+      fileName = fileNameSplit.slice(0, -1).join(".");
+    }
+    // 全文件名.分割的最后一位作为拓展名(babel.config.js、.browserslistrc、.eslintrc.js等等)
+    const fileExtension = fileNameSplit[fileNameSplit.length - 1];
     this.fileData.children.push({
       path,
       children: [],
       type: "file",
       describe: { fileName, fileContent, fileExtension },
     });
+  }
+  /**
+   * 统一渲染所有文件
+   */
+  render() {
+    console.log(111);
   }
 }
 export default FileTree;

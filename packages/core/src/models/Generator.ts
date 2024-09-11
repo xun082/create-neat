@@ -210,6 +210,8 @@ class Generator {
     );
 
     if (fs.existsSync(templatePath)) {
+      // 将文件添加到根文件树对象中,最后一起生成
+      this.files.addToTreeByPath(templatePath);
       new FileTree(templatePath).renderTemplates(this.rootDirectory);
     }
 
@@ -291,12 +293,19 @@ class Generator {
 
     // 与构建工具有关的配置全部添加完毕，生成构建工具配置文件
     const code = generator(this.buildToolConfig.ast).code;
+    // 将构建工具配置文件也添加到根文件树对象中
+    const buildToolFileName = `${this.buildToolConfig.buildTool}.config.js`;
+    this.files.addToTreeByFile(
+      `${this.buildToolConfig.buildTool}.config.js`,
+      code,
+      path.resolve(this.rootDirectory, buildToolFileName),
+    );
     fs.writeFileSync(
       path.resolve(this.rootDirectory, `${this.buildToolConfig.buildTool}.config.js`),
       code,
     );
 
-    // 从package.json中生成额外的的文件
+    // 从package.json中生成额外的的文件(如果extraConfigFiles为true时需要)
     await this.extractConfigFiles(extraConfigFiles);
     // 重写pakcage.json文件，并向根文件树中添加该文件，消除generatorAPI中拓展package.json带来得副作用
     this.files.addToTreeByFile(
@@ -309,6 +318,8 @@ class Generator {
     await createFiles(this.rootDirectory, {
       "package.json": JSON.stringify(this.pkg, null, 2),
     });
+    // 经过以上步骤需要新增或修改的文件已经都添加到根文件树对象中,统一渲染根文件树对象中的内容
+    this.files.render();
 
     console.log(chalk.green("💘 Files have been generated and written to disk."));
   }
@@ -338,12 +349,12 @@ class Generator {
         // 转换生成文件内容
         const res = configTransform.transform(value, this.files, this.rootDirectory);
         const { content, filename } = res;
+        delete this.pkg[key];
         this.files.addToTreeByFile(
           filename,
           ensureEOL(content),
           path.resolve(this.rootDirectory, filename),
         );
-        delete this.pkg[key];
         // 生成插件配置文件
         await createFiles(this.rootDirectory, {
           [filename]: ensureEOL(content),
