@@ -133,8 +133,6 @@ export default async function createAppTest(projectName: string, options: Record
     bundler: buildTool,
     language: "typescript" in plugins ? "typescript" : "javascript",
     VueEjs: {
-      name: "vue_test",
-      data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
       useElementPlus: !!preset.plugins["element-plus"],
     },
   };
