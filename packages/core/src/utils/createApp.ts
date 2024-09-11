@@ -118,6 +118,7 @@ export default async function createAppTest(projectName: string, options: Record
     scripts: {},
   };
 
+  // 拉取webpack执行命令脚本
   if (buildTool === "webpack") {
     await copyDirectory(
       "./template-webpack-script/generator/template",
