@@ -176,7 +176,7 @@ class FileTree {
    */
   async fileRender(src: string, file: FileData, options: any) {
     const rendered = ejs.render(file.describe?.fileContent, options, {});
-    await fs.writeFile(src, rendered,{flag: 'w'});
+    await fs.writeFile(src, rendered, { flag: "w" });
   }
 
   /**

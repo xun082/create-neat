@@ -173,7 +173,9 @@ class Generator {
     return baseGenerator;
   }
 
-  // 生成构建工具配置文件
+  // 借助ast合并构建工具配置
+  // 主要用于一些插件以及模板可能需要对构建工具做一些配置，该方法就是获取插件或模板相关文件中的配置与模板ast进行合并
+  // 最后将ast生成代码放到相关文件中插入到根目录
   async buildToolGenerate(entryPath: string) {
     // 执行 plugin的入口文件，把 config 合并到构建工具原始配置中
     const baseEntry = await loadModule(entryPath, path.resolve(__dirname, relativePathToRoot));
@@ -215,7 +217,7 @@ class Generator {
     await this.buildToolGenerate(`packages/@plugin/plugin-${pluginName}/index.cjs`);
   }
 
-  // 单独处理一个框架相关文件
+  // 单独处理一个框架相关依赖，主要是将框架相关的依赖包插入到pkg内，以及将需要的构建工具配置合并到构建工具模板中
   async templateGenerate() {
     const templateGenerator = await this.loadBase(
       `packages/core/template/template-${this.templateName}/generator/index.cjs`,
@@ -232,16 +234,16 @@ class Generator {
     }
   }
 
-  // 单独处理一个构建工具相关的文件，将构建工具相关的配置插入到package.json中
-  async webpackGenerator() {
-    const webpackGenerator = await this.loadBase(
+  // 单独处理一个构建工具相关的依赖，将构建工具相关的依赖插入到package.json中
+  async buildGenerator() {
+    const buildGenerator = await this.loadBase(
       `packages/core/template/template-${this.buildToolConfig.buildTool}-script/generator/index.cjs`,
       "",
     );
 
-    if (webpackGenerator && typeof webpackGenerator === "function") {
+    if (buildGenerator && typeof buildGenerator === "function") {
       // 将框架需要的依赖加入到package.json中
-      await webpackGenerator(this.generatorAPI, this.templateName);
+      await buildGenerator(this.generatorAPI, this.templateName);
     }
   }
 
@@ -260,7 +262,8 @@ class Generator {
     // 将框架需要的依赖添加到package.json中，以及如果该框架如果需要添加构建工具配置属性，则借助ast进行添加
     await this.templateGenerate();
 
-    await this.webpackGenerator();
+    // 将构建工具需要的依赖添加到package.json中
+    await this.buildGenerator();
 
     // 根据选择的框架拉取模板进行渲染
     const templatePath = join(
@@ -283,6 +286,7 @@ class Generator {
         useReactRouter: !!this.preset.plugins["react-router"],
       },
     };
+
     new FileTree(templatePath).renderTemplates(this.rootDirectory, undefined, options);
 
     // 与构建工具有关的配置全部添加完毕，生成构建工具配置文件
