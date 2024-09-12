@@ -211,7 +211,7 @@ class Generator {
 
     if (fs.existsSync(templatePath)) {
       // 将文件添加到根文件树对象中,最后一起生成
-      this.files.addToTreeByPath(templatePath);
+      this.files.addToTreeByTemplateDirPath(templatePath);
       new FileTree(templatePath).renderTemplates(this.rootDirectory);
     }
 
@@ -319,7 +319,7 @@ class Generator {
       "package.json": JSON.stringify(this.pkg, null, 2),
     });
     // 经过以上步骤需要新增或修改的文件已经都添加到根文件树对象中,统一渲染根文件树对象中的内容
-    this.files.render();
+    this.files.renderAllFiles(this.rootDirectory);
 
     console.log(chalk.green("💘 Files have been generated and written to disk."));
   }

@@ -119,6 +119,7 @@ export default async function createAppTest(projectName: string, options: Record
   };
 
   // 拉取webpack执行命令脚本
+  // todo: 也先放到generator内部生成
   if (buildTool === "webpack") {
     await copyDirectory(
       "./template-webpack-script/generator/template",
@@ -170,8 +171,9 @@ export default async function createAppTest(projectName: string, options: Record
     }
   });
 
-  const packageJson = new PackageAPI(rootDirectory);
-  await packageJson.createPackageJson(packageContent);
+  // 这一步没有必要去做pkg的生成,直接把目前的pkg内容传递给generator内部即可,在内部会对pkg做生成
+  // const packageJson = new PackageAPI(rootDirectory);
+  // await packageJson.createPackageJson(packageContent);
 
   // 初始化 Git 仓库
   if (gitCheck(rootDirectory)) exec("git init", { cwd: rootDirectory });
@@ -205,6 +207,7 @@ export default async function createAppTest(projectName: string, options: Record
   await dependenciesInstall(rootDirectory, packageManager);
 
   // 其他剩余操作，如创建 md 文档，或其他首位操作
+  // todo: 剩余文件的创建也放到generator内部由filetree对象控制生成
   console.log(chalk.blue(`\n📄  Generating README.md...`));
 
   await createFiles(rootDirectory, {

@@ -3,6 +3,8 @@ import fs from "fs-extra";
 import ejs from "ejs";
 import chalk from "chalk";
 
+import { createFiles } from "../utils/createFiles";
+
 /**
  * 判断是否为文件夹
  * @param {string} path - 路径
@@ -67,23 +69,26 @@ class FileTree {
       describe: { fileName: path.basename(rootDirectory) },
     };
     //初始化文件树对象
-    this.fileData = FileTree.buildFileData(this.rootDirectory);
+    // this.fileData = FileTree.buildFileData(this.rootDirectory);
 
     //如果有 ts 插件则更改相关文件后缀
-    process.env.isTs && this.changeFileExtensionToTs();
+    // process.env.isTs && this.changeFileExtensionToTs();
   }
 
   /**
    * 根据目录构造文件数对象
    * @static
-   * @param {string} src - 文件根路径
+   * @param {string} src - 文件或文件夹的真实路径
+   * @param {string} parentDir - 创建文件后的父文件夹路径(根目录下的路径)
    * @returns {FileData} - 文件树对象
    */
-  static buildFileData(src: string) {
+  static buildFileData(src: string, parentDir?: string) {
+    const baseName = path.basename(src);
+
     const file: FileData = {
-      path: src,
+      path: path.resolve(parentDir, baseName),
       children: [],
-      describe: { fileName: path.basename(src) },
+      describe: { fileName: baseName },
     };
     //对目录和文件处理不同，是目录则要遍历处理children
     if (isDirectoryOrFile(src)) {
@@ -92,7 +97,10 @@ class FileTree {
         withFileTypes: true,
       });
       for (const entry of entries) {
-        const subTree = this.buildFileData(path.join(src, entry.name));
+        const subTree = this.buildFileData(
+          path.join(src, entry.name),
+          path.relative(parentDir, baseName),
+        );
         file.children?.push(subTree);
       }
     } else {
@@ -217,6 +225,22 @@ class FileTree {
   }
 
   /**
+   * 根据template模板路径向文件树中添加节点
+   * @param url 添加文件的原始的真实路径
+   */
+  addToTreeByTemplateDirPath(url: string) {
+    if (path.basename(url) === "template") {
+      const entries = fs.readdirSync(url, {
+        withFileTypes: true,
+      });
+      for (const entry of entries) {
+        const subTree = FileTree.buildFileData(path.join(url, entry.name));
+        this.fileData.children.push(subTree);
+      }
+    }
+  }
+
+  /**
    * 添加的文件最后渲染也是在根目录
    * @param {string} fullFileName - 添加的文件名(包含文件后缀)
    * @param {string} fileContent - 添加的文件内容
@@ -242,8 +266,24 @@ class FileTree {
   /**
    * 统一渲染所有文件
    */
-  render() {
-    console.log(111);
+  async renderAllFiles(parentDir: string) {
+    // 渲染根fileTree对象中的children中的内容 --> 根目录内的文件
+    this.fileData.children.forEach(async (item: FileData) => {
+      if (item.type === "dir") {
+        // 创建文件夹
+        fs.mkdirSync(path.resolve(parentDir, item.describe.fileName));
+        // 如果是文件夹类型则递归生成
+        const dirName = `${parentDir}\\${item.describe.fileName}`;
+        this.renderAllFiles(dirName);
+      } else {
+        // 如果是文件类型直接生成
+        const fileName = item.describe.fileName + item.describe.fileExtension;
+        const fileContent = item.describe.fileContent;
+        await createFiles(parentDir, {
+          [fileName]: JSON.stringify(fileContent, null, 2),
+        });
+      }
+    });
   }
 }
 export default FileTree;
