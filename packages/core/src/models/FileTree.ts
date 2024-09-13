@@ -55,6 +55,7 @@ interface FileData {
 class FileTree {
   private rootDirectory: string; //文件树的根目录路径
   private fileData: FileData; //文件树对象
+  private alteration = { js: "ts", jsx: "tsx" }; // 扩展名转换映射
 
   /**
    * @constructor
@@ -88,11 +89,12 @@ class FileTree {
     const file: FileData = {
       path: path.resolve(parentDir, baseName),
       children: [],
-      describe: { fileName: baseName },
+      describe: {},
     };
     //对目录和文件处理不同，是目录则要遍历处理children
     if (isDirectoryOrFile(src)) {
       file.type = "dir";
+      file.describe.fileName = baseName;
       const entries = fs.readdirSync(src, {
         withFileTypes: true,
       });
@@ -111,6 +113,56 @@ class FileTree {
         fileExtension: path.extname(src).slice(1),
         fileContent,
       };
+    }
+    return file;
+  }
+
+  /**
+   *
+   * @param src
+   * @param options
+   * @param parentDir
+   * @returns
+   */
+  buildFileDataByEjs(src: string, parentDir: string, options: any) {
+    const baseName = path.basename(src);
+    const file: FileData = {
+      path: "",
+      children: [],
+      describe: {},
+    };
+    if (isDirectoryOrFile(src)) {
+      file.type = "dir";
+      file.path = path.resolve(parentDir, baseName);
+      file.describe.fileName = baseName;
+      const entries = fs.readdirSync(src, {
+        withFileTypes: true,
+      });
+      for (const entry of entries) {
+        const subTree = this.buildFileDataByEjs(
+          path.join(src, entry.name),
+          path.relative(parentDir, baseName),
+          options,
+        );
+        file.children?.push(subTree);
+      }
+    } else {
+      const ejsTempalte = fs.readFileSync(src, "utf8");
+      const fileContent = ejs.render(ejsTempalte, options);
+      file.type = "file";
+      file.describe = {
+        fileName: path.basename(src).split(".")[0],
+        fileExtension: process.env.isTs
+          ? this.alteration[path.extname(src).slice(1)]
+            ? this.alteration[path.extname(src).slice(1)]
+            : path.extname(src).slice(1)
+          : path.extname(src).slice(1),
+        fileContent,
+      };
+      file.path = path.resolve(
+        parentDir,
+        `${file.describe.fileName}.${file.describe.fileExtension}`,
+      );
     }
     return file;
   }
@@ -228,13 +280,25 @@ class FileTree {
    * 根据template模板路径向文件树中添加节点
    * @param url 添加文件的原始的真实路径
    */
-  addToTreeByTemplateDirPath(url: string) {
+  addToTreeByTemplateDirPath(url: string, parentDir: string) {
     if (path.basename(url) === "template") {
       const entries = fs.readdirSync(url, {
         withFileTypes: true,
       });
       for (const entry of entries) {
-        const subTree = FileTree.buildFileData(path.join(url, entry.name));
+        const subTree = FileTree.buildFileData(path.join(url, entry.name), parentDir);
+        this.fileData.children.push(subTree);
+      }
+    }
+  }
+
+  addToTreeByTempalteDirPathAndEjs(url: string, parentDir: string, options: any) {
+    if (path.basename(url) === "template") {
+      const entries = fs.readdirSync(url, {
+        withFileTypes: true,
+      });
+      for (const entry of entries) {
+        const subTree = this.buildFileDataByEjs(path.join(url, entry.name), parentDir, options);
         this.fileData.children.push(subTree);
       }
     }
@@ -266,18 +330,18 @@ class FileTree {
   /**
    * 统一渲染所有文件
    */
-  async renderAllFiles(parentDir: string) {
+  async renderAllFiles(parentDir: string, fileData: FileData = this.fileData) {
     // 渲染根fileTree对象中的children中的内容 --> 根目录内的文件
-    this.fileData.children.forEach(async (item: FileData) => {
+    fileData.children.forEach(async (item: FileData) => {
       if (item.type === "dir") {
         // 创建文件夹
         fs.mkdirSync(path.resolve(parentDir, item.describe.fileName));
         // 如果是文件夹类型则递归生成
-        const dirName = `${parentDir}\\${item.describe.fileName}`;
-        this.renderAllFiles(dirName);
+        const dirName = path.resolve(parentDir, item.describe.fileName);
+        this.renderAllFiles(dirName, item);
       } else {
         // 如果是文件类型直接生成
-        const fileName = item.describe.fileName + item.describe.fileExtension;
+        const fileName = `${item.describe.fileName}.${item.describe.fileExtension}`;
         const fileContent = item.describe.fileContent;
         await createFiles(parentDir, {
           [fileName]: JSON.stringify(fileContent, null, 2),

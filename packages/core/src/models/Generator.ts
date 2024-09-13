@@ -202,7 +202,6 @@ class Generator {
       await pluginGenerator(this.generatorAPI, this.templateName);
     }
 
-    // ejs 渲染插件的 template 文件
     const templatePath = resolve(
       __dirname,
       relativePathToRoot,
@@ -211,8 +210,8 @@ class Generator {
 
     if (fs.existsSync(templatePath)) {
       // 将文件添加到根文件树对象中,最后一起生成
-      this.files.addToTreeByTemplateDirPath(templatePath);
-      new FileTree(templatePath).renderTemplates(this.rootDirectory);
+      this.files.addToTreeByTemplateDirPath(templatePath, this.rootDirectory);
+      // new FileTree(templatePath).renderTemplates(this.rootDirectory);
     }
 
     // 如果插件有在构建工具配置文件中插入特有配置的需求，需要调用该函数借助ast进行插入
@@ -289,7 +288,8 @@ class Generator {
       },
     };
 
-    new FileTree(templatePath).renderTemplates(this.rootDirectory, undefined, options);
+    this.files.addToTreeByTempalteDirPathAndEjs(templatePath, this.rootDirectory, options);
+    // new FileTree(templatePath).renderTemplates(this.rootDirectory, undefined, options);
 
     // 与构建工具有关的配置全部添加完毕，生成构建工具配置文件
     const code = generator(this.buildToolConfig.ast).code;
@@ -300,10 +300,10 @@ class Generator {
       code,
       path.resolve(this.rootDirectory, buildToolFileName),
     );
-    fs.writeFileSync(
-      path.resolve(this.rootDirectory, `${this.buildToolConfig.buildTool}.config.js`),
-      code,
-    );
+    // fs.writeFileSync(
+    //   path.resolve(this.rootDirectory, `${this.buildToolConfig.buildTool}.config.js`),
+    //   code,
+    // );
 
     // 从package.json中生成额外的的文件(如果extraConfigFiles为true时需要)
     await this.extractConfigFiles(extraConfigFiles);
@@ -315,9 +315,9 @@ class Generator {
     );
 
     // 安装package.json文件
-    await createFiles(this.rootDirectory, {
-      "package.json": JSON.stringify(this.pkg, null, 2),
-    });
+    // await createFiles(this.rootDirectory, {
+    //   "package.json": JSON.stringify(this.pkg, null, 2),
+    // });
     // 经过以上步骤需要新增或修改的文件已经都添加到根文件树对象中,统一渲染根文件树对象中的内容
     this.files.renderAllFiles(this.rootDirectory);
 
