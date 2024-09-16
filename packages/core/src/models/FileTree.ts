@@ -310,7 +310,8 @@ class FileTree {
    * @param {string} fileContent - 添加的文件内容
    * @param {string} [path=""] - 添加的文件的路径
    */
-  addToTreeByFile(fullFileName: string, fileContent: string, path: string = "") {
+  addToTreeByFile(fullFileName: string, parentDir: string, fileContent: string) {
+    const fullPath = path.resolve(parentDir, fullFileName);
     const fileNameSplit = fullFileName.split(".");
     let fileName; // 文件名称(不包含文件后缀)
     if (fileNameSplit.length <= 2) {
@@ -321,7 +322,7 @@ class FileTree {
     // 全文件名.分割的最后一位作为拓展名(babel.config.js、.browserslistrc、.eslintrc.js等等)
     const fileExtension = fileNameSplit[fileNameSplit.length - 1];
     this.fileData.children.push({
-      path,
+      path: fullPath,
       children: [],
       type: "file",
       describe: { fileName, fileContent, fileExtension },

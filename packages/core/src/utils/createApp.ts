@@ -120,29 +120,29 @@ export default async function createAppTest(projectName: string, options: Record
 
   // 拉取webpack执行命令脚本
   // todo: 也先放到generator内部生成
-  if (buildTool === "webpack") {
-    await copyDirectory(
-      "./template-webpack-script/generator/template",
-      path.join(rootDirectory, "./"),
-    );
-  }
+  // if (buildTool === "webpack") {
+  //   await copyDirectory(
+  //     "./template-webpack-script/generator/template",
+  //     path.join(rootDirectory, "./"),
+  //   );
+  // }
 
   // 2. 初始化构建工具配置文件
   // 获取原始配置文件的ejs格式
-  const buildToolConfigTemplate = readTemplateFileContent(`${buildTool}.config.ejs`);
-  // 借助ejs.render对ejs格式文件进行渲染
-  const ejsResolver = generateBuildToolConfigFromEJS(
-    template,
-    buildTool,
-    "typescript" in plugins ? "typescript" : "javascript",
-    buildToolConfigTemplate,
-  );
+  // const buildToolConfigTemplate = readTemplateFileContent(`${buildTool}.config.ejs`);
+  // // 借助ejs.render对ejs格式文件进行渲染
+  // const ejsResolver = generateBuildToolConfigFromEJS(
+  //   template,
+  //   buildTool,
+  //   "typescript" in plugins ? "typescript" : "javascript",
+  //   buildToolConfigTemplate,
+  // );
   // 对解析出来的文件生成初始ast语法树，用于后续合并配置并生成真是的构建工具配置文件
-  const buildToolConfigAst = parse(ejsResolver, {
-    sourceType: "module",
-    ranges: true,
-    tokens: true,
-  });
+  // const buildToolConfigAst = parse(ejsResolver, {
+  //   sourceType: "module",
+  //   ranges: true,
+  //   tokens: true,
+  // });
 
   // 根据构建工具类型为 package.json 新增不同的 scripts 脚本
   packageContent.scripts = {
@@ -192,10 +192,7 @@ export default async function createAppTest(projectName: string, options: Record
     plugins,
     packageContent,
     template,
-    {
-      ast: buildToolConfigAst,
-      buildTool,
-    },
+    buildTool,
     preset,
   );
 
