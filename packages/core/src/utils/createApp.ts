@@ -3,13 +3,13 @@ import fs from "fs-extra";
 import { exec } from "child_process";
 import { confirm } from "@clack/prompts";
 import chalk from "chalk";
-import { parse } from "@babel/parser";
+// import { parse } from "@babel/parser";
 import path from "path";
 
 import Generator from "../models/Generator";
-import PackageAPI from "../models/PackageAPI";
+// import PackageAPI from "../models/PackageAPI";
 
-import { removeDirectory, readTemplateFileContent, copyDirectory } from "./fileController";
+import { removeDirectory, readTemplateFileContent } from "./fileController";
 import { projectSelect } from "./select";
 import gitCheck from "./gitCheck";
 import { createFiles } from "./createFiles";
@@ -18,7 +18,7 @@ import createSuccessInfo from "./createSuccessInfo";
 import dependenciesInstall from "./dependenciesInstall";
 import { createReadmeString } from "./createFiles";
 import { buildToolConfigDevDependencies, buildToolScripts } from "./constants";
-import generateBuildToolConfigFromEJS from "./generateBuildToolConfigFromEJS";
+// import generateBuildToolConfigFromEJS from "./generateBuildToolConfigFromEJS";
 
 /**
  * 将输入模式设置为原始模式。
