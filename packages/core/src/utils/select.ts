@@ -152,31 +152,30 @@ async function projectSelect() {
   })) as string[];
 
   // 根据不同框架加载对应的插件列表
-  // const specialPluginsMap = {
-  //   react: [
-  //     { key: "mobx", value: "mobx" },
-  //     { key: "react-router", value: "react-router" },
-  //     { key: "antd", value: "antd" },
-  //   ],
-  //   vue: [
-  //     { key: "vuex", value: "vuex" },
-  //     { key: "vue-router", value: "vue-router" },
-  //   ],
-  // };
+  const specialPluginsMap = {
+    react: [
+      { key: "mobx", value: "mobx" },
+      { key: "react-router", value: "react-router" },
+      { key: "antd", value: "antd" },
+    ],
+    vue: [
+      { key: "vuex", value: "vuex" },
+      { key: "vue-router", value: "vue-router" },
+    ],
+  };
 
   // 选择特殊插件(框架专属插件)
-  // const specialPlugins = (await multiselect({
-  //   message: `Pick special plugins for your project.(${chalk.greenBright(
-  //     "<space>",
-  //   )} select, ${chalk.greenBright("<a>")} toggle all, ${chalk.greenBright(
-  //     "<i>",
-  //   )} invert selection,${chalk.greenBright("<enter>")} next step)`,
-  //   options: specialPluginsMap[responses.template],
-  //   required: false,
-  // })) as string[];
+  const specialPlugins = (await multiselect({
+    message: `Pick special plugins for your project.(${chalk.greenBright(
+      "<space>",
+    )} select, ${chalk.greenBright("<a>")} toggle all, ${chalk.greenBright(
+      "<i>",
+    )} invert selection,${chalk.greenBright("<enter>")} next step)`,
+    options: specialPluginsMap[responses.template],
+    required: false,
+  })) as string[];
 
-  // responses.plugins = [...normalPlugins, ...specialPlugins];
-  responses.plugins = [...normalPlugins];
+  responses.plugins = [...normalPlugins, ...specialPlugins];
 
   // 选择包管理器
   responses.packageManager = (await select({

@@ -324,25 +324,13 @@ class Generator {
     const buildConfigFinalContent = generator(this.buildToolConfigAst).code;
     // 将构建工具配置文件也添加到根文件树对象中
     const buildToolConfigName = `${this.buildTool}.config.js`;
-    this.files.addToTreeByFile(buildToolConfigName, this.rootDirectory, buildConfigFinalContent);
-    // fs.writeFileSync(
-    //   path.resolve(this.rootDirectory, `${this.buildToolConfig.buildTool}.config.js`),
-    //   code,
-    // );
+    this.files.addToTreeByFile(buildToolConfigName, buildConfigFinalContent);
 
     // 从package.json中生成额外的的文件(如果extraConfigFiles为true时需要)
     await this.extractConfigFiles(extraConfigFiles);
     // 重写pakcage.json文件，并向根文件树中添加该文件，消除generatorAPI中拓展package.json带来得副作用
-    this.files.addToTreeByFile(
-      "package.json",
-      this.rootDirectory,
-      JSON.stringify(this.pkg, null, 2),
-    );
+    this.files.addToTreeByFile("package.json", JSON.stringify(this.pkg, null, 2));
 
-    // 安装package.json文件
-    // await createFiles(this.rootDirectory, {
-    //   "package.json": JSON.stringify(this.pkg, null, 2),
-    // });
     // 经过以上步骤需要新增或修改的文件已经都添加到根文件树对象中,统一渲染根文件树对象中的内容
     this.files.renderAllFiles(this.rootDirectory);
 
@@ -375,7 +363,7 @@ class Generator {
         const res = configTransform.transform(value, this.files, this.rootDirectory);
         const { content, filename } = res;
         delete this.pkg[key];
-        this.files.addToTreeByFile(filename, this.rootDirectory, ensureEOL(content));
+        this.files.addToTreeByFile(filename, ensureEOL(content));
         // 生成插件配置文件
         await createFiles(this.rootDirectory, {
           [filename]: ensureEOL(content),

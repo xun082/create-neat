@@ -1,7 +1,7 @@
 import path from "path";
 import fs from "fs-extra";
 import ejs from "ejs";
-import chalk from "chalk";
+// import chalk from "chalk";
 
 import { createFiles } from "../utils/createFiles";
 
@@ -69,21 +69,16 @@ class FileTree {
       children: [],
       describe: { fileName: path.basename(rootDirectory) },
     };
-    //初始化文件树对象
-    // this.fileData = FileTree.buildFileData(this.rootDirectory);
-
-    //如果有 ts 插件则更改相关文件后缀
-    // process.env.isTs && this.changeFileExtensionToTs();
   }
 
   /**
    * 根据目录构造文件数对象
    * @static
    * @param {string} src - 文件或文件夹的真实路径
-   * @param {string} parentDir - 创建文件后的父文件夹路径(根目录下的路径)
+   * @param {string} parentDir - 创建文件后的父文件夹路径
    * @returns {FileData} - 文件树对象
    */
-  static buildFileData(src: string, parentDir?: string) {
+  private buildFileData(src: string, parentDir?: string) {
     const baseName = path.basename(src);
 
     const file: FileData = {
@@ -118,13 +113,14 @@ class FileTree {
   }
 
   /**
-   *
-   * @param src
-   * @param options
-   * @param parentDir
-   * @returns
+   * 借助ejs构造文件树对象
+   * @static
+   * @param {string} src - 文件或文件夹的真实路径
+   * @param {string} parentDir - 创建文件后的父文件夹路径
+   * @param {string} options - ejs渲染配置参数
+   * @returns {FileData} - 文件树对象
    */
-  buildFileDataByEjs(src: string, parentDir: string, options: any) {
+  private buildFileDataByEjs(src: string, parentDir: string, options: any) {
     const baseName = path.basename(src);
     const file: FileData = {
       path: "",
@@ -172,60 +168,60 @@ class FileTree {
    * @param {FileData} file - 文件数对象
    * @param {(file: FileData) => any} handleFn - 处理文件树对象的函数
    */
-  traverseTree(file: FileData, handleFn: (file: FileData, getFileByName?: any) => any) {
-    handleFn(file);
-    if (file.children.length) {
-      file.children.forEach((subFile) => this.traverseTree(subFile, handleFn));
-    }
-  }
+  // traverseTree(file: FileData, handleFn: (file: FileData, getFileByName?: any) => any) {
+  //   handleFn(file);
+  //   if (file.children.length) {
+  //     file.children.forEach((subFile) => this.traverseTree(subFile, handleFn));
+  //   }
+  // }
 
   /**
    * 根据文件名返回fileData数组
    * @param name 文件名
    * @returns 匹配文件名的fileData数组
    */
-  getFileByName(name: string) {
-    let result: FileData[];
-    this.traverseTree(this.fileData, (file) => {
-      if (file.describe.fileName === name) {
-        result.push(file);
-      }
-    });
-    return result;
-  }
+  // getFileByName(name: string) {
+  //   let result: FileData[];
+  //   this.traverseTree(this.fileData, (file) => {
+  //     if (file.describe.fileName === name) {
+  //       result.push(file);
+  //     }
+  //   });
+  //   return result;
+  // }
 
   /**
    * 传递中间件数组，对文件树对象内容进行逐步修改
    * @param middleware - 中间件函数，提供参数 根file对象,pkg：package.json，getFileByName:根据文件名获取文件
    * @param isTraverse - 是否对每个file对象都使用middleware函数
    */
-  changeFileMiddleware(
-    middleware: (file: FileData, getFileByName?: (name: string) => any) => any,
-    isTraverse: boolean = false,
-  ) {
-    if (isTraverse) {
-      this.traverseTree(this.fileData, middleware);
-    } else {
-      middleware(this.fileData, this.getFileByName);
-    }
-  }
+  // changeFileMiddleware(
+  //   middleware: (file: FileData, getFileByName?: (name: string) => any) => any,
+  //   isTraverse: boolean = false,
+  // ) {
+  //   if (isTraverse) {
+  //     this.traverseTree(this.fileData, middleware);
+  //   } else {
+  //     middleware(this.fileData, this.getFileByName);
+  //   }
+  // }
 
   /**
    * 使用中间件将文件后缀从js,jsx更改为ts,tsx
    */
-  changeFileExtensionToTs() {
-    const alteration = { js: "ts", jsx: "tsx" };
-    const keys = Object.keys(alteration);
-    function handleExt(file: FileData) {
-      if (file.type === "file") {
-        const key = file.describe.fileExtension;
-        if (keys.includes(key)) {
-          file.describe.fileExtension = alteration[key];
-        }
-      }
-    }
-    this.changeFileMiddleware(handleExt, true);
-  }
+  // changeFileExtensionToTs() {
+  //   const alteration = { js: "ts", jsx: "tsx" };
+  //   const keys = Object.keys(alteration);
+  //   function handleExt(file: FileData) {
+  //     if (file.type === "file") {
+  //       const key = file.describe.fileExtension;
+  //       if (keys.includes(key)) {
+  //         file.describe.fileExtension = alteration[key];
+  //       }
+  //     }
+  //   }
+  //   this.changeFileMiddleware(handleExt, true);
+  // }
 
   /**
    * 将单个文件树（type==='file'）通过ejs渲染成文件，只渲染文件
@@ -234,10 +230,10 @@ class FileTree {
    * @param {FileData} file - 文件树对象
    * @param {*} options - ejs对应的options参数
    */
-  async fileRender(src: string, file: FileData, options: any) {
-    const rendered = ejs.render(file.describe?.fileContent, options, {});
-    await fs.writeFile(src, rendered, { flag: "w" });
-  }
+  // async fileRender(src: string, file: FileData, options: any) {
+  //   const rendered = ejs.render(file.describe?.fileContent, options, {});
+  //   await fs.writeFile(src, rendered, { flag: "w" });
+  // }
 
   /**
    * 将文件树渲染到指定目录下形成文件
@@ -246,39 +242,40 @@ class FileTree {
    * @param {FileData} [file=this.fileData] - 文件树对象
    * @param {*} [options={}] - ejs对应的Options参数
    */
-  async renderTemplates(dest: string, file: FileData = this.fileData, options: any = {}) {
-    await fs.ensureDir(dest);
-    const promises = file.children.map(async (subFile) => {
-      const destPath = path.join(
-        dest,
-        `${subFile.describe.fileName!}${subFile.type === "file" ? "." + subFile.describe.fileExtension : ""}`,
-      );
-      if (subFile.type === "dir" && subFile.describe) {
-        return this.renderTemplates(destPath, subFile, options);
-      } else {
-        return this.fileRender(destPath, subFile, options);
-      }
-    });
-    try {
-      await Promise.all(promises);
-    } catch (err) {
-      console.error(chalk.red(`渲染文件失败 ${err}`));
-    }
-  }
+  // async renderTemplates(dest: string, file: FileData = this.fileData, options: any = {}) {
+  //   await fs.ensureDir(dest);
+  //   const promises = file.children.map(async (subFile) => {
+  //     const destPath = path.join(
+  //       dest,
+  //       `${subFile.describe.fileName!}${subFile.type === "file" ? "." + subFile.describe.fileExtension : ""}`,
+  //     );
+  //     if (subFile.type === "dir" && subFile.describe) {
+  //       return this.renderTemplates(destPath, subFile, options);
+  //     } else {
+  //       return this.fileRender(destPath, subFile, options);
+  //     }
+  //   });
+  //   try {
+  //     await Promise.all(promises);
+  //   } catch (err) {
+  //     console.error(chalk.red(`渲染文件失败 ${err}`));
+  //   }
+  // }
 
   /**
    * 根据路径向文件树中添加节点，注意只在对应的根目录下添加
    * @param {string} path - 添加文件的路径
    */
-  addToTreeByPath(path: string) {
-    this.fileData.children.push(FileTree.buildFileData(path));
-    //如果有 ts 插件则更改相关文件后缀
-    process.env.isTs && this.changeFileExtensionToTs();
-  }
+  // addToTreeByPath(path: string) {
+  //   this.fileData.children.push(this.buildFileData(path));
+  //   //如果有 ts 插件则更改相关文件后缀
+  //   process.env.isTs && this.changeFileExtensionToTs();
+  // }
 
   /**
    * 根据template模板路径向文件树中添加节点
    * @param url 添加文件的原始的真实路径
+   * @param parentDir 父文件夹路径
    */
   addToTreeByTemplateDirPath(url: string, parentDir: string) {
     if (path.basename(url) === "template") {
@@ -286,12 +283,17 @@ class FileTree {
         withFileTypes: true,
       });
       for (const entry of entries) {
-        const subTree = FileTree.buildFileData(path.join(url, entry.name), parentDir);
+        const subTree = this.buildFileData(path.join(url, entry.name), parentDir);
         this.fileData.children.push(subTree);
       }
     }
   }
 
+  /**
+   * 根据template模板路径向文件树中添加节点(适用于需要ejs渲染的模板)
+   * @param url 添加文件的原始的真实路径
+   * @param parentDir 父文件夹路径
+   */
   addToTreeByTempalteDirPathAndEjs(url: string, parentDir: string, options: any) {
     if (path.basename(url) === "template") {
       const entries = fs.readdirSync(url, {
@@ -305,13 +307,12 @@ class FileTree {
   }
 
   /**
-   * 添加的文件最后渲染也是在根目录
+   * 根据文件内容以及名称将文件添加到创建的根目录中(只适用于将文件添加到创建的根目录)
    * @param {string} fullFileName - 添加的文件名(包含文件后缀)
-   * @param {string} fileContent - 添加的文件内容
-   * @param {string} [path=""] - 添加的文件的路径
+   * @param {string} fileContent - 添加的文件的内容
    */
-  addToTreeByFile(fullFileName: string, parentDir: string, fileContent: string) {
-    const fullPath = path.resolve(parentDir, fullFileName);
+  addToTreeByFile(fullFileName: string, fileContent: string) {
+    const fullPath = path.resolve(this.rootDirectory, fullFileName);
     const fileNameSplit = fullFileName.split(".");
     let fileName; // 文件名称(不包含文件后缀)
     if (fileNameSplit.length <= 2) {
@@ -345,7 +346,7 @@ class FileTree {
         const fileName = `${item.describe.fileName}.${item.describe.fileExtension}`;
         const fileContent = item.describe.fileContent;
         await createFiles(parentDir, {
-          [fileName]: JSON.stringify(fileContent, null, 2),
+          [fileName]: fileContent,
         });
       }
     });
