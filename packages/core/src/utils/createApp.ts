@@ -3,13 +3,11 @@ import fs from "fs-extra";
 import { exec } from "child_process";
 import { confirm } from "@clack/prompts";
 import chalk from "chalk";
-import { parse } from "@babel/parser";
 import path from "path";
 
 import Generator from "../models/Generator";
-import PackageAPI from "../models/PackageAPI";
 
-import { removeDirectory, readTemplateFileContent, copyDirectory } from "./fileController";
+import { removeDirectory, readTemplateFileContent } from "./fileController";
 import { projectSelect } from "./select";
 import gitCheck from "./gitCheck";
 import { createFiles } from "./createFiles";
@@ -18,7 +16,6 @@ import createSuccessInfo from "./createSuccessInfo";
 import dependenciesInstall from "./dependenciesInstall";
 import { createReadmeString } from "./createFiles";
 import { buildToolConfigDevDependencies, buildToolScripts } from "./constants";
-import generateBuildToolConfigFromEJS from "./generateBuildToolConfigFromEJS";
 
 /**
  * 将输入模式设置为原始模式。
@@ -118,31 +115,6 @@ export default async function createAppTest(projectName: string, options: Record
     scripts: {},
   };
 
-  // 拉取webpack执行命令脚本
-  if (buildTool === "webpack") {
-    await copyDirectory(
-      "./template-webpack-script/generator/template",
-      path.join(rootDirectory, "./"),
-    );
-  }
-
-  // 2. 初始化构建工具配置文件
-  // 获取原始配置文件的ejs格式
-  const buildToolConfigTemplate = readTemplateFileContent(`${buildTool}.config.ejs`);
-  // 借助ejs.render对ejs格式文件进行渲染
-  const ejsResolver = generateBuildToolConfigFromEJS(
-    template,
-    buildTool,
-    "typescript" in plugins ? "typescript" : "javascript",
-    buildToolConfigTemplate,
-  );
-  // 对解析出来的文件生成初始ast语法树，用于后续合并配置并生成真是的构建工具配置文件
-  const buildToolConfigAst = parse(ejsResolver, {
-    sourceType: "module",
-    ranges: true,
-    tokens: true,
-  });
-
   // 根据构建工具类型为 package.json 新增不同的 scripts 脚本
   packageContent.scripts = {
     ...buildToolScripts[buildTool],
@@ -170,9 +142,6 @@ export default async function createAppTest(projectName: string, options: Record
     }
   });
 
-  const packageJson = new PackageAPI(rootDirectory);
-  await packageJson.createPackageJson(packageContent);
-
   // 初始化 Git 仓库
   if (gitCheck(rootDirectory)) exec("git init", { cwd: rootDirectory });
 
@@ -190,10 +159,7 @@ export default async function createAppTest(projectName: string, options: Record
     plugins,
     packageContent,
     template,
-    {
-      ast: buildToolConfigAst,
-      buildTool,
-    },
+    buildTool,
     preset,
   );
 
@@ -205,6 +171,7 @@ export default async function createAppTest(projectName: string, options: Record
   await dependenciesInstall(rootDirectory, packageManager);
 
   // 其他剩余操作，如创建 md 文档，或其他首位操作
+  // todo: 剩余文件的创建也放到generator内部由filetree对象控制生成
   console.log(chalk.blue(`\n📄  Generating README.md...`));
 
   await createFiles(rootDirectory, {
