@@ -1,6 +1,8 @@
 import traverse from "@babel/traverse";
 import { objectExpression, regExpLiteral, stringLiteral, arrayExpression } from "@babel/types";
 
+import { buildToolType } from "../../types";
+
 import {
   createImportDeclaration,
   createNewExpression,
@@ -11,8 +13,9 @@ import {
 enum BuildToolType {
   VITE = "vite",
   WEBPACK = "webpack",
+  ROLLUP = "rollup",
 }
-type BuildTool = `${BuildToolType}`;
+// type BuildTool = `${BuildToolType}`;
 
 interface Import {
   /** 导出内容 */
@@ -43,7 +46,7 @@ interface Options {
  * @param options 配置
  * @param ast 初始化ast
  */
-export const createConfigByParseAst = (buildTool: BuildTool, options: Options, ast) => {
+export const createConfigByParseAst = (buildTool: buildToolType, options: Options, ast) => {
   if (buildTool === BuildToolType.VITE) {
     mergeViteConfigAst(options, ast);
   }

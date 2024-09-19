@@ -2,11 +2,15 @@ import path, { resolve, join } from "path";
 import generator from "@babel/generator";
 import fs from "fs-extra";
 import chalk from "chalk";
+import { parse } from "@babel/parser";
 
 import { relativePathToRoot } from "../utils/constants";
 import { createFiles } from "../utils/createFiles";
 import { createConfigByParseAst } from "../utils/ast/parseAst";
 import { Preset } from "../utils/preset";
+import { readTemplateFileContent } from "../utils/fileController";
+import generateBuildToolConfigFromEJS from "../utils/generateBuildToolConfigFromEJS";
+import { buildToolType } from "../types";
 
 import GeneratorAPI from "./GeneratorAPI";
 import ConfigTransform from "./ConfigTransform";
@@ -126,6 +130,8 @@ class Generator {
   public pkg: object; // 执行generatorAPI之后带有key值为plugin
   public originalPkg: object; // 原始package.json
   public templateName: string; // 需要拉取的模板名称
+  public buildTool: buildToolType; // 构建工具名称
+  public buildToolConfigAst; // 构建工具配置文件语法树
   public buildToolConfig;
   private generatorAPI: GeneratorAPI;
   private templateAPI: TemplateAPI;
@@ -136,7 +142,7 @@ class Generator {
     plugins = {},
     pkg = {},
     templateName: string,
-    buildToolConfig = {},
+    buildTool: buildToolType,
     preset: Preset,
   ) {
     this.rootDirectory = rootDirectory;
@@ -146,7 +152,7 @@ class Generator {
     this.originalPkg = pkg;
     this.pkg = Object.assign({}, pkg);
     this.templateName = templateName;
-    this.buildToolConfig = buildToolConfig;
+    this.buildTool = buildTool;
     this.files = new FileTree(this.rootDirectory);
     this.generatorAPI = new GeneratorAPI(this);
     this.templateAPI = new TemplateAPI(this);
@@ -176,17 +182,17 @@ class Generator {
   // 借助ast合并构建工具配置
   // 主要用于一些插件以及模板可能需要对构建工具做一些配置，该方法就是获取插件或模板相关文件中的配置与模板ast进行合并
   // 最后将ast生成代码放到相关文件中插入到根目录
-  async buildToolGenerate(entryPath: string) {
-    // 执行 plugin的入口文件，把 config 合并到构建工具原始配置中
+  async mergeBuildToolConfigByAst(entryPath: string) {
+    // 执行 plugin或模板的入口文件，把 config 合并到构建工具原始配置中
     const baseEntry = await loadModule(entryPath, path.resolve(__dirname, relativePathToRoot));
 
     // 处理构建工具配置
     if (typeof baseEntry === "function") {
       // 解析配置项成 ast 语法树,并且和原始配置的 ast 合并
       createConfigByParseAst(
-        this.buildToolConfig.buildTool,
-        baseEntry(this.buildToolConfig.buildTool, this.templateName),
-        this.buildToolConfig.ast,
+        this.buildTool,
+        baseEntry(this.buildTool, this.templateName),
+        this.buildToolConfigAst,
       );
     }
   }
@@ -202,7 +208,6 @@ class Generator {
       await pluginGenerator(this.generatorAPI, this.templateName);
     }
 
-    // ejs 渲染插件的 template 文件
     const templatePath = resolve(
       __dirname,
       relativePathToRoot,
@@ -210,11 +215,13 @@ class Generator {
     );
 
     if (fs.existsSync(templatePath)) {
-      new FileTree(templatePath).renderTemplates(this.rootDirectory);
+      // 将文件添加到根文件树对象中,最后一起生成
+      this.files.addToTreeByTemplateDirPath(templatePath, this.rootDirectory);
+      // new FileTree(templatePath).renderTemplates(this.rootDirectory);
     }
 
     // 如果插件有在构建工具配置文件中插入特有配置的需求，需要调用该函数借助ast进行插入
-    await this.buildToolGenerate(`packages/@plugin/plugin-${pluginName}/index.cjs`);
+    await this.mergeBuildToolConfigByAst(`packages/@plugin/plugin-${pluginName}/index.cjs`);
   }
 
   // 单独处理一个框架相关依赖，主要是将框架相关的依赖包插入到pkg内，以及将需要的构建工具配置合并到构建工具模板中
@@ -228,16 +235,16 @@ class Generator {
       // 将框架需要的依赖加入到package.json中
       await templateGenerator(this.templateAPI);
       // 如果框架需要对构建工具进行配置，借助于ast
-      await this.buildToolGenerate(
+      await this.mergeBuildToolConfigByAst(
         `packages/core/template/template-${this.templateName}/index.cjs`,
       );
     }
   }
 
   // 单独处理一个构建工具相关的依赖，将构建工具相关的依赖插入到package.json中
-  async buildGenerator() {
+  async buildToolGenerator() {
     const buildGenerator = await this.loadBase(
-      `packages/core/template/template-${this.buildToolConfig.buildTool}-script/generator/index.cjs`,
+      `packages/core/template/template-${this.buildTool}-script/generator/index.cjs`,
       "",
     );
 
@@ -254,6 +261,33 @@ class Generator {
       process.env.isTs = "true";
     }
 
+    // 获取构建工具配置文件ast语法树
+    const buildToolConfigEjsContent = readTemplateFileContent(`${this.buildTool}.config.ejs`);
+    // 借助ejs.render对ejs字符串文件进行渲染
+    const templasteOptions = {
+      framework: this.templateName,
+      bundler: this.buildTool,
+      language: "typescript" in this.plugins ? "typescript" : "javascript",
+      VueEjs: {
+        useElementPlus: !!this.preset.plugins["element-plus"],
+      },
+    };
+    const ejsResolver = generateBuildToolConfigFromEJS(templasteOptions, buildToolConfigEjsContent);
+    // 对解析出来的文件生成初始ast语法树，用于后续合并配置并生成真是的构建工具配置文件
+    this.buildToolConfigAst = parse(ejsResolver, {
+      sourceType: "module",
+      ranges: true,
+      tokens: true,
+    });
+
+    // 根据构建工具拉取相应的脚本执行文件
+    const buildToolScriptPath = path.resolve(
+      __dirname,
+      "../../template/",
+      `./template-${this.buildTool}-script/generator/template`,
+    );
+    this.files.addToTreeByTemplateDirPath(buildToolScriptPath, this.rootDirectory);
+
     // 为每个 plugin 创建 GeneratorAPI 实例，调用插件中的 generate
     for (const pluginName of Object.keys(this.plugins)) {
       await this.pluginGenerate(pluginName);
@@ -263,7 +297,7 @@ class Generator {
     await this.templateGenerate();
 
     // 将构建工具需要的依赖添加到package.json中
-    await this.buildGenerator();
+    await this.buildToolGenerator();
 
     // 根据选择的框架拉取模板进行渲染
     const templatePath = join(
@@ -271,7 +305,6 @@ class Generator {
       "../../template/",
       `template-${this.templateName}/generator/template`,
     );
-
     // TODO: 此处的 ejs 渲染配置是测试用数据，实际应用中需要根据使用不同的模板进行具体的配置，具体如何实现 options 的集中管理有待商榷
     const options = {
       packageEjs: {
@@ -287,28 +320,22 @@ class Generator {
       },
     };
 
-    new FileTree(templatePath).renderTemplates(this.rootDirectory, undefined, options);
+    this.files.addToTreeByTempalteDirPathAndEjs(templatePath, this.rootDirectory, options);
+    // new FileTree(templatePath).renderTemplates(this.rootDirectory, undefined, options);
 
     // 与构建工具有关的配置全部添加完毕，生成构建工具配置文件
-    const code = generator(this.buildToolConfig.ast).code;
-    fs.writeFileSync(
-      path.resolve(this.rootDirectory, `${this.buildToolConfig.buildTool}.config.js`),
-      code,
-    );
+    const buildConfigFinalContent = generator(this.buildToolConfigAst).code;
+    // 将构建工具配置文件也添加到根文件树对象中
+    const buildToolConfigName = `${this.buildTool}.config.js`;
+    this.files.addToTreeByFile(buildToolConfigName, buildConfigFinalContent);
 
-    // 从package.json中生成额外的的文件
+    // 从package.json中生成额外的的文件(如果extraConfigFiles为true时需要)
     await this.extractConfigFiles(extraConfigFiles);
     // 重写pakcage.json文件，并向根文件树中添加该文件，消除generatorAPI中拓展package.json带来得副作用
-    this.files.addToTreeByFile(
-      "package.json",
-      JSON.stringify(this.pkg, null, 2),
-      path.resolve(this.rootDirectory, "package.json"),
-    );
+    this.files.addToTreeByFile("package.json", JSON.stringify(this.pkg, null, 2));
 
-    // 安装package.json文件
-    await createFiles(this.rootDirectory, {
-      "package.json": JSON.stringify(this.pkg, null, 2),
-    });
+    // 经过以上步骤需要新增或修改的文件已经都添加到根文件树对象中,统一渲染根文件树对象中的内容
+    this.files.renderAllFiles(this.rootDirectory);
 
     console.log(chalk.green("💘 Files have been generated and written to disk."));
   }
@@ -338,12 +365,8 @@ class Generator {
         // 转换生成文件内容
         const res = configTransform.transform(value, this.files, this.rootDirectory);
         const { content, filename } = res;
-        this.files.addToTreeByFile(
-          filename,
-          ensureEOL(content),
-          path.resolve(this.rootDirectory, filename),
-        );
         delete this.pkg[key];
+        this.files.addToTreeByFile(filename, ensureEOL(content));
         // 生成插件配置文件
         await createFiles(this.rootDirectory, {
           [filename]: ensureEOL(content),
