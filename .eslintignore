@@ -6,3 +6,4 @@ rollup.config.js
 commitlint.config.js
 packages/*/dist/
 apps/
+**/generator/template/**

@@ -314,6 +314,7 @@ class Generator {
       VueEjs: {
         name: "vue_test",
         data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        usePinia: !!this.preset.plugins["pinia"],
       },
       ReactEjs: {
         useReactRouter: !!this.preset.plugins["react-router"],
