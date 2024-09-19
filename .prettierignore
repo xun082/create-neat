@@ -2,7 +2,7 @@ dist/
 node_modules/
 package-lock.json
 apps/
-
+packages/core/template
 # package.json
 
 # remixed ejs file
