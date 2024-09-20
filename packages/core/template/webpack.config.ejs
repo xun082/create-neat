@@ -8,6 +8,7 @@ const HtmlMinimizerPlugin = require('html-minimizer-webpack-plugin');
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 
+
 <% if (framework === 'react') { %>
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 <% if (language === "typescript") { %>
@@ -18,6 +19,11 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 <% if (framework === 'vue') { %>
 const { VueLoaderPlugin } = require('vue-loader');
 <% } %>
+<%_ if (typeof(VueEjs)!= "undefined" && VueEjs.useElementPlus == true) { _%>
+const ElementPlus = require('unplugin-element-plus/webpack');
+<% } %>
+
+
 
 let tsxOrJsxLoader;
 <% if (framework==='vue' ) { %>
@@ -54,6 +60,7 @@ let tsxOrJsxLoader;
     }
     <% } %>
 
+
 const isDevelopment = process.env.NODE_ENV === 'development';
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -66,6 +73,9 @@ const developmentPlugins = isDevelopment ? [
   <% } %>
   <% if (framework === 'vue') { %>
   new VueLoaderPlugin(),
+  <% } %>
+  <% if (typeof(VueEjs)!= "undefined" && VueEjs.useElementPlus == true ) { %>
+    ElementPlus(),
   <% } %>
 ] : [];
 
@@ -101,10 +111,24 @@ const productionPlugins = isProduction ? [
     },
   }),
 ] : [];
+<%
+const paths = {
+  react: {
+    typescript: "'./src/index.tsx'",
+    javascript: "'./src/index.jsx'",
+  },
+  vue: {
+    typescript: "'./src/main.ts'",
+    javascript: "'./src/main.js'",
+  }
+};
+const defaultPath = "'./src/main.js'";
+const selectedPath = paths[framework]?.[language] || defaultPath;
+%>
 
 module.exports = {
   stats: 'errors-warnings',
-  entry: '<% if (framework === "react") { %><% if (language === "typescript" || (bundler === "swc" && language === "typescript")) { %>./src/index.tsx<% } else if (language === "javascript" || (bundler === "swc" && language === "javascript")) { %>./src/index.jsx<% } %><% } else if (framework === "vue") { %><% if (language === "typescript" || (bundler === "swc" && language === "typescript")) { %>./src/main.tsx<% } else if (language === "javascript" || (bundler === "swc" && language === "javascript")) { %>./src/main.jsx<% } else { %>./src/main.ts<% } %><% } %>',
+  entry: <%- selectedPath %>,
   mode: isDevelopment ? 'development' : 'production',
   devtool: isDevelopment ? 'eval-source-map' : 'none',
   output: {
@@ -124,8 +148,6 @@ module.exports = {
     tsxOrJsxLoader,
     {
         test: /\.css$/i,
-        include: [path.resolve(__dirname, './src')],
-        exclude: /node_modules/,
         use: [
           isDevelopment ?
           <% if (framework === 'vue') { %>

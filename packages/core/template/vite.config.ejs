@@ -1,7 +1,15 @@
 import { defineConfig } from "vite";
+<% if ( typeof(VueEjs)!= "undefined" && VueEjs.useElementPlus === true ) { %>
+import ElementPlus from 'unplugin-element-plus/vite';
+<% } %>
+
 
 export default defineConfig({
-  plugins: [],
+  plugins: [
+  <% if ( typeof(VueEjs)!= "undefined" && VueEjs.useElementPlus === true ) { %>
+   ElementPlus(),
+  <% } %>
+  ],
   resolve: {
     alias: [],
   },
