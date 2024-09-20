@@ -111,10 +111,24 @@ const productionPlugins = isProduction ? [
     },
   }),
 ] : [];
+<%
+const paths = {
+  react: {
+    typescript: "./src/index.tsx",
+    javascript: "./src/index.jsx",
+  },
+  vue: {
+    typescript: "./src/main.ts",
+    javascript: "./src/main.js",
+  }
+};
+const defaultPath = "./src/main.js";
+const selectedPath = paths[framework]?.[language] || defaultPath;
+%>
 
 module.exports = {
   stats: 'errors-warnings',
-  entry: '<% if (framework === "react") { %><% if (language === "typescript") { %>./src/index.tsx<% } else if (language === "javascript") { %>./src/index.jsx<% } %><% } else if (framework === "vue") { %><% if (language === "typescript") { %>./src/main.ts<% } else if (language === "javascript") { %>./src/main.js<% } else { %>./src/main.js<% } %><% } %>',
+  entry: '<%= selectedPath %>',
   mode: isDevelopment ? 'development' : 'production',
   devtool: isDevelopment ? 'eval-source-map' : 'none',
   output: {
