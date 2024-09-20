@@ -26,9 +26,9 @@ const devDependencies = {
 };
 
 const scripts = {
-  dev: "NODE_ENV=development npx next-script dev",
-  build: "NODE_ENV=production npx next-script build",
-  analyzer: "NODE_ENV=production CLI=analyzer npx next-script analyzer",
+  dev: "cross-env NODE_ENV=development npx next-script dev",
+  build: "cross-env NODE_ENV=production npx next-script build",
+  analyzer: "cross-env NODE_ENV=production CLI=analyzer npx next-script analyzer",
 };
 
 const bin = {
