@@ -32,16 +32,9 @@ let tsxOrJsxLoader;
     test: /\.(tsx?|jsx?)$/,
     include: [path.resolve(__dirname, "./src")],
     loader: "babel-loader",
-    options: {
-    babelrc: true,
-    cacheDirectory: true,
-    cacheCompression: false,
-    presets: [],
-    plugins: ["react-refresh/babel"],
-    },
     exclude: [/node_modules/, /public/, /(.|_)min\.js$/]
     }
-    <% } %>
+  <% } %>
 
 
 const isDevelopment = process.env.NODE_ENV === 'development';
