@@ -21,7 +21,8 @@ const devDependencies = {
   "webpack-bundle-analyzer": "^4.10.2",
   "webpack-dev-server": "^5.0.4",
   "webpack-manifest-plugin": "^5.0.0",
-  "webpack-merge": "^6.0.1"
+  "webpack-merge": "^6.0.1",
+  "cross-env": "^7.0.3"
 };
 
 const scripts = {
