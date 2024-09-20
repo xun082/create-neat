@@ -9,7 +9,7 @@ import { createFiles } from "../utils/createFiles";
 import { createConfigByParseAst } from "../utils/ast/parseAst";
 import { Preset } from "../utils/preset";
 import { readTemplateFileContent } from "../utils/fileController";
-import generateBuildToolConfigFromEJS from "../utils/generateBuildToolConfigFromEJS";
+import generateWebpackConfigFromEJS from "../utils/generateBuildToolConfigFromEJS";
 import { buildToolType } from "../types";
 
 import GeneratorAPI from "./GeneratorAPI";
@@ -272,7 +272,7 @@ class Generator {
         useElementPlus: !!this.preset.plugins["element-plus"],
       },
     };
-    const ejsResolver = generateBuildToolConfigFromEJS(templasteOptions, buildToolConfigEjsContent);
+    const ejsResolver = generateWebpackConfigFromEJS(templasteOptions, buildToolConfigEjsContent);
     // 对解析出来的文件生成初始ast语法树，用于后续合并配置并生成真是的构建工具配置文件
     this.buildToolConfigAst = parse(ejsResolver, {
       sourceType: "module",
