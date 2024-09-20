@@ -1,0 +1,6 @@
+{
+  "name": "@laconic/plugin-pinia",
+  "version": "1.0.0",
+  "description": "pinia plugin for vue",
+  "dependencies": {}
+}

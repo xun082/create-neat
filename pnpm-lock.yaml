@@ -112,6 +112,8 @@ importers:
 
   packages/@plugin/plugin-mobx: {}
 
+  packages/@plugin/plugin-pinia: {}
+
   packages/@plugin/plugin-prettier: {}
 
   packages/@plugin/plugin-react-router:
