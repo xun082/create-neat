@@ -21,12 +21,13 @@ const devDependencies = {
   "webpack-bundle-analyzer": "^4.10.2",
   "webpack-dev-server": "^5.0.4",
   "webpack-manifest-plugin": "^5.0.0",
+  "webpack-merge": "^6.0.1"
 };
 
 const scripts = {
-  dev: "npx next-script dev",
-  build: "npx next-script build",
-  analyzer: "npx next-script analyzer",
+  dev: "NODE_ENV=development npx next-script dev",
+  build: "NODE_ENV=production npx next-script build",
+  analyzer: "NODE_ENV=production CLI=analyzer npx next-script analyzer",
 };
 
 const bin = {

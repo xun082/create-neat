@@ -5,7 +5,8 @@ const crossSpawn = require("cross-spawn");
 const argument = process.argv.slice(2);
 
 if (["dev", "build", "analyzer"].includes(argument[0])) {
-  const result = crossSpawn.sync(process.execPath, [require.resolve(`./${argument[0]}/index.js`)], {
+  // 统一处理
+  const result = crossSpawn.sync(process.execPath, [require.resolve(`./dev-build-analyzer/index.js`)], {
     stdio: "inherit",
   });
   if (result.signal) {

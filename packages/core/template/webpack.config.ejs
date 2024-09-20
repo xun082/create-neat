@@ -26,24 +26,7 @@ const ElementPlus = require('unplugin-element-plus/webpack');
 
 
 let tsxOrJsxLoader;
-<% if (framework==='vue' ) { %>
-  tsxOrJsxLoader = {
-  test: /\.(tsx?|jsx?)$/,
-  include: [path.resolve(__dirname, "./src")],
-  exclude: [/node_modules/, /public/, /(.|_)min\.js$/],
-  use: [
-  {
-  loader: "babel-loader",
-  options: {
-  babelrc: true,
-  cacheDirectory: true,
-  cacheCompression: false,
-  },
-  },
-  "@ant-design-vue/vue-jsx-hot-loader",
-  ]
-  }
-  <% } %>
+
   <% if (framework==='react' ) { %>
     tsxOrJsxLoader = {
     test: /\.(tsx?|jsx?)$/,
@@ -71,9 +54,6 @@ const developmentPlugins = isDevelopment ? [
   new ForkTsCheckerWebpackPlugin({ async: false }),
   <% } %>
   <% } %>
-  <% if (framework === 'vue') { %>
-  new VueLoaderPlugin(),
-  <% } %>
   <% if (typeof(VueEjs)!= "undefined" && VueEjs.useElementPlus == true ) { %>
     ElementPlus(),
   <% } %>
@@ -91,24 +71,6 @@ const productionPlugins = isProduction ? [
     test: /\.js$|\.json$|\.css/,
     threshold: 10240,
     minRatio: 0.8,
-  }),
-  // 生成目录文件
-  new WebpackManifestPlugin({
-    fileName: "asset-manifest.json",
-    generate: (seed, files, entryPoints) => {
-      const manifestFiles = files.reduce((manifest, file) => {
-        if (manifest) manifest[file.name] = file.path;
-        return manifest;
-      }, seed);
-      const entrypointFiles = entryPoints.index.filter(
-        (fileName) => !fileName.endsWith(".map")
-      );
-
-      return {
-        files: manifestFiles,
-        entryPoints: entrypointFiles,
-      };
-    },
   }),
 ] : [];
 <%
@@ -130,7 +92,6 @@ module.exports = {
   stats: 'errors-warnings',
   entry: <%- selectedPath %>,
   mode: isDevelopment ? 'development' : 'production',
-  devtool: isDevelopment ? 'eval-source-map' : 'none',
   output: {
     path: isDevelopment ? undefined : path.resolve(__dirname, './dist'),
     assetModuleFilename: 'assets/[hash][ext][query]',
@@ -145,7 +106,6 @@ module.exports = {
   },
   module: {
     rules: [
-    tsxOrJsxLoader,
     {
         test: /\.css$/i,
         use: [
@@ -155,27 +115,9 @@ module.exports = {
           <% } else { %>
           'style-loader'
           <% } %>
-          : MiniCssExtractPlugin.loader,
-          {
-            loader: 'css-loader',
-            options: {
-              sourceMap: isDevelopment, // 在开发环境下开启
-              modules: {
-                mode: 'local',
-                auto: true,
-                exportGlobals: true,
-                localIdentName: isDevelopment
-                  ? '[path][name]__[local]--[hash:base64:5]'
-                  : '[local]--[hash:base64:5]',
-                localIdentContext: path.resolve(__dirname, './src'),
-                exportLocalsConvention: 'camelCase',
-              },
-              importLoaders: 2,
-            },
-          },
-          'postcss-loader',
-        ].filter(Boolean),
+          : MiniCssExtractPlugin.loader,'css-loader','postcss-loader'].filter(Boolean),
       },
+      tsxOrJsxLoader,
       {
         test: /\.(jpe?g|png|gif|webp|svg|mp4)$/,
         type: 'asset',
@@ -221,6 +163,7 @@ module.exports = {
     },
   },
   plugins: [
+  ...productionPlugins,
     new HtmlWebpackPlugin({
       template: './public/index.html',
       filename: 'index.html',
@@ -247,7 +190,9 @@ module.exports = {
       'process.env': JSON.stringify(process.env),
     }),
     ...developmentPlugins,
-    ...productionPlugins,
+    <% if (framework === 'vue') { %>
+      new VueLoaderPlugin(),
+    <% } %>
   ].filter(Boolean),
   performance: isProduction
     ? {
