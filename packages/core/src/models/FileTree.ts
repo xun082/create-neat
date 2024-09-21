@@ -185,7 +185,7 @@ class FileTree {
    * @param url 添加文件的原始的真实路径
    * @param parentDir 父文件夹路径
    */
-  addToTreeByTempalteDirPathAndEjs(url: string, parentDir: string, options: any) {
+  addToTreeByTemplateDirPathAndEjs(url: string, parentDir: string, options: any) {
     if (path.basename(url) === "template") {
       const entries = fs.readdirSync(url, {
         withFileTypes: true,

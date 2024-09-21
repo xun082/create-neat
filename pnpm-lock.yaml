@@ -106,6 +106,8 @@ importers:
         specifier: ^7.12.16
         version: 7.24.5(@babel/core@7.24.5)
 
+  packages/@plugin/plugin-element-plus: {}
+
   packages/@plugin/plugin-eslint: {}
 
   packages/@plugin/plugin-husky: {}
