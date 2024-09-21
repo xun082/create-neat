@@ -1,6 +1,17 @@
-import { createApp } from "vue";
+import { createApp } from 'vue'
 
-import "./index.css";
-import App from "./App.vue";
+import App from './App.vue'
 
-createApp(App).mount("#root");
+<%_ if (VueEjs.usePinia === true) { _%>
+import { createPinia } from 'pinia'
+
+const pinia = createPinia()
+<%_ } _%>
+
+const app = createApp(App)
+
+<%_ if (VueEjs.usePinia === true) { _%>
+app.use(pinia)
+<%_ } _%>
+
+app.mount('#app')

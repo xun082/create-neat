@@ -7,3 +7,4 @@ commitlint.config.js
 packages/*/dist/
 apps/
 packages/core/src/**/webpack.config.ejs
+**/generator/template/**
