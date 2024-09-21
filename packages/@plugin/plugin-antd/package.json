@@ -1,0 +1,8 @@
+{
+  "name": "@laconic/plugin-antd",
+  "version": "1.0.0",
+  "description": "antd plugin for create-neat",
+  "main": "index.cjs",
+  "devDependencies": {
+  }
+}
