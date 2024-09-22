@@ -1,9 +1,6 @@
 const portFinder = require("portfinder");
 const WebpackDevServer = require("webpack-dev-server");
 const webpack = require("webpack");
-const BundleAnalyzerPlugin =
-  require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
-const { merge } = require("webpack-merge");
 const chalk = require("chalk");
 
 const {
@@ -19,27 +16,9 @@ const isInteractive = process.stdout.isTTY;
 
 // 如果是生产环境
 if (process.env.NODE_ENV === "production") {
-
-// 如果是命令行是analyzer，则添加体积分析插件
-  if (process.env.CLI === "analyzer") {
-    // 合并体积分析插件
-    const analyzerWebpackConfig = merge(
-      {
-        plugins: [new BundleAnalyzerPlugin()].filter(Boolean),
-      },
-      webpackConfig
-    );
-    //analyzer的配置
-    webpack(analyzerWebpackConfig, (err, _res) => {
-      if (err) console.log(err);
-    });
-  } else {
-    // pro环境
-    webpack(webpackConfig, (err, _res) => {
-      if (err) console.log(err);
-    });
-  }
-
+  webpack(webpackConfig, (err, _res) => {
+    if (err) console.log(err);
+  })
 } else if (process.env.NODE_ENV === "development") {
   // dev 开发环境
   const compiler = webpack(webpackConfig, (err, _res) => {
