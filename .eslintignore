@@ -6,4 +6,5 @@ rollup.config.js
 commitlint.config.js
 packages/*/dist/
 apps/
+**/webpack.config.js
 **/generator/template/**

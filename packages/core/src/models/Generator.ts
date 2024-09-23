@@ -262,7 +262,7 @@ class Generator {
     }
 
     // 获取构建工具配置文件ast语法树
-    const buildToolConfigEjsContent = readTemplateFileContent(`${this.buildTool}.config.ejs`);
+    const buildToolConfigEjsContent = readTemplateFileContent(`${this.buildTool}.config.js`);
     // 借助ejs.render对ejs字符串文件进行渲染
     const templasteOptions = {
       framework: this.templateName,

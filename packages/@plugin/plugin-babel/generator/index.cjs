@@ -33,7 +33,7 @@ const commonDevDependencies = {
 // React的Babel配置
 const reactBabelConfig = {
   presets: ["@babel/preset-react", ...commonBabelPresets],
-  plugins: ["react-refresh/babel", ...commonBabelPlugins],
+  plugins: [...commonBabelPlugins],
 };
 
 // Vue的Babel配置
