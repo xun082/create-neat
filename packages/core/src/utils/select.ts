@@ -166,16 +166,28 @@ async function projectSelect() {
     ],
   };
 
+  const useSpecilPligins = await select({
+    message: "Use framework spcial plugins?",
+    options: [
+      { value: true, label: "Yes" },
+      { value: false, label: "No" },
+    ],
+  });
+
   // 选择特殊插件(框架专属插件)
-  const specialPlugins = (await multiselect({
-    message: `Pick special plugins for your project.(${chalk.greenBright(
-      "<space>",
-    )} select, ${chalk.greenBright("<a>")} toggle all, ${chalk.greenBright(
-      "<i>",
-    )} invert selection,${chalk.greenBright("<enter>")} next step)`,
-    options: specialPluginsMap[responses.template],
-    required: false,
-  })) as string[];
+
+  const specialPlugins =
+    useSpecilPligins === true
+      ? ((await multiselect({
+          message: `Pick special plugins for your project.(${chalk.greenBright(
+            "<space>",
+          )} select, ${chalk.greenBright("<a>")} toggle all, ${chalk.greenBright(
+            "<i>",
+          )} invert selection,${chalk.greenBright("<enter>")} next step)`,
+          options: specialPluginsMap[responses.template],
+          required: false,
+        })) as string[])
+      : "";
 
   responses.plugins = [...normalPlugins, ...specialPlugins];
 
