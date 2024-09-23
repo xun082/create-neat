@@ -264,7 +264,7 @@ class Generator {
     // 获取构建工具配置文件ast语法树
     const buildToolConfigEjsContent = readTemplateFileContent(`${this.buildTool}.config.js`);
     // 借助ejs.render对ejs字符串文件进行渲染
-    const templasteOptions = {
+    const templateOptions = {
       framework: this.templateName,
       bundler: this.buildTool,
       language: "typescript" in this.plugins ? "typescript" : "javascript",
@@ -272,7 +272,7 @@ class Generator {
         useElementPlus: !!this.preset.plugins["element-plus"],
       },
     };
-    const ejsResolver = generateBuildToolConfigFromEJS(templasteOptions, buildToolConfigEjsContent);
+    const ejsResolver = generateBuildToolConfigFromEJS(templateOptions, buildToolConfigEjsContent);
     // 对解析出来的文件生成初始ast语法树，用于后续合并配置并生成真是的构建工具配置文件
     this.buildToolConfigAst = parse(ejsResolver, {
       sourceType: "module",
@@ -321,7 +321,7 @@ class Generator {
       },
     };
 
-    this.files.addToTreeByTempalteDirPathAndEjs(templatePath, this.rootDirectory, options);
+    this.files.addToTreeByTemplateDirPathAndEjs(templatePath, this.rootDirectory, options);
     // new FileTree(templatePath).renderTemplates(this.rootDirectory, undefined, options);
 
     // 与构建工具有关的配置全部添加完毕，生成构建工具配置文件
@@ -332,7 +332,7 @@ class Generator {
 
     // 从package.json中生成额外的的文件(如果extraConfigFiles为true时需要)
     await this.extractConfigFiles(extraConfigFiles);
-    // 重写pakcage.json文件，并向根文件树中添加该文件，消除generatorAPI中拓展package.json带来得副作用
+    // 重写package.json文件，并向根文件树中添加该文件，消除generatorAPI中拓展package.json带来得副作用
     this.files.addToTreeByFile("package.json", JSON.stringify(this.pkg, null, 2));
 
     // 经过以上步骤需要新增或修改的文件已经都添加到根文件树对象中,统一渲染根文件树对象中的内容
