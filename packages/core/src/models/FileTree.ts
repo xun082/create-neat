@@ -227,8 +227,9 @@ class FileTree {
     // 渲染根fileTree对象中的children中的内容 --> 根目录内的文件
     fileData.children.forEach(async (item: FileData) => {
       if (item.type === "dir") {
+        const filePath = path.resolve(parentDir, item.describe.fileName);
         // 创建文件夹
-        fs.mkdirSync(path.resolve(parentDir, item.describe.fileName));
+        !fs.existsSync(filePath) && fs.mkdirSync(filePath);
         // 如果是文件夹类型则递归生成
         const dirName = path.resolve(parentDir, item.describe.fileName);
         this.renderAllFiles(dirName, item);
