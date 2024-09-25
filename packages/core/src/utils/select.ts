@@ -11,6 +11,7 @@ import { savePresetToRcPath, getRcPath, loadRcOptions } from "./options";
 const registryInfo = execSync("npm config get registry").toString().trim();
 const npmSource: any = getNpmSource();
 const rcPath = getRcPath(".neatrc");
+const skip = ">> skip";
 /**
  * 表示用户对项目预设的回应。
  * @interface Responses
@@ -157,37 +158,38 @@ async function projectSelect() {
       { key: "mobx", value: "mobx" },
       { key: "react-router", value: "react-router" },
       { key: "antd", value: "antd" },
+      {
+        key: "null",
+        value: skip,
+        hint: "If you select this, none of the special plugins will be installed.",
+      },
     ],
     vue: [
       { key: "vuex", value: "vuex" },
       { key: "vue-router", value: "vue-router" },
       { key: "element-plus", value: "element-plus" },
       { key: "pinia", value: "pinia" },
+      {
+        key: "null",
+        value: skip,
+        hint: "If you select this, none of the special plugins will be installed.",
+      },
     ],
   };
 
-  const useSpecilPligins = await select({
-    message: "Use framework spcial plugins?",
-    options: [
-      { value: true, label: "Yes" },
-      { value: false, label: "No" },
-    ],
-  });
-
   // 选择特殊插件(框架专属插件)
-
-  const specialPlugins =
-    useSpecilPligins === true
-      ? ((await multiselect({
-          message: `Pick special plugins for your project.(${chalk.greenBright(
-            "<space>",
-          )} select, ${chalk.greenBright("<a>")} toggle all, ${chalk.greenBright(
-            "<i>",
-          )} invert selection,${chalk.greenBright("<enter>")} next step)`,
-          options: specialPluginsMap[responses.template],
-          required: false,
-        })) as string[])
-      : "";
+  const specialPlugins = (await multiselect({
+    message: `Pick special plugins for your project.(${chalk.greenBright(
+      "<space>",
+    )} select, ${chalk.greenBright("<a>")} toggle all, ${chalk.greenBright(
+      "<i>",
+    )} invert selection,${chalk.greenBright("<enter>")} next step)`,
+    options: specialPluginsMap[responses.template],
+    required: false,
+  })) as string[];
+  if (specialPlugins.includes(skip)) {
+    specialPlugins.length = 0;
+  }
 
   responses.plugins = [...normalPlugins, ...specialPlugins];
 
