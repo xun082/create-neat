@@ -11,6 +11,7 @@ import { savePresetToRcPath, getRcPath, loadRcOptions } from "./options";
 const registryInfo = execSync("npm config get registry").toString().trim();
 const npmSource: any = getNpmSource();
 const rcPath = getRcPath(".neatrc");
+const skip = ">> skip";
 /**
  * 表示用户对项目预设的回应。
  * @interface Responses
@@ -157,12 +158,22 @@ async function projectSelect() {
       { key: "mobx", value: "mobx" },
       { key: "react-router", value: "react-router" },
       { key: "antd", value: "antd" },
+      {
+        key: "null",
+        value: chalk.greenBright(skip),
+        hint: "If you select this, none of the special plugins will be installed.",
+      },
     ],
     vue: [
       { key: "vuex", value: "vuex" },
       { key: "vue-router", value: "vue-router" },
       { key: "element-plus", value: "element-plus" },
       { key: "pinia", value: "pinia" },
+      {
+        key: "null",
+        value: chalk.greenBright(skip),
+        hint: "If you select this, none of the special plugins will be installed.",
+      },
     ],
   };
 
@@ -176,6 +187,9 @@ async function projectSelect() {
     options: specialPluginsMap[responses.template],
     required: false,
   })) as string[];
+  if (specialPlugins.includes(skip)) {
+    specialPlugins.length = 0;
+  }
 
   responses.plugins = [...normalPlugins, ...specialPlugins];
 
