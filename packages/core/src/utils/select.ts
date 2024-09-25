@@ -160,7 +160,7 @@ async function projectSelect() {
       { key: "antd", value: "antd" },
       {
         key: "null",
-        value: skip,
+        value: chalk.greenBright(skip),
         hint: "If you select this, none of the special plugins will be installed.",
       },
     ],
@@ -171,7 +171,7 @@ async function projectSelect() {
       { key: "pinia", value: "pinia" },
       {
         key: "null",
-        value: skip,
+        value: chalk.greenBright(skip),
         hint: "If you select this, none of the special plugins will be installed.",
       },
     ],
