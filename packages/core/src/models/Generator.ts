@@ -336,7 +336,7 @@ class Generator {
     this.files.addToTreeByFile("package.json", JSON.stringify(this.pkg, null, 2));
 
     // 经过以上步骤需要新增或修改的文件已经都添加到根文件树对象中,统一渲染根文件树对象中的内容
-    this.files.renderAllFiles(this.rootDirectory);
+    await this.files.renderAllFiles(this.rootDirectory);
 
     console.log(chalk.green("💘 Files have been generated and written to disk."));
   }
