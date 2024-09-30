@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 
 import Generator from "./Generator";
+import PluginToTemplateAPI from "./protocolGenerator/PluginToTemplateAPI";
 
 interface ConfigFileData {
   file: Record<string, string[]>;
@@ -22,6 +23,12 @@ class BaseAPI {
 
   constructor(generator: Generator) {
     this.generator = generator;
+  }
+
+  // todo: jsdoc + protocols 的类型
+  protocolGenerate(protocols){
+    const pluginToTemplate = new PluginToTemplateAPI(protocols)
+    pluginToTemplate.generator()
   }
 
   /**
