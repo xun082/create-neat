@@ -6,11 +6,12 @@ import { parse } from "@babel/parser";
 
 import { relativePathToRoot } from "../utils/constants";
 import { createFiles } from "../utils/createFiles";
-import { createConfigByParseAst } from "../utils/ast/parseAst";
+import { createConfigByParseAst } from "../utils/ast/tools/parseAst";
 import { Preset } from "../utils/preset";
 import { readTemplateFileContent } from "../utils/fileController";
 import generateBuildToolConfigFromEJS from "../utils/generateBuildToolConfigFromEJS";
-import { buildToolType } from "../types";
+import { BuildToolType } from "../types/ast";
+import { mergeAst } from "../utils/ast/tools";
 
 import GeneratorAPI from "./GeneratorAPI";
 import ConfigTransform from "./ConfigTransform";
@@ -107,6 +108,8 @@ async function loadModule(modulePath: string, rootDirectory: string) {
    * @type {string}
    */
   const resolvedPath = path.resolve(rootDirectory, modulePath);
+  console.log("🚀 ~ loadModule ~ resolvedPath:", resolvedPath);
+
   try {
     const module = await require(resolvedPath);
     return module;
@@ -130,7 +133,7 @@ class Generator {
   public pkg: object; // 执行generatorAPI之后带有key值为plugin
   public originalPkg: object; // 原始package.json
   public templateName: string; // 需要拉取的模板名称
-  public buildTool: buildToolType; // 构建工具名称
+  public buildTool: BuildToolType; // 构建工具名称
   public buildToolConfigAst; // 构建工具配置文件语法树
   public buildToolConfig;
   private generatorAPI: GeneratorAPI;
@@ -142,7 +145,7 @@ class Generator {
     plugins = {},
     pkg = {},
     templateName: string,
-    buildTool: buildToolType,
+    buildTool: BuildToolType,
     preset: Preset,
   ) {
     this.rootDirectory = rootDirectory;
@@ -189,6 +192,10 @@ class Generator {
     // 处理构建工具配置
     if (typeof baseEntry === "function") {
       // 解析配置项成 ast 语法树,并且和原始配置的 ast 合并
+      mergeAst[this.buildTool](
+        baseEntry(this.buildTool, this.templateName),
+        this.buildToolConfigAst,
+      );
       createConfigByParseAst(
         this.buildTool,
         baseEntry(this.buildTool, this.templateName),

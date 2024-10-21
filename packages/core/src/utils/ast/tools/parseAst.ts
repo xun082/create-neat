@@ -1,44 +1,14 @@
 import traverse from "@babel/traverse";
 import { objectExpression, regExpLiteral, stringLiteral, arrayExpression } from "@babel/types";
 
-import { buildToolType } from "../../types";
-
+import type { BuildToolType, Options, Plugin } from "../../../types/ast";
+import { Build_Tool } from "../../../constants/ast";
 import {
   createImportDeclaration,
   createNewExpression,
   createCallExpression,
   createObjectProperty,
-} from "./commonAst";
-
-enum BuildToolType {
-  VITE = "vite",
-  WEBPACK = "webpack",
-  ROLLUP = "rollup",
-}
-// type BuildTool = `${BuildToolType}`;
-
-interface Import {
-  /** 导出内容 */
-  name: string;
-  /** 导出的包 */
-  from: string;
-}
-
-interface Plugin {
-  /** 导出内容 */
-  name: string;
-  /** 配置参数 */
-  params: object;
-  /** 导出配置 */
-  import: Import;
-}
-
-interface Options {
-  /** rules配置项 */
-  rules: any;
-  /** 插件配置 */
-  plugins: Plugin[];
-}
+} from "../uno/commonAst";
 
 /**
  * 将传入配置转换成ast
@@ -46,11 +16,11 @@ interface Options {
  * @param options 配置
  * @param ast 初始化ast
  */
-export const createConfigByParseAst = (buildTool: buildToolType, options: Options, ast) => {
-  if (buildTool === BuildToolType.VITE) {
+export const createConfigByParseAst = (buildTool: BuildToolType, options: Options, ast) => {
+  if (buildTool === Build_Tool.VITE) {
     mergeViteConfigAst(options, ast);
   }
-  if (buildTool === BuildToolType.WEBPACK) {
+  if (buildTool === Build_Tool.WEBPACK) {
     mergeWebpackConfigAst(options, ast);
   }
 };

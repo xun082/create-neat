@@ -29,5 +29,3 @@ export interface PackageJsonType {
   config?: { [key: string]: any };
   "lint-staged"?: { [globPattern: string]: string | string[] };
 }
-
-export type buildToolType = "webpack" | "vite" | "rollup";

@@ -157,7 +157,7 @@ module.exports = {
     },
   },
   plugins: [
-  ...productionPlugins,
+    ...productionPlugins,
     new HtmlWebpackPlugin({
       template: './public/index.html',
       filename: 'index.html',
