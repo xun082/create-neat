@@ -1,4 +1,4 @@
-import type { buildToolType } from "../types";
+import { BuildToolType } from "./../types/ast";
 
 /**
  * 表示用户的预设配置。
@@ -12,7 +12,7 @@ import type { buildToolType } from "../types";
  */
 interface Preset {
   template: string;
-  buildTool: buildToolType;
+  buildTool: BuildToolType;
   plugins: Record<string, any>;
   packageManager: string;
   npmSource: string;
@@ -31,7 +31,7 @@ interface Preset {
 // todo: 目前没有使用到 defaultPreset，后续考虑加入默认配置
 const getPreset = (
   template: string,
-  buildTool: buildToolType,
+  buildTool: BuildToolType,
   plugins: string[],
   packageManager: string,
   npmSource: string,

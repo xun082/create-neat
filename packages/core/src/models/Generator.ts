@@ -6,7 +6,7 @@ import { parse } from "@babel/parser";
 
 import { relativePathToRoot } from "../utils/constants";
 import { createFiles } from "../utils/createFiles";
-import { createConfigByParseAst } from "../utils/ast/tools/parseAst";
+// import { createConfigByParseAst } from "../utils/ast/tools/parseAst";
 import { Preset } from "../utils/preset";
 import { readTemplateFileContent } from "../utils/fileController";
 import generateBuildToolConfigFromEJS from "../utils/generateBuildToolConfigFromEJS";
@@ -196,11 +196,11 @@ class Generator {
         baseEntry(this.buildTool, this.templateName),
         this.buildToolConfigAst,
       );
-      createConfigByParseAst(
-        this.buildTool,
-        baseEntry(this.buildTool, this.templateName),
-        this.buildToolConfigAst,
-      );
+      // createConfigByParseAst(
+      //   this.buildTool,
+      //   baseEntry(this.buildTool, this.templateName),
+      //   this.buildToolConfigAst,
+      // );
     }
   }
 
