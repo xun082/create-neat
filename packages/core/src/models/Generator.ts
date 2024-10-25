@@ -108,7 +108,6 @@ async function loadModule(modulePath: string, rootDirectory: string) {
    * @type {string}
    */
   const resolvedPath = path.resolve(rootDirectory, modulePath);
-  console.log("🚀 ~ loadModule ~ resolvedPath:", resolvedPath);
 
   try {
     const module = await require(resolvedPath);
@@ -196,11 +195,6 @@ class Generator {
         baseEntry(this.buildTool, this.templateName),
         this.buildToolConfigAst,
       );
-      // createConfigByParseAst(
-      //   this.buildTool,
-      //   baseEntry(this.buildTool, this.templateName),
-      //   this.buildToolConfigAst,
-      // );
     }
   }
 
