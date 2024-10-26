@@ -71,12 +71,12 @@ export const pluginToTemplateProtocol = {
           description: "影响框架根入口文件配置",
           changes: [
             {
-              description: "增加usePinia",
-              content: "app.use(Pinia)",
-            },
-            {
               description: "创建Pinia实例",
               content: "const Pinia=createPinia()",
+            },
+            {
+              description: "增加usePinia",
+              content: "app.use(Pinia)",
             },
           ],
         },
