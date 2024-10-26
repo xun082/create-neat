@@ -1,10 +1,13 @@
 import traverse from "@babel/traverse";
 import { objectExpression, regExpLiteral, stringLiteral, arrayExpression } from "@babel/types";
 
-import { Build_Tool } from "../../../constants/ast";
+import { Build_Tool, Rule_Prop } from "../../../constants/ast";
 import { createObjectProperty, createNewExpression } from "../uno/commonAst";
 
 import { BaseAst } from "./baseAst";
+
+// 格式化正则: 去掉字符串两端的/
+const formatReg = (str: string) => str.substring(1, str.length - 1);
 
 export class WebpackAst extends BaseAst {
   private rules;
@@ -18,8 +21,34 @@ export class WebpackAst extends BaseAst {
   }
 
   /**
-   * 合并webpack config ast
-   * 目前支持loaders、plugins
+   * 处理 rule 中的 include、exclude、loader 属性
+   */
+  dealRuleIsArrayOrRegExp(prop: string, value: string | string[]) {
+    switch (prop) {
+      case Rule_Prop.INCLUDE || Rule_Prop.EXCLUDE:
+        if (Array.isArray(value)) {
+          // 如果 value 为数组
+          return arrayExpression(value.map((item) => stringLiteral(item)));
+        } else {
+          // 如果 value 为正则
+          return regExpLiteral(formatReg(`${value}`));
+        }
+      case Rule_Prop.LOADER:
+        if (Array.isArray(value)) {
+          // 如果 value 为数组
+          return arrayExpression(value.map((item) => stringLiteral(item)));
+        } else {
+          // 如果 value 为字符串
+          return stringLiteral(value);
+        }
+      default:
+        return undefined;
+    }
+  }
+
+  /**
+   * 合并 webpack config ast
+   * 目前支持 loaders、plugins
    */
   mergeConfig() {
     if (!this.plugins) return;
@@ -43,33 +72,14 @@ export class WebpackAst extends BaseAst {
           if (property.key.name === "module") {
             const rulesAstNodes = [];
             this.rules.forEach((rule) => {
-              const formatReg = (str) => str.substring(1, str.length - 1);
-              let parseIncludeAst;
-              let parseExcludeAst;
-              let parseLoaderAst;
+              const parseIncludeAst = this.dealRuleIsArrayOrRegExp(Rule_Prop.INCLUDE, rule.include);
+              const parseExcludeAst = this.dealRuleIsArrayOrRegExp(Rule_Prop.EXCLUDE, rule.exclude);
+              const parseLoaderAst = rule.loader
+                ? this.dealRuleIsArrayOrRegExp(Rule_Prop.LOADER, rule.loader)
+                : undefined;
               let ruleAstNode;
-              // 如果include属性为数组
-              if (Array.isArray(rule.include)) {
-                parseIncludeAst = arrayExpression(rule.include.map((item) => stringLiteral(item)));
-              } else {
-                // 如果include属性值为正则表达式
-                parseIncludeAst = regExpLiteral(formatReg(`${rule.include}`));
-              }
-              // 如果exclude属性值为数组
-              if (Array.isArray(rule.exclude)) {
-                parseExcludeAst = arrayExpression(
-                  rule.exclude.map((item) => regExpLiteral(formatReg(`${item}`))),
-                );
-              } else {
-                // 如果exclude属性值为正则
-                parseExcludeAst = regExpLiteral(formatReg(`${rule.exclude}`));
-              }
+
               if (rule.loader) {
-                if (Array.isArray(rule.loader)) {
-                  parseLoaderAst = arrayExpression(rule.loader.map((item) => stringLiteral(item)));
-                } else {
-                  parseLoaderAst = stringLiteral(rule.loader);
-                }
                 ruleAstNode = objectExpression([
                   createObjectProperty("test", regExpLiteral(formatReg(`${rule.test}`))),
                   createObjectProperty("include", parseIncludeAst),

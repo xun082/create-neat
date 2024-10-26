@@ -2,7 +2,8 @@ import { multiselect, select, intro, confirm, text } from "@clack/prompts";
 import chalk from "chalk";
 import { execSync } from "child_process";
 
-import { BuildToolType } from "./../types/ast";
+import { Build_Tool } from "../constants/ast";
+
 import { getPreset, defaultPreset } from "./preset";
 import { getNpmSource } from "./getnpmSource";
 import { savePresetToRcPath, getRcPath, loadRcOptions } from "./options";
@@ -23,7 +24,7 @@ const skip = ">> skip";
  */
 interface Responses {
   template: string;
-  buildTool?: BuildToolType;
+  buildTool?: Build_Tool;
   plugins: string[];
   packageManager: string;
   npmSource: string;
@@ -122,11 +123,11 @@ async function projectSelect() {
   responses.buildTool = (await select({
     message: "Pick a build tools for your project",
     options: [
-      { value: "webpack", label: "webpack" },
-      { value: "vite", label: "vite" },
-      { value: "rollup", label: "rollup" },
+      { value: Build_Tool.WEBPACK, label: "webpack" },
+      { value: Build_Tool.VITE, label: "vite" },
+      { value: Build_Tool.ROLLUP, label: "rollup" },
     ],
-  })) as BuildToolType;
+  })) as Build_Tool;
 
   responses.transpilers = (await select({
     message: "Please select a JavaScript/TypeScript compiler for your project:",

@@ -1,24 +1,22 @@
-export type BuildToolType = "webpack" | "vite" | "rollup";
-
-interface Import {
+interface ASTImport {
   /** 导出内容 */
   name: string;
   /** 导出的包 */
   from: string;
 }
 
-export interface Plugin {
+export interface ASTPlugin {
   /** 导出内容 */
   name: string;
   /** 配置参数 */
   params: object;
   /** 导出配置 */
-  import: Import;
+  import: ASTImport;
 }
 
-export interface Options {
+export interface ASTOptions {
   /** rules配置项 */
   rules: any;
   /** 插件配置 */
-  plugins: Plugin[];
+  plugins: ASTPlugin[];
 }

@@ -7,3 +7,9 @@ export enum Build_Tool {
   WEBPACK = "webpack",
   ROLLUP = "rollup",
 }
+
+export enum Rule_Prop {
+  INCLUDE = "include",
+  EXCLUDE = "exclude",
+  LOADER = "loader",
+}

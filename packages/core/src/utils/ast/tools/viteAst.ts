@@ -1,7 +1,7 @@
 import traverse from "@babel/traverse";
 import { objectExpression, stringLiteral, arrayExpression } from "@babel/types";
 
-import type { Plugin } from "../../../types/ast";
+import type { ASTPlugin } from "../../../types/ast";
 import { Build_Tool } from "../../../constants/ast";
 import {
   createImportDeclaration,
@@ -11,7 +11,7 @@ import {
 
 import { BaseAst } from "./baseAst";
 
-export class VitepackAst extends BaseAst {
+export class ViteAst extends BaseAst {
   private plugins;
 
   constructor(options, ast) {
@@ -24,9 +24,9 @@ export class VitepackAst extends BaseAst {
    * 解析配置项转换为ast语法树
    * @param plugins 配置
    */
-  createPluginAst(plugins: Plugin[]) {
+  createPluginAst(plugins: ASTPlugin[]) {
     // 收集plugins配置函数ast
-    const pluginAsts = plugins.map((plugin: Plugin) => {
+    const pluginAsts = plugins.map((plugin: ASTPlugin) => {
       // 收集配置中的参数项，并创建参数对象
       const pluginParams = Object.keys(plugin.params).reduce(
         (acc, key) => {

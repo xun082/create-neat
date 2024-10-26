@@ -6,11 +6,10 @@ import { parse } from "@babel/parser";
 
 import { relativePathToRoot } from "../utils/constants";
 import { createFiles } from "../utils/createFiles";
-// import { createConfigByParseAst } from "../utils/ast/tools/parseAst";
 import { Preset } from "../utils/preset";
 import { readTemplateFileContent } from "../utils/fileController";
 import generateBuildToolConfigFromEJS from "../utils/generateBuildToolConfigFromEJS";
-import { BuildToolType } from "../types/ast";
+import { Build_Tool } from "../constants/ast";
 import { mergeAst } from "../utils/ast/tools";
 
 import GeneratorAPI from "./GeneratorAPI";
@@ -132,7 +131,7 @@ class Generator {
   public pkg: object; // 执行generatorAPI之后带有key值为plugin
   public originalPkg: object; // 原始package.json
   public templateName: string; // 需要拉取的模板名称
-  public buildTool: BuildToolType; // 构建工具名称
+  public buildTool: Build_Tool; // 构建工具名称
   public buildToolConfigAst; // 构建工具配置文件语法树
   public buildToolConfig;
   private generatorAPI: GeneratorAPI;
@@ -144,7 +143,7 @@ class Generator {
     plugins = {},
     pkg = {},
     templateName: string,
-    buildTool: BuildToolType,
+    buildTool: Build_Tool,
     preset: Preset,
   ) {
     this.rootDirectory = rootDirectory;
