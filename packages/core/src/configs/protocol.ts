@@ -1,6 +1,7 @@
 // 通用协议
 export const commonProtocol = {
   ENTRY_FILE: [
+    //入口文件配置
     {
       pluginName: "scss",
       version: "@latest",
@@ -75,7 +76,7 @@ export const pluginToTemplateProtocol = {
               content: "const Pinia=createPinia()",
             },
             {
-              description: "增加usePinia",
+              description: "增加use",
               content: "app.use(Pinia)",
             },
           ],
@@ -96,7 +97,6 @@ export const pluginToTemplateProtocol = {
       },
     },
   ],
-  // ……
 };
 
 // 插件对构建工具的协议
