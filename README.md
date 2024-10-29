@@ -82,8 +82,4 @@ npm start
 
 ### 七、加入我们
 
-我们诚挚欢迎大家在 `create-neat` 中贡献力量。若想获取更多信息及如何开始，欢迎扫码加入我们的群聊：
-
-<center>
-<img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/cca82f4647a54c18b7b67e8bd2dffbb6~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1079&h=811&s=263717&e=jpg&b=bca3b7" width="400" height="300" alt="微信群">
-</center>
+> 我们很乐意在 `create-neat` 中得到您的帮助，看到您的贡献，如果你想获取到更多信息以及如何开始，欢迎通过添加微信号 `yunmz777` / `Tongxx_yi`加入我们
