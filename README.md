@@ -45,7 +45,15 @@ create-neat <project-name>
 
 输入命令 `create-neat my-app` 后，控制台将提供以下功能选择:
 
-![功能选择界面](https://imgur.la/images/2024/10/21/1.png)
+```markdown
+create-you-app
+
+♦ Please pick a preset:
+● Default-lib ( `[common-lib]` eslint, babel, webpack )
+○ Default-vue ( `[vue]` eslint, babel, webpack )
+○ Default-react ( `[react]` eslint, babel, webpack )
+○ Manually select preset
+```
 
 根据需求选择对应框架，或通过 `Manually select preset` 进行自由组合。`create-neat` 将根据选择的预设创建不同的开箱即用应用程序，选项包括：
 
@@ -68,7 +76,7 @@ npm start
 
 至此，你可以开始项目的开发了！如欲深入了解项目启动方式、架构等细节，欢迎加入我们的社区群或查阅文档网站（建设中）。
 
-### 五、贡献者
+### 四、贡献者 👊
 
 感谢以下贡献者的支持，诚邀更多技术大佬加入我们的行列！
 
@@ -76,10 +84,10 @@ npm start
     <img src="https://contributors.nn.ci/api?repo=xun082/create-neat" alt="贡献者名单">
 </a>
 
-### 六、贡献指南
+### 五、贡献指南 📑
 
 [查看贡献指南文档](https://rwndk8l22n.feishu.cn/docx/IF5id8KlPo7pNAxff5Ic2W8bnzf)
 
-### 七、加入我们
+### 六、加入我们 🔗
 
-> 我们很乐意在 `create-neat` 中得到您的帮助，看到您的贡献，如果你想获取到更多信息以及如何开始，欢迎通过添加微信号`Tongxx_yj`/`yunmz777`加入我们🫧
+> 我们很乐意在 `create-neat` 中得到您的帮助，看到您的贡献，如果你想获取到更多信息以及如何开始，欢迎通过添加微信号`Tongxx_yj`/`yunmz777`加入我们
