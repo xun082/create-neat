@@ -4,11 +4,8 @@ import "./index.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 <%_ } _%>
 
-function App() {
-  return (
-    <%_ if (ReactEjs.useReactRouter === true) { _%>
-    <Router>
-    <%_ } _%>
+  function App() {
+    return (
       <div className="container">
         <header className="header">
           <h1 className="title">create-neat</h1>
@@ -86,10 +83,7 @@ function App() {
           <div className="footer_text">Copyright © 2023-present Moment</div>
         </footer>
       </div>
-        <%_ if (ReactEjs.useReactRouter === true) { _%>
-    </Router>
-    <%_ } _%>
-  );
-}
+    );
+  }
 
 export default App;

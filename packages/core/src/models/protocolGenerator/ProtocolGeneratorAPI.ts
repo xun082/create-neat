@@ -14,7 +14,7 @@ class ProtocolGeneratorAPI {
 
   generator() {
     // todo: 加入优先级调度
-    for (let protocol in this.protocols) {
+    for (const protocol in this.protocols) {
       this[protocol](this.protocols[protocol]);
     }
   }

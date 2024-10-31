@@ -6,6 +6,18 @@ import ejs from "ejs";
 import { createFiles } from "../utils/createFiles";
 
 /**
+ * 插件写入配置文件至template中,PluginEffectTemplate
+ */
+interface WriteConfigIntoTemplate {
+  /** 插件 */
+  plugin: string;
+  /** 插件影响框架的文件路径 */
+  path: string;
+  /** 插件影响框架的文件内容 */
+  content: string;
+}
+
+/**
  * 判断是否为文件夹
  * @param {string} path - 路径
  * @returns {boolean} - 返回路径是否为文件夹
@@ -121,6 +133,13 @@ class FileTree {
    * @returns {FileData} - 文件树对象
    */
   private buildFileDataByEjs(src: string, parentDir: string, options: any) {
+    const reactRouter: WriteConfigIntoTemplate = {
+      plugin: "ReactRouter",
+      // 后面改一个dir下多个file结构
+      path: "App.jsx",
+      content: "\n<Router>%*#$</Router>\n",
+    };
+
     const baseName = path.basename(src);
     const file: FileData = {
       path: "",
@@ -143,16 +162,30 @@ class FileTree {
         file.children?.push(subTree);
       }
     } else {
-      const ejsTempalte = fs.readFileSync(src, "utf8");
-      const fileContent = ejs.render(ejsTempalte, options);
+      let fileContent;
+      // 插件对框架的影响中，对EJS模板的影响，且是除公共gneneratorAPI之外的影响
+      if (path.basename(src) === reactRouter.path) {
+        const ejsTemplate = fs.readFileSync(src, "utf8");
+        const match = ejsTemplate.match(/return\s*\(([\s\S]*?)\);/s);
+        if (match && match[1]) {
+          const content = reactRouter.content;
+          const newContent = `return (${content.split("%*#$")[0]}${match[1]}${content.split("%*#$")[1]});`;
+          const replacedContent = ejsTemplate.replace(/return\s*\(([\s\S]*?)\);/s, newContent);
+          fileContent = ejs.render(replacedContent, options);
+        } else {
+          return null;
+        }
+      } else {
+        const ejsTemplate = fs.readFileSync(src, "utf8");
+        fileContent = ejs.render(ejsTemplate, options);
+      }
       file.type = "file";
       file.describe = {
         fileName: path.basename(src).split(".")[0],
-        fileExtension: process.env.isTs
-          ? this.alteration[path.extname(src).slice(1)]
+        fileExtension:
+          process.env.isTs && this.alteration[path.extname(src).slice(1)]
             ? this.alteration[path.extname(src).slice(1)]
-            : path.extname(src).slice(1)
-          : path.extname(src).slice(1),
+            : path.extname(src).slice(1),
         fileContent,
       };
       file.path = path.resolve(
