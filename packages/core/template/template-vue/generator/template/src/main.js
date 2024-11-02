@@ -14,4 +14,4 @@ const app = createApp(App)
 app.use(pinia)
 <%_ } _%>
 
-app.mount('#app')
+app.mount('#root')

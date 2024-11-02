@@ -185,7 +185,7 @@ class FileTree {
    * @param url 添加文件的原始的真实路径
    * @param parentDir 父文件夹路径
    */
-  addToTreeByTempalteDirPathAndEjs(url: string, parentDir: string, options: any) {
+  addToTreeByTemplateDirPathAndEjs(url: string, parentDir: string, options: any) {
     if (path.basename(url) === "template") {
       const entries = fs.readdirSync(url, {
         withFileTypes: true,
@@ -225,13 +225,14 @@ class FileTree {
    */
   async renderAllFiles(parentDir: string, fileData: FileData = this.fileData) {
     // 渲染根fileTree对象中的children中的内容 --> 根目录内的文件
-    fileData.children.forEach(async (item: FileData) => {
+    for (const item of fileData.children) {
       if (item.type === "dir") {
+        const filePath = path.resolve(parentDir, item.describe.fileName);
         // 创建文件夹
-        fs.mkdirSync(path.resolve(parentDir, item.describe.fileName));
+        !fs.existsSync(filePath) && fs.mkdirSync(filePath);
         // 如果是文件夹类型则递归生成
         const dirName = path.resolve(parentDir, item.describe.fileName);
-        this.renderAllFiles(dirName, item);
+        await this.renderAllFiles(dirName, item);
       } else {
         // 如果是文件类型直接生成
         const fileName = `${item.describe.fileName}.${item.describe.fileExtension}`;
@@ -240,7 +241,7 @@ class FileTree {
           [fileName]: fileContent,
         });
       }
-    });
+    }
   }
 }
 export default FileTree;

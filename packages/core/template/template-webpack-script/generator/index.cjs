@@ -21,22 +21,19 @@ const devDependencies = {
   "webpack-bundle-analyzer": "^4.10.2",
   "webpack-dev-server": "^5.0.4",
   "webpack-manifest-plugin": "^5.0.0",
+  "cross-env": "^7.0.3",
+  "webpack-cli": "^5.1.4"
 };
 
 const scripts = {
-  dev: "npx next-script dev",
-  build: "npx next-script build",
-  analyzer: "npx next-script analyzer",
-};
-
-const bin = {
-  "next-script": "./scripts/index.js",
+  dev: "cross-env NODE_ENV=development npx webpack serve --config ./webpack.config.js",
+  build: "cross-env NODE_ENV=production npx webpack build --config ./webpack.config.js",
+  analyzer: "cross-env NODE_ENV=production CLI=analyzer npx webpack build --config ./webpack.config.js",
 };
 
 module.exports = (templateAPI, template) => {
   if (template === "vue") {
     templateAPI.extendPackage({
-      bin,
       scripts,
       dependencies: {},
       devDependencies: {
@@ -47,7 +44,6 @@ module.exports = (templateAPI, template) => {
     });
   } else if (template === "react") {
     templateAPI.extendPackage({
-      bin,
       scripts,
       dependencies: {},
       devDependencies: {
