@@ -5,17 +5,54 @@ import ejs from "ejs";
 
 import { createFiles } from "../utils/createFiles";
 
-/**
- * 插件写入配置文件至template中,PluginEffectTemplate
- */
 interface WriteConfigIntoTemplate {
-  /** 插件 */
   plugin: string;
-  /** 插件影响框架的文件路径 */
-  path: string;
-  /** 插件影响框架的文件内容 */
-  content: string;
+  paths: string[];
+  contents: string[];
+  regexps: RegExp[];
+  locations: Location[];
+  // 用于定义包裹结构
+  wrapStructures?: string[];
 }
+
+enum Location {
+  BeforeMatchStructure,
+  InMatchStructure,
+  AfterMatchStructureImport,
+  AfterMatchStructureUse,
+  WrapMatchStructure,
+}
+
+const reactRouterRegexpJSX: RegExp = /return\s*\(([\s\S]*?)\);/s;
+const fileImport: RegExp = /^import.*$/gm;
+
+const reactRouter: WriteConfigIntoTemplate = {
+  plugin: "ReactRouter",
+  paths: ["App.jsx", "App.jsx"],
+  contents: [
+    "\n<Router>%*#$</Router>\n",
+    "\nimport { BrowserRouter as Router, Switch, Route } from 'react-router-dom';\n",
+  ],
+  regexps: [reactRouterRegexpJSX, fileImport],
+  locations: [Location.WrapMatchStructure, Location.AfterMatchStructureImport],
+  wrapStructures: ["return (%*#$)", ""],
+};
+
+const createAppRegex: RegExp = /const\s+app\s*=\s*createApp\s*\(\s*App\s*\)/;
+
+const vuePinia: WriteConfigIntoTemplate = {
+  plugin: "vuePinia",
+  paths: ["main.js", "main.js"],
+  contents: [
+    "\nimport { createPinia } from 'pinia'\nconst pinia = createPinia()\n\n",
+    "\n\napp.use(pinia)\n",
+  ],
+  regexps: [createAppRegex, createAppRegex],
+  locations: [Location.BeforeMatchStructure, Location.AfterMatchStructureUse],
+  wrapStructures: ["return (%*#$)", ""],
+};
+
+const plugins: WriteConfigIntoTemplate[] = [reactRouter, vuePinia];
 
 /**
  * 判断是否为文件夹
@@ -133,13 +170,6 @@ class FileTree {
    * @returns {FileData} - 文件树对象
    */
   private buildFileDataByEjs(src: string, parentDir: string, options: any) {
-    const reactRouter: WriteConfigIntoTemplate = {
-      plugin: "ReactRouter",
-      // 后面改一个dir下多个file结构
-      path: "App.jsx",
-      content: "\n<Router>%*#$</Router>\n",
-    };
-
     const baseName = path.basename(src);
     const file: FileData = {
       path: "",
@@ -162,23 +192,76 @@ class FileTree {
         file.children?.push(subTree);
       }
     } else {
-      let fileContent;
-      // 插件对框架的影响中，对EJS模板的影响，且是除公共gneneratorAPI之外的影响
-      if (path.basename(src) === reactRouter.path) {
-        const ejsTemplate = fs.readFileSync(src, "utf8");
-        const match = ejsTemplate.match(/return\s*\(([\s\S]*?)\);/s);
-        if (match && match[1]) {
-          const content = reactRouter.content;
-          const newContent = `return (${content.split("%*#$")[0]}${match[1]}${content.split("%*#$")[1]});`;
-          const replacedContent = ejsTemplate.replace(/return\s*\(([\s\S]*?)\);/s, newContent);
-          fileContent = ejs.render(replacedContent, options);
-        } else {
-          return null;
+      let fileContent = fs.readFileSync(src, "utf8");
+
+      for (const plugin of plugins) {
+        if (plugin.paths.includes(baseName)) {
+          for (let i = 0; i < plugin.paths.length; i++) {
+            if (plugin.paths[i] === baseName) {
+              const match = fileContent.match(plugin.regexps[i]);
+              if (match) {
+                let replacedContent = fileContent;
+
+                switch (plugin.locations[i]) {
+                  case Location.BeforeMatchStructure:
+                    replacedContent = (() => {
+                      const beforeInsertIndex = match.index;
+                      return (
+                        fileContent.slice(0, beforeInsertIndex) +
+                        plugin.contents[i] +
+                        fileContent.slice(beforeInsertIndex)
+                      );
+                    })();
+                    break;
+                  case Location.AfterMatchStructureImport:
+                    replacedContent = (() => {
+                      const importRegex = /^import\s+.*$/gm;
+                      const imports = fileContent.match(importRegex);
+                      if (imports && imports.length > 0) {
+                        const lastImport = imports[imports.length - 1];
+                        const lastImportIndex = fileContent.lastIndexOf(lastImport);
+                        const endOfLastImportIndex = lastImportIndex + lastImport.length;
+                        const beforeImports = fileContent.substring(0, endOfLastImportIndex);
+                        const afterImports = fileContent.substring(endOfLastImportIndex);
+                        return beforeImports + plugin.contents[i] + afterImports;
+                      }
+                      return plugin.contents[i] + "\n" + fileContent;
+                    })();
+                    break;
+                  case Location.AfterMatchStructureUse:
+                    replacedContent = (() => {
+                      const afterInsertIndex = match.index + match[0].length;
+                      return (
+                        fileContent.slice(0, afterInsertIndex) +
+                        plugin.contents[i] +
+                        fileContent.slice(afterInsertIndex)
+                      );
+                    })();
+                    break;
+                  case Location.InMatchStructure:
+                    replacedContent = fileContent.replace(plugin.regexps[i], plugin.contents[i]);
+                    break;
+                  case Location.WrapMatchStructure:
+                    if (plugin.wrapStructures && plugin.wrapStructures[i]) {
+                      const wrapParts = plugin.wrapStructures[i].split("%*#$");
+                      const contentParts = plugin.contents[i].split("%*#$");
+                      const newContent = `${wrapParts[0]}${contentParts[0]}${match[1]}${contentParts[1]}${wrapParts[1]}`;
+                      replacedContent = fileContent.replace(plugin.regexps[i], newContent);
+                    }
+                    break;
+                  default:
+                    break;
+                }
+
+                fileContent = replacedContent;
+              }
+            }
+          }
         }
-      } else {
-        const ejsTemplate = fs.readFileSync(src, "utf8");
-        fileContent = ejs.render(ejsTemplate, options);
       }
+
+      fileContent = ejs.render(fileContent, options);
+
       file.type = "file";
       file.describe = {
         fileName: path.basename(src).split(".")[0],
@@ -195,7 +278,6 @@ class FileTree {
     }
     return file;
   }
-
   /**
    * 根据template模板路径向文件树中添加节点
    * @param url 添加文件的原始的真实路径
