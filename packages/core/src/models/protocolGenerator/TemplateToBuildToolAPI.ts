@@ -1,0 +1,70 @@
+import path from "path";
+import ProtocolGeneratorAPI from "./ProtocolGeneratorAPI";
+import { createConfigByParseAst } from "../../utils/ast/parseAst";
+import { relativePathToRoot } from "../../utils/constants";
+
+/**
+ * 框架对构建工具协议
+ * @param protocols 协议内容
+ */
+class TemplateToBuildToolAPI extends ProtocolGeneratorAPI {
+  protected declare protocols: Record<string, object>; // todo 类型考虑优化
+
+  constructor(protocols) {
+    super(protocols);
+    this.protocols = protocols;
+  }
+
+  generator() {
+    // todo: 加入优先级调度
+    for (let protocol in this.protocols) {
+      this[protocol](this.protocols[protocol]);
+    }
+  }
+  async loadModule(modulePath: string, rootDirectory: string) {
+    /**
+     * 解析后的路径。
+     * @type {string}
+     */
+    const resolvedPath = path.resolve(rootDirectory, modulePath);
+    try {
+      const module = await require(resolvedPath);
+      return module;
+    } catch (error) {
+      console.error(`Error loading module at ${resolvedPath}:`, error);
+      return null;
+    }
+  }
+  // 入口的先暂时不做
+  // ENTRY_FILE(params) {
+  // }
+  async ADD_CONFIG(params) {
+    //这里 有两种插入方式，一种是利用传进来的 content 手动配置去加，另一种是利用已有的插件（例如 plugin-babel）来做固定的配置插入（实际上是原有方案。
+    //这样就解决了普通插件和特殊插件的配置插入问题，比如如果是个特殊插件或者是框架独有的，可以用 content 插入，而普通的通用插件，则使用第二种方式插入。
+    //目前暂时还缺一个特殊插件的例子，待补全。
+    const content = params.content;
+    const { buildTool, template, plugins } = params.perset;
+    const buildToolConfigAst = params.buildToolConfigAst;
+    for (const plugin in plugins) {
+      if (plugins.hasOwnProperty(plugin)) {
+        // 确保只遍历对象自身的属性
+        const entryPath = `packages/@plugin/plugin-${plugin}/index.cjs`;
+        // 执行 plugin或模板的入口文件，把 config 合并到构建工具原始配置中
+        const baseEntry = await this.loadModule(
+          entryPath,
+          path.resolve(__dirname, relativePathToRoot),
+        );
+        // 处理构建工具配置
+        if (typeof baseEntry === "function") {
+          // 解析配置项成 ast 语法树,并且和原始配置的 ast 合并
+          createConfigByParseAst(buildTool, baseEntry(buildTool, template), buildToolConfigAst);
+        }
+      }
+    }
+  }
+  // ADD_DEPENDENCIES(params) {
+  //   //直接在templateAPI调用extendPackage就可以了，这里就不再次封装了。
+  // }
+}
+
+export default TemplateToBuildToolAPI;
