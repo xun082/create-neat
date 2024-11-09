@@ -1,7 +1,9 @@
 import path from "path";
-import ProtocolGeneratorAPI from "./ProtocolGeneratorAPI";
+
 import { createConfigByParseAst } from "../../utils/ast/parseAst";
 import { relativePathToRoot } from "../../utils/constants";
+
+import ProtocolGeneratorAPI from "./ProtocolGeneratorAPI";
 
 /**
  * 框架对构建工具协议
@@ -17,7 +19,7 @@ class TemplateToBuildToolAPI extends ProtocolGeneratorAPI {
 
   generator() {
     // todo: 加入优先级调度
-    for (let protocol in this.protocols) {
+    for (const protocol in this.protocols) {
       this[protocol](this.protocols[protocol]);
     }
   }
@@ -43,10 +45,14 @@ class TemplateToBuildToolAPI extends ProtocolGeneratorAPI {
     //这样就解决了普通插件和特殊插件的配置插入问题，比如如果是个特殊插件或者是框架独有的，可以用 content 插入，而普通的通用插件，则使用第二种方式插入。
     //目前暂时还缺一个特殊插件的例子，待补全。
     const content = params.content;
+    if (content) {
+      console.log(content);
+    }
+
     const { buildTool, template, plugins } = params.perset;
     const buildToolConfigAst = params.buildToolConfigAst;
     for (const plugin in plugins) {
-      if (plugins.hasOwnProperty(plugin)) {
+      if (Object.prototype.hasOwnProperty.call(plugins, plugin)) {
         // 确保只遍历对象自身的属性
         const entryPath = `packages/@plugin/plugin-${plugin}/index.cjs`;
         // 执行 plugin或模板的入口文件，把 config 合并到构建工具原始配置中

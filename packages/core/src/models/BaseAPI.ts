@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+
 import Generator from "./Generator";
 import PluginToTemplateAPI from "./protocolGenerator/PluginToTemplateAPI";
 import TemplateToBuildToolAPI from "./protocolGenerator/TemplateToBuildToolAPI";
