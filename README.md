@@ -30,11 +30,7 @@
 - 🌈 **活跃的社区氛围**：提供丰富的技术交流和学习资源，帮助开发者快速成长。
 - ⚙️ **定期更新与维护**：定期更新工具，修复bug、完善功能、加入新的技术栈支持。
 - 🎉 **用户友好的体验**：专注于用户体验，力求让每一位用户都能享受到流畅、无阻的开发过程。
-<<<<<<< HEAD
-  
-=======
 
->>>>>>> 1996fd4 (Update README.md)
 ### 三、快速开始 🚩
 
 #### 安装依赖
@@ -49,7 +45,6 @@ create-neat <project-name>
 
 输入命令 `create-neat my-app` 后，控制台将提供以下功能选择:
 
-<<<<<<< HEAD
 ```markdown
 create-you-app
 
@@ -59,9 +54,6 @@ create-you-app
 ○ Default-react ( `[react]` eslint, babel, webpack )
 ○ Manually select preset
 ```
-=======
-![功能选择界面](https://imgur.la/images/2024/10/21/1.png)
->>>>>>> 1996fd4 (Update README.md)
 
 根据需求选择对应框架，或通过 `Manually select preset` 进行自由组合。`create-neat` 将根据选择的预设创建不同的开箱即用应用程序，选项包括：
 
@@ -74,7 +66,7 @@ create-you-app
 
 若项目创建成功，可查看如下效果图：
 
-![项目创建成功](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/fe46e77448d54c14aebf4557db949883~tplv-k3u1fbpfcp-zoom-1.image)
+![项目创建成功](assets/project_create_renderings.png)
 
 #### 启动项目
 ```shell
