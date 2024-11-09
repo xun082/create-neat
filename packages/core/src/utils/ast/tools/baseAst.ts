@@ -1,4 +1,4 @@
-import { traverse } from "@babel/traverse";
+import traverse from "@babel/traverse";
 
 import { ASTOptions } from "../../../types/ast";
 import { Build_Tool } from "../../../constants/ast";
