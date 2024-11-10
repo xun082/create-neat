@@ -26,9 +26,9 @@ class BaseAPI {
   }
 
   // todo: jsdoc + protocols 的类型
-  protocolGenerate(protocols){
-    const pluginToTemplate = new PluginToTemplateAPI(protocols)
-    pluginToTemplate.generator()
+  protocolGenerate(protocols) {
+    const pluginToTemplate = new PluginToTemplateAPI(protocols);
+    pluginToTemplate.generator();
   }
 
   /**

@@ -1,10 +1,10 @@
 import path from "path";
 import fs from "fs-extra";
 import ejs from "ejs";
-// import chalk from "chalk";
 
 import { createFiles } from "../utils/createFiles";
 
+import PluginToTemplateAPI from "./protocolGenerator/PluginToTemplateAPI";
 /**
  * 判断是否为文件夹
  * @param {string} path - 路径
@@ -53,14 +53,10 @@ interface FileData {
  * @class
  */
 class FileTree {
-  private rootDirectory: string; //文件树的根目录路径
-  private fileData: FileData; //文件树对象
-  private alteration = { js: "ts", jsx: "tsx" }; // 扩展名转换映射
+  private rootDirectory: string;
+  private fileData: any;
+  private pluginToTemplateAPI: PluginToTemplateAPI;
 
-  /**
-   * @constructor
-   * @param {string} rootDirectory - 文件树的根目录路径
-   */
   constructor(rootDirectory: string) {
     this.rootDirectory = rootDirectory;
     this.fileData = {
@@ -69,30 +65,29 @@ class FileTree {
       children: [],
       describe: { fileName: path.basename(rootDirectory) },
     };
+    // 初始化 PluginToTemplateAPI，传入所需协议
+    this.pluginToTemplateAPI = new PluginToTemplateAPI({});
   }
 
   /**
-   * 根据目录构造文件数对象
-   * @static
-   * @param {string} src - 文件或文件夹的真实路径
-   * @param {string} parentDir - 创建文件后的父文件夹路径
-   * @returns {FileData} - 文件树对象
+   * 根据目录构造文件树对象
+   * @param src 文件或文件夹的真实路径
+   * @param parentDir 创建文件后的父文件夹路径
+   * @returns 文件树对象
    */
   private buildFileData(src: string, parentDir?: string) {
     const baseName = path.basename(src);
 
-    const file: FileData = {
+    const file: any = {
       path: path.resolve(parentDir, baseName),
       children: [],
       describe: {},
     };
-    //对目录和文件处理不同，是目录则要遍历处理children
+
     if (isDirectoryOrFile(src)) {
       file.type = "dir";
       file.describe.fileName = baseName;
-      const entries = fs.readdirSync(src, {
-        withFileTypes: true,
-      });
+      const entries = fs.readdirSync(src, { withFileTypes: true });
       for (const entry of entries) {
         const subTree = this.buildFileData(
           path.join(src, entry.name),
@@ -101,7 +96,11 @@ class FileTree {
         file.children?.push(subTree);
       }
     } else {
-      const fileContent = fs.readFileSync(src, "utf8");
+      let fileContent = fs.readFileSync(src, "utf8");
+
+      // 使用 PluginToTemplateAPI 处理文件内容
+      fileContent = this.pluginToTemplateAPI.processFileContent(baseName, fileContent);
+
       file.type = "file";
       file.describe = {
         fileName: path.basename(src).split(".")[0],
@@ -113,27 +112,24 @@ class FileTree {
   }
 
   /**
-   * 借助ejs构造文件树对象
-   * @static
-   * @param {string} src - 文件或文件夹的真实路径
-   * @param {string} parentDir - 创建文件后的父文件夹路径
-   * @param {string} options - ejs渲染配置参数
-   * @returns {FileData} - 文件树对象
+   * 通过ejs模板构建文件数据
+   * @param src 源文件路径
+   * @param parentDir 父目录
+   * @param options ejs选项
    */
   private buildFileDataByEjs(src: string, parentDir: string, options: any) {
     const baseName = path.basename(src);
-    const file: FileData = {
+    const file: any = {
       path: "",
       children: [],
       describe: {},
     };
+
     if (isDirectoryOrFile(src)) {
       file.type = "dir";
       file.path = path.resolve(parentDir, baseName);
       file.describe.fileName = baseName;
-      const entries = fs.readdirSync(src, {
-        withFileTypes: true,
-      });
+      const entries = fs.readdirSync(src, { withFileTypes: true });
       for (const entry of entries) {
         const subTree = this.buildFileDataByEjs(
           path.join(src, entry.name),
@@ -143,16 +139,18 @@ class FileTree {
         file.children?.push(subTree);
       }
     } else {
-      const ejsTempalte = fs.readFileSync(src, "utf8");
-      const fileContent = ejs.render(ejsTempalte, options);
+      let fileContent = fs.readFileSync(src, "utf8");
+
+      // 使用 PluginToTemplateAPI 处理文件内容
+      fileContent = this.pluginToTemplateAPI.processFileContent(baseName, fileContent);
+
+      // EJS 渲染
+      fileContent = ejs.render(fileContent, options);
+
       file.type = "file";
       file.describe = {
         fileName: path.basename(src).split(".")[0],
-        fileExtension: process.env.isTs
-          ? this.alteration[path.extname(src).slice(1)]
-            ? this.alteration[path.extname(src).slice(1)]
-            : path.extname(src).slice(1)
-          : path.extname(src).slice(1),
+        fileExtension: path.extname(src).slice(1),
         fileContent,
       };
       file.path = path.resolve(
@@ -162,7 +160,6 @@ class FileTree {
     }
     return file;
   }
-
   /**
    * 根据template模板路径向文件树中添加节点
    * @param url 添加文件的原始的真实路径
