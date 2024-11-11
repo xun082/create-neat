@@ -234,10 +234,6 @@ class Generator {
     if (templateGenerator && typeof templateGenerator === "function") {
       // 将框架需要的依赖加入到package.json中
       await templateGenerator(this.templateAPI);
-      // 如果框架需要对构建工具进行配置，借助于ast
-      await this.mergeBuildToolConfigByAst(
-        `packages/core/template/template-${this.templateName}/index.cjs`,
-      );
     }
   }
 
@@ -413,6 +409,10 @@ class Generator {
    */
   getRootDirectory(): string {
     return this.rootDirectory;
+  }
+
+  getPreset(): Preset {
+    return this.preset;
   }
 }
 
