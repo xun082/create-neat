@@ -3,6 +3,13 @@ import path from "path";
 
 import Generator from "./Generator";
 import PluginToTemplateAPI from "./protocolGenerator/PluginToTemplateAPI";
+import TemplateToBuildToolAPI from "./protocolGenerator/TemplateToBuildToolAPI";
+
+const {
+  pluginToTemplateProtocol,
+  pluginToBuildToolProtocol,
+  templateToBuildToolProtocol,
+} = require("../configs/protocol");
 
 interface ConfigFileData {
   file: Record<string, string[]>;
@@ -27,8 +34,21 @@ class BaseAPI {
 
   // todo: jsdoc + protocols 的类型
   protocolGenerate(protocols) {
-    const pluginToTemplate = new PluginToTemplateAPI(protocols);
-    pluginToTemplate.generator();
+    const preset = this.generator.getPreset();
+    const buildToolConfigAst = this.generator.buildToolConfigAst;
+    for (const protocol in protocols) {
+      let api;
+      if (protocol in pluginToTemplateProtocol) {
+        api = new PluginToTemplateAPI(protocols);
+      } else if (protocol in pluginToBuildToolProtocol) {
+        // api = new PluginToBuildToolAPI(protocols);
+      } else if (protocol in templateToBuildToolProtocol) {
+        protocols[protocol].perset = preset;
+        protocols[protocol].buildToolConfigAst = buildToolConfigAst;
+        api = new TemplateToBuildToolAPI(protocols);
+      }
+      api.generator();
+    }
   }
 
   /**
