@@ -1,5 +1,6 @@
 const protocol = require("../../../src/configs/protocol.ts")
 const templateToBuildToolProtocol = protocol.templateToBuildToolProtocol;
+
 module.exports = (templateAPI) => {
   templateAPI.extendPackage({
     dependencies: {
@@ -13,11 +14,7 @@ module.exports = (templateAPI) => {
   templateAPI.protocolGenerate({
     [templateToBuildToolProtocol.ADD_CONFIG]: {
       params: {
-        content: {
-          buildToolName: 'webpack',  //这里怎么拿选项呢？
-          template: 'vue',
-          options: '' //补全一下定义
-        }
+        content: 'Specil plugin',
       },
       priority: 1,
     },

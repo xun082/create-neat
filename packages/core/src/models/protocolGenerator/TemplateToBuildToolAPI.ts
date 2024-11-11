@@ -2,8 +2,21 @@ import path from "path";
 
 import { createConfigByParseAst } from "../../utils/ast/parseAst";
 import { relativePathToRoot } from "../../utils/constants";
+import { Preset } from "../../utils/preset";
 
 import ProtocolGeneratorAPI from "./ProtocolGeneratorAPI";
+
+/**
+ * ADD_CONFIG传入参数
+ * @property {string} content - 特殊插件 content
+ * @property {Preset} perset - 用户选项配置
+ * @property {any} buildToolConfigAst - 构建工具 AST
+ */
+interface ConfigParamters {
+  content?: string;
+  perset: Preset;
+  buildToolConfigAst: any;
+}
 
 /**
  * 框架对构建工具协议
@@ -18,7 +31,6 @@ class TemplateToBuildToolAPI extends ProtocolGeneratorAPI {
   }
 
   generator() {
-    // todo: 加入优先级调度
     for (const protocol in this.protocols) {
       this[protocol](this.protocols[protocol]);
     }
@@ -37,13 +49,10 @@ class TemplateToBuildToolAPI extends ProtocolGeneratorAPI {
       return null;
     }
   }
-  // 入口的先暂时不做
-  // ENTRY_FILE(params) {
-  // }
-  async ADD_CONFIG(params) {
+
+  async ADD_CONFIG(params: ConfigParamters) {
     //这里 有两种插入方式，一种是利用传进来的 content 手动配置去加，另一种是利用已有的插件（例如 plugin-babel）来做固定的配置插入（实际上是原有方案。
     //这样就解决了普通插件和特殊插件的配置插入问题，比如如果是个特殊插件或者是框架独有的，可以用 content 插入，而普通的通用插件，则使用第二种方式插入。
-    //目前暂时还缺一个特殊插件的例子，待补全。
     const content = params.content;
     if (content) {
       console.log(content);
@@ -54,7 +63,7 @@ class TemplateToBuildToolAPI extends ProtocolGeneratorAPI {
     for (const plugin in plugins) {
       if (Object.prototype.hasOwnProperty.call(plugins, plugin)) {
         // 确保只遍历对象自身的属性
-        const entryPath = `packages/@plugin/plugin-${plugin}/index.cjs`;
+        const entryPath = `@plugin/plugin-${plugin}/index.cjs`;
         // 执行 plugin或模板的入口文件，把 config 合并到构建工具原始配置中
         const baseEntry = await this.loadModule(
           entryPath,
@@ -68,9 +77,6 @@ class TemplateToBuildToolAPI extends ProtocolGeneratorAPI {
       }
     }
   }
-  // ADD_DEPENDENCIES(params) {
-  //   //直接在templateAPI调用extendPackage就可以了，这里就不再次封装了。
-  // }
 }
 
 export default TemplateToBuildToolAPI;
