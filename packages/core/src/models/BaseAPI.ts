@@ -4,6 +4,7 @@ import path from "path";
 import Generator from "./Generator";
 import PluginToTemplateAPI from "./protocolGenerator/PluginToTemplateAPI";
 import TemplateToBuildToolAPI from "./protocolGenerator/TemplateToBuildToolAPI";
+import PluginToBuildToolAPI from "./protocolGenerator/PluginToBuildToolAPI";
 
 const {
   pluginToTemplateProtocol,
@@ -41,7 +42,7 @@ class BaseAPI {
       if (protocol in pluginToTemplateProtocol) {
         api = new PluginToTemplateAPI(protocols);
       } else if (protocol in pluginToBuildToolProtocol) {
-        // api = new PluginToBuildToolAPI(protocols);
+        api = new PluginToBuildToolAPI(protocols);
       } else if (protocol in templateToBuildToolProtocol) {
         protocols[protocol].perset = preset;
         protocols[protocol].buildToolConfigAst = buildToolConfigAst;

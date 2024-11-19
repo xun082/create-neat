@@ -10,6 +10,7 @@ exports.pluginToTemplateProtocol = {
 // 插件对构建工具的协议
 exports.pluginToBuildToolProtocol = {
   ...globalProtocol,
+  ADD_CONFIG: "ADD_CONFIG",
 };
 // 框架对构建工具的协议
 exports.templateToBuildToolProtocol = {

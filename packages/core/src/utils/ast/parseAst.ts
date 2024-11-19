@@ -90,12 +90,14 @@ function mergeWebpackConfigAst(options: Options, ast) {
             let parseExcludeAst;
             let parseLoaderAst;
             let ruleAstNode;
-            // 如果include属性为数组
-            if (Array.isArray(rule.include)) {
-              parseIncludeAst = arrayExpression(rule.include.map((item) => stringLiteral(item)));
-            } else {
-              // 如果include属性值为正则表达式
-              parseIncludeAst = regExpLiteral(formatReg(`${rule.include}`));
+            if (rule.include) {
+              // 如果include属性为数组
+              if (Array.isArray(rule.include)) {
+                parseIncludeAst = arrayExpression(rule.include.map((item) => stringLiteral(item)));
+              } else {
+                // 如果include属性值为正则表达式
+                parseIncludeAst = regExpLiteral(formatReg(`${rule.include}`));
+              }
             }
             // 如果exclude属性值为数组
             if (Array.isArray(rule.exclude)) {
@@ -112,12 +114,14 @@ function mergeWebpackConfigAst(options: Options, ast) {
               } else {
                 parseLoaderAst = stringLiteral(rule.loader);
               }
-              ruleAstNode = objectExpression([
-                createObjectProperty("test", regExpLiteral(formatReg(`${rule.test}`))),
-                createObjectProperty("include", parseIncludeAst),
-                createObjectProperty("exclude", parseExcludeAst),
-                createObjectProperty("loader", parseLoaderAst),
-              ]);
+              ruleAstNode = objectExpression(
+                [
+                  createObjectProperty("test", regExpLiteral(formatReg(`${rule.test}`))),
+                  parseIncludeAst ? createObjectProperty("include", parseIncludeAst) : null,
+                  createObjectProperty("exclude", parseExcludeAst),
+                  createObjectProperty("loader", parseLoaderAst),
+                ].filter(Boolean),
+              );
             }
             if (rule.use) {
               const parseUseAst = arrayExpression(
@@ -131,12 +135,14 @@ function mergeWebpackConfigAst(options: Options, ast) {
                   }
                 }),
               );
-              ruleAstNode = objectExpression([
-                createObjectProperty("test", regExpLiteral(formatReg(`${rule.test}`))),
-                createObjectProperty("include", parseIncludeAst),
-                createObjectProperty("exclude", parseExcludeAst),
-                createObjectProperty("use", parseUseAst),
-              ]);
+              ruleAstNode = objectExpression(
+                [
+                  createObjectProperty("test", regExpLiteral(formatReg(`${rule.test}`))),
+                  parseIncludeAst ? createObjectProperty("include", parseIncludeAst) : null,
+                  createObjectProperty("exclude", parseExcludeAst),
+                  createObjectProperty("use", parseUseAst),
+                ].filter(Boolean),
+              );
             }
 
             rulesAstNodes.push(ruleAstNode);
