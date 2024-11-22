@@ -51,6 +51,8 @@ class PluginToTemplateAPI extends ProtocolGeneratorAPI {
   private fileImport: RegExp = /^import.*$/gm;
   // 匹配 createApp 语句
   private createAppRegex: RegExp = /const\s+app\s*=\s*createApp\s*\(\s*App\s*\)/;
+  // 匹配 export default 语句
+  private exportDefaultRexg = /export\s+default\s+(\w+);/;
 
   constructor(protocols) {
     super(protocols);
@@ -83,7 +85,24 @@ class PluginToTemplateAPI extends ProtocolGeneratorAPI {
       wrapStructures: ["return (%*#$)", ""],
     };
 
-    this.plugins = [reactRouter, vuePinia];
+    const reactMobx: WriteConfigIntoTemplate = {
+      plugin: "reactMobx",
+      paths: ["App.jsx", "App.jsx", "App.jsx"],
+      contents: [
+        "\nimport { observer } from 'mobx-react-lite';",
+        "\nimport store from './store';",
+        "observer(%*#$)",
+      ],
+      regexps: [this.fileImport, this.fileImport, this.exportDefaultRexg],
+      locations: [
+        Location.AfterMatchStructureImport,
+        Location.AfterMatchStructureImport,
+        Location.WrapMatchStructure,
+      ],
+      wrapStructures: ["", "", "export default %*#$;"],
+    };
+
+    this.plugins = [reactRouter, vuePinia, reactMobx];
   }
 
   // 处理文件内容
