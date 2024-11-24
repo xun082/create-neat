@@ -5,6 +5,7 @@ const globalProtocol = {
 // 插件对框架的协议
 exports.pluginToTemplateProtocol = {
   ...globalProtocol,
+  PROCESS_SASS: "PROCESS_SASS"
 };
 
 // 插件对构建工具的协议

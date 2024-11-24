@@ -15,6 +15,8 @@ interface ConfigFileData {
   file: Record<string, string[]>;
 }
 
+type ProtocolAPI = PluginToTemplateAPI | TemplateToBuildToolAPI /* | PluginToBuildToolAPI */;
+
 /**
  * 通用类，为 generator 和 template 提供 API
  * @param plugin 插件名
@@ -36,19 +38,22 @@ class BaseAPI {
   protocolGenerate(protocols) {
     const preset = this.generator.getPreset();
     const buildToolConfigAst = this.generator.buildToolConfigAst;
+    const files = this.generator.getFiles();
+    let api: ProtocolAPI = undefined;
     for (const protocol in protocols) {
-      let api;
       if (protocol in pluginToTemplateProtocol) {
-        api = new PluginToTemplateAPI(protocols);
+        protocols[protocol].perset = preset;
+        protocols[protocol].files = files;
+        api = api === undefined ? new PluginToTemplateAPI(protocols) : api;
       } else if (protocol in pluginToBuildToolProtocol) {
         // api = new PluginToBuildToolAPI(protocols);
       } else if (protocol in templateToBuildToolProtocol) {
         protocols[protocol].perset = preset;
         protocols[protocol].buildToolConfigAst = buildToolConfigAst;
-        api = new TemplateToBuildToolAPI(protocols);
+        api = api === undefined ? new TemplateToBuildToolAPI(protocols) : api;
       }
-      api.generator();
     }
+    api.generator();
   }
 
   /**
