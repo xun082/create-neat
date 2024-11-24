@@ -148,7 +148,7 @@ async function projectSelect() {
       { value: "eslint", label: "eslint" },
       { value: "prettier", label: "prettier" },
       { value: "husky", label: "husky" },
-      { value: "sass", label: "sass"}
+      { value: "sass", label: "sass" },
     ],
     required: false,
   })) as string[];
