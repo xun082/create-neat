@@ -1,4 +1,5 @@
 import ProtocolGeneratorAPI from "./ProtocolGeneratorAPI";
+import path from "path";
 
 // 定义 Location 枚举，用于指定插件内容插入的位置
 /**
@@ -51,9 +52,12 @@ class PluginToTemplateAPI extends ProtocolGeneratorAPI {
   private fileImport: RegExp = /^import.*$/gm;
   // 匹配 createApp 语句
   private createAppRegex: RegExp = /const\s+app\s*=\s*createApp\s*\(\s*App\s*\)/;
+  // 匹配 index.css 语句
+  private cssRegex: RegExp = /import\s+["']\.\/index\.css["'];/;
 
   constructor(protocols) {
     super(protocols);
+    this.protocols = protocols;
     this.initializePlugins();
   }
 
@@ -83,6 +87,14 @@ class PluginToTemplateAPI extends ProtocolGeneratorAPI {
       wrapStructures: ["return (%*#$)", ""],
     };
 
+    const sass: WriteConfigIntoTemplate = {
+      plugin: "sass",
+      paths: ["main.css"],
+      contents: ['\nimport "./index.scss";'],
+      regexps: [this.cssRegex],
+      locations: [Location.BeforeMatchStructure],
+    };
+
     this.plugins = [reactRouter, vuePinia];
   }
 
@@ -101,6 +113,34 @@ class PluginToTemplateAPI extends ProtocolGeneratorAPI {
     }
 
     return processedContent;
+  }
+
+  PROCESS_SASS(params) {
+    const { buildTool, template, plugins } = params.perset;
+    const fileData = params.files.fileData;
+    if ("sass" in plugins) {
+      for (let i = 0; i < fileData.children.length; i++) {
+        const dirName = path.basename(fileData.children[i].path);
+        if (dirName === "src") {
+          if (template === "vue") {
+            let vueData = fileData.children[i].children[0].describe;
+            vueData.fileContent = vueData.fileContent.replace(
+              `</script>\n\n<style scoped>\n@import \"./index.css\";\n</style>\n`,
+              `</script>\n\n<style scoped lang="scss">\n@import \"./index.scss\";\n</style>\n`,
+            );
+          } else if (template === "react") {
+            let reactData = fileData.children[i].children[0].describe;
+            reactData.fileContent = reactData.fileContent.replace(
+              `import \"./index.css\"`,
+              `import \"./index.scss\"`,
+            );
+          }
+          let cssData = fileData.children[i].children[1];
+          cssData.describe.fileExtension = "scss";
+          cssData.path = cssData.path.replace(/\.css$/, ".scss");
+        }
+      }
+    }
   }
 
   // 应用插件转换

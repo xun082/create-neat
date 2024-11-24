@@ -264,6 +264,7 @@ class Generator {
       framework: this.templateName,
       bundler: this.buildTool,
       language: "typescript" in this.plugins ? "typescript" : "javascript",
+      plugin: "sass" in this.preset.plugins ? "sass" : "",
       VueEjs: {
         useElementPlus: !!this.preset.plugins["element-plus"],
       },
@@ -283,17 +284,6 @@ class Generator {
       `./template-${this.buildTool}-script/generator/template`,
     );
     this.files.addToTreeByTemplateDirPath(buildToolScriptPath, this.rootDirectory);
-
-    // 为每个 plugin 创建 GeneratorAPI 实例，调用插件中的 generate
-    for (const pluginName of Object.keys(this.plugins)) {
-      await this.pluginGenerate(pluginName);
-    }
-
-    // 将框架需要的依赖添加到package.json中，以及如果该框架如果需要添加构建工具配置属性，则借助ast进行添加
-    await this.templateGenerate();
-
-    // 将构建工具需要的依赖添加到package.json中
-    await this.buildToolGenerator();
 
     // 根据选择的框架拉取模板进行渲染
     const templatePath = join(
@@ -318,7 +308,17 @@ class Generator {
     };
 
     this.files.addToTreeByTemplateDirPathAndEjs(templatePath, this.rootDirectory, options);
-    // new FileTree(templatePath).renderTemplates(this.rootDirectory, undefined, options);
+
+    // 为每个 plugin 创建 GeneratorAPI 实例，调用插件中的 generate
+    for (const pluginName of Object.keys(this.plugins)) {
+      await this.pluginGenerate(pluginName);
+    }
+
+    // 将框架需要的依赖添加到package.json中，以及如果该框架如果需要添加构建工具配置属性，则借助ast进行添加
+    await this.templateGenerate();
+
+    // 将构建工具需要的依赖添加到package.json中
+    await this.buildToolGenerator();
 
     // 与构建工具有关的配置全部添加完毕，生成构建工具配置文件
     const buildConfigFinalContent = generator(this.buildToolConfigAst).code;
@@ -413,6 +413,10 @@ class Generator {
 
   getPreset(): Preset {
     return this.preset;
+  }
+
+  getFiles(): FileTree {
+    return this.files;
   }
 }
 

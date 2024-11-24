@@ -1,9 +1,9 @@
-const { pluginToTemplateProtocol } = require("'../../../core/src/configs/protocol.ts'"); // todo: 新增 alias
-
+const protocol = require("../../../core/src/configs/protocol.ts");
+const pluginToTemplateProtocol = protocol.pluginToTemplateProtocol;
 module.exports = (generatorAPI) => {
   generatorAPI.extendPackage({
     devDependencies: {
-      scss: "latest", // todo: 暂时的版本
+      scss: "^1.81.0", // todo: 暂时的版本
     },
   });
 
@@ -16,5 +16,10 @@ module.exports = (generatorAPI) => {
       },
       priority: 1, // 优先级
     },
+    [pluginToTemplateProtocol.PROCESS_SASS]: {
+      params: {
+        content: '',// sass并没有什么特殊语句要添加，所以内容在 ast 方法内实现
+      }
+    }
   });
 };
