@@ -1,6 +1,8 @@
 import path from "path";
 
 import ProtocolGeneratorAPI from "./ProtocolGeneratorAPI";
+import FileTree, { FileData } from "../FileTree";
+import { Preset } from "../../utils/preset";
 
 // 定义 Location 枚举，用于指定插件内容插入的位置
 /**
@@ -38,6 +40,19 @@ interface WriteConfigIntoTemplate {
   regexps: RegExp[];
   locations: Location[];
   wrapStructures?: string[];
+}
+
+/**
+ * 样式插件参数
+ * @interface
+ * @param {Preset} preset - 用户预设
+ * @param {FileTree} files - 文件树，包含了基础的 src 目录
+ * @param {Record<'content', string>} params - 传入的 content，适用于一些需要添加字段的特殊情况。
+ */
+interface StyleParams {
+  preset: Preset;
+  files: FileTree;
+  params: Record<'content', string>;
 }
 
 /**
@@ -115,32 +130,21 @@ class PluginToTemplateAPI extends ProtocolGeneratorAPI {
 
     return processedContent;
   }
-
-  PROCESS_SASS(params) {
-    const { template, plugins } = params.perset;
-    const fileData = params.files.fileData;
-    if ("sass" in plugins) {
-      for (let i = 0; i < fileData.children.length; i++) {
-        const dirName = path.basename(fileData.children[i].path);
-        if (dirName === "src") {
-          if (template === "vue") {
-            const vueData = fileData.children[i].children[0].describe;
-            vueData.fileContent = vueData.fileContent.replace(
-              `</script>\n\n<style scoped>\n@import "./index.css";\n</style>\n`,
-              `</script>\n\n<style scoped lang="scss">\n@import "./index.scss";\n</style>\n`,
-            );
-          } else if (template === "react") {
-            const reactData = fileData.children[i].children[0].describe;
-            reactData.fileContent = reactData.fileContent.replace(
-              `import "./index.css"`,
-              `import "./index.scss"`,
-            );
-          }
-          const cssData = fileData.children[i].children[1];
-          cssData.describe.fileExtension = "scss";
-          cssData.path = cssData.path.replace(/\.css$/, ".scss");
+  /**
+   * 样式类插件协议
+   * @param params
+   */
+  PROCESS_STYLE_PLUGIN(params: StyleParams) {
+    const { template, plugins } = params.preset;
+    const fileData: FileData = params.files.getFileData();
+    try {
+      for (const plugin in plugins) {
+        if (plugins.hasOwnProperty(plugin) && plugin === "sass") {
+          this.processSass(fileData, template);
         }
       }
+    } catch (error) {
+      console.log(error);
     }
   }
 
@@ -223,6 +227,31 @@ class PluginToTemplateAPI extends ProtocolGeneratorAPI {
       structure.replace("%*#$", wrappedContent) +
       content.slice(match.index! + match[0].length)
     );
+  }
+
+  private processSass(fileData: FileData, template: string): FileData {
+    for (let i = 0; i < fileData.children.length; i++) {
+      const dirName = path.basename(fileData.children[i].path);
+      if (dirName === "src") {
+        if (template === "vue") {
+          const vueData = fileData.children[i].children[0].describe;
+          vueData.fileContent = vueData.fileContent.replace(
+            `</script>\n\n<style scoped>\n@import "./index.css";\n</style>\n`,
+            `</script>\n\n<style scoped lang="scss">\n@import "./index.scss";\n</style>\n`,
+          );
+        } else if (template === "react") {
+          const reactData = fileData.children[i].children[0].describe;
+          reactData.fileContent = reactData.fileContent.replace(
+            `import "./index.css"`,
+            `import "./index.scss"`,
+          );
+        }
+        const cssData = fileData.children[i].children[1];
+        cssData.describe.fileExtension = "scss";
+        cssData.path = cssData.path.replace(/\.css$/, ".scss");
+      }
+    }
+    return fileData;
   }
 }
 

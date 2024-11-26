@@ -40,9 +40,10 @@ class BaseAPI {
     const buildToolConfigAst = this.generator.buildToolConfigAst;
     const files = this.generator.getFiles();
     let api: ProtocolAPI = undefined;
+    // 此处会遍历调用的各个协议，并将 Generator 的数据（利如用户preset）传入协议处理器中去。
     for (const protocol in protocols) {
       if (protocol in pluginToTemplateProtocol) {
-        protocols[protocol].perset = preset;
+        protocols[protocol].preset = preset;
         protocols[protocol].files = files;
         api = api === undefined ? new PluginToTemplateAPI(protocols) : api;
       } else if (protocol in pluginToBuildToolProtocol) {

@@ -16,7 +16,7 @@ module.exports = (generatorAPI) => {
       },
       priority: 1, // 优先级
     },
-    [pluginToTemplateProtocol.PROCESS_SASS]: {
+    [pluginToTemplateProtocol.PROCESS_STYLE_PLUGIN]: {
       params: {
         content: '',// sass并没有什么特殊语句要添加，所以内容在 ast 方法内实现
       }
