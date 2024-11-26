@@ -3,6 +3,7 @@ import path from "path";
 import ProtocolGeneratorAPI from "./ProtocolGeneratorAPI";
 import FileTree, { FileData } from "../FileTree";
 import { Preset } from "../../utils/preset";
+import { ProtocolProps } from "../BaseAPI";
 
 // 定义 Location 枚举，用于指定插件内容插入的位置
 /**
@@ -49,11 +50,6 @@ interface WriteConfigIntoTemplate {
  * @param {FileTree} files - 文件树，包含了基础的 src 目录
  * @param {Record<'content', string>} params - 传入的 content，适用于一些需要添加字段的特殊情况。
  */
-interface StyleParams {
-  preset: Preset;
-  files: FileTree;
-  params: Record<'content', string>;
-}
 
 /**
  * 插件影响框架的协议处理器
@@ -68,12 +64,17 @@ class PluginToTemplateAPI extends ProtocolGeneratorAPI {
   private fileImport: RegExp = /^import.*$/gm;
   // 匹配 createApp 语句
   private createAppRegex: RegExp = /const\s+app\s*=\s*createApp\s*\(\s*App\s*\)/;
-  // 匹配 index.css 语句
-  private cssRegex: RegExp = /import\s+["']\.\/index\.css["'];/;
 
-  constructor(protocols) {
+  private StyleReg: { [key: string]: RegExp } = {
+    css: /css$/i,
+    scss: /scss$/i, // 匹配以 .scss 结尾的文件
+    less: /less$/i, // 匹配以 .less 结尾的文件
+  };
+
+  constructor(protocols, props) {
     super(protocols);
     this.protocols = protocols;
+    this.props = props;
     this.initializePlugins();
   }
 
@@ -103,15 +104,7 @@ class PluginToTemplateAPI extends ProtocolGeneratorAPI {
       wrapStructures: ["return (%*#$)", ""],
     };
 
-    const sass: WriteConfigIntoTemplate = {
-      plugin: "sass",
-      paths: ["main.css"],
-      contents: ['\nimport "./index.scss";'],
-      regexps: [this.cssRegex],
-      locations: [Location.BeforeMatchStructure],
-    };
-
-    this.plugins = [reactRouter, vuePinia, sass];
+    this.plugins = [reactRouter, vuePinia];
   }
 
   // 处理文件内容
@@ -134,13 +127,13 @@ class PluginToTemplateAPI extends ProtocolGeneratorAPI {
    * 样式类插件协议
    * @param params
    */
-  PROCESS_STYLE_PLUGIN(params: StyleParams) {
-    const { template, plugins } = params.preset;
-    const fileData: FileData = params.files.getFileData();
+  PROCESS_STYLE_PLUGIN() {
+    const { template, plugins } = this.props.preset;
+    const fileData: FileData = this.props.files.getFileData();
     try {
       for (const plugin in plugins) {
         if (plugins.hasOwnProperty(plugin) && plugin === "sass") {
-          this.processSass(fileData, template);
+          this.processStyleFiles("scss", fileData, this.processSass);
         }
       }
     } catch (error) {
@@ -229,7 +222,9 @@ class PluginToTemplateAPI extends ProtocolGeneratorAPI {
     );
   }
 
-  private processSass(fileData: FileData, template: string): FileData {
+  // 处理 sass 的回调函数，这里传入props 的原因是因为回调函数无法找到 API 的 this。
+  private processSass(fileData: FileData, props: ProtocolProps): FileData {
+    const template = props.preset.template;
     for (let i = 0; i < fileData.children.length; i++) {
       const dirName = path.basename(fileData.children[i].path);
       if (dirName === "src") {
@@ -246,11 +241,42 @@ class PluginToTemplateAPI extends ProtocolGeneratorAPI {
             `import "./index.scss"`,
           );
         }
-        const cssData = fileData.children[i].children[1];
-        cssData.describe.fileExtension = "scss";
-        cssData.path = cssData.path.replace(/\.css$/, ".scss");
       }
     }
+    return fileData;
+  }
+
+  private processStyleFiles(
+    protocolName: string,
+    fileData: FileData,
+    contentCallback: (fileContent: FileData, props: ProtocolProps) => FileData,
+  ): FileData {
+    const regexps = this.StyleReg["CSS"];
+    for (let i = 0; i < fileData.children.length; i++) {
+      // 先寻找 src 文件夹
+      const dirName = path.basename(fileData.children[i].path);
+      if (dirName === "src") {
+        const srcFileData = fileData.children[i];
+        for (let j = 0; j < srcFileData.children.length; j++) {
+          const dirName = path.basename(srcFileData.children[j].path);
+          const extension = dirName.split(".").pop();
+          if (regexps.test(extension)) {
+            const child = fileData.children[i].children[j];
+            const fileDescribe = child.describe;
+            // 更新文件扩展名和路径
+            if (child.path && child.path.endsWith(`.${fileDescribe.fileExtension}`)) {
+              child.describe.fileExtension = protocolName;
+              child.path = child.path.replace(child.path.match(regexps)[0], `.${protocolName}`);
+            }
+            // 文件内容由回调函数处理
+            if (fileDescribe && typeof fileDescribe.fileContent === "string") {
+              fileData = contentCallback(fileData, this.props);
+            }
+          }
+        }
+      }
+    }
+
     return fileData;
   }
 }

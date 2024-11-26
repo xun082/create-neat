@@ -239,7 +239,6 @@ class Generator {
         `packages/core/template/template-${this.templateName}/index.cjs`,
       );
     }
-    
   }
 
   // 单独处理一个构建工具相关的依赖，将构建工具相关的依赖插入到package.json中
@@ -415,13 +414,28 @@ class Generator {
   getRootDirectory(): string {
     return this.rootDirectory;
   }
-
+  /**
+   * 返回用户预设
+   * @returns
+   */
   getPreset(): Preset {
     return this.preset;
   }
 
+  /**
+   * 返回生成器文件树 （文件树的构建是分步骤的，有时候拿到的不一定是最终的文件树）
+   * @returns
+   */
   getFiles(): FileTree {
     return this.files;
+  }
+
+  /**
+   * 返回生成器插件
+   * @returns
+   */
+  getPlugins(): Record<string, any> {
+    return this.plugins;
   }
 }
 
