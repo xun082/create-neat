@@ -28,16 +28,10 @@ interface ConfigParamters {
 class TemplateToBuildToolAPI extends ProtocolGeneratorAPI {
   protected declare protocols: Record<string, object>; // todo 类型考虑优化
 
-<<<<<<< HEAD
   constructor(protocols, props) {
     super(protocols);
     this.protocols = protocols;
     this.props = props;
-=======
-  constructor(protocols) {
-    super(protocols);
-    this.protocols = protocols;
->>>>>>> upstream/feat/generator-upgrade
   }
 
   generator() {
@@ -60,11 +54,7 @@ class TemplateToBuildToolAPI extends ProtocolGeneratorAPI {
     }
   }
 
-<<<<<<< HEAD
   async ADD_CONFIG(params) {
-=======
-  async ADD_CONFIG(params: ConfigParamters) {
->>>>>>> upstream/feat/generator-upgrade
     //这里 有两种插入方式，一种是利用传进来的 content 手动配置去加，另一种是利用已有的插件（例如 plugin-babel）来做固定的配置插入（实际上是原有方案。
     //这样就解决了普通插件和特殊插件的配置插入问题，比如如果是个特殊插件或者是框架独有的，可以用 content 插入，而普通的通用插件，则使用第二种方式插入。
     const content = params.content;
@@ -72,13 +62,8 @@ class TemplateToBuildToolAPI extends ProtocolGeneratorAPI {
       console.log(content);
     }
 
-<<<<<<< HEAD
     const { buildTool, template, plugins } = this.props.preset;
     const buildToolConfigAst = this.props.buildToolConfigAst;
-=======
-    const { buildTool, template, plugins } = params.perset;
-    const buildToolConfigAst = params.buildToolConfigAst;
->>>>>>> upstream/feat/generator-upgrade
     for (const plugin in plugins) {
       if (Object.prototype.hasOwnProperty.call(plugins, plugin)) {
         // 确保只遍历对象自身的属性
