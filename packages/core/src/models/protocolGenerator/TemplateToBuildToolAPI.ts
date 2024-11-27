@@ -2,7 +2,6 @@ import path from "path";
 
 import { createConfigByParseAst } from "../../utils/ast/parseAst";
 import { relativePathToRoot } from "../../utils/constants";
-import { Preset } from "../../utils/preset";
 
 import ProtocolGeneratorAPI from "./ProtocolGeneratorAPI";
 

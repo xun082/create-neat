@@ -1,9 +1,6 @@
-import path from "path";
+import { FileData } from "../FileTree";
 
 import ProtocolGeneratorAPI from "./ProtocolGeneratorAPI";
-import FileTree, { FileData } from "../FileTree";
-import { Preset } from "../../utils/preset";
-import { ProtocolProps } from "../BaseAPI";
 
 // 定义 Location 枚举，用于指定插件内容插入的位置
 /**
@@ -204,13 +201,13 @@ class PluginToTemplateAPI extends ProtocolGeneratorAPI {
    * @param params
    */
   PROCESS_STYLE_PLUGIN(params) {
-    let content = params.params.content;
+    const content = params.params.content;
     const plugins = this.props.preset.plugins;
     const template = this.props.preset.template;
     const fileData: FileData = this.props.files.getFileData();
     try {
       for (const plugin in plugins) {
-        if (plugins.hasOwnProperty(plugin) && plugin === "scss") {
+        if (plugin === "scss") {
           content.processStyleFiles("scss", fileData, template, content.processScss);
         }
       }
