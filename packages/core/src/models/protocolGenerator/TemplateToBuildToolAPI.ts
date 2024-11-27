@@ -7,21 +7,6 @@ import { Preset } from "../../utils/preset";
 import ProtocolGeneratorAPI from "./ProtocolGeneratorAPI";
 
 /**
- * ADD_CONFIG传入参数
- * @property {string} content - 特殊插件 content
- * @property {Preset} perset - 用户选项配置
- * @property {any} buildToolConfigAst - 构建工具 AST
- */
-<<<<<<< HEAD
-=======
-interface ConfigParamters {
-  content?: string;
-  perset: Preset;
-  buildToolConfigAst: any;
-}
->>>>>>> upstream/feat/generator-upgrade
-
-/**
  * 框架对构建工具协议
  * @param protocols 协议内容
  */
