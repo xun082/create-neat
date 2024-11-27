@@ -124,7 +124,7 @@ module.exports = {
           },
         },
       },
-      <% if (plugin ==='sass' ) { %>
+      <% if (plugin ==='scss' ) { %>
       {
         test: /\.s[ac]ss$/i,
         use: [

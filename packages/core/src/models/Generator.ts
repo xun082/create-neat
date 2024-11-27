@@ -268,7 +268,7 @@ class Generator {
       framework: this.templateName,
       bundler: this.buildTool,
       language: "typescript" in this.plugins ? "typescript" : "javascript",
-      plugin: "sass" in this.preset.plugins ? "sass" : "",
+      plugin: "scss" in this.preset.plugins ? "scss" : "",
       VueEjs: {
         useElementPlus: !!this.preset.plugins["element-plus"],
       },
