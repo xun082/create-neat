@@ -1,3 +1,6 @@
+const protocol = require("../../../src/configs/protocol.ts")
+const templateToBuildToolProtocol = protocol.templateToBuildToolProtocol;
+
 module.exports = (templateAPI) => {
   templateAPI.extendPackage({
     dependencies: {
@@ -6,4 +9,12 @@ module.exports = (templateAPI) => {
     },
     devDependencies: {},
   });
+  templateAPI.protocolGenerate({
+    [templateToBuildToolProtocol.ADD_CONFIG]: {
+      params: {
+        content: 'Specil plugin',
+      },
+      priority: 1,
+    },
+  })
 };

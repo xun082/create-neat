@@ -1,3 +1,5 @@
+import { FileData } from "../FileTree";
+
 import ProtocolGeneratorAPI from "./ProtocolGeneratorAPI";
 
 // 定义 Location 枚举，用于指定插件内容插入的位置
@@ -39,6 +41,14 @@ interface WriteConfigIntoTemplate {
 }
 
 /**
+ * 样式插件参数
+ * @interface
+ * @param {Preset} preset - 用户预设
+ * @param {FileTree} files - 文件树，包含了基础的 src 目录
+ * @param {Record<'content', string>} params - 传入的 content，适用于一些需要添加字段的特殊情况。
+ */
+
+/**
  * 插件影响框架的协议处理器
  * @param protocols 协议内容
  */
@@ -52,8 +62,10 @@ class PluginToTemplateAPI extends ProtocolGeneratorAPI {
   // 匹配 createApp 语句
   private createAppRegex: RegExp = /const\s+app\s*=\s*createApp\s*\(\s*App\s*\)/;
 
-  constructor(protocols) {
+  constructor(protocols, props) {
     super(protocols);
+    this.protocols = protocols;
+    this.props = props;
     this.initializePlugins();
   }
 
@@ -182,6 +194,26 @@ class PluginToTemplateAPI extends ProtocolGeneratorAPI {
       structure.replace("%*#$", wrappedContent) +
       content.slice(match.index! + match[0].length)
     );
+  }
+
+  /**
+   * 样式类插件协议
+   * @param params
+   */
+  PROCESS_STYLE_PLUGIN(params) {
+    const content = params.params.content;
+    const plugins = this.props.preset.plugins;
+    const template = this.props.preset.template;
+    const fileData: FileData = this.props.files.getFileData();
+    try {
+      for (const plugin in plugins) {
+        if (plugin === "scss") {
+          content.processStyleFiles("scss", fileData, template, content.processScss);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
 

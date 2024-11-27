@@ -1,18 +1,35 @@
 import fs from "fs";
 import path from "path";
 
+import * as Protocols from "../configs/protocol";
+import { Preset } from "../utils/preset";
+
 import Generator from "./Generator";
 import PluginToTemplateAPI from "./protocolGenerator/PluginToTemplateAPI";
 import TemplateToBuildToolAPI from "./protocolGenerator/TemplateToBuildToolAPI";
+import FileTree from "./FileTree";
 
-const {
-  pluginToTemplateProtocol,
-  pluginToBuildToolProtocol,
-  templateToBuildToolProtocol,
-} = require("../configs/protocol");
+const { pluginToTemplateProtocol, pluginToBuildToolProtocol, templateToBuildToolProtocol } =
+  Protocols;
 
 interface ConfigFileData {
   file: Record<string, string[]>;
+}
+
+type ProtocolAPI = PluginToTemplateAPI | TemplateToBuildToolAPI /* | PluginToBuildToolAPI */;
+
+/**
+ * 传入协议的参数，不再对每个协议单独传参，而是统一挂载在API上
+ * @param preset 用户预设
+ * @param files 文件树
+ * @param plugins 生成器插件
+ * @param buildToolConfigAst 构造工具 AST
+ */
+export interface ProtocolProps {
+  preset: Preset;
+  files: FileTree;
+  plugins: Record<string, any>;
+  buildToolConfigAst?: any;
 }
 
 /**
@@ -34,18 +51,22 @@ class BaseAPI {
 
   // todo: jsdoc + protocols 的类型
   protocolGenerate(protocols) {
-    const preset = this.generator.getPreset();
-    const buildToolConfigAst = this.generator.buildToolConfigAst;
+    // 统一定义协议所需参数
+    const props: ProtocolProps = {
+      preset: this.generator.getPreset(),
+      files: this.generator.getFiles(),
+      plugins: this.generator.getPlugins(),
+      buildToolConfigAst: this.generator.buildToolConfigAst,
+    };
+    let api: ProtocolAPI = undefined;
+    // 此处会遍历调用的各个协议，并将 Generator 的数据（利如用户preset）传入协议处理器中去。
     for (const protocol in protocols) {
-      let api;
       if (protocol in pluginToTemplateProtocol) {
-        api = new PluginToTemplateAPI(protocols);
+        api = new PluginToTemplateAPI(protocols, props);
       } else if (protocol in pluginToBuildToolProtocol) {
         // api = new PluginToBuildToolAPI(protocols);
       } else if (protocol in templateToBuildToolProtocol) {
-        protocols[protocol].perset = preset;
-        protocols[protocol].buildToolConfigAst = buildToolConfigAst;
-        api = new TemplateToBuildToolAPI(protocols);
+        api = new TemplateToBuildToolAPI(protocols, props);
       }
       api.generator();
     }

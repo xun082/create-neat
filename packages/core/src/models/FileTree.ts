@@ -27,7 +27,7 @@ function isDirectoryOrFile(path: string) {
  * @property {string} fileExtension - 文件扩展名
  * @property {*} fileContent - 文件内容
  */
-interface FileDescribe {
+export interface FileDescribe {
   fileName: string;
   fileExtension: string;
   fileContent: any;
@@ -41,7 +41,7 @@ interface FileDescribe {
  * @property {FileData[]} children - 子节点
  * @property {Partial<FileDescribe>} describe - 文件描述
  */
-interface FileData {
+export interface FileData {
   path: string;
   type?: "dir" | "file";
   children: FileData[];
@@ -66,7 +66,7 @@ class FileTree {
       describe: { fileName: path.basename(rootDirectory) },
     };
     // 初始化 PluginToTemplateAPI，传入所需协议
-    this.pluginToTemplateAPI = new PluginToTemplateAPI({});
+    this.pluginToTemplateAPI = new PluginToTemplateAPI({}, {});
   }
 
   /**
@@ -239,6 +239,10 @@ class FileTree {
         });
       }
     }
+  }
+
+  getFileData(): FileData {
+    return this.fileData;
   }
 }
 export default FileTree;

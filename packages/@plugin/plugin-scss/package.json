@@ -1,6 +1,6 @@
 {
-  "name": "@laconic/plugin-scss",
-  "description": "scss",
+  "name": "@laconic/plugin-sass",
+  "description": "sass",
   "version": "1.0.0",
   "dependencies": {
     "ejs": "^3.1.9"
