@@ -1,4 +1,4 @@
-// todo 因为文件中的函数或方法被index.cjs调用，导致无法用ts和es6写法
+// todo 因为文件中的函数或方法被index.cjs调用，导致无法用ts和esm导出写法
 
 // 定义 LocationCode 枚举，用于指定插件内容插入的位置
 /**
