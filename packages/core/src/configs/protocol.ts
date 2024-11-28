@@ -6,6 +6,7 @@ const globalProtocol = {
 const pluginToTemplateProtocol = {
   ...globalProtocol,
   PROCESS_STYLE_PLUGIN: "PROCESS_STYLE_PLUGIN",
+  PROCESS_TEMPLATE_PLUGIN: "PROCESS_TEMPLATE_PLUGIN",
 };
 
 // 插件对构建工具的协议
