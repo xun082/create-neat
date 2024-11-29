@@ -1,7 +1,8 @@
 const path = require('path');
 const protocol = require("../../../core/src/configs/protocol.ts");
-const pluginToTemplateProtocol = protocol.pluginToTemplateProtocol;
 const { applyPluginTransformation, LocationCode, RegExpMap } = require('../../../core/src/utils/transformFileData.ts')
+
+const pluginToTemplateProtocol = protocol.pluginToTemplateProtocol;
 
 const reactMobx = {
   plugin: "reactMobx",
@@ -49,7 +50,7 @@ module.exports = (generatorAPI) => {
   });
 
   generatorAPI.protocolGenerate({
-    [pluginToTemplateProtocol.PROCESS_TEMPLATE_PLUGIN]: {
+    [pluginToTemplateProtocol.PROCESS_MOBX_PLUGIN]: {
       params: {
         content: {
           processReactFiles
