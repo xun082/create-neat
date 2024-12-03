@@ -1,4 +1,5 @@
 // todo 因为文件中的函数或方法被index.cjs调用，导致无法用ts和esm导出写法
+const path = require("path");
 
 // 定义 LocationCode 枚举，用于指定插件内容插入的位置
 /**
@@ -144,6 +145,21 @@ function applyPluginTransformation(content, plugin, index) {
   return result;
 }
 
+/**
+ * 根据fileData找出src目录
+ */
+const getSrcDir = (fileData) => {
+  for (let i = 0; i < fileData.children.length; i++) {
+    // 先寻找 src 文件夹
+    const dirName = path.basename(fileData.children[i].path);
+    if (dirName === "src") {
+      const srcFileData = fileData.children[i];
+      return srcFileData;
+    }
+  }
+  return null;
+};
+
 // 导出模块
 module.exports = {
   LocationCode,
@@ -154,4 +170,5 @@ module.exports = {
   insertAfterLastImport,
   wrapContent,
   applyPluginTransformation,
+  getSrcDir,
 };
