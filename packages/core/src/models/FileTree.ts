@@ -66,7 +66,7 @@ class FileTree {
       describe: { fileName: path.basename(rootDirectory) },
     };
     // 初始化 PluginToTemplateAPI，传入所需协议
-    this.pluginToTemplateAPI = new PluginToTemplateAPI({}, {});
+    this.pluginToTemplateAPI = new PluginToTemplateAPI();
   }
 
   /**
@@ -96,11 +96,7 @@ class FileTree {
         file.children?.push(subTree);
       }
     } else {
-      let fileContent = fs.readFileSync(src, "utf8");
-
-      // 使用 PluginToTemplateAPI 处理文件内容
-      fileContent = this.pluginToTemplateAPI.processFileContent(baseName, fileContent);
-
+      const fileContent = fs.readFileSync(src, "utf8");
       file.type = "file";
       file.describe = {
         fileName: path.basename(src).split(".")[0],
@@ -140,10 +136,6 @@ class FileTree {
       }
     } else {
       let fileContent = fs.readFileSync(src, "utf8");
-
-      // 使用 PluginToTemplateAPI 处理文件内容
-      fileContent = this.pluginToTemplateAPI.processFileContent(baseName, fileContent);
-
       // EJS 渲染
       fileContent = ejs.render(fileContent, options);
 

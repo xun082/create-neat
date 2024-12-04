@@ -6,12 +6,14 @@ const globalProtocol = {
 const pluginToTemplateProtocol = {
   ...globalProtocol,
   PROCESS_STYLE_PLUGIN: "PROCESS_STYLE_PLUGIN",
+  INSERT_IMPORT: "INSERT_IMPORT",
 };
 
 // 插件对构建工具的协议
 const pluginToBuildToolProtocol = {
   ...globalProtocol,
 };
+
 // 框架对构建工具的协议
 const templateToBuildToolProtocol = {
   ...globalProtocol,
