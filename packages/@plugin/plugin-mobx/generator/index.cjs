@@ -1,10 +1,6 @@
 const path = require('path');
 const protocol = require("../../../core/src/configs/protocol.ts");
-const { getSrcDir } = require('../../../core/src/utils/transformFileData.ts')
-const parser = require("@babel/parser");
-const traverse = require("@babel/traverse").default;
-const t = require("@babel/types");
-const generate = require("@babel/generator").default;
+const { getSrcDir, transformCode } = require('../../../core/src/utils/transformFileData.ts')
 
 const pluginToTemplateProtocol = protocol.pluginToTemplateProtocol;
 
@@ -14,41 +10,51 @@ function processReactFiles(fileData) {
     const fileName = path.basename(srcFileDir.children[i].path);
     if (fileName === 'App.jsx') {
       const file = srcFileDir.children[i].describe
-      const ast = parser.parse(file.fileContent, { sourceType: "module", plugins: ["jsx"] });
-      traverse(ast, {
-        Program(path) {
-          // 新的 import 声明
-          const mobxImport = t.importDeclaration(
-            [t.importSpecifier(t.identifier("observer"), t.identifier("observer"))],
-            t.stringLiteral("mobx-react-lite")
-          );
+      const operations = {
+        ImportDeclaration(path, t) {
+          const programBody = path.parent.body; // 当前 Program 节点的所有顶级节点
+          const importDeclarations = programBody.filter((node) => node.type === "ImportDeclaration");
+          console.log(programBody.length, importDeclarations.length, 'length');
+          // 去重，检查目标导入是否已经存在
+          const existingImports = new Set(importDeclarations.map((node) => node.source.value));
+          const needsMobxImport = !existingImports.has("mobx-react-lite");
+          const needsStoreImport = !existingImports.has("./store");
 
-          const storeImport = t.importDeclaration(
-            [t.importDefaultSpecifier(t.identifier("store"))],
-            t.stringLiteral("./store")
-          );
+          // 如果需要插入的 import 存在，则准备插入内容
+          const importsToAdd = [];
+          if (needsMobxImport) {
+            importsToAdd.push(
+              t.importDeclaration(
+                [t.importSpecifier(t.identifier("observer"), t.identifier("observer"))],
+                t.stringLiteral("mobx-react-lite")
+              )
+            );
+          }
+          if (needsStoreImport) {
+            importsToAdd.push(
+              t.importDeclaration(
+                [t.importDefaultSpecifier(t.identifier("store"))],
+                t.stringLiteral("./store")
+              )
+            );
+          }
 
-          // 找到最后一个 ImportDeclaration
-          const importNodes = path.get("body").filter((p) => p.isImportDeclaration());
-
-          if (importNodes.length > 0) {
-            // 最后一个 import 的路径
-            const lastImport = importNodes[importNodes.length - 1];
-            // 在最后一个 import 后插入
-            lastImport.insertAfter([mobxImport, storeImport]);
+          // 找到最后一个 ImportDeclaration 节点
+          if (importDeclarations.length > 0 && importsToAdd.length > 0) {
+            const lastImportPath = path.getSibling(importDeclarations.length - 1);
+            lastImportPath.insertAfter(importsToAdd);
           }
         },
-        ExportDefaultDeclaration(path) {
+        ExportDefaultDeclaration(path, t) {
+          // 用 observer 包装导出组件
           const declaration = path.node.declaration;
-
-          // 用 observer 包裹导出组件
-          path.node.declaration = t.callExpression(t.identifier("observer"), [
-            declaration,
-          ]);
+          path.node.declaration = t.callExpression(t.identifier("observer"), [declaration]);
         },
-      });
-      const output = generate(ast, {}, file.fileContent);
-      file.fileContent = output.code
+      }
+      const parserOptions = { sourceType: "module", plugins: ["jsx"] }
+      const modifiedCode = transformCode(file.fileContent, operations, parserOptions);
+      console.log(modifiedCode);
+      file.fileContent = modifiedCode
       break
     }
   }
