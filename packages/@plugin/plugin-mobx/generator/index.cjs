@@ -14,7 +14,6 @@ function processReactFiles(fileData) {
         ImportDeclaration(path, t) {
           const programBody = path.parent.body; // 当前 Program 节点的所有顶级节点
           const importDeclarations = programBody.filter((node) => node.type === "ImportDeclaration");
-          console.log(programBody.length, importDeclarations.length, 'length');
           // 去重，检查目标导入是否已经存在
           const existingImports = new Set(importDeclarations.map((node) => node.source.value));
           const needsMobxImport = !existingImports.has("mobx-react-lite");
@@ -53,7 +52,6 @@ function processReactFiles(fileData) {
       }
       const parserOptions = { sourceType: "module", plugins: ["jsx"] }
       const modifiedCode = transformCode(file.fileContent, operations, parserOptions);
-      console.log(modifiedCode);
       file.fileContent = modifiedCode
       break
     }
