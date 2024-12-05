@@ -6,6 +6,8 @@ const globalProtocol = {
 const pluginToTemplateProtocol = {
   ...globalProtocol,
   PROCESS_STYLE_PLUGIN: "PROCESS_STYLE_PLUGIN",
+  PROCESS_PINIA_PLUGIN: "PROCESS_PINIA_PLUGIN",
+  PROCESS_ROUTER_PLUGIN: "PROCESS_ROUTER_PLUGIN",
 };
 
 // 插件对构建工具的协议

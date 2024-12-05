@@ -1,4 +1,5 @@
-const path = require('path');
+const path = require("path");
+
 const protocol = require("../../../core/src/configs/protocol.ts");
 const pluginToTemplateProtocol = protocol.pluginToTemplateProtocol;
 
@@ -87,9 +88,9 @@ module.exports = (generatorAPI) => {
       params: {
         content: {
           processStyleFiles,
-          processScss
-        }
-      }
-    }
+          processScss,
+        },
+      },
+    },
   });
 };
