@@ -1,6 +1,6 @@
 const path = require('path');
 const protocol = require("../../../core/src/configs/protocol.ts");
-const { getSrcDir, transformCode } = require('../../../core/src/utils/transformFileData.ts')
+const { getSrcDir, transformCode, importDeclarationUtils, exportDefaultDeclarationUtils } = require('../../../core/src/utils/transformFileData.ts')
 
 const pluginToTemplateProtocol = protocol.pluginToTemplateProtocol;
 
@@ -12,42 +12,15 @@ function processReactFiles(fileData) {
       const file = srcFileDir.children[i].describe
       const operations = {
         ImportDeclaration(path, t) {
-          const programBody = path.parent.body; // 当前 Program 节点的所有顶级节点
-          const importDeclarations = programBody.filter((node) => node.type === "ImportDeclaration");
-          // 去重，检查目标导入是否已经存在
-          const existingImports = new Set(importDeclarations.map((node) => node.source.value));
-          const needsMobxImport = !existingImports.has("mobx-react-lite");
-          const needsStoreImport = !existingImports.has("./store");
-
-          // 如果需要插入的 import 存在，则准备插入内容
-          const importsToAdd = [];
-          if (needsMobxImport) {
-            importsToAdd.push(
-              t.importDeclaration(
-                [t.importSpecifier(t.identifier("observer"), t.identifier("observer"))],
-                t.stringLiteral("mobx-react-lite")
-              )
-            );
-          }
-          if (needsStoreImport) {
-            importsToAdd.push(
-              t.importDeclaration(
-                [t.importDefaultSpecifier(t.identifier("store"))],
-                t.stringLiteral("./store")
-              )
-            );
-          }
-
-          // 找到最后一个 ImportDeclaration 节点
-          if (importDeclarations.length > 0 && importsToAdd.length > 0) {
-            const lastImportPath = path.getSibling(importDeclarations.length - 1);
-            lastImportPath.insertAfter(importsToAdd);
-          }
+          const options = [
+            { name: 'mobx', path: 'mobx-react-lite' },
+            { name: 'store', path: './store' }
+          ]
+          importDeclarationUtils(path, t, options)
         },
         ExportDefaultDeclaration(path, t) {
-          // 用 observer 包装导出组件
-          const declaration = path.node.declaration;
-          path.node.declaration = t.callExpression(t.identifier("observer"), [declaration]);
+          const content = 'mobx.observer'
+          exportDefaultDeclarationUtils(path, t, content)
         },
       }
       const parserOptions = { sourceType: "module", plugins: ["jsx"] }

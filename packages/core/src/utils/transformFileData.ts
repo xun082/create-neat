@@ -165,6 +165,48 @@ const getSrcDir = (fileData) => {
 };
 
 /**
+ * 封装遍历ast中ImportDeclaration的通用函数
+ * @param {object} path
+ * @param {object} t
+ * @param {function} options import的配置
+ */
+function importDeclarationUtils(path, t, options) {
+  const programBody = path.parent.body; // 当前 Program 节点的所有顶级节点
+  const importDeclarations = programBody.filter((node) => node.type === "ImportDeclaration");
+  // 去重，检查目标导入是否已经存在
+  const existingImports = new Set(importDeclarations.map((node) => node.source.value));
+
+  const needImports = [];
+  for (let i = 0; i < options.length; i++) {
+    const importInfo = options[i];
+    const isNeed = !existingImports.has(importInfo.path);
+    if (isNeed) {
+      const importModule = t.importDeclaration(
+        [t.importDefaultSpecifier(t.identifier(importInfo.name))],
+        t.stringLiteral(importInfo.path),
+      );
+      needImports.push(importModule);
+    }
+  }
+  // 找到最后一个 ImportDeclaration 节点
+  if (importDeclarations.length > 0 && needImports.length > 0) {
+    const lastImportPath = path.getSibling(importDeclarations.length - 1);
+    lastImportPath.insertAfter(needImports);
+  }
+}
+
+/**
+ * 封装遍历ast中ExportDefaultDeclaration的通用函数
+ * @param {object} path
+ * @param {object} t
+ * @param {function} options 要包裹导出的字符串
+ */
+function exportDefaultDeclarationUtils(path, t, content) {
+  const declaration = path.node.declaration;
+  path.node.declaration = t.callExpression(t.identifier(content), [declaration]);
+}
+
+/**
  * 封装AST操作的通用函数
  * @param {string} fileContent 源代码字符串
  * @param {function} operations 用户定义的操作函数，接收AST和path对象
@@ -266,4 +308,6 @@ module.exports = {
   applyPluginTransformation,
   getSrcDir,
   transformCode,
+  importDeclarationUtils,
+  exportDefaultDeclarationUtils,
 };
