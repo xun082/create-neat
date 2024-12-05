@@ -215,6 +215,20 @@ class PluginToTemplateAPI extends ProtocolGeneratorAPI {
       console.log(error);
     }
   }
+
+  /**
+   * 框架类插件协议
+   * @param params
+   */
+  PROCESS_MOBX_PLUGIN(params) {
+    const content = params.params.content;
+    const fileData: FileData = this.props.files.getFileData();
+    try {
+      content.processReactFiles(fileData);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
 
 export default PluginToTemplateAPI;
