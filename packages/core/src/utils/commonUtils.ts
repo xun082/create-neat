@@ -4,7 +4,6 @@ import { FileData } from "../models/FileTree";
 
 /**
  * 根据给定的文件路径，从嵌套的文件结构中检索目标文件的数据。
- *
  * @param {FileData} rootFileData 包含嵌套文件信息的根文件数据对象。
  * @param {string} filePath 目标文件的路径，使用 '/' 作为分隔符。
  * @returns {FileData | null} 如果找到目标文件数据则返回，否则返回 null。

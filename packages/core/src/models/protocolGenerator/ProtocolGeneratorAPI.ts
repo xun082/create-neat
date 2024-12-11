@@ -60,9 +60,9 @@ class ProtocolGeneratorAPI {
     const fileData = getTargetFileData(rootFileTree, url);
     const fileContent = fileData.describe.fileContent;
     const operations = {
-      ExportDefaultDeclaration(path, t) {
+      ExportDefaultDeclaration(path) {
         const content = exportContent;
-        exportDefaultDeclarationUtils(path, t, content);
+        exportDefaultDeclarationUtils(path, content);
       },
     };
     // const parserOptions = { sourceType: "module", plugins: ["jsx"] };
