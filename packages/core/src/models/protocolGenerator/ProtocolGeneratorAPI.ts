@@ -46,10 +46,16 @@ class ProtocolGeneratorAPI {
     }
   }
 
+  /**
+   * 更新目标文件导出内容协议，根据给定的文件路径和新的导出内容更新文件数据。
+   *
+   * @param {Object} params 包含文件路径和新的导出内容的参数对象。
+   * @param {string} params.url 目标文件的路径。
+   * @param {string} params.exportContent 要更新的导出内容。
+   * @param {string} params.parserOptions ast的解析器
+   */
   UPDATE_EXPORT_CONTENT_PROTOCOL({ params }) {
-    console.log("UPDATE_EXPORT_CONTENT_PROTOCOL");
-
-    const { url, exportContent } = params;
+    const { url, exportContent, parserOptions } = params;
     const rootFileTree = this.props.files.getFileData();
     const fileData = getTargetFileData(rootFileTree, url);
     const fileContent = fileData.describe.fileContent;
@@ -59,7 +65,7 @@ class ProtocolGeneratorAPI {
         exportDefaultDeclarationUtils(path, t, content);
       },
     };
-    const parserOptions = { sourceType: "module", plugins: ["jsx"] };
+    // const parserOptions = { sourceType: "module", plugins: ["jsx"] };
     fileData.describe.fileContent = transformCode(fileContent, operations, parserOptions);
   }
 }
