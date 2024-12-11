@@ -1,5 +1,6 @@
 const globalProtocol = {
   ENTRY_FILE: "ENTRY_FILE", // 入口文件配置，如：入口文件引入全局 less、scss
+  EXPORT_CONTENT_PROTOCL: "EXPORT_CONTENT_PROTOCL",
 };
 
 // 插件对框架的协议

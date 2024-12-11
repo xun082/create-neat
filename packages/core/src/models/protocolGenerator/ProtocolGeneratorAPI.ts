@@ -11,8 +11,9 @@ class ProtocolGeneratorAPI {
   protected protocols: Record<string, object>; // todo 类型考虑优化
   protected props: ProtocolProps;
 
-  constructor(protocols) {
+  constructor(protocols, props) {
     this.protocols = protocols;
+    this.props = props;
   }
 
   generator() {
