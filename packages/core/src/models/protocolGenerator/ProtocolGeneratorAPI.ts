@@ -2,6 +2,9 @@ import fs from "fs";
 import path from "path";
 
 import { ProtocolProps } from "../BaseAPI";
+import { getTargetFileData } from "../../utils/commonUtils";
+import { exportDefaultDeclarationUtils } from "../../utils/ast/commonAst";
+import { transformCode } from "../../utils/ast/utils";
 
 /**
  * 通用类，为 插件/框架/构建工具 之间的影响定义协议处理器
@@ -39,6 +42,21 @@ class ProtocolGeneratorAPI {
       // todo: 具体如何实现，其实很灵活，甚至可以借助 AST 进行
       fs.writeFileSync(entryFilePath, entryContent, "utf-8");
     }
+  }
+
+  UPDATE_EXPORT_CONTENT_PROTOCOL({ params }) {
+    const { url } = params;
+    const rootFileTree = this.props.files.getFileData();
+    const fileData = getTargetFileData(rootFileTree, url);
+    const fileContent = fileData.describe.fileContent;
+    const operations = {
+      ExportDefaultDeclaration(path, t) {
+        const content = "mobx.observer";
+        exportDefaultDeclarationUtils(path, t, content);
+      },
+    };
+    const parserOptions = { sourceType: "module", plugins: ["jsx"] };
+    fileData.describe.fileContent = transformCode(fileContent, operations, parserOptions);
   }
 }
 
