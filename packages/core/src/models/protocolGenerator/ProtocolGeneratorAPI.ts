@@ -13,17 +13,19 @@ import { transformCode } from "../../utils/ast/utils";
 class ProtocolGeneratorAPI {
   protected protocols: Record<string, object>; // todo 类型考虑优化
   protected props: ProtocolProps;
+  protected protocol: any;
 
-  constructor(protocols, props) {
+  constructor(protocols, props, protocol) {
     this.protocols = protocols;
     this.props = props;
+    this.protocol = protocol;
   }
 
   generator() {
     // todo: 加入优先级调度
-    for (const protocol in this.protocols) {
-      this[protocol](this.protocols[protocol]);
-    }
+    const protocol = this.protocol;
+    const protocols = this.protocols;
+    this[protocol](protocols[protocol]);
   }
 
   ENTRY_FILE(params) {
@@ -45,13 +47,15 @@ class ProtocolGeneratorAPI {
   }
 
   UPDATE_EXPORT_CONTENT_PROTOCOL({ params }) {
-    const { url } = params;
+    console.log("UPDATE_EXPORT_CONTENT_PROTOCOL");
+
+    const { url, exportContent } = params;
     const rootFileTree = this.props.files.getFileData();
     const fileData = getTargetFileData(rootFileTree, url);
     const fileContent = fileData.describe.fileContent;
     const operations = {
       ExportDefaultDeclaration(path, t) {
-        const content = "mobx.observer";
+        const content = exportContent;
         exportDefaultDeclarationUtils(path, t, content);
       },
     };

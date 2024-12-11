@@ -12,10 +12,8 @@ import ProtocolGeneratorAPI from "./ProtocolGeneratorAPI";
 class TemplateToBuildToolAPI extends ProtocolGeneratorAPI {
   protected declare protocols: Record<string, object>; // todo 类型考虑优化
 
-  constructor(protocols, props) {
-    super(protocols);
-    this.protocols = protocols;
-    this.props = props;
+  constructor(protocols, props, protocol) {
+    super(protocols, props, protocol);
   }
 
   generator() {

@@ -62,10 +62,8 @@ class PluginToTemplateAPI extends ProtocolGeneratorAPI {
   // 匹配 createApp 语句
   private createAppRegex: RegExp = /const\s+app\s*=\s*createApp\s*\(\s*App\s*\)/;
 
-  constructor(protocols, props) {
-    super(protocols, props);
-    this.protocols = protocols;
-    this.props = props;
+  constructor(protocols, props, protocol) {
+    super(protocols, props, protocol);
     this.initializePlugins();
   }
 
