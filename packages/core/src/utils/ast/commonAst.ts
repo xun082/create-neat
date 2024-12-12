@@ -52,3 +52,13 @@ export const createCallExpression = (
  */
 export const createObjectProperty = (name: string, value: Parameters<typeof objectProperty>[1]) =>
   objectProperty(identifier(name), value);
+
+/**
+ * 封装遍历ast中ExportDefaultDeclaration的通用函数
+ * @param {object} path
+ * @param {string} content 要包裹导出的字符串
+ */
+export const exportDefaultDeclarationUtils = (path: any, content: string) => {
+  const declaration = path.node.declaration;
+  path.node.declaration = callExpression(identifier(content), [declaration]);
+};

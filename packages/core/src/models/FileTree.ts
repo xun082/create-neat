@@ -66,7 +66,7 @@ class FileTree {
       describe: { fileName: path.basename(rootDirectory) },
     };
     // 初始化 PluginToTemplateAPI，传入所需协议
-    this.pluginToTemplateAPI = new PluginToTemplateAPI({}, {});
+    this.pluginToTemplateAPI = new PluginToTemplateAPI({}, {}, {});
   }
 
   /**
