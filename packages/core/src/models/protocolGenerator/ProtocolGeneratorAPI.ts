@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 
 import { ProtocolProps } from "../BaseAPI";
+import { Protocol } from "../../types/protocol";
 
 /**
  * 通用类，为 插件/框架/构建工具 之间的影响定义协议处理器
@@ -10,9 +11,12 @@ import { ProtocolProps } from "../BaseAPI";
 class ProtocolGeneratorAPI {
   protected protocols: Record<string, object>; // todo 类型考虑优化
   protected props: ProtocolProps;
+  protected protocol: Protocol;
 
-  constructor(protocols) {
+  constructor(protocols, props, protocol) {
     this.protocols = protocols;
+    this.props = props;
+    this.protocol = protocol;
   }
 
   generator() {
