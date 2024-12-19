@@ -13,7 +13,7 @@ import { transformCode } from "../../utils/ast/utils";
 class ProtocolGeneratorAPI {
   protected protocols: Record<string, object>; // todo 类型考虑优化
   protected props: ProtocolProps;
-  protected protocol: any;
+  protected protocol: string;
 
   constructor(protocols, props, protocol) {
     this.protocols = protocols;

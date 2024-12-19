@@ -7,12 +7,14 @@ export const globalProtocol = {
 export const pluginToTemplateProtocol = {
   ...globalProtocol,
   PROCESS_STYLE_PLUGIN: "PROCESS_STYLE_PLUGIN",
+  INSERT_IMPORT: "INSERT_IMPORT",
 };
 
 // 插件对构建工具的协议
 export const pluginToBuildToolProtocol = {
   ...globalProtocol,
 };
+
 // 框架对构建工具的协议
 export const templateToBuildToolProtocol = {
   ...globalProtocol,
