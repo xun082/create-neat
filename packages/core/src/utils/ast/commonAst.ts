@@ -54,9 +54,10 @@ export const createObjectProperty = (name: string, value: Parameters<typeof obje
   objectProperty(identifier(name), value);
 
 /**
- * 封装遍历ast中ExportDefaultDeclaration的通用函数
- * @param {object} path
- * @param {string} content 要包裹导出的字符串
+ * ast操作方法，将文件最后导出的内容用content将其包裹
+ * @example export default App -> export default Observer(App)
+ * @param {object} path 表示ast节点路径的对象
+ * @param {string} content 包裹导出的字符串 例如Observer
  */
 export const exportDefaultDeclarationUtils = (path: any, content: string) => {
   const declaration = path.node.declaration;
