@@ -1,6 +1,7 @@
 import path from "path";
 
 import { FileData } from "../models/FileTree";
+
 /**
  * 根据给定的文件路径，从嵌套的文件结构中检索目标文件的数据。
  * @param {FileData} rootFileData 包含嵌套文件信息的根文件数据对象。
@@ -16,7 +17,8 @@ export const getTargetFileData = (rootFileData: FileData, filePath: string) => {
     let flag = false;
     for (let j = 0; j < targetFileData.children.length; j++) {
       flag = false;
-      const fileName = path.basename(targetFileData.children[j].path);
+      // 不包含文件后缀
+      const fileName = path.basename(targetFileData.children[j].path).split(".")[0];
       if (fileName === targetFileName) {
         flag = true;
         targetFileData = targetFileData.children[j];

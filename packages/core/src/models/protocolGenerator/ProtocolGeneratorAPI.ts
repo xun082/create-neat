@@ -2,7 +2,9 @@ import fs from "fs";
 import path from "path";
 
 import { ProtocolProps } from "../BaseAPI";
-import { Protocol } from "../../types/protocol";
+import { getTargetFileData } from "../../utils/commonUtils";
+import { exportDefaultDeclarationUtils } from "../../utils/ast/commonAst";
+import { transformCode } from "../../utils/ast/utils";
 
 /**
  * 通用类，为 插件/框架/构建工具 之间的影响定义协议处理器
@@ -11,7 +13,7 @@ import { Protocol } from "../../types/protocol";
 class ProtocolGeneratorAPI {
   protected protocols: Record<string, object>; // todo 类型考虑优化
   protected props: ProtocolProps;
-  protected protocol: Protocol;
+  protected protocol: string;
 
   constructor(protocols, props, protocol) {
     this.protocols = protocols;
@@ -21,9 +23,9 @@ class ProtocolGeneratorAPI {
 
   generator() {
     // todo: 加入优先级调度
-    for (const protocol in this.protocols) {
-      this[protocol](this.protocols[protocol]);
-    }
+    const protocol = this.protocol;
+    const protocols = this.protocols;
+    this[protocol](protocols[protocol]);
   }
 
   ENTRY_FILE(params) {
@@ -42,6 +44,29 @@ class ProtocolGeneratorAPI {
       // todo: 具体如何实现，其实很灵活，甚至可以借助 AST 进行
       fs.writeFileSync(entryFilePath, entryContent, "utf-8");
     }
+  }
+
+  /**
+   * 更新目标文件导出内容协议，根据给定的文件路径和新的导出内容更新文件数据。
+   *
+   * @param {Object} params 包含文件路径和新的导出内容的参数对象。
+   * @param {string} params.url 目标文件的路径。
+   * @param {string} params.exportContent 要更新的导出内容。
+   * @param {string} params.parserOptions ast的解析器
+   */
+  UPDATE_EXPORT_CONTENT_PROTOCOL({ params }) {
+    const { url, exportContent, astOptions } = params;
+    const { parserOptions } = astOptions;
+    const rootFileTree = this.props.files.getFileData();
+    const fileData = getTargetFileData(rootFileTree, url);
+    const fileContent = fileData.describe.fileContent;
+    const operations = {
+      ExportDefaultDeclaration(path) {
+        const content = exportContent;
+        exportDefaultDeclarationUtils(path, content);
+      },
+    };
+    fileData.describe.fileContent = transformCode(fileContent, operations, parserOptions);
   }
 }
 
