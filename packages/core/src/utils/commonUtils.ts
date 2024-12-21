@@ -17,7 +17,8 @@ export const getTargetFileData = (rootFileData: FileData, filePath: string) => {
     let flag = false;
     for (let j = 0; j < targetFileData.children.length; j++) {
       flag = false;
-      const fileName = path.basename(targetFileData.children[j].path);
+      // 不包含文件后缀
+      const fileName = path.basename(targetFileData.children[j].path).split(".")[0];
       if (fileName === targetFileName) {
         flag = true;
         targetFileData = targetFileData.children[j];
