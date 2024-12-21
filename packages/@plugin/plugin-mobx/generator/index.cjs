@@ -15,7 +15,7 @@ module.exports = (generatorAPI) => {
         url: 'src/App.jsx',
         exportContent: 'Observer',
         astOptions: {
-          parserOptions: { sourceType: "module", plugins: ["jsx"] }
+          parserOptions: { sourceType: "module", plugins: ["typescript", "jsx"] }
         }
       },
     },
