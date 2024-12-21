@@ -55,7 +55,8 @@ class ProtocolGeneratorAPI {
    * @param {string} params.parserOptions ast的解析器
    */
   UPDATE_EXPORT_CONTENT_PROTOCOL({ params }) {
-    const { url, exportContent, parserOptions } = params;
+    const { url, exportContent, astOptions } = params;
+    const { parserOptions } = astOptions;
     const rootFileTree = this.props.files.getFileData();
     const fileData = getTargetFileData(rootFileTree, url);
     const fileContent = fileData.describe.fileContent;
@@ -65,7 +66,6 @@ class ProtocolGeneratorAPI {
         exportDefaultDeclarationUtils(path, content);
       },
     };
-    // const parserOptions = { sourceType: "module", plugins: ["jsx"] };
     fileData.describe.fileContent = transformCode(fileContent, operations, parserOptions);
   }
 }
